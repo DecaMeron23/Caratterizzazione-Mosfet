@@ -8,10 +8,10 @@ V_ds = 5; % indica per quale V_ds stampare il real vs fit
 
 figure
 hold on
-plot(id_Vgs(:,1),RM_data(:,V_ds)) %Plot dei dati grezzi
+plot(Vg,RM_data(:,V_ds)) %Plot dei dati grezzi
 
-y =  RM_fitLineare(V_ds , INTERCEPT) + RM_fitLineare( V_ds , SLOPE) * id_Vgs(: , 1); % creazione fit Lineare
-plot(id_Vgs(: , 1) , y); %plot del fit lineara
+y =  RM_fitLineare(V_ds , INTERCEPT) + RM_fitLineare( V_ds , SLOPE) .* Vg; % creazione fit Lineare
+plot(Vg, y); %plot del fit lineara
 
 plot(vth_RM(V_ds) , 0 , "o"); % Vth
 yline(0 , "-."); % y = 0
