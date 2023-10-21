@@ -23,7 +23,7 @@ hold off
 ylabel('$\frac{I_d}{\sqrt{g_m}}$','interpreter','latex')
 xlabel('$V_{gs}$','interpreter','latex')
 legend("Real", "Fit"  , "$V_{th}$", "Location","northwest" , "interpreter" , "latex");
-plot_title = "Vds = " + string(Vds(V_ds)) + "mv";
+plot_title = "Vds = " + string(Vds(V_ds)) + "v";
 title(plot_title);
 ylim([-0.02, max(y)]);
 xlim([0 , 1]);
