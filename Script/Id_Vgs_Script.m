@@ -1,25 +1,39 @@
-clc
-clear
+clear; clc;
 
-id_Vgs_completo = readmatrix("C:\Users\emili\OneDrive - unibg.it\UNI\Tesi\MatLab\N1-100-30\id-vgs.txt"); % Carico il file
-colonne_vg_id = [1 , 2:5:36]; 
-id_Vgs = id_Vgs_completo(: , colonne_vg_id); % seleziono solo le colonne con vg e id (al variare di Vds)
+File = "id-vgs.txt"; % nome del file da caricare
+
+% Valori di Vds
+if File == "id-vgs-2.txt"
+    Vds = 0:0.01:0.1;
+else
+    if File == "id-vgs.txt"
+        Vds = 0:0.15:0.9;
+    end
+end
+
+fp = dir("*.txt");
+NameFolder = fp.folder;
+[~ , Dispositivo] = fileparts(NameFolder);
+
+id_Vgs_completo = readmatrix(File); % Carico il file
+
+% file composto da {Vg + (Id , Ig , Is , Iavdd , Igrd) * vd}
+NUMERO_COLONNE = length(id_Vgs_completo(1 , :));
+colonne_vg_id = 2:5:NUMERO_COLONNE;
+Id = id_Vgs_completo(: , colonne_vg_id); % seleziono solo le colonne con Id (al variare di Vds)
+Vg = id_Vgs_completo(: , 1); %seleziono le Vg
 clear colonne_vg_id id_Vgs_completo;
 
-% Valori di Vds in mV
-Vds = 0:150:900;
-
-device_type = "N";
-
-% matrice id_Vgs: prima colonna valori di Vg da colonna 2 a colonna 8
-% (totale 7 colonne) valore di id con vd da 0 a 0.9 con step (per colonna)
-% di 0.15V
+device_type = Dispositivo(1);
 
 %% Calcoliamo Gm
 
-gm = zeros(size(id_Vgs,1),7);  % crea una matrice di zeri [righe = numero rilevazioni] e 7 colonne
+gm = zeros(length(Vg),7);  % crea una matrice di zeri [righe = numero rilevazioni] e 7 colonne
+
+incremento_Vg = abs(Vg(1) - Vg(2));
+
 for i=1:7
-    gm(:,i) = gradient(id_Vgs(:,i+1) , abs(id_Vgs(1,1) - id_Vgs(2,1))); % i+1 per prendere id
+    gm(:,i) = gradient(Id(:,i) , incremento_Vg);
 end
 
 figure
@@ -28,6 +42,8 @@ ylabel('$g_m$ [mS]','interpreter','latex')
 xlabel('$V_{gs}$ [V]','interpreter','latex')
 title('$g_m$','interpreter','latex')
 legend('Vds=0','Vds=150mV','Vds=300mV','Vds=450mV','Vds=600mV','Vds=750mV','Vds=900mV','Location','northwest')
+
+clear incremento_Vg
 
 %% Calculate threshold - Ratio Method (RM)
 
@@ -108,7 +124,7 @@ if device_type == 'P'
     end
 else
     for i=1:7
-        SDLM_derivata(:, i) = gradient (log(abs(id_Vgs(:, i+1)))) ./gradient(id_Vgs(:, 1));
+        SDLM_derivata(:, i) = gradient(log(abs(id_Vgs(:, i+1)))) ./gradient(id_Vgs(:, 1));
     end
 end
     
@@ -132,10 +148,10 @@ clear SDLM_derivata i spuriousRemoved;
 
 %% Save File
 
-Vth =  array2table([ Vds'./ 1e3 , (round(vth_RM , 6)) , round(vth_TCM, 6) , round(vth_SDLM, 6)]);
+Vth =  array2table([ Vds', (round(vth_RM , 6)) , round(vth_TCM, 6) , round(vth_SDLM, 6)]);
 
 Vth = renamevars(Vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" , "Vth_RM", "Vth_TCM", "Vth_SDLM"]);
 
-writetable( Vth, "C:\Users\emili\OneDrive - unibg.it\UNI\Tesi\MatLab\N1-100-30\Vth.txt" , "Delimiter","\t");
+writetable( Vth, NameFolder + "\Vth.txt",  "Delimiter","\t");
 
 clear Vth
