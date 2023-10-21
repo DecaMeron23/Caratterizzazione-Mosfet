@@ -1,7 +1,7 @@
 %% Plot SDLM
 % plot solo per valori di Vgs > 0
 
-V_ds = 7;
+V_ds = 5;
 
 Vgs_maggiore_0 = id_Vgs(: , 1) > 0;
 

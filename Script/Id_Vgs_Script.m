@@ -1,7 +1,7 @@
 clc
 clear
 
-id_Vgs_completo = readmatrix("id-vgs.txt"); % Carico il file
+id_Vgs_completo = readmatrix("C:\Users\emili\OneDrive - unibg.it\UNI\Tesi\MatLab\N1-100-30\id-vgs.txt"); % Carico il file
 colonne_vg_id = [1 , 2:5:36]; 
 id_Vgs = id_Vgs_completo(: , colonne_vg_id); % seleziono solo le colonne con vg e id (al variare di Vds)
 clear colonne_vg_id id_Vgs_completo;
@@ -128,4 +128,14 @@ for i=1:7
     vth_SDLM(i, 1) = id_Vgs(SDLM_Indice(i), 1);
 end
 
-clear SDLM_derivata i;
+clear SDLM_derivata i spuriousRemoved;
+
+%% Save File
+
+Vth =  array2table([ Vds'./ 1e3 , (round(vth_RM , 6)) , round(vth_TCM, 6) , round(vth_SDLM, 6)]);
+
+Vth = renamevars(Vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" , "Vth_RM", "Vth_TCM", "Vth_SDLM"]);
+
+writetable( Vth, "C:\Users\emili\OneDrive - unibg.it\UNI\Tesi\MatLab\N1-100-30\Vth.txt" , "Delimiter","\t");
+
+clear Vth
