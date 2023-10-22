@@ -1,22 +1,30 @@
 %% Plot TCM
 
-% for i = 5:7;
+clc;
 
-V_ds = 5;
+% richiesta tipo di dati
+disp(Vds);
+valoreVds = input("Valore Di Vds tra quelli sopra indicati (in V): ");
+
+V_ds = find(Vds == valoreVds);
+
+% Verifica se valoreVds è valido
+if isempty(V_ds)
+    error("Valore di Vds non Valido");
+end
 
 figure
 hold on
 
-plot(id_Vgs(: , 1) , TCM_data(: , V_ds) , "Color","blue");
-plot(id_Vgs(: , 1) , TCM_data_smooth(: , V_ds) , "Color","red");
-plot(id_Vgs( TCM_Indice(V_ds), 1) , TCM_Max(V_ds), "o", "Color","black" , "LineWidth" , 1);
+plot(Vg, TCM_data(: , V_ds) , "Color","blue" , LineStyle="-.");
+plot(Vg, TCM_data_smooth(: , V_ds) , "Color","red");
+plot(Vg(TCM_Indice(V_ds)), TCM_Max(V_ds), "o", "Color","black" , "LineWidth" , 1);
 
 hold off
 
 ylabel('$\frac{\mathrm{d} g_m}{\mathrm{d} V_{gs}}$' , 'Interpreter' ,'latex');
 xlabel("$V_{gs}$" , "Interpreter","latex");
 legend("Real" , "Smooth"  , "Punto Massimo", "Location","northwest");
-plot_title = "Vds = " + string(Vds(V_ds)) + "mv";
+plot_title =  device_type + " - Vds = " + string(Vds(V_ds)) + "V";
 title(plot_title);
-xlim([-0.1 , 0.6])
-%end
+% xlim([-0.1 , 0.6])

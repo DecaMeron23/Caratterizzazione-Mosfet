@@ -1,17 +1,16 @@
+% Calcolo Delle Vth con i metodo RM , TCM e SDLM
+
+%% inizializzazine
 clear; clc;
 
-File = "id-vgs.txt"; % nome del file da caricare
 
-% Valori di Vds
-if File == "id-vgs-2.txt"
-    Vds = 0:0.01:0.1;
-else
-    if File == "id-vgs.txt"
-        Vds = 0:0.15:0.9;
-    end
+File = input("Specificare in nome del file: " , "s"); % nome del file da caricare
+fp = dir(File);
+
+if isempty(fp)
+    error("Il file specificato non è stato trovato ( " + File + " )" );
 end
 
-fp = dir("*.txt");
 NameFolder = fp.folder;
 [~ , Dispositivo] = fileparts(NameFolder);
 
@@ -26,13 +25,22 @@ clear colonne_vg_id id_Vgs_completo;
 
 device_type = Dispositivo(1);
 
+% Valori di Vds in V
+if File == "id-vgs-2.txt"
+    Vds = 0:0.01:0.1;
+else
+    if File == "id-vgs.txt"
+        Vds = 0:0.15:0.9;
+    end
+end
+
 %% Calcoliamo Gm
 
 gm = zeros(length(Vg),7);  % crea una matrice di zeri [righe = numero rilevazioni] e 7 colonne
 
 incremento_Vg = abs(Vg(1) - Vg(2));
 
-for i=1:7
+for i=1:length(Vds)
     gm(:,i) = gradient(Id(:,i) , incremento_Vg);
 end
 
@@ -40,23 +48,40 @@ figure
 plot(Vg , gm .* 1e3)
 ylabel('$g_m$ [mS]','interpreter','latex')
 xlabel('$V_{gs}$ [V]','interpreter','latex')
-title('$g_m$','interpreter','latex')
-legend('Vds=0','Vds=150mV','Vds=300mV','Vds=450mV','Vds=600mV','Vds=750mV','Vds=900mV','Location','northwest')
+title(device_type + " - $g_m$",'interpreter','latex')
 
-clear incremento_Vg
+% creo la legenda
+
+for i = 1: length(Vds)
+    legend_text(i) = "Vds = " + (Vds(i)*1e3)+ " mV"; 
+end
+
+if device_type == "N"
+    legend(legend_text,'Location','northwest')
+else
+    if device_type == "P"
+    legend(legend_text,'Location','southeast') 
+    end
+end
+
+clear incremento_Vg legend_text
 
 %% Calculate threshold - Ratio Method (RM)
 
 RM_data = abs(Id) ./ sqrt(abs(gm));
 RM_fitLineare = zeros(length(Vds), 2);
 
-
-if(device_type=='P')
-    RM_data = flipud(RM_data);
+if device_type == "P"
+    RM_data = flipud(RM_data); % è giusto far il flipud dei dati? le Vth
+    % si sballano tutti
+    puntiFit = [1 1.2];
+    % puntiFit = [0 0.3];
+else
+    if device_type == "N"
+        puntiFit = [0.6 0.9];
+    end
 end
-
-dati_da_prendere = boolean((Vg >=0.6)&(Vg<=0.9));
-
+dati_da_prendere = boolean((Vg >= puntiFit(1) ) & (Vg <= puntiFit(2)));
 RM_data_fit_y = RM_data(dati_da_prendere, : ); % selezioniamo i Vgs che servono per il fit (#modifica: "2:end" --> ":")
 RM_data_fit_x = Vg(dati_da_prendere); % selezioniamo le Vgs >= 0.6 e <= 0.9
 
@@ -81,11 +106,17 @@ figure
 plot(Vg, RM_data);
 ylabel('$\frac{I_d}{\sqrt{g_m}}$ [A$\cdot V$]','interpreter','latex')
 xlabel('$V_{gs}$ [V]','interpreter','latex')
-title('$\frac{I_d}{\sqrt{g_m}}/V_{gs}$','interpreter','latex')
+title(device_type + " - $\frac{I_d}{\sqrt{g_m}}/V_{gs}$",'interpreter','latex')
 
-legend('Vds=0','Vds=150mV','Vds=300mV','Vds=450mV','Vds=600mV','Vds=750mV','Vds=900mV','Location','northwest')
+% creo la legenda
 
-clear GRADO dati_da_prendere RM_data_fit_y RM_data_fit_x SLOPE INTERCEPT;
+for i = 1: length(Vds)
+    legend_text(i) = "Vds = " + (Vds(i)*1e3)+ " mV"; 
+end
+
+legend(legend_text,'Location','northwest')
+
+clear legend_text GRADO dati_da_prendere RM_data_fit_y RM_data_fit_x SLOPE INTERCEPT;
 
 %% Calculate threshold - Transconductance Change Method (TCM)
 %Find the maximum point of the gm derivative
@@ -95,7 +126,8 @@ TCM_data = zeros(length(Id(:, 1)), length(Vds));
 vth_TCM = zeros(length(Vds) , 1 );
 
 if(device_type=='P')
-    gm_copy=flipud(gm);
+    gm_copy=flipud(gm); %giusto fare flipud della gm?
+    %gm_copy=gm;
 else
     gm_copy=gm;
 end
@@ -138,7 +170,7 @@ for i=1:length(Vds)
     SDLM_derivata_2(:, i) = gradient(SDLM_derivata(:, i)) ./gradient(Vg(:, 1));
 end
 
-spuriousRemoved=[ones(20,7)*200; SDLM_derivata_2(21:end,:)]; % per bassi valori di Vgs (da -0.3 a -0.2) sostituiamo i valori 
+spuriousRemoved=[ones(20,length(Vds))*200; SDLM_derivata_2(21:end,:)]; % per bassi valori di Vgs (da -0.3 a -0.2) sostituiamo i valori 
 
 for i=1:length(Vds)
     SDLM_derivata_2_smooth(:, i) = smooth(spuriousRemoved(:,i));
@@ -158,6 +190,14 @@ Vth =  array2table([ Vds', (round(vth_RM , 6)) , round(vth_TCM, 6) , round(vth_S
 
 Vth = renamevars(Vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" , "Vth_RM", "Vth_TCM", "Vth_SDLM"]);
 
-writetable( Vth, NameFolder + "\Vth.txt",  "Delimiter","\t");
+charFile = char(File);
+
+if charFile(end-4) == '2'
+    nameFile = "\Vth-2.txt";
+else
+   nameFile = "\Vth.txt";
+end
+
+writetable( Vth, NameFolder + nameFile ,  "Delimiter","\t");
 
 clear Vth
