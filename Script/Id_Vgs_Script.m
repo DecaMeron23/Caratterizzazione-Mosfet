@@ -42,7 +42,7 @@ Id = [Id_2 , Id_1];
 Vds = [0:10:100, 150:150:900];
 
 % pulisco il Workspace
-% clear Id_1 Id_2 NUMERO_COLONNE_1 NUMERO_COLONNE_2 id_Vgs_completo_1 id_Vgs_completo_2 File1 File2 fp fileInFolder;
+clear Id_1 Id_2 NUMERO_COLONNE_1 NUMERO_COLONNE_2 id_Vgs_completo_1 id_Vgs_completo_2 File1 File2 fp fileInFolder;
 
 
 
@@ -205,8 +205,10 @@ end
 clear spuriousRemoved;
 
 %% Save File
+% verticalizzo Vds
+Vds_verticale = Vds';
 %creo una matrice contenente le Vth calcolate
-Vth =  array2table([ Vds', round(vth_RM , 6) , round(vth_TCM, 6) , round(vth_SDLM, 6)]);
+Vth =  array2table([Vds_verticale(2:end) , round(vth_RM(2:end) , 6) , round(vth_TCM(2:end), 6) , round(vth_SDLM(2:end), 6)]);
 %Rinonimo le intestazioni
 Vth = renamevars(Vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" , "Vth_RM", "Vth_TCM", "Vth_SDLM"]);
 %Salvo File nella cartella
