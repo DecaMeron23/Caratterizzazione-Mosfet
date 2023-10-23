@@ -161,8 +161,12 @@ end
 a = 1;
 b = (1/4) * ones(1,4);
 
-TCM_data_smooth = filter(b, a, TCM_data); % Filter -> Smooth delle alte frequenze dei dati grezzi
+% TCM_data_smooth = filter(b, a, TCM_data); % Filter -> Smooth delle alte frequenze dei dati grezzi
 
+for i=1:length(Vds)
+
+TCM_data_smooth(: , i) = smooth(TCM_data(: , i));
+end
 [ TCM_Max , TCM_Indice] = max(TCM_data_smooth); % "TCM_Max" valore massimo, "TCM_Indice" indice del valore massimo
 for i=1:length(Vds)
     vth_TCM(i, 1)= Vg(TCM_Indice(i)); % Vth_TCM è la Vgs corrispondente al massimo della derivata dGm/dVgs
