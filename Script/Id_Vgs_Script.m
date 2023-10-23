@@ -3,13 +3,24 @@
 %% inizializzazine
 clear; clc;
 
-
-File = input("Specificare in nome del file: " , "s"); % nome del file da caricare
-fp = dir(File);
-
-if isempty(fp)
-    error("Il file specificato non è stato trovato ( " + File + " )" );
+fp = dir();
+fileInFolder = {fp.name};
+if length(fileInFolder) <= 2
+    error("Cartella vuota...")
 end
+
+for i=3:length(fileInFolder)
+    disp((i-2) + ") " + fileInFolder(i));
+end
+
+indexFile = input("Selezionare il file: ");
+
+File = string(fileInFolder(indexFile + 2));
+
+
+% if isempty(fp)
+%     error("Il file specificato non è stato trovato ( " + File + " )" );
+% end
 
 NameFolder = fp.folder;
 [~ , Dispositivo] = fileparts(NameFolder);
@@ -17,20 +28,26 @@ NameFolder = fp.folder;
 id_Vgs_completo = readmatrix(File); % Carico il file
 
 % file composto da {Vg + (Id , Ig , Is , Iavdd , Igrd) * vd}
+% numero di colonne totali
 NUMERO_COLONNE = length(id_Vgs_completo(1 , :));
+%seleziono gli indici di colonna contenenti Id
 colonne_vg_id = 2:5:NUMERO_COLONNE;
-Id = id_Vgs_completo(: , colonne_vg_id); % seleziono solo le colonne con Id (al variare di Vds)
-Vg = id_Vgs_completo(: , 1); %seleziono le Vg
+% estraggo le colonne con Id
+Id = id_Vgs_completo(: , colonne_vg_id);
+% estraggo le Vg
+Vg = id_Vgs_completo(: , 1);
+
 clear colonne_vg_id id_Vgs_completo;
 
+%nome del dispositivo
 device_type = Dispositivo(1);
 
-% Valori di Vds in V
-if File == "id-vgs-2.txt"
-    Vds = 0:0.01:0.1;
+% Valori di Vds in mV
+if File == 'id-vgs-2.txt' || File == "id-vgs-2.txt"
+    Vds = 0:10:100;
 else
-    if File == "id-vgs.txt"
-        Vds = 0:0.15:0.9;
+    if File == 'id-vgs.txt' || File == "id-vgs.txt"
+        Vds = 0:150:900;
     end
 end
 
@@ -46,8 +63,12 @@ end
 
 figure
 plot(Vg , gm .* 1e3)
+
+% nome assi
 ylabel('$g_m$ [mS]','interpreter','latex')
 xlabel('$V_{gs}$ [V]','interpreter','latex')
+
+% titolo del plot
 title(device_type + " - $g_m$",'interpreter','latex')
 
 % creo la legenda
@@ -182,7 +203,7 @@ for i=1:length(Vds)
     vth_SDLM(i, 1) = Vg(SDLM_Indice(i));
 end
 
-clear SDLM_derivata spuriousRemoved;
+clear spuriousRemoved;
 
 %% Save File
 

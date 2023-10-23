@@ -6,7 +6,7 @@ clc
 
 % richiesta tipo di dati
 disp(Vds);
-valoreVds = input("Valore Di Vds tra quelli sopra indicati (in V): ");
+valoreVds = input("Valore Di Vds tra quelli sopra indicati (in mV): ");
 
 V_ds = find(Vds == valoreVds);
 

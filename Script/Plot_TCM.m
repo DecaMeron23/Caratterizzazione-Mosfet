@@ -4,11 +4,12 @@ clc;
 
 % richiesta tipo di dati
 disp(Vds);
-valoreVds = input("Valore Di Vds tra quelli sopra indicati (in V): ");
+valoreVds = input("Valore Di Vds tra quelli sopra indicati (in mV): ");
 
 V_ds = find(Vds == valoreVds);
 
 % Verifica se valoreVds è valido
+
 if isempty(V_ds)
     error("Valore di Vds non Valido");
 end
