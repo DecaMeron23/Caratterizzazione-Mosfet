@@ -45,7 +45,7 @@ xlabel('$V_{gs}$','interpreter','latex')
 legend("Real", "Fit"  , "$V_{th}$", "Location", "northwest" , "interpreter" , "latex");
 
 % aggiunta del titolo
-plot_title = device_type + " - Vds = " + string(Vds(V_ds)) + "v";
+plot_title = device_type + " - Vds = " + string(Vds(V_ds)) + "mV";
 title(plot_title);
 
 % impostazione limiti plot -> migliora la visualizzazione

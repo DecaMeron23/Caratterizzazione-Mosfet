@@ -74,7 +74,7 @@ title(device_type + " - $g_m$",'interpreter','latex')
 % creo la legenda
 
 for i = 1: length(Vds)
-    legend_text(i) = "Vds = " + (Vds(i)*1e3)+ " mV"; 
+    legend_text(i) = "Vds = " + (Vds(i))+ " mV"; 
 end
 
 if device_type == "N"
@@ -132,7 +132,7 @@ title(device_type + " - $\frac{I_d}{\sqrt{g_m}}/V_{gs}$",'interpreter','latex')
 % creo la legenda
 
 for i = 1: length(Vds)
-    legend_text(i) = "Vds = " + (Vds(i)*1e3)+ " mV"; 
+    legend_text(i) = "Vds = " + (Vds(i))+ " mV"; 
 end
 
 legend(legend_text,'Location','northwest')
@@ -141,14 +141,15 @@ clear legend_text GRADO dati_da_prendere RM_data_fit_y RM_data_fit_x SLOPE INTER
 
 %% Calculate threshold - Transconductance Change Method (TCM)
 %Find the maximum point of the gm derivative
+%valido per basse Vds
 
 % inizializzazione dei dati
 TCM_data = zeros(length(Id(:, 1)), length(Vds));
 vth_TCM = zeros(length(Vds) , 1 );
 
 if(device_type=='P')
-    gm_copy=flipud(gm); %giusto fare flipud della gm?
-    %gm_copy=gm;
+    % gm_copy=flipud(gm); %giusto fare flipud della gm? perchè poi noi andiamo a cercare il massimo 
+    gm_copy=gm;
 else
     gm_copy=gm;
 end
@@ -207,7 +208,7 @@ clear spuriousRemoved;
 
 %% Save File
 
-Vth =  array2table([ Vds', (round(vth_RM , 6)) , round(vth_TCM, 6) , round(vth_SDLM, 6)]);
+Vth =  array2table([ Vds', round(vth_RM , 6) , round(vth_TCM, 6) , round(vth_SDLM, 6)]);
 
 Vth = renamevars(Vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" , "Vth_RM", "Vth_TCM", "Vth_SDLM"]);
 

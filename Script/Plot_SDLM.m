@@ -43,7 +43,7 @@ if device_type == "P"
     xlim([0 , vth_SDLM(V_ds) + 0.2]);
 else
     if device_type == "N"
-        ylim([min(SDLM_derivata_2(: , V_ds)) - 10 , max(SDLM_derivata_2_smooth(: , V_ds)) + 10]);
+        ylim([min(SDLM_derivata_2(Vg > 0 , V_ds)) - 10 , max(SDLM_derivata_2_smooth(Vg > 0 , V_ds)) + 10]);
         xlim([vth_RM(V_ds) - 0.2 , max(Vg) + 0.1]);
     end
 end

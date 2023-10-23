@@ -1,4 +1,5 @@
 %% Plot TCM
+% valido per basse Vds
 
 clc;
 
@@ -26,6 +27,6 @@ hold off
 ylabel('$\frac{\mathrm{d} g_m}{\mathrm{d} V_{gs}}$' , 'Interpreter' ,'latex');
 xlabel("$V_{gs}$" , "Interpreter","latex");
 legend("Real" , "Smooth"  , "Punto Massimo", "Location","northwest");
-plot_title =  device_type + " - Vds = " + string(Vds(V_ds)) + "V";
+plot_title =  device_type + " - Vds = " + string(Vds(V_ds)) + "mV";
 title(plot_title);
 % xlim([-0.1 , 0.6])
