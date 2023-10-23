@@ -9,51 +9,46 @@ if length(fileInFolder) <= 2
     error("Cartella vuota...")
 end
 
-for i=3:length(fileInFolder)
-    disp((i-2) + ") " + fileInFolder(i));
-end
-
-indexFile = input("Selezionare il file: ");
-
-File = string(fileInFolder(indexFile + 2));
-
-
-% if isempty(fp)
-%     error("Il file specificato non è stato trovato ( " + File + " )" );
-% end
-
 NameFolder = fp.folder;
 [~ , Dispositivo] = fileparts(NameFolder);
 
-id_Vgs_completo = readmatrix(File); % Carico il file
-
-% file composto da {Vg + (Id , Ig , Is , Iavdd , Igrd) * vd}
-% numero di colonne totali
-NUMERO_COLONNE = length(id_Vgs_completo(1 , :));
-%seleziono gli indici di colonna contenenti Id
-colonne_vg_id = 2:5:NUMERO_COLONNE;
-% estraggo le colonne con Id
-Id = id_Vgs_completo(: , colonne_vg_id);
-% estraggo le Vg
-Vg = id_Vgs_completo(: , 1);
-
-clear colonne_vg_id id_Vgs_completo;
 
 %nome del dispositivo
 device_type = Dispositivo(1);
 
+File1 = "id-vgs.txt";
+File2 = "id-vgs-2.txt";
+
+% Carico i file
+id_Vgs_completo_1 = readmatrix(File1); 
+id_Vgs_completo_2 = readmatrix(File2);    
+% file composto da {Vg + (Id , Ig , Is , Iavdd , Igrd) * vd}
+% numero di colonne totali
+NUMERO_COLONNE_1 = length(id_Vgs_completo_1(1, :));
+NUMERO_COLONNE_2 = length(id_Vgs_completo_2(1, :));
+%seleziono gli indici di colonna contenenti Id (nel primo file non prendo
+%vd = 0)
+colonne_vg_id_1 = 7:5:NUMERO_COLONNE_1;
+colonne_vg_id_2 = 2:5:NUMERO_COLONNE_2;
+% estraggo le colonne con Id
+Id_1 = id_Vgs_completo_1(: , colonne_vg_id_1);
+Id_2 = id_Vgs_completo_2(: , colonne_vg_id_2);
+% estraggo le Vg (sono uguali per entrambi i file)
+Vg = id_Vgs_completo_1(: , 1);
+%faccio il merge dei file
+Id = [Id_2 , Id_1];
+
 % Valori di Vds in mV
-if File == 'id-vgs-2.txt' || File == "id-vgs-2.txt"
-    Vds = 0:10:100;
-else
-    if File == 'id-vgs.txt' || File == "id-vgs.txt"
-        Vds = 0:150:900;
-    end
-end
+Vds = [0:10:100, 150:150:900];
+
+% pulisco il Workspace
+% clear Id_1 Id_2 NUMERO_COLONNE_1 NUMERO_COLONNE_2 id_Vgs_completo_1 id_Vgs_completo_2 File1 File2 fp fileInFolder;
+
+
 
 %% Calcoliamo Gm
 
-gm = zeros(length(Vg),7);  % crea una matrice di zeri [righe = numero rilevazioni] e 7 colonne
+gm = zeros(length(Vg),length(Vds));  % crea una matrice di zeri [righe = numero rilevazioni] e 7 colonne
 
 incremento_Vg = abs(Vg(1) - Vg(2));
 
@@ -72,7 +67,6 @@ xlabel('$V_{gs}$ [V]','interpreter','latex')
 title(device_type + " - $g_m$",'interpreter','latex')
 
 % creo la legenda
-
 for i = 1: length(Vds)
     legend_text(i) = "Vds = " + (Vds(i))+ " mV"; 
 end
@@ -211,19 +205,9 @@ end
 clear spuriousRemoved;
 
 %% Save File
-
+%creo una matrice contenente le Vth calcolate
 Vth =  array2table([ Vds', round(vth_RM , 6) , round(vth_TCM, 6) , round(vth_SDLM, 6)]);
-
+%Rinonimo le intestazioni
 Vth = renamevars(Vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" , "Vth_RM", "Vth_TCM", "Vth_SDLM"]);
-
-charFile = char(File);
-
-if charFile(end-4) == '2'
-    nameFile = "\Vth-2.txt";
-else
-   nameFile = "\Vth.txt";
-end
-
-writetable( Vth, NameFolder + nameFile ,  "Delimiter","\t");
-
-clear Vth
+%Salvo File nella cartella
+writetable( Vth, "Vth.txt",  "Delimiter", "\t");
