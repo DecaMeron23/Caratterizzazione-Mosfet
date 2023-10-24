@@ -69,7 +69,7 @@ for i=1:length(Vds)
 end
 
 figure
-plot(Vg , gm1 .* 1e3)
+plot(Vg , gm .* 1e3)
 
 % nome assi
 ylabel('$g_m$ [mS]','interpreter','latex')
@@ -152,21 +152,20 @@ clear legend_text GRADO dati_da_prendere RM_data_fit_y RM_data_fit_x SLOPE INTER
 % inizializzazione dei dati
 TCM_data = zeros(length(Id(:, 1)), length(Vds));
 Vth_TCM = zeros(length(Vds) , 1 );
-Gm_Smooth = zeros(size(gm));
 TCM_data_smooth = zeros(size(gm));
 
 %smooth della Gm
 for i=1:length(Vds)
-    Gm_Smooth(:,i) = smooth(gm(: , i)); 
+    gm(:,i) = smooth(gm(: , i)); 
 end
 
 % se il dispositivo è un p specchiamo verticalmente la gm 
 if(device_type=='P')
-    Gm_Smooth = flipud(Gm_Smooth); %giusto fare flipud della gm? perchè poi noi andiamo a cercare il massimo 
+    gm = flipud(gm); % giusto fare flipud della gm? perchè poi noi andiamo a cercare il massimo 
 end
 
-for i=1:length(Vds)  % #modifica: per valori grandi di Vds -> tutti i valori di Vds
-    TCM_data(:,i) = gradient(Gm_Smooth(:,i))./gradient(Vg);
+for i=1:length(Vds)
+    TCM_data(:,i) = gradient(gm(:,i))./gradient(Vg);
 end
 
 % Smooth della derivata
@@ -183,7 +182,7 @@ for i=1:length(Vds)
     Vth_TCM(i, 1)= Vg(TCM_Indice(i));
 end
 
-clear a b Gm_Smooth;
+clear a b gm;
 
 %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
 
