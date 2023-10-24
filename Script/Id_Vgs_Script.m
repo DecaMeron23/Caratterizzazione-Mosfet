@@ -228,6 +228,17 @@ for i=1:length(Vds)
     vth_SDLM(i, 1) = Vg(SDLM_Indice(i));
 end
 
+grado = 3;
+coefficienti = zeros(length(Vds), grado+1);
+for i = 1:length(Vds)
+    intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
+    coefficienti(i,:) = polyfit(Vg(intervallo), Id(intervallo,i), grado);
+    grafico(i,:) = polyval(coefficienti(i,:), Vg(intervallo));
+end
+figure
+plot(Vg(intervallo),grafico(end,:))
+hold on
+plot(Vg(intervallo),SDLM_derivata_2_smooth(intervallo,end));
 clear spuriousRemoved;
 
 %% Save File
