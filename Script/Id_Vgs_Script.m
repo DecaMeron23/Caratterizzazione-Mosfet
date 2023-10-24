@@ -1,6 +1,6 @@
 % Calcolo Delle Vth con i metodo RM , TCM e SDLM
 
-%% inizializzazine
+%% inizializzazione
 clear; clc;
 
 fp = dir();
@@ -48,13 +48,19 @@ clear Id_1 Id_2 NUMERO_COLONNE_1 NUMERO_COLONNE_2 id_Vgs_completo_1 id_Vgs_compl
 
 %% Calcoliamo Gm
 
-gm = zeros(length(Vg),length(Vds));  % crea una matrice di zeri [righe = numero rilevazioni] e 7 colonne
-
-incremento_Vg = abs(Vg(1) - Vg(2));
+gm1 = zeros(size(id));
+gm2 = gm1;
 
 for i=1:length(Vds)
-    gm(:,i) = gradient(Id(:,i) , incremento_Vg);
+    gm1(:,i) = gradient(Id(:,i))/gradient(Vg(i));
 end
+
+for i=1:length(Vds)-1
+    gm2(:,i) = gradient(Id(:,i))/gradient(Vg(i+1));
+end
+
+
+gm = (g1+g2)./2;
 
 figure
 plot(Vg , gm .* 1e3)
