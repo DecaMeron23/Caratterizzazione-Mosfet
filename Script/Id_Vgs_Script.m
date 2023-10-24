@@ -48,7 +48,7 @@ clear Id_1 Id_2 NUMERO_COLONNE_1 NUMERO_COLONNE_2 id_Vgs_completo_1 id_Vgs_compl
 
 %% Calcoliamo Gm
 
-gm1 = zeros(size(id));
+gm1 = zeros(size(Id));
 gm2 = gm1;
 
 for i=1:length(Vds)
@@ -60,7 +60,7 @@ for i=1:length(Vds)-1
 end
 
 
-gm = (g1+g2)./2;
+gm = (gm1+gm2)./2;
 
 figure
 plot(Vg , gm .* 1e3)
@@ -102,7 +102,7 @@ else
         puntiFit = [0.6 0.9];
     end
 end
-dati_da_prendere = boolean((Vg >= puntiFit(1) ) & (Vg <= puntiFit(2)));
+dati_da_prendere = (Vg >= puntiFit(1) ) & (Vg <= puntiFit(2));
 RM_data_fit_y = RM_data(dati_da_prendere, : ); % selezioniamo i Vgs che servono per il fit (#modifica: "2:end" --> ":")
 RM_data_fit_x = Vg(dati_da_prendere); % selezioniamo le Vgs >= 0.6 e <= 0.9
 
@@ -182,27 +182,42 @@ clear a b Gm_Smooth;
 %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
 
 % inizzializzazione parametri
-SDLM_derivata = zeros(length(Vg(: , 1)) , length(Vds));
-SDLM_derivata_2 = zeros(length(Vg(: , 1 )) , length(Vds));
-vth_SDLM = zeros(length(Vds),1);
-SDLM_derivata_2_smooth = zeros(length(Vg(: , 1 )) , length(Vds));
+% vth_SDLM = zeros(length(Vds),1);
+% log_Id_smooth = zeros(size(Id));
+% SDLM_derivata_Smooth = log_Id_smooth;
+% SDLM_derivata_2_smooth = log_Id_smooth;
 
+% se il dispositivo è un p specchiamo verticalmente il log(Id) 
 if device_type == 'P'
-    for i=1:length(Vds)
-        SDLM_derivata(:, i) = gradient(log(flipud(abs(Id(:, i))))) ./ gradient((Vg)); 
-    end
+    log_Id = log(flipud(abs(Id)));
 else
-    for i=1:length(Vds)
-        SDLM_derivata(:, i) = gradient(log(abs(Id(:, i)))) ./gradient(Vg);
-    end
+    log_Id = log(abs(Id));
 end
-    
+
+%Eseguiamo lo smooth
 for i=1:length(Vds)
-    SDLM_derivata_2(:, i) = gradient(SDLM_derivata(:, i)) ./gradient(Vg(:, 1));
+    log_Id_smooth(: , i) = smooth(log_Id(: , i));
 end
 
-spuriousRemoved=[ones(20,length(Vds))*200; SDLM_derivata_2(21:end,:)]; % per bassi valori di Vgs (da -0.3 a -0.2) sostituiamo i valori 
+%Deriviamo rispetto Vgs
+for i = 1:length(Vds) 
+    SDLM_derivata(: , i) = gradient(log_Id_smooth(: , i)) ./ gradient(Vg);
+end
 
+%Eseguiamo lo smooth della derivata
+for i=1:length(Vds)
+    SDLM_derivata_Smooth(: , i) = smooth(SDLM_derivata(: , i));
+end
+
+%Deriviamo la seconda volta
+for i= 1:length(Vds)
+    SDLM_derivata_2(: , i) = gradient(SDLM_derivata(:,i)) ./ gradient(Vg);
+end
+
+% per bassi valori di Vgs (da -0.3 a -0.2) sostituiamo i valori 
+spuriousRemoved = [ones(20,length(Vds))*200; SDLM_derivata_2(21:end,:)]; 
+
+%Smooth della derivata seconda
 for i=1:length(Vds)
     SDLM_derivata_2_smooth(:, i) = smooth(spuriousRemoved(:,i));
 end
