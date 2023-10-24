@@ -228,17 +228,21 @@ for i=1:length(Vds)
     vth_SDLM(i, 1) = Vg(SDLM_Indice(i));
 end
 
-grado = 3;
+grado = 6;
 coefficienti = zeros(length(Vds), grado+1);
 for i = 1:length(Vds)
     intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
     coefficienti(i,:) = polyfit(Vg(intervallo), SDLM_derivata_2_smooth(intervallo,i), grado);
-    grafico(i,:) = polyval(coefficienti(i,:), Vg(intervallo));
+    grafico(:,i) = polyval(coefficienti(i,:), Vg(intervallo));
 end
+[min_grafico, ind_grafico] = min(grafico);
 figure
-plot(Vg(intervallo),grafico(end,:))
+plot(Vg(intervallo),grafico(:, end))
 hold on
 plot(Vg(intervallo),SDLM_derivata_2_smooth(intervallo,end));
+plot(Vg(intervallo(ind_grafico(end))) , min_grafico(end) , "o")
+xline(vth_SDLM(end),"--","Color","r");
+legend("Fit di grado "+grado, "SDLM", "Minimo del fit", "Minimo di SDLM");
 clear spuriousRemoved;
 
 %% Save File
