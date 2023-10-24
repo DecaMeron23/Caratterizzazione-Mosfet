@@ -29,7 +29,7 @@ NUMERO_COLONNE_2 = length(id_Vgs_completo_2(1, :));
 %seleziono gli indici di colonna contenenti Id (nel primo file non prendo
 %vd = 0)
 colonne_vg_id_1 = 7:5:NUMERO_COLONNE_1;
-colonne_vg_id_2 = 2:5:NUMERO_COLONNE_2;
+colonne_vg_id_2 = 7:5:NUMERO_COLONNE_2;
 % estraggo le colonne con Id
 Id_1 = id_Vgs_completo_1(: , colonne_vg_id_1);
 Id_2 = id_Vgs_completo_2(: , colonne_vg_id_2);
@@ -39,7 +39,7 @@ Vg = id_Vgs_completo_1(: , 1);
 Id = [Id_2 , Id_1];
 
 % Valori di Vds in mV
-Vds = [0:10:100, 150:150:900];
+Vds = [10:10:100, 150:150:900];
 
 % pulisco il Workspace
 clear Id_1 Id_2 NUMERO_COLONNE_1 NUMERO_COLONNE_2 id_Vgs_completo_1 id_Vgs_completo_2 File1 File2 fp fileInFolder;
@@ -145,34 +145,39 @@ clear legend_text GRADO dati_da_prendere RM_data_fit_y RM_data_fit_x SLOPE INTER
 
 % inizializzazione dei dati
 TCM_data = zeros(length(Id(:, 1)), length(Vds));
-vth_TCM = zeros(length(Vds) , 1 );
+Vth_TCM = zeros(length(Vds) , 1 );
+Gm_Smooth = zeros(size(gm));
+TCM_data_smooth = zeros(size(gm));
 
+%smooth della Gm
+for i=1:length(Vds)
+    Gm_Smooth(:,i) = smooth(gm(: , i)); 
+end
+
+% se il dispositivo è un p specchiamo verticalmente la gm 
 if(device_type=='P')
-    % gm_copy=flipud(gm); %giusto fare flipud della gm? perchè poi noi andiamo a cercare il massimo 
-    gm_copy=gm;
-else
-    gm_copy=gm;
+    Gm_Smooth = flipud(Gm_Smooth); %giusto fare flipud della gm? perchè poi noi andiamo a cercare il massimo 
 end
 
 for i=1:length(Vds)  % #modifica: per valori grandi di Vds -> tutti i valori di Vds
-    TCM_data(:,i) = gradient(gm_copy(:,i))./gradient(Vg(:,1));
+    TCM_data(:,i) = gradient(Gm_Smooth(:,i))./gradient(Vg);
 end
 
-a = 1;
-b = (1/4) * ones(1,4);
-
-% TCM_data_smooth = filter(b, a, TCM_data); % Filter -> Smooth delle alte frequenze dei dati grezzi
-
+% Smooth della derivata
 for i=1:length(Vds)
-
-TCM_data_smooth(: , i) = smooth(TCM_data(: , i));
+    TCM_data_smooth(: , i) = smooth(TCM_data(: , i));
 end
-[ TCM_Max , TCM_Indice] = max(TCM_data_smooth); % "TCM_Max" valore massimo, "TCM_Indice" indice del valore massimo
+
+%prendiamo il massimo e l'indice del massimo per ogni Vds
+[TCM_Max , TCM_Indice] = max(TCM_data_smooth); % "TCM_Max" valore massimo, "TCM_Indice" indice del valore massimo
+
+% Estraiamo la Vth come il valore corrispondente di Vgs nel punto massimo
+% della Derivata di Gm rispetto Vgs
 for i=1:length(Vds)
-    vth_TCM(i, 1)= Vg(TCM_Indice(i)); % Vth_TCM è la Vgs corrispondente al massimo della derivata dGm/dVgs
+    Vth_TCM(i, 1)= Vg(TCM_Indice(i));
 end
 
-clear a b gm_copy;
+clear a b Gm_Smooth;
 
 %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
 
@@ -214,7 +219,7 @@ clear spuriousRemoved;
 % verticalizzo Vds
 Vds_verticale = Vds';
 %creo una matrice contenente le Vth calcolate
-Vth =  array2table([Vds_verticale(2:end) , round(vth_RM(2:end) , 6) , round(vth_TCM(2:end), 6) , round(vth_SDLM(2:end), 6)]);
+Vth =  array2table([Vds_verticale(2:end) , round(vth_RM(2:end) , 6) , round(Vth_TCM(2:end), 6) , round(vth_SDLM(2:end), 6)]);
 %Rinonimo le intestazioni
 Vth = renamevars(Vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" , "Vth_RM", "Vth_TCM", "Vth_SDLM"]);
 %Salvo File nella cartella
