@@ -52,18 +52,24 @@ gm1 = zeros(size(Id));
 gm2 = gm1;
 
 for i=1:length(Vds)
-    gm1(:,i) = gradient(Id(:,i))/gradient(Vg(i));
+    gm1(:,i) = gradient(Id(:,i))./gradient(Vg);
 end
 
-for i=1:length(Vds)-1
-    gm2(:,i) = gradient(Id(:,i))/gradient(Vg(i+1));
+for i=1:length(Vds)
+    gm2(2:end,i) = gradient(Id(1:end-1,i))./gradient(Vg(2:end));
 end
 
+gm2(1,:) = gm1(1,:);
 
-gm = (gm1+gm2)./2;
+
+gm = (gm1+gm2)/2;
+
+for i=1:length(Vds)
+    gm(:,i) = smooth(gm(:,i));
+end
 
 figure
-plot(Vg , gm .* 1e3)
+plot(Vg , gm1 .* 1e3)
 
 % nome assi
 ylabel('$g_m$ [mS]','interpreter','latex')
