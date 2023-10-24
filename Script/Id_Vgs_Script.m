@@ -48,22 +48,28 @@ clear Id_1 Id_2 NUMERO_COLONNE_1 NUMERO_COLONNE_2 id_Vgs_completo_1 id_Vgs_compl
 
 %% Calcoliamo Gm
 
-gm1 = zeros(size(id));
+gm1 = zeros(size(Id));
 gm2 = gm1;
 
 for i=1:length(Vds)
-    gm1(:,i) = gradient(Id(:,i))/gradient(Vg(i));
+    gm1(:,i) = gradient(Id(:,i))./gradient(Vg);
 end
 
-for i=1:length(Vds)-1
-    gm2(:,i) = gradient(Id(:,i))/gradient(Vg(i+1));
+for i=1:length(Vds)
+    gm2(2:end,i) = gradient(Id(1:end-1,i))./gradient(Vg(2:end));
 end
 
+gm2(1,:) = gm1(1,:);
 
-gm = (g1+g2)./2;
+
+gm = (gm1+gm2)/2;
+
+for i=1:length(Vds)
+    gm(:,i) = smooth(gm(:,i));
+end
 
 figure
-plot(Vg , gm .* 1e3)
+plot(Vg , gm1 .* 1e3)
 
 % nome assi
 ylabel('$g_m$ [mS]','interpreter','latex')
@@ -102,7 +108,7 @@ else
         puntiFit = [0.6 0.9];
     end
 end
-dati_da_prendere = boolean((Vg >= puntiFit(1) ) & (Vg <= puntiFit(2)));
+dati_da_prendere = (Vg >= puntiFit(1) ) & (Vg <= puntiFit(2));
 RM_data_fit_y = RM_data(dati_da_prendere, : ); % selezioniamo i Vgs che servono per il fit (#modifica: "2:end" --> ":")
 RM_data_fit_x = Vg(dati_da_prendere); % selezioniamo le Vgs >= 0.6 e <= 0.9
 
