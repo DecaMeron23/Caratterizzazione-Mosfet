@@ -154,11 +154,6 @@ TCM_data = zeros(length(Id(:, 1)), length(Vds));
 Vth_TCM = zeros(length(Vds) , 1 );
 TCM_data_smooth = zeros(size(gm));
 
-%smooth della Gm
-for i=1:length(Vds)
-    gm(:,i) = smooth(gm(: , i)); 
-end
-
 % se il dispositivo è un p specchiamo verticalmente la gm 
 if(device_type=='P')
     gm = flipud(gm); % giusto fare flipud della gm? perchè poi noi andiamo a cercare il massimo 
