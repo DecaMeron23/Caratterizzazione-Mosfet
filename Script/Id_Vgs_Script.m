@@ -92,57 +92,57 @@ end
 
 clear incremento_Vg legend_text
 
-%% Calculate threshold - Ratio Method (RM)
-
-RM_data = abs(Id) ./ sqrt(abs(gm));
-RM_fitLineare = zeros(length(Vds), 2);
-
-if device_type == "P"
-    RM_data = flipud(RM_data); % è giusto far il flipud dei dati? le Vth
-    % si sballano tutti
-    puntiFit = [1 1.2];
-    % puntiFit = [0 0.3];
-else
-    if device_type == "N"
-        puntiFit = [0.6 0.9];
-    end
-end
-dati_da_prendere = (Vg >= puntiFit(1) ) & (Vg <= puntiFit(2));
-RM_data_fit_y = RM_data(dati_da_prendere, : ); % selezioniamo i Vgs che servono per il fit (#modifica: "2:end" --> ":")
-RM_data_fit_x = Vg(dati_da_prendere); % selezioniamo le Vgs >= 0.6 e <= 0.9
-
-% definizione gado del polnomio del fit
-GRADO = 1;
-
-for i=1:length(Vds)
-    RM_fitLineare(i,:) = polyfit(RM_data_fit_x, RM_data_fit_y(:,i), GRADO); % facciamo il fit lineare di grado 1 di rm_data_fit_x e y
-end
-
-%Now matrix P contains the fit of the linear region of the curve; Column 1
-%contains the slope, column 2 contains the y-axis intercept
-% Dichiarazione Costanti
-SLOPE = 1;
-INTERCEPT = 2;
-
-%Solve for y = 0 to find the x-axis intercept
-vth_RM = -RM_fitLineare(:,INTERCEPT) ./ RM_fitLineare (:,SLOPE);
-
-% Plot
-figure
-plot(Vg, RM_data);
-ylabel('$\frac{I_d}{\sqrt{g_m}}$ [A$\cdot V$]','interpreter','latex')
-xlabel('$V_{gs}$ [V]','interpreter','latex')
-title(device_type + " - $\frac{I_d}{\sqrt{g_m}}/V_{gs}$",'interpreter','latex')
-
-% creo la legenda
-
-for i = 1: length(Vds)
-    legend_text(i) = "Vds = " + (Vds(i))+ " mV"; 
-end
-
-legend(legend_text,'Location','northwest')
-
-clear legend_text GRADO dati_da_prendere RM_data_fit_y RM_data_fit_x SLOPE INTERCEPT;
+% %% Calculate threshold - Ratio Method (RM)
+% 
+% RM_data = abs(Id) ./ sqrt(abs(gm));
+% RM_fitLineare = zeros(length(Vds), 2);
+% 
+% if device_type == "P"
+%     RM_data = flipud(RM_data); % è giusto far il flipud dei dati? le Vth
+%     % si sballano tutti
+%     puntiFit = [1 1.2];
+%     % puntiFit = [0 0.3];
+% else
+%     if device_type == "N"
+%         puntiFit = [0.6 0.9];
+%     end
+% end
+% dati_da_prendere = (Vg >= puntiFit(1) ) & (Vg <= puntiFit(2));
+% RM_data_fit_y = RM_data(dati_da_prendere, : ); % selezioniamo i Vgs che servono per il fit (#modifica: "2:end" --> ":")
+% RM_data_fit_x = Vg(dati_da_prendere); % selezioniamo le Vgs >= 0.6 e <= 0.9
+% 
+% % definizione gado del polnomio del fit
+% GRADO = 1;
+% 
+% for i=1:length(Vds)
+%     RM_fitLineare(i,:) = polyfit(RM_data_fit_x, RM_data_fit_y(:,i), GRADO); % facciamo il fit lineare di grado 1 di rm_data_fit_x e y
+% end
+% 
+% %Now matrix P contains the fit of the linear region of the curve; Column 1
+% %contains the slope, column 2 contains the y-axis intercept
+% % Dichiarazione Costanti
+% SLOPE = 1;
+% INTERCEPT = 2;
+% 
+% %Solve for y = 0 to find the x-axis intercept
+% vth_RM = -RM_fitLineare(:,INTERCEPT) ./ RM_fitLineare (:,SLOPE);
+% 
+% % Plot
+% figure
+% plot(Vg, RM_data);
+% ylabel('$\frac{I_d}{\sqrt{g_m}}$ [A$\cdot V$]','interpreter','latex')
+% xlabel('$V_{gs}$ [V]','interpreter','latex')
+% title(device_type + " - $\frac{I_d}{\sqrt{g_m}}/V_{gs}$",'interpreter','latex')
+% 
+% % creo la legenda
+% 
+% for i = 1: length(Vds)
+%     legend_text(i) = "Vds = " + (Vds(i))+ " mV"; 
+% end
+% 
+% legend(legend_text,'Location','northwest')
+% 
+% clear legend_text GRADO dati_da_prendere RM_data_fit_y RM_data_fit_x SLOPE INTERCEPT;
 
 %% Calculate threshold - Transconductance Change Method (TCM)
 %Find the maximum point of the gm derivative
@@ -167,14 +167,10 @@ for i=1:length(Vds)
     TCM_data_smooth(: , i) = smooth(TCM_data(: , i));
 end
 
-%prendiamo il massimo e l'indice del massimo per ogni Vds
-[TCM_Max , TCM_Indice] = max(TCM_data_smooth); % "TCM_Max" valore massimo, "TCM_Indice" indice del valore massimo
+%prendiamo l'indice del massimo per ogni Vds
+[ ~ , TCM_Indice] = max(TCM_data_smooth(1:201,:)); % "TCM_Max" valore massimo, "TCM_Indice" indice del valore massimo
 
-% Estraiamo la Vth come il valore corrispondente di Vgs nel punto massimo
-% della Derivata di Gm rispetto Vgs
-for i=1:length(Vds)
-    Vth_TCM(i, 1)= Vg(TCM_Indice(i));
-end
+
 
 clear a b gm;
 
