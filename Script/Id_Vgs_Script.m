@@ -177,22 +177,33 @@ end
 grado = 6; % grado della polinomiale
 coefficienti = zeros(length(Vds), grado+1);
 for i = 1:length(Vds)
-    intervallo = TCM_Indice(i)-20 : TCM_Indice(i)+20;
-    intervallo_alta_ris = Vg(intervallo(1)):0.0001:Vg(intervallo(end));
-    coefficienti(i,:) = polyfit(Vg(intervallo), TCM_data(intervallo,i), grado);
+    indici_intervallo = TCM_Indice(i)-20 : TCM_Indice(i)+20;
+    intervallo_alta_ris = Vg(indici_intervallo(1)):0.0001:Vg(indici_intervallo(end));
+    coefficienti(i,:) = polyfit(Vg(indici_intervallo), TCM_data(indici_intervallo,i), grado);
     grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
+    % se Vds = 10mv (i == 1) teniamo gli intervalli per fare il grafico
+    % dopo il for
+    if(i == 1)
+        intervallo_vds_10mv = indici_intervallo;
+        intervallo_vds_10mv_alta_ris = intervallo_alta_ris;
+    end
 end
-[Vth_TCM, ind_grafico] = max(grafico); %massimo della polinomiale
+[max_grafico, ind_grafico] = max(grafico); %massimo della polinomiale
+
+for i=1:length(Vds)
+    Vth_TCM(i) = intervallo_vds_10mv_alta_ris(ind_grafico(i));
+end
+
 figure
 hold on
 title("TCM")
-plot(Vg(intervallo),TCM_data(intervallo,1)); %grafico dati
+plot(Vg(intervallo_vds_10mv),TCM_data(intervallo_vds_10mv,1)); %grafico dati
 xline(Vth_data_TCM(1),"--","Color","r");  %Vth dati
-plot(intervallo_alta_ris,grafico(:, 1)); %grafico polinomiale
-plot(intervallo_alta_ris(ind_grafico(1)) , Vth_TCM(1) , "o") %minimo della polinomiale (Vth)
+plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
+plot(Vth_TCM(1) , max_grafico(1) , "o") %minimo della polinomiale (Vth)
 legend("SDLM","Massimo di TCM","Fit di grado "+grado, "Massimo del fit")
 
-clear a b gm;
+clear a b gm indici_intervallo;
 
 %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
 
@@ -248,19 +259,24 @@ end
 grado = 6; % grado della polinomiale
 coefficienti = zeros(length(Vds), grado+1);
 for i = 1:length(Vds)
-    intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
-    intervallo_alta_ris = Vg(intervallo(1)):0.0001:Vg(intervallo(end));
-    coefficienti(i,:) = polyfit(Vg(intervallo), SDLM_derivata_2(intervallo,i), grado);
+    indici_intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
+    intervallo_alta_ris = Vg(indici_intervallo(1)):0.0001:Vg(indici_intervallo(end));
+    coefficienti(i,:) = polyfit(Vg(indici_intervallo), SDLM_derivata_2(indici_intervallo,i), grado);
     grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
 end
-[Vth_SDLM, ind_grafico] = min(grafico); %minimo della polinomiale
+[min_grafico, ind_grafico] = min(grafico); %minimo della polinomiale
+
+for i=1:length(Vds)
+    Vth_SDLM(i) = intervallo_alta_ris(ind_grafico(i));
+end
+
 figure
 hold on
 title("SDLM")
-plot(Vg(intervallo),SDLM_derivata_2(intervallo,end)) %grafico dati
+plot(Vg(indici_intervallo),SDLM_derivata_2(indici_intervallo,end)) %grafico dati
 xline(Vth_data_SDLM(end),"--","Color","r"); %Vth dati
-plot(intervallo_alta_ris,grafico(:, end)); %grafico polinomiale
-plot(intervallo_alta_ris(ind_grafico(end)) , Vth_SDLM(end) , "o") %minimo della polinomiale (Vth)
+plot(intervallo_alta_ris, grafico(:, end)); %grafico polinomiale
+plot(Vth_SDLM(end) , min_grafico(end) , "o") %minimo della polinomiale (Vth)
 legend( "SDLM", "Minimo di SDLM", "Fit di grado "+grado, "Minimo del fit");
 clear spuriousRemoved;
 
@@ -268,8 +284,18 @@ clear spuriousRemoved;
 % verticalizzo Vds
 Vds_verticale = Vds';
 %creo una matrice contenente le Vth calcolate
-Vth =  array2table([Vds_verticale , round(Vth_TCM', 6) , round(Vth_SDLM',  6)]);
+Vth =  array2table([Vds_verticale , round(Vth_TCM' , 6) , round(Vth_SDLM' , 6)]);
 %Rinonimo le intestazioni
 Vth = renamevars(Vth , ["Var1", "Var2", "Var3"] , ["Vd" , "Vth_TCM", "Vth_SDLM"]);
+
+cd ..
+
+ if ~exist("~\Vth")
+    mkdir("Vth");
+ end
+ cd Vth;
+
 %Salvo File nella cartella
-writetable( Vth, "Vth.txt",  "Delimiter", "\t");
+writetable( Vth, "Vth_"+ Dispositivo + ".txt",  "Delimiter", "\t");
+
+% ci muoviamo nella prossima cartella da analizzare
