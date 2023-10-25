@@ -150,8 +150,7 @@ clear incremento_Vg legend_text
 
 % inizializzazione dei dati
 TCM_data = zeros(length(Id(:, 1)), length(Vds));
-Vth_TCM = zeros(length(Vds) , 1 );
-TCM_data_smooth = zeros(size(gm));
+Vth_data_TCM = zeros(length(Vds) , 1 );
 
 % se il dispositivo è un p specchiamo verticalmente la gm 
 if(device_type=='P')
@@ -164,13 +163,34 @@ end
 
 % Smooth della derivata
 for i=1:length(Vds)
-    TCM_data_smooth(: , i) = smooth(TCM_data(: , i));
+    TCM_data(: , i) = smooth(TCM_data(: , i));
 end
 
-%prendiamo l'indice del massimo per ogni Vds
-[ ~ , TCM_Indice] = max(TCM_data_smooth(1:201,:)); % "TCM_Max" valore massimo, "TCM_Indice" indice del valore massimo
+[TCM_Max, TCM_Indice] = max(TCM_data(1:201,:)); % valore e indice massimo di di TCM per Vgs<=700mV
 
+for i=1:length(Vds)
+    Vth_data_TCM(i, 1) = Vg(TCM_Indice(i));
+end
 
+%Calcolo del massimo della funzione polinomiale che interpola i punti 
+% in un intorno di Vth calcolata con TCM a Vgs = 10 mV e di raggio 100 mV
+grado = 6; % grado della polinomiale
+coefficienti = zeros(length(Vds), grado+1);
+for i = 1:length(Vds)
+    intervallo = TCM_Indice(i)-20 : TCM_Indice(i)+20;
+    intervallo_alta_ris = Vg(intervallo(1)):0.0001:Vg(intervallo(end));
+    coefficienti(i,:) = polyfit(Vg(intervallo), TCM_data(intervallo,i), grado);
+    grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
+end
+[Vth_TCM, ind_grafico] = max(grafico); %massimo della polinomiale
+figure
+hold on
+title("TCM")
+plot(Vg(intervallo),TCM_data(intervallo,1)); %grafico dati
+xline(Vth_data_TCM(1),"--","Color","r");  %Vth dati
+plot(intervallo_alta_ris,grafico(:, 1)); %grafico polinomiale
+plot(intervallo_alta_ris(ind_grafico(1)) , Vth_TCM(1) , "o") %minimo della polinomiale (Vth)
+legend("SDLM","Massimo di TCM","Fit di grado "+grado, "Massimo del fit")
 
 clear a b gm;
 
@@ -201,7 +221,7 @@ end
 
 %Eseguiamo lo smooth della derivata
 for i=1:length(Vds)
-    SDLM_derivata_Smooth(: , i) = smooth(SDLM_derivata(: , i));
+    SDLM_derivata(: , i) = smooth(SDLM_derivata(: , i));
 end
 
 %Deriviamo la seconda volta
@@ -214,13 +234,13 @@ spuriousRemoved = [ones(20,length(Vds))*200; SDLM_derivata_2(21:end,:)];
 
 %Smooth della derivata seconda
 for i=1:length(Vds)
-    SDLM_derivata_2_smooth(:, i) = smooth(spuriousRemoved(:,i));
+    SDLM_derivata_2(:, i) = smooth(spuriousRemoved(:,i));
 end
 
-[SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2_smooth); % #modifica: SDLM_derivata_2 --> SDLM_derivata_2_smooth
+[SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2); % #modifica: SDLM_derivata_2 --> SDLM_derivata_2_smooth
 
 for i=1:length(Vds)
-    vth_SDLM(i, 1) = Vg(SDLM_Indice(i));
+    Vth_data_SDLM(i, 1) = Vg(SDLM_Indice(i));
 end
 
 %Calcolo del minimo della funzione polinomiale che interpola i punti 
@@ -230,25 +250,26 @@ coefficienti = zeros(length(Vds), grado+1);
 for i = 1:length(Vds)
     intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
     intervallo_alta_ris = Vg(intervallo(1)):0.0001:Vg(intervallo(end));
-    coefficienti(i,:) = polyfit(Vg(intervallo), SDLM_derivata_2_smooth(intervallo,i), grado);
+    coefficienti(i,:) = polyfit(Vg(intervallo), SDLM_derivata_2(intervallo,i), grado);
     grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
 end
-[min_grafico, ind_grafico] = min(grafico); %minimo della polinomiale
+[Vth_SDLM, ind_grafico] = min(grafico); %minimo della polinomiale
 figure
-plot(intervallo_alta_ris,grafico(:, end));
 hold on
-plot(Vg(intervallo),SDLM_derivata_2_smooth(intervallo,end));
-plot(intervallo_alta_ris(ind_grafico(end)) , min_grafico(end) , "o")
-xline(vth_SDLM(end),"--","Color","r");
-legend("Fit di grado "+grado, "SDLM", "Minimo del fit", "Minimo di SDLM");
+title("SDLM")
+plot(Vg(intervallo),SDLM_derivata_2(intervallo,end)) %grafico dati
+xline(Vth_data_SDLM(end),"--","Color","r"); %Vth dati
+plot(intervallo_alta_ris,grafico(:, end)); %grafico polinomiale
+plot(intervallo_alta_ris(ind_grafico(end)) , Vth_SDLM(end) , "o") %minimo della polinomiale (Vth)
+legend( "SDLM", "Minimo di SDLM", "Fit di grado "+grado, "Minimo del fit");
 clear spuriousRemoved;
 
 %% Save File
 % verticalizzo Vds
 Vds_verticale = Vds';
 %creo una matrice contenente le Vth calcolate
-Vth =  array2table([Vds_verticale , round(vth_RM , 6) , round(Vth_TCM, 6) , round(vth_SDLM,  6)]);
+Vth =  array2table([Vds_verticale , round(vth_TCM, 6) , round(Vth_SDLM,  6)]);
 %Rinonimo le intestazioni
-Vth = renamevars(Vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" , "Vth_RM", "Vth_TCM", "Vth_SDLM"]);
+Vth = renamevars(Vth , ["Var1", "Var2", "Var3"] , ["Vd" , "Vth_TCM", "Vth_SDLM"]);
 %Salvo File nella cartella
 writetable( Vth, "Vth.txt",  "Delimiter", "\t");
