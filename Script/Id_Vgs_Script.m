@@ -268,7 +268,7 @@ clear spuriousRemoved;
 % verticalizzo Vds
 Vds_verticale = Vds';
 %creo una matrice contenente le Vth calcolate
-Vth =  array2table([Vds_verticale , round(vth_TCM, 6) , round(Vth_SDLM,  6)]);
+Vth =  array2table([Vds_verticale , round(Vth_TCM', 6) , round(Vth_SDLM',  6)]);
 %Rinonimo le intestazioni
 Vth = renamevars(Vth , ["Var1", "Var2", "Var3"] , ["Vd" , "Vth_TCM", "Vth_SDLM"]);
 %Salvo File nella cartella
