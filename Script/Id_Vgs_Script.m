@@ -228,17 +228,17 @@ for i=1:length(Vds)
 end
 
 %Calcolo del minimo della funzione polinomiale che interpola i punti 
-% in un intorno di raggio 100 mV e centro Vth calcolata con SDLM a Vgs = 900 mV
+% in un intorno di Vth calcolata con SDLM a Vgs = 900 mV e di raggio 100 mV
 grado = 6; % grado della polinomiale
 coefficienti = zeros(length(Vds), grado+1);
 for i = 1:length(Vds)
     intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
     coefficienti(i,:) = polyfit(Vg(intervallo), SDLM_derivata_2_smooth(intervallo,i), grado);
-    grafico(:,i) = polyval(coefficienti(i,:), Vg(intervallo));
+    grafico(:,i) = polyval(coefficienti(i,:), Vg(intervallo(1)):0.0001:Vg(intervallo(end)));
 end
 [min_grafico, ind_grafico] = min(grafico); %minimo della polinomiale
 figure
-plot(Vg(intervallo),grafico(:, end))
+plot(Vg(intervallo(1)):0.0001:Vg(intervallo(end)),grafico(:, end))
 hold on
 plot(Vg(intervallo),SDLM_derivata_2_smooth(intervallo,end));
 plot(Vg(intervallo(ind_grafico(end))) , min_grafico(end) , "o")
