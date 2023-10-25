@@ -55,12 +55,11 @@ for i=1:length(Vds)
     gm1(:,i) = gradient(Id(:,i))./gradient(Vg);
 end
 
+gm2(1,:) = gm1(1,:);
+
 for i=1:length(Vds)
     gm2(2:end,i) = gradient(Id(1:end-1,i))./gradient(Vg(2:end));
 end
-
-gm2(1,:) = gm1(1,:);
-
 
 gm = (gm1+gm2)/2;
 
@@ -228,14 +227,16 @@ for i=1:length(Vds)
     vth_SDLM(i, 1) = Vg(SDLM_Indice(i));
 end
 
-grado = 6;
+%Calcolo del minimo della funzione polinomiale che interpola i punti 
+% in un intorno di raggio 100 mV e centro Vth calcolata con SDLM a Vgs = 900 mV
+grado = 6; % grado della polinomiale
 coefficienti = zeros(length(Vds), grado+1);
 for i = 1:length(Vds)
     intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
     coefficienti(i,:) = polyfit(Vg(intervallo), SDLM_derivata_2_smooth(intervallo,i), grado);
     grafico(:,i) = polyval(coefficienti(i,:), Vg(intervallo));
 end
-[min_grafico, ind_grafico] = min(grafico);
+[min_grafico, ind_grafico] = min(grafico); %minimo della polinomiale
 figure
 plot(Vg(intervallo),grafico(:, end))
 hold on
