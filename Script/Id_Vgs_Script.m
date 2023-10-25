@@ -233,15 +233,16 @@ grado = 6; % grado della polinomiale
 coefficienti = zeros(length(Vds), grado+1);
 for i = 1:length(Vds)
     intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
+    intervallo_alta_ris = Vg(intervallo(1)):0.0001:Vg(intervallo(end));
     coefficienti(i,:) = polyfit(Vg(intervallo), SDLM_derivata_2_smooth(intervallo,i), grado);
-    grafico(:,i) = polyval(coefficienti(i,:), Vg(intervallo(1)):0.0001:Vg(intervallo(end)));
+    grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
 end
 [min_grafico, ind_grafico] = min(grafico); %minimo della polinomiale
 figure
-plot(Vg(intervallo(1)):0.0001:Vg(intervallo(end)),grafico(:, end))
+plot(intervallo_alta_ris,grafico(:, end));
 hold on
 plot(Vg(intervallo),SDLM_derivata_2_smooth(intervallo,end));
-plot(Vg(intervallo(ind_grafico(end))) , min_grafico(end) , "o")
+plot(intervallo_alta_ris(ind_grafico(end)) , min_grafico(end) , "o")
 xline(vth_SDLM(end),"--","Color","r");
 legend("Fit di grado "+grado, "SDLM", "Minimo del fit", "Minimo di SDLM");
 clear spuriousRemoved;
@@ -250,7 +251,7 @@ clear spuriousRemoved;
 % verticalizzo Vds
 Vds_verticale = Vds';
 %creo una matrice contenente le Vth calcolate
-Vth =  array2table([Vds_verticale(2:end) , round(vth_RM(2:end) , 6) , round(Vth_TCM(2:end), 6) , round(vth_SDLM(2:end), 6)]);
+Vth =  array2table([Vds_verticale , round(vth_RM , 6) , round(Vth_TCM, 6) , round(vth_SDLM,  6)]);
 %Rinonimo le intestazioni
 Vth = renamevars(Vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" , "Vth_RM", "Vth_TCM", "Vth_SDLM"]);
 %Salvo File nella cartella
