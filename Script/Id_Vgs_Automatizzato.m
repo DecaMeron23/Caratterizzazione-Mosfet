@@ -9,6 +9,8 @@ if length(fileInFolder) <= 2
     error("Cartella vuota...")
 end
 
+
+
 NameFolder = fp.folder;
 [~ , Dispositivo] = fileparts(NameFolder);
 
@@ -18,6 +20,10 @@ device_type = Dispositivo(1);
 
 File1 = "id-vgs.txt";
 File2 = "id-vgs-2.txt";
+
+if ~exist(File1) && ~exist(File2)
+    error(File1  + " e " + File2 + " non esiste")
+end
 
 % Carico i file
 id_Vgs_completo_1 = readmatrix(File1); 
@@ -55,12 +61,11 @@ for i=1:length(Vds)
     gm1(:,i) = gradient(Id(:,i))./gradient(Vg);
 end
 
+gm2(1,:) = gm1(1,:);
+
 for i=1:length(Vds)
     gm2(2:end,i) = gradient(Id(1:end-1,i))./gradient(Vg(2:end));
 end
-
-gm2(1,:) = gm1(1,:);
-
 
 gm = (gm1+gm2)/2;
 
@@ -68,41 +73,82 @@ for i=1:length(Vds)
     gm(:,i) = smooth(gm(:,i));
 end
 
-%% Calculate threshold - Ratio Method (RM)
+figure
+plot(Vg , gm .* 1e3)
 
-RM_data = abs(Id) ./ sqrt(abs(gm));
-RM_fitLineare = zeros(length(Vds), 2);
+% nome assi
+ylabel('$g_m$ [mS]','interpreter','latex')
+xlabel('$V_{gs}$ [V]','interpreter','latex')
 
-if device_type == "P"
-    RM_data = flipud(RM_data); % è giusto far il flipud dei dati? le Vth
-    % si sballano tutti
-    puntiFit = [1 1.2];
-    % puntiFit = [0 0.3];
+% titolo del plot
+title(device_type + " - $g_m$",'interpreter','latex')
+
+% creo la legenda
+for i = 1: length(Vds)
+    legend_text(i) = "Vds = " + (Vds(i))+ " mV"; 
+end
+
+if device_type == "N"
+    legend(legend_text,'Location','northwest')
 else
-    if device_type == "N"
-        puntiFit = [0.6 0.9];
+    if device_type == "P"
+    legend(legend_text,'Location','southeast') 
     end
 end
-dati_da_prendere = (Vg >= puntiFit(1) ) & (Vg <= puntiFit(2));
-RM_data_fit_y = RM_data(dati_da_prendere, : ); % selezioniamo i Vgs che servono per il fit (#modifica: "2:end" --> ":")
-RM_data_fit_x = Vg(dati_da_prendere); % selezioniamo le Vgs >= 0.6 e <= 0.9
 
-% definizione gado del polnomio del fit
-GRADO = 1;
+clear incremento_Vg legend_text
 
-for i=1:length(Vds)
-    RM_fitLineare(i,:) = polyfit(RM_data_fit_x, RM_data_fit_y(:,i), GRADO); % facciamo il fit lineare di grado 1 di rm_data_fit_x e y
-end
-
-%Now matrix P contains the fit of the linear region of the curve; Column 1
-%contains the slope, column 2 contains the y-axis intercept
-% Dichiarazione Costanti
-SLOPE = 1;
-INTERCEPT = 2;
-
-%Solve for y = 0 to find the x-axis intercept
-vth_RM = -RM_fitLineare(:,INTERCEPT) ./ RM_fitLineare (:,SLOPE);
-clear  GRADO dati_da_prendere RM_data_fit_y RM_data_fit_x SLOPE INTERCEPT;
+% %% Calculate threshold - Ratio Method (RM)
+% 
+% RM_data = abs(Id) ./ sqrt(abs(gm));
+% RM_fitLineare = zeros(length(Vds), 2);
+% 
+% if device_type == "P"
+%     RM_data = flipud(RM_data); % è giusto far il flipud dei dati? le Vth
+%     % si sballano tutti
+%     puntiFit = [1 1.2];
+%     % puntiFit = [0 0.3];
+% else
+%     if device_type == "N"
+%         puntiFit = [0.6 0.9];
+%     end
+% end
+% dati_da_prendere = (Vg >= puntiFit(1) ) & (Vg <= puntiFit(2));
+% RM_data_fit_y = RM_data(dati_da_prendere, : ); % selezioniamo i Vgs che servono per il fit (#modifica: "2:end" --> ":")
+% RM_data_fit_x = Vg(dati_da_prendere); % selezioniamo le Vgs >= 0.6 e <= 0.9
+% 
+% % definizione gado del polnomio del fit
+% GRADO = 1;
+% 
+% for i=1:length(Vds)
+%     RM_fitLineare(i,:) = polyfit(RM_data_fit_x, RM_data_fit_y(:,i), GRADO); % facciamo il fit lineare di grado 1 di rm_data_fit_x e y
+% end
+% 
+% %Now matrix P contains the fit of the linear region of the curve; Column 1
+% %contains the slope, column 2 contains the y-axis intercept
+% % Dichiarazione Costanti
+% SLOPE = 1;
+% INTERCEPT = 2;
+% 
+% %Solve for y = 0 to find the x-axis intercept
+% vth_RM = -RM_fitLineare(:,INTERCEPT) ./ RM_fitLineare (:,SLOPE);
+% 
+% % Plot
+% figure
+% plot(Vg, RM_data);
+% ylabel('$\frac{I_d}{\sqrt{g_m}}$ [A$\cdot V$]','interpreter','latex')
+% xlabel('$V_{gs}$ [V]','interpreter','latex')
+% title(device_type + " - $\frac{I_d}{\sqrt{g_m}}/V_{gs}$",'interpreter','latex')
+% 
+% % creo la legenda
+% 
+% for i = 1: length(Vds)
+%     legend_text(i) = "Vds = " + (Vds(i))+ " mV"; 
+% end
+% 
+% legend(legend_text,'Location','northwest')
+% 
+% clear legend_text GRADO dati_da_prendere RM_data_fit_y RM_data_fit_x SLOPE INTERCEPT;
 
 %% Calculate threshold - Transconductance Change Method (TCM)
 %Find the maximum point of the gm derivative
@@ -110,8 +156,7 @@ clear  GRADO dati_da_prendere RM_data_fit_y RM_data_fit_x SLOPE INTERCEPT;
 
 % inizializzazione dei dati
 TCM_data = zeros(length(Id(:, 1)), length(Vds));
-Vth_TCM = zeros(length(Vds) , 1 );
-TCM_data_smooth = zeros(size(gm));
+Vth_data_TCM = zeros(length(Vds) , 1 );
 
 % se il dispositivo è un p specchiamo verticalmente la gm 
 if(device_type=='P')
@@ -124,19 +169,47 @@ end
 
 % Smooth della derivata
 for i=1:length(Vds)
-    TCM_data_smooth(: , i) = smooth(TCM_data(: , i));
+    TCM_data(: , i) = smooth(TCM_data(: , i));
 end
 
-%prendiamo il massimo e l'indice del massimo per ogni Vds
-[TCM_Max , TCM_Indice] = max(TCM_data_smooth); % "TCM_Max" valore massimo, "TCM_Indice" indice del valore massimo
+[TCM_Max, TCM_Indice] = max(TCM_data(1:201,:)); % valore e indice massimo di di TCM per Vgs<=700mV
 
-% Estraiamo la Vth come il valore corrispondente di Vgs nel punto massimo
-% della Derivata di Gm rispetto Vgs
 for i=1:length(Vds)
-    Vth_TCM(i, 1)= Vg(TCM_Indice(i));
+    Vth_data_TCM(i, 1) = Vg(TCM_Indice(i));
 end
 
-clear a b gm;
+%Calcolo del massimo della funzione polinomiale che interpola i punti 
+% in un intorno di Vth calcolata con TCM a Vgs = 10 mV e di raggio 100 mV
+grado = 6; % grado della polinomiale
+coefficienti = zeros(length(Vds), grado+1);
+for i = 1:length(Vds)
+    indici_intervallo = TCM_Indice(i)-20 : TCM_Indice(i)+20;
+    intervallo_alta_ris = Vg(indici_intervallo(1)):0.0001:Vg(indici_intervallo(end));
+    coefficienti(i,:) = polyfit(Vg(indici_intervallo), TCM_data(indici_intervallo,i), grado);
+    grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
+    % se Vds = 10mv (i == 1) teniamo gli intervalli per fare il grafico
+    % dopo il for
+    if(i == 1)
+        intervallo_vds_10mv = indici_intervallo;
+        intervallo_vds_10mv_alta_ris = intervallo_alta_ris;
+    end
+end
+[max_grafico, ind_grafico] = max(grafico); %massimo della polinomiale
+
+for i=1:length(Vds)
+    Vth_TCM(i) = intervallo_vds_10mv_alta_ris(ind_grafico(i));
+end
+
+figure
+hold on
+title("TCM")
+plot(Vg(intervallo_vds_10mv),TCM_data(intervallo_vds_10mv,1)); %grafico dati
+xline(Vth_data_TCM(1),"--","Color","r");  %Vth dati
+plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
+plot(Vth_TCM(1) , max_grafico(1) , "o") %minimo della polinomiale (Vth)
+legend("SDLM","Massimo di TCM","Fit di grado "+grado, "Massimo del fit")
+
+clear a b gm indici_intervallo;
 
 %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
 
@@ -165,7 +238,7 @@ end
 
 %Eseguiamo lo smooth della derivata
 for i=1:length(Vds)
-    SDLM_derivata_Smooth(: , i) = smooth(SDLM_derivata(: , i));
+    SDLM_derivata(: , i) = smooth(SDLM_derivata(: , i));
 end
 
 %Deriviamo la seconda volta
@@ -178,38 +251,57 @@ spuriousRemoved = [ones(20,length(Vds))*200; SDLM_derivata_2(21:end,:)];
 
 %Smooth della derivata seconda
 for i=1:length(Vds)
-    SDLM_derivata_2_smooth(:, i) = smooth(spuriousRemoved(:,i));
+    SDLM_derivata_2(:, i) = smooth(spuriousRemoved(:,i));
 end
 
-[SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2_smooth); % #modifica: SDLM_derivata_2 --> SDLM_derivata_2_smooth
+[SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2); % #modifica: SDLM_derivata_2 --> SDLM_derivata_2_smooth
 
 for i=1:length(Vds)
-    vth_SDLM(i, 1) = Vg(SDLM_Indice(i));
+    Vth_data_SDLM(i, 1) = Vg(SDLM_Indice(i));
 end
 
-grado = 6;
+%Calcolo del minimo della funzione polinomiale che interpola i punti 
+% in un intorno di Vth calcolata con SDLM a Vgs = 900 mV e di raggio 100 mV
+grado = 6; % grado della polinomiale
 coefficienti = zeros(length(Vds), grado+1);
 for i = 1:length(Vds)
-    intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
-    coefficienti(i,:) = polyfit(Vg(intervallo), SDLM_derivata_2_smooth(intervallo,i), grado);
-    grafico(:,i) = polyval(coefficienti(i,:), Vg(intervallo));
+    indici_intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
+    intervallo_alta_ris = Vg(indici_intervallo(1)):0.0001:Vg(indici_intervallo(end));
+    coefficienti(i,:) = polyfit(Vg(indici_intervallo), SDLM_derivata_2(indici_intervallo,i), grado);
+    grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
 end
-[min_grafico, ind_grafico] = min(grafico);
+[min_grafico, ind_grafico] = min(grafico); %minimo della polinomiale
+
+for i=1:length(Vds)
+    Vth_SDLM(i) = intervallo_alta_ris(ind_grafico(i));
+end
+
 figure
-plot(Vg(intervallo),grafico(:, end))
 hold on
-plot(Vg(intervallo),SDLM_derivata_2_smooth(intervallo,end));
-plot(Vg(intervallo(ind_grafico(end))) , min_grafico(end) , "o")
-xline(vth_SDLM(end),"--","Color","r");
-legend("Fit di grado "+grado, "SDLM", "Minimo del fit", "Minimo di SDLM");
+title("SDLM")
+plot(Vg(indici_intervallo),SDLM_derivata_2(indici_intervallo,end)) %grafico dati
+xline(Vth_data_SDLM(end),"--","Color","r"); %Vth dati
+plot(intervallo_alta_ris, grafico(:, end)); %grafico polinomiale
+plot(Vth_SDLM(end) , min_grafico(end) , "o") %minimo della polinomiale (Vth)
+legend( "SDLM", "Minimo di SDLM", "Fit di grado "+grado, "Minimo del fit");
 clear spuriousRemoved;
 
 %% Save File
 % verticalizzo Vds
 Vds_verticale = Vds';
 %creo una matrice contenente le Vth calcolate
-Vth =  array2table([Vds_verticale(2:end) , round(vth_RM(2:end) , 6) , round(Vth_TCM(2:end), 6) , round(vth_SDLM(2:end), 6)]);
+Vth =  array2table([Vds_verticale , round(Vth_TCM' , 6) , round(Vth_SDLM' , 6)]);
 %Rinonimo le intestazioni
-Vth = renamevars(Vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" , "Vth_RM", "Vth_TCM", "Vth_SDLM"]);
+Vth = renamevars(Vth , ["Var1", "Var2", "Var3"] , ["Vd" , "Vth_TCM", "Vth_SDLM"]);
+
+% cd ..
+% 
+%  if ~exist("~\Vth")
+%     mkdir("Vth");
+%  end
+%  cd Vth;
+
 %Salvo File nella cartella
-writetable( Vth, "Vth.txt",  "Delimiter", "\t");
+writetable( Vth, "Vth_"+ Dispositivo + ".txt",  "Delimiter", "\t");
+
+% ci muoviamo nella prossima cartella da analizzare

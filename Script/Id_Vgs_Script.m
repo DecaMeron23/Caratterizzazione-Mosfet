@@ -288,12 +288,12 @@ Vth =  array2table([Vds_verticale , round(Vth_TCM' , 6) , round(Vth_SDLM' , 6)])
 %Rinonimo le intestazioni
 Vth = renamevars(Vth , ["Var1", "Var2", "Var3"] , ["Vd" , "Vth_TCM", "Vth_SDLM"]);
 
-cd ..
-
- if ~exist("~\Vth")
-    mkdir("Vth");
- end
- cd Vth;
+% cd ..
+% 
+%  if ~exist("~\Vth")
+%     mkdir("Vth");
+%  end
+%  cd Vth;
 
 %Salvo File nella cartella
 writetable( Vth, "Vth_"+ Dispositivo + ".txt",  "Delimiter", "\t");
