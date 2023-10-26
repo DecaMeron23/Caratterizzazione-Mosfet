@@ -203,7 +203,9 @@ figure
 hold on
 title("TCM")
 plot(vg(intervallo_vds_10mv),TCM_data(intervallo_vds_10mv,1)); %grafico dati
-xline(vth_TCM_noFit(1),"--","Color","r");  %Vth dati
+xline(vth_TCM_noFit(1),"--","Color","red");  %Vth dati
+xlabel("$V_{gs}$" , "Interpreter","latex");
+ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{gs}}$" , Interpreter="latex");
 plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
 plot(vth_TCM(1) , max_grafico(1) , "o") %minimo della polinomiale (Vth)
 legend("SDLM","Massimo di TCM","Fit di grado "+grado, "Massimo del fit")
@@ -284,6 +286,8 @@ end
 figure
 hold on
 title("SDLM")
+xlabel("$V_{gs}$" , "Interpreter","latex");
+ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{gs}^2}$" , Interpreter="latex");
 plot(vg(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
 xline(vth_SDLM_noFit(end),"--","Color","r"); %Vth dati
 plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
