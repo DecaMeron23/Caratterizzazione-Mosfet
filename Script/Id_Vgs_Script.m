@@ -48,6 +48,10 @@ end
 %faccio il merge dei file
 id = [id_2 , id_1];
 
+% if device_type == "P"
+%     id = fliplr(id);
+% end
+
 % Valori di Vds in mV
 vds = [10:10:100, 150:150:900];
 
@@ -161,7 +165,7 @@ TCM_data = zeros(length(id(:, 1)), length(vds));
 
 % se il dispositivo è un p specchiamo verticalmente la gm 
 if(device_type=='P')
-    gm = abs(gm); % giusto fare flipud della gm? perchè poi noi andiamo a cercare il massimo 
+    gm = flipud(gm);
 end
 
 for i=1:length(vds)
@@ -211,9 +215,9 @@ xlabel("$V_{gs}$" , "Interpreter","latex");
 ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{gs}}$" , Interpreter="latex");
 plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
 plot(vth_TCM(1) , max_grafico(1) , "o") %minimo della polinomiale (Vth)
-legend("SDLM","Massimo di TCM","Fit di grado "+grado, "Massimo del fit")
+legend("TCM","Massimo di TCM","Fit di grado "+ grado, "Massimo del fit")
 
-clear a b gm indici_intervallo;
+clear a b indici_intervallo;
 
 %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
 
