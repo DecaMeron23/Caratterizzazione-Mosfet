@@ -273,7 +273,7 @@ for i = 1:length(vds)
     intervallo_alta_ris = vg(indici_intervallo(1)) : 0.0001 : vg(indici_intervallo(end));
     coefficienti(i,:) = polyfit(vg(indici_intervallo), SDLM_derivata_2(indici_intervallo,i), grado);
     grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
-    % se Vds = 900mv (i == length(Vds)) teniamo gli intervalli per fare il grafico
+    % se Vds = 900mv (i == length(Vds)) teniamo gli intervalli per fare il grafico  
     % dopo il for
     if(i == length(vds))
         indici_intervallo_vds_900mv = indici_intervallo;
