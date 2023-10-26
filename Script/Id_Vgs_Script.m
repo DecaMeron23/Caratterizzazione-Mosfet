@@ -40,6 +40,11 @@ id_1 = id_Vgs_completo_1(: , colonne_vg_id_1);
 id_2 = id_Vgs_completo_2(: , colonne_vg_id_2);
 % estraggo le Vg (sono uguali per entrambi i file)
 vg = id_Vgs_completo_1(: , 1);
+%se il dispositivo è un P abbiamo che Vs = 0.9 v e Vg varia da 1.2V a 0V
+if device_type == 'P'
+    vg = 0.9 - vg;
+end
+
 %faccio il merge dei file
 id = [id_2 , id_1];
 
@@ -48,8 +53,6 @@ vds = [10:10:100, 150:150:900];
 
 % pulisco il Workspace
 clear id_1 id_2 NUM_COLONNE_TOT_1 NUM_COLONNE_TOT_2 id_Vgs_completo_1 id_Vgs_completo_2 file1 file2 fp fileInFolder;
-
-
 
 %% Calcoliamo Gm
 
@@ -91,7 +94,7 @@ if device_type == "N"
     legend(legend_text,'Location','northwest')
 else
     if device_type == "P"
-    legend(legend_text,'Location','southeast') 
+    legend(legend_text,'Location','southwest') 
     end
 end
 
@@ -158,7 +161,7 @@ TCM_data = zeros(length(id(:, 1)), length(vds));
 
 % se il dispositivo è un p specchiamo verticalmente la gm 
 if(device_type=='P')
-    gm = flipud(gm); % giusto fare flipud della gm? perchè poi noi andiamo a cercare il massimo 
+    gm = abs(gm); % giusto fare flipud della gm? perchè poi noi andiamo a cercare il massimo 
 end
 
 for i=1:length(vds)
@@ -255,7 +258,7 @@ for i=1:length(vds)
     SDLM_derivata_2(:, i) = smooth(spuriousRemoved(:,i));
 end
 
-[SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2); % #modifica: SDLM_derivata_2 --> SDLM_derivata_2_smooth
+[SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2(1:201,:)); % valore e indice minimo di di SDLM per Vgs<=700mV
 
 for i=1:length(vds)
     vth_SDLM_noFit(i, 1) = vg(SDLM_Indice(i));
@@ -267,7 +270,7 @@ grado = 6; % grado della polinomiale
 coefficienti = zeros(length(vds), grado+1);
 for i = 1:length(vds)
     indici_intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
-    intervallo_alta_ris = vg(indici_intervallo(1)):0.0001:vg(indici_intervallo(end));
+    intervallo_alta_ris = vg(indici_intervallo(1)) : 0.0001 : vg(indici_intervallo(end));
     coefficienti(i,:) = polyfit(vg(indici_intervallo), SDLM_derivata_2(indici_intervallo,i), grado);
     grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
     % se Vds = 900mv (i == length(Vds)) teniamo gli intervalli per fare il grafico
@@ -303,14 +306,18 @@ vth =  array2table([vds_verticale , round(vth_TCM' , 6) , round(vth_SDLM' , 6)])
 %Rinonimo le intestazioni
 vth = renamevars(vth , ["Var1", "Var2", "Var3"] , ["Vd" , "Vth_TCM", "Vth_SDLM"]);
 
-% cd ..
-% 
-%  if ~exist("~\Vth")
-%     mkdir("Vth");
-%  end
-%  cd vth;
+Cartella = "Vth";
+
+cd ..
+
+ % if ~exist(("~\" + Cartella))
+    mkdir(Cartella);
+ % end
+ cd(Cartella);
+ 
 
 %Salvo File nella cartella
 writetable( vth, "Vth_"+ dispositivo + ".txt",  "Delimiter", "\t");
 
+cd ..;
 % ci muoviamo nella prossima cartella da analizzare
