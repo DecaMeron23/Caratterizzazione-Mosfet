@@ -52,7 +52,7 @@ id = [id_2 , id_1];
 vds = [10:10:100, 150:150:900];
 
 % pulisco il Workspace
-clear id_1 id_2 NUM_COLONNE_TOT_1 NUM_COLONNE_TOT_2 id_Vgs_completo_1 id_Vgs_completo_2 file1 file2 fp fileInFolder;
+clear id_1 id_2 NUM_COLONNE_TOT_1 NUM_COLONNE_TOT_2 id_Vgs_completo_1 id_Vgs_completo_2 file1 file2 fp fileInFolder colonne_vg_id_2 colonne_vg_id_1;
 
 %% Calcoliamo Gm
 
@@ -98,7 +98,7 @@ else
     end
 end
 
-clear incremento_Vg legend_text
+clear incremento_Vg legend_text gm1 gm2
 
 % %% Calculate threshold - Ratio Method (RM)
 % 
