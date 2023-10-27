@@ -23,38 +23,35 @@ function [vth] = Id_Vgs_P(dispositivo)
 
     
     % estraggo le Vg (sono uguali per entrambi i file)
-    vg = id_Vgs_completo(: , 1);
+    vsg = id_Vgs_completo(: , 1);
     
-    if device_type == "N"
-        %faccio il merge dei file solo se il dispositivo è un N
-        id = [id_2(: , 2 : end) , id_1(: , 2:end)];
-        % Valori di Vds in mV  per i dispositivi N
-        vd = [10:10:100, 150:150:900];
-    else % se il dispositivo è un P specchiamo da sinistra a destra le id
-         % cosi abbiamo id a Vd = 900mv, quindi con Vsd = 0mv, come primo valore 
-        id = fliplr(id_1());
-        id = id(: , 2:end);
-        % Valori di Vsd in mV
-        vd = 150:150:900;
-        %calcoliamo i valori di Vsg
-        vg = 0.9 - vg;
-    end
+    
+    %specchiamo da sinistra a destra le id
+    % cosi abbiamo id a Vd = 900mv, quindi con Vsd = 0mv, come primo valore 
+    id = fliplr(id_1());
+    id = id(: , 2:end);
+    % Valori di Vsd in mV
+    vd = 150:150:900;
+    %calcoliamo i valori di Vsg
+    vsg = 0.9 - vsg;
+
+    plot(vsg,id);
 
 
     %% Ratio Method
     
     pos_min = 1;
-    while(vg(pos_min)<0.6)
+    while(vsg(pos_min)<0.6)
         pos_min = pos_min+1;
     end
     
     pos_max = pos_min;
-    while(vg(pos_max)<0.9)
+    while(vsg(pos_max)<0.9)
         pos_max = pos_max +1;
     end
     
     for i=1:length(vd)
-        P = polyfit(vg(pos_min:pos_max), id(pos_min:pos_max,i), 1);
+        P = polyfit(vsg(pos_min:pos_max), id(pos_min:pos_max,i), 1);
         vth_RM(i) = -P(2)/P(1);
     end
    
@@ -66,13 +63,13 @@ function [vth] = Id_Vgs_P(dispositivo)
     gm2 = gm1;
     
     for i=1:length(vd)
-        gm1(:,i) = gradient(id(:,i))./gradient(vg);
+        gm1(:,i) = gradient(id(:,i))./gradient(vsg);
     end
     
     gm2(1,:) = gm1(1,:);
     
     for i=1:length(vd)
-        gm2(2:end,i) = gradient(id(1:end-1,i))./gradient(vg(2:end));
+        gm2(2:end,i) = gradient(id(1:end-1,i))./gradient(vsg(2:end));
     end
     
     gm = (gm1+gm2)/2;
@@ -119,7 +116,7 @@ function [vth] = Id_Vgs_P(dispositivo)
     end
     
     for i=1:length(vd)
-        TCM_data(:,i) = gradient(gm(:,i))./gradient(vg);
+        TCM_data(:,i) = gradient(gm(:,i))./gradient(vsg);
     end
     
     % Smooth della derivata
@@ -130,7 +127,7 @@ function [vth] = Id_Vgs_P(dispositivo)
     [TCM_Max, TCM_Indice] = max(TCM_data(1:201,:)); % valore e indice massimo di di TCM per Vgs<=700mV
     
     for i=1:length(vd)
-        vth_TCM_noFit(i, 1) = vg(TCM_Indice(i));
+        vth_TCM_noFit(i, 1) = vsg(TCM_Indice(i));
     end
     
     
@@ -142,8 +139,8 @@ function [vth] = Id_Vgs_P(dispositivo)
     
     for i = 1:length(vd)
         indici_intervallo = TCM_Indice(i)-20 : TCM_Indice(i)+20;
-        intervallo_alta_ris = vg(indici_intervallo(1)) : 0.0001 : vg(indici_intervallo(end));
-        coefficienti(i,:) = polyfit(vg(indici_intervallo), TCM_data(indici_intervallo,i), grado);
+        intervallo_alta_ris = vsg(indici_intervallo(1)) : 0.0001 : vsg(indici_intervallo(end));
+        coefficienti(i,:) = polyfit(vsg(indici_intervallo), TCM_data(indici_intervallo,i), grado);
         grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
         % se Vds = 10mv (i == 1) teniamo gli intervalli per fare il grafico
         % dopo il for
@@ -192,7 +189,7 @@ function [vth] = Id_Vgs_P(dispositivo)
     
     %Deriviamo rispetto Vgs
     for i = 1:length(vd) 
-        SDLM_derivata(: , i) = gradient(log_Id_smooth(: , i)) ./ gradient(vg);
+        SDLM_derivata(: , i) = gradient(log_Id_smooth(: , i)) ./ gradient(vsg);
     end
     
     %Eseguiamo lo smooth della derivata
@@ -202,7 +199,7 @@ function [vth] = Id_Vgs_P(dispositivo)
     
     %Deriviamo la seconda volta
     for i= 1:length(vd)
-        SDLM_derivata_2(: , i) = gradient(SDLM_derivata(:,i)) ./ gradient(vg);
+        SDLM_derivata_2(: , i) = gradient(SDLM_derivata(:,i)) ./ gradient(vsg);
     end
     
     % per bassi valori di Vgs (da -0.3 a -0.2) sostituiamo i valori 
@@ -216,7 +213,7 @@ function [vth] = Id_Vgs_P(dispositivo)
     [SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2); % #modifica: SDLM_derivata_2 --> SDLM_derivata_2_smooth
     
     for i=1:length(vd)
-        vth_SDLM_noFit(i, 1) = vg(SDLM_Indice(i));
+        vth_SDLM_noFit(i, 1) = vsg(SDLM_Indice(i));
     end
     
     %Calcolo del minimo della funzione polinomiale che interpola i punti 
@@ -227,8 +224,8 @@ function [vth] = Id_Vgs_P(dispositivo)
     
     for i = 1:length(vd)
         indici_intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
-        intervallo_alta_ris = vg(indici_intervallo(1)):0.0001:vg(indici_intervallo(end));
-        coefficienti(i,:) = polyfit(vg(indici_intervallo), SDLM_derivata_2(indici_intervallo,i), grado);
+        intervallo_alta_ris = vsg(indici_intervallo(1)):0.0001:vsg(indici_intervallo(end));
+        coefficienti(i,:) = polyfit(vsg(indici_intervallo), SDLM_derivata_2(indici_intervallo,i), grado);
         grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
         % se Vds = 900mv (i == length(Vds)) teniamo gli intervalli per fare il grafico
         % dopo il for

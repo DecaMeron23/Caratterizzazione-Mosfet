@@ -58,10 +58,14 @@ function [vth] = Id_Vgs_N(dispositivo)
     end
     
     for i=1:length(vd)
-        P = polyfit(vg(pos_min:pos_max), id(pos_min:pos_max,i), 1);
-        vth_RM(i) = -P(2)/P(1);
+        P(i,:) = polyfit(vg(pos_min:pos_max), id(pos_min:pos_max, i), 1);
+        vth_RM(i) = -P(i,2)/P(i,1);
+    
+    figure
+    hold on
+    plot(vg,id)
+    plot(vg,fitval(P))
     end
-   
 
     
     %% Calcoliamo Gm
