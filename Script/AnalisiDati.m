@@ -17,7 +17,7 @@ nameFolder = fp.folder;
 for i = 3 : length(fileInFolder)
     [~ , cartella] = fileparts(nameFolder);
     dispositivo = char(fileInFolder(i));
-    if (dispositivo(1) == 'P' || dispositivo(1) == 'N') && dispositivo(3) == '-'
+    if (dispositivo(1) == 'P' || dispositivo(1) == 'N') && dispositivo(3) == '-' && ~strcmp(dispositivo,'N4-600-30')
 
         vth = Id_Vgs_Script(dispositivo);
       
