@@ -1,23 +1,8 @@
 %Calcolo Delle Vth con i metodo RM , TCM e SDLM
 
-%% inizializzazione
-clear; clc;
+function [vth] = Id_Vgs_Script(dispositivo)
 
-% trovo la directory in cui ci troviamo
-fp = dir();
-% Lista dei file nella cartella
-fileInFolder = {fp.name};
-% verifichiamo se ci sono dei file nella cartella ( . e .. esclusi)
-if length(fileInFolder) <= 2
-    error("Cartella vuota...")
-end
-
-
-% prendo il nome completo della cartella (es: "C:\Dispositivi\N1_100-30")
-nameFolder = fp.folder;
-% prendo solo il nome della cartella (es: "N1_100-30")
-[~ , dispositivo] = fileparts(nameFolder);
-
+cd (string(dispositivo))
 
 % Tipo del dispositivo
 device_type = dispositivo(1);
@@ -284,6 +269,7 @@ for i = 1:length(vds)
         indici_intervallo_vds_900mv = indici_intervallo;
         intervallo_vds_900mv_alta_ris = intervallo_alta_ris;
     end
+end
     
     figure
     plot(vg , gm .* 1e3)
@@ -516,28 +502,11 @@ for i = 1:length(vds)
     legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ grado, "Minimo del fit");
     clear spuriousRemoved;
 
+
+    %creo una matrice contenente le Vth calcolate
+    vth =  array2table([vds' , round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
+
     cd ..;
 
-%end
+end
 
-%% Save File
-%creo una matrice contenente le Vth calcolate
-vth =  array2table([vds' , round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
-%Rinonimo le intestazioni
-vth = renamevars(vth , ["Var1", "Var2", "Var3"] , ["Vd" , "Vth_TCM", "Vth_SDLM"]);
-
-Cartella = "Vth";
-
-cd ..
-
- % if ~exist(("~\" + Cartella))
-    mkdir(Cartella);
- % end
- cd(Cartella);
- 
-
-%Salvo File nella cartella
-writetable( vth, "Vth_" + dispositivo + ".txt",  "Delimiter", "\t");
-
-cd ..;
-% ci muoviamo nella prossima cartella da analizzare
