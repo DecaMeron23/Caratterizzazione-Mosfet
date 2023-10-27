@@ -1,6 +1,6 @@
 %Calcolo Delle Vth con i metodo RM , TCM e SDLM
 
-function [vth] = Id_Vgs_Script(dispositivo)
+function [vth] = Id_Vgs_P(dispositivo)
 
     cd (string(dispositivo))
     
@@ -8,26 +8,22 @@ function [vth] = Id_Vgs_Script(dispositivo)
     device_type = dispositivo(1);
     
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
-    file1 = "id-vgs.txt";
-    file2 = "id-vgs-2.txt";
+    file = "id-vgs.txt";
     
-    % Carico i file
-    id_Vgs_completo_1 = readmatrix(file1); 
-    id_Vgs_completo_2 = readmatrix(file2);    
+    % Carico i file  
+    id_Vgs_completo = readmatrix(file);
     % file composto da {Vg + (Id , Ig , Is , Iavdd , Igrd) * vd}
     % numero di colonne totali
-    NUM_COLONNE_TOT_1 = length(id_Vgs_completo_1(1, :));
-    NUM_COLONNE_TOT_2 = length(id_Vgs_completo_2(1, :));
+    NUM_COLONNE_TOT = length(id_Vgs_completo(1, :));
     %seleziono gli indici di colonna contenenti Id (non prendiamo le Vd = 0)
-    colonne_vg_id_1 = 2:5:NUM_COLONNE_TOT_1;
-    colonne_vg_id_2 = 2:5:NUM_COLONNE_TOT_2;
+    colonne_vg_id = 2:5:NUM_COLONNE_TOT;
     
     % estraggo le colonne con Id
-    id_1 = id_Vgs_completo_1(: , colonne_vg_id_1);
-    id_2 = id_Vgs_completo_2(: , colonne_vg_id_2);
+    id = id_Vgs_completo(: , colonne_vg_id);
+
     
     % estraggo le Vg (sono uguali per entrambi i file)
-    vg = id_Vgs_completo_1(: , 1);
+    vg = id_Vgs_completo(: , 1);
     
     if device_type == "N"
         %faccio il merge dei file solo se il dispositivo è un N
@@ -43,12 +39,26 @@ function [vth] = Id_Vgs_Script(dispositivo)
         %calcoliamo i valori di Vsg
         vg = 0.9 - vg;
     end
+
+
+    %% Ratio Method
     
-    % pulisco il Workspace
-    clear id_1 id_2 NUM_COLONNE_TOT_1 NUM_COLONNE_TOT_2 id_Vgs_completo_1 id_Vgs_completo_2 file1 file2 fp fileInFolder colonne_vg_id_2 colonne_vg_id_1;
+    pos_min = 1;
+    while(vg(pos_min)<0.6)
+        pos_min = pos_min+1;
+    end
     
+    pos_max = pos_min;
+    while(vg(pos_max)<0.9)
+        pos_max = pos_max +1;
+    end
     
-    
+    for i=1:length(vd)
+        P = polyfit(vg(pos_min:pos_max), id(pos_min:pos_max,i), 1);
+        vth_RM(i) = -P(2)/P(1);
+    end
+   
+
     
     %% Calcoliamo Gm
     
@@ -94,7 +104,6 @@ function [vth] = Id_Vgs_Script(dispositivo)
     %     end
     % end
     
-    clear incremento_Vg legend_text gm1 gm2  
    
     %% Calculate threshold - Transconductance Change Method (TCM)
     %Find the maximum point of the gm derivative
@@ -128,7 +137,7 @@ function [vth] = Id_Vgs_Script(dispositivo)
     %Calcolo del massimo della funzione polinomiale che interpola i punti 
     % in un intorno di Vth calcolata con TCM a Vgs = 10 mV e di raggio 100 mV
     
-    grado = 6; % grado della polinomiale
+    grado = 2; % grado della polinomiale
     coefficienti = zeros(length(vd), grado+1);
     
     for i = 1:length(vd)
@@ -153,7 +162,7 @@ function [vth] = Id_Vgs_Script(dispositivo)
     
     % figure
     % hold on
-    % title("TCM")
+    % title("TCM - " + dispositivo)
     % plot(vg(intervallo_vds_10mv),TCM_data(intervallo_vds_10mv,1)); %grafico dati
     % xline(vth_TCM_noFit(1),"--","Color","red");  %Vth dati
     % xlabel("$V_{gs}$" , "Interpreter","latex");
@@ -162,7 +171,6 @@ function [vth] = Id_Vgs_Script(dispositivo)
     % plot(vth_TCM(1) , max_grafico(1) , "o") %minimo della polinomiale (Vth)
     % legend("SDLM","Massimo di TCM","Fit di grado "+grado, "Massimo del fit")
     
-    clear a b indici_intervallo;
     
     %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
     
@@ -171,13 +179,15 @@ function [vth] = Id_Vgs_Script(dispositivo)
     % log_Id_smooth = zeros(size(Id));
     % SDLM_derivata_Smooth = log_Id_smooth;
     % SDLM_derivata_2_smooth = log_Id_smooth;
+
+    span = 20;
     
     %calcoliamo il logaritmo di Id
     log_Id = log(abs(id));
     
     %Eseguiamo lo smooth
     for i=1:length(vd)
-        log_Id_smooth(: , i) = smooth(log_Id(: , i));
+        log_Id_smooth(: , i) = smooth(log_Id(: , i),span);
     end
     
     %Deriviamo rispetto Vgs
@@ -187,7 +197,7 @@ function [vth] = Id_Vgs_Script(dispositivo)
     
     %Eseguiamo lo smooth della derivata
     for i=1:length(vd)
-        SDLM_derivata(: , i) = smooth(SDLM_derivata(: , i));
+        SDLM_derivata(: , i) = smooth(SDLM_derivata(: , i),span);
     end
     
     %Deriviamo la seconda volta
@@ -200,7 +210,7 @@ function [vth] = Id_Vgs_Script(dispositivo)
     
     %Smooth della derivata seconda
     for i=1:length(vd)
-        SDLM_derivata_2(:, i) = smooth(spuriousRemoved(:,i));
+        SDLM_derivata_2(:, i) = smooth(spuriousRemoved(:,i),span);
     end
     
     [SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2); % #modifica: SDLM_derivata_2 --> SDLM_derivata_2_smooth
@@ -208,7 +218,6 @@ function [vth] = Id_Vgs_Script(dispositivo)
     for i=1:length(vd)
         vth_SDLM_noFit(i, 1) = vg(SDLM_Indice(i));
     end
-    
     
     %Calcolo del minimo della funzione polinomiale che interpola i punti 
     % in un intorno di Vth calcolata con SDLM a Vgs = 900 mV e di raggio 100 mV
@@ -237,7 +246,7 @@ function [vth] = Id_Vgs_Script(dispositivo)
     
     % figure
     % hold on
-    % title("SDLM")
+    % title("SDLM - " + dispositivo)
     % xlabel("$V_{gs}$" , "Interpreter","latex");
     % ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{gs}^2}$" , Interpreter="latex");
     % plot(vg(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
@@ -245,10 +254,9 @@ function [vth] = Id_Vgs_Script(dispositivo)
     % plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
     % plot(vth_SDLM(end) , min_grafico(end) , "o") %minimo della polinomiale (Vth)
     % legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ grado, "Minimo del fit");
-    clear spuriousRemoved;
     
     %creo una matrice contenente le Vth calcolate
-    vth =  array2table([vd' , round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
+    vth =  array2table([vd' , round(vth_RM' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
 
     cd ..
     

@@ -10,20 +10,20 @@ if length(fileInFolder) <= 2
     error("Cartella vuota...")
 end
 
-% prendo il nome completo della cartella (es: "C:\Dispositivi\N1_100-30")
-nameFolder = fp.folder;
-
 
 for i = 3 : length(fileInFolder)
-    [~ , cartella] = fileparts(nameFolder);
     dispositivo = char(fileInFolder(i));
-    if (dispositivo(1) == 'P' || dispositivo(1) == 'N') && dispositivo(3) == '-' && ~strcmp(dispositivo,'N4-600-30')
+    if dispositivo(3) == '-' && ~strcmp(dispositivo,'N4-600-30')
 
-        vth = Id_Vgs_Script(dispositivo);
+        if dispositivo(1) == 'N' 
+            vth = Id_Vgs_N(dispositivo);
+        elseif dispositivo(1) == 'P'
+            vth = Id_Vgs_P(dispositivo);
+        end
       
         %% Save File
         %Rinonimo le intestazioni
-        vth = renamevars(vth , ["Var1", "Var2", "Var3"] , ["Vd" , "Vth_TCM", "Vth_SDLM"]);
+        vth = renamevars(vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" ,"Vth_RM", "Vth_TCM", "Vth_SDLM"]);
         
         Cartella = "Vth";
        
@@ -35,5 +35,6 @@ for i = 3 : length(fileInFolder)
         writetable( vth, "Vth_" + dispositivo + ".txt",  "Delimiter", "\t");
 
         cd ..
+        
      end
 end
