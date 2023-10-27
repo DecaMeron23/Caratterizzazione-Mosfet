@@ -23,9 +23,9 @@ for i = 3 : length(fileInFolder)
       
         %% Save File
         %Rinonimo le intestazioni
-        vth = renamevars(vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" ,"Vth_RM", "Vth_TCM", "Vth_SDLM"]);
+        vth = renamevars(vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" ,"Lin_fit_Id", "Vth_TCM", "Vth_SDLM"]);
         
-        Cartella = "Vth";
+        Cartella = "Vth" +  ;
        
          mkdir(Cartella);  
          cd(Cartella);

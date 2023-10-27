@@ -61,9 +61,7 @@ function [vth] = Id_Vgs_N(dispositivo)
             plot([0 , 0.9] , val)
 
         end
-
     end
-   
 
     
     %% Calcoliamo Gm
@@ -180,7 +178,7 @@ function [vth] = Id_Vgs_N(dispositivo)
     % SDLM_derivata_Smooth = log_Id_smooth;
     % SDLM_derivata_2_smooth = log_Id_smooth;
 
-    span = 20;
+    span = 5;
     
     %calcoliamo il logaritmo di Id
     log_Id = log(abs(id));
