@@ -18,7 +18,6 @@ nameFolder = fp.folder;
 % prendo solo il nome della cartella (es: "N1_100-30")
 [~ , dispositivo] = fileparts(nameFolder);
 
-<<<<<<< Updated upstream
 
 % Tipo del dispositivo
 device_type = dispositivo(1);
@@ -284,62 +283,6 @@ for i = 1:length(vds)
     if(i == length(vds))
         indici_intervallo_vds_900mv = indici_intervallo;
         intervallo_vds_900mv_alta_ris = intervallo_alta_ris;
-=======
-% function [vth_TCM, vth_SDLM] = Id_Vgs_Script(dispositivo)
-    
-    % Tipo del dispositivo
-    device_type = dispositivo(1);
-    
-    % Nomi dei file contenenti le Id, al variare di Vds, e Vgs
-    file1 = "id-vgs.txt";
-    file2 = "id-vgs-2.txt";
-    
-    % Carico i file
-    id_Vgs_completo_1 = readmatrix(file1); 
-    id_Vgs_completo_2 = readmatrix(file2);    
-    % file composto da {Vg + (Id , Ig , Is , Iavdd , Igrd) * vd}
-    % numero di colonne totali
-    NUM_COLONNE_TOT_1 = length(id_Vgs_completo_1(1, :));
-    NUM_COLONNE_TOT_2 = length(id_Vgs_completo_2(1, :));
-    %seleziono gli indici di colonna contenenti Id (non prendiamo le Vd = 0)
-    colonne_vg_id_1 = 7:5:NUM_COLONNE_TOT_1;
-    colonne_vg_id_2 = 7:5:NUM_COLONNE_TOT_2;
-    % estraggo le colonne con Id
-    id_1 = id_Vgs_completo_1(: , colonne_vg_id_1);
-    id_2 = id_Vgs_completo_2(: , colonne_vg_id_2);
-    % estraggo le Vg (sono uguali per entrambi i file)
-    vg = id_Vgs_completo_1(: , 1);
-    %faccio il merge dei file
-    id = [id_2 , id_1];
-    
-    % Valori di Vds in mV
-    vds = [10:10:100, 150:150:900];
-    
-    % pulisco il Workspace
-    clear id_1 id_2 NUM_COLONNE_TOT_1 NUM_COLONNE_TOT_2 id_Vgs_completo_1 id_Vgs_completo_2 file1 file2 fp fileInFolder;
-    
-    
-    
-    %% Calcoliamo Gm
-    
-    gm1 = zeros(size(id));
-    gm2 = gm1;
-    
-    for i=1:length(vds)
-        gm1(:,i) = gradient(id(:,i))./gradient(vg);
-    end
-    
-    gm2(1,:) = gm1(1,:);
-    
-    for i=1:length(vds)
-        gm2(2:end,i) = gradient(id(1:end-1,i))./gradient(vg(2:end));
-    end
-    
-    gm = (gm1+gm2)/2;
-    
-    for i=1:length(vds)
-        gm(:,i) = smooth(gm(:,i));
->>>>>>> Stashed changes
     end
     
     figure
