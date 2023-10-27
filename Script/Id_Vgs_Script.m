@@ -12,6 +12,7 @@ if length(fileInFolder) <= 2
     error("Cartella vuota...")
 end
 
+
 % prendo il nome completo della cartella (es: "C:\Dispositivi\N1_100-30")
 nameFolder = fp.folder;
 % prendo solo il nome della cartella (es: "N1_100-30")
