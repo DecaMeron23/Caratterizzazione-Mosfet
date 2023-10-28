@@ -49,7 +49,7 @@ function [vth] = Id_Vgs_N(dispositivo)
     
     for i=1:length(vd)
         P = polyfit(vgs(pos_min:pos_max), id(pos_min:pos_max,i), 1);
-        vth_RM(i) = -P(2)/P(1);
+        vth_Lin_Fit(i) = -P(2)/P(1);
 
         if vd(i) == 150
             title(dispositivo);
@@ -143,6 +143,10 @@ function [vth] = Id_Vgs_N(dispositivo)
         intervallo_alta_ris = vgs(indici_intervallo(1)) : 0.0001 : vgs(indici_intervallo(end));
         coefficienti(i,:) = polyfit(vgs(indici_intervallo), TCM_data(indici_intervallo,i), grado);
         grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
+        %massimo della polinomiale
+        [max_grafico(i), ind_grafico(i)] = max(grafico(: , i)); 
+        % Estraiamo la Vth dalla polinomiale
+        vth_TCM(i) = intervallo_alta_ris(ind_grafico(i));
         % se Vds = 10mv (i == 1) teniamo gli intervalli per fare il grafico
         % dopo il for
         if(i == 1)
@@ -151,12 +155,6 @@ function [vth] = Id_Vgs_N(dispositivo)
         end
     end
     
-    %massimo della polinomiale
-    [max_grafico, ind_grafico] = max(grafico); 
-    
-    for i=1:length(vd)
-        vth_TCM(i) = intervallo_vds_10mv_alta_ris(ind_grafico(i));
-    end
     
     % figure
     % hold on
@@ -228,33 +226,31 @@ function [vth] = Id_Vgs_N(dispositivo)
         intervallo_alta_ris = vgs(indici_intervallo(1)):0.0001:vgs(indici_intervallo(end));
         coefficienti(i,:) = polyfit(vgs(indici_intervallo), SDLM_derivata_2(indici_intervallo,i), grado);
         grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
+        %minimo della polinomiale
+        [~, ind_grafico(i)] = min(grafico( : , i));
+        % Estraiamo la Vth della polinomiale
+        vth_SDLM(i) = intervallo_alta_ris(ind_grafico(i));
         % se Vds = 900mv (i == length(Vds)) teniamo gli intervalli per fare il grafico
         % dopo il for
-        if(i == length(vd))
+        if vd(i) == 900
             indici_intervallo_vds_900mv = indici_intervallo;
             intervallo_vds_900mv_alta_ris = intervallo_alta_ris;
         end
     end
     
-    [min_grafico, ind_grafico] = min(grafico); %minimo della polinomiale
+    figure
+    hold on
+    title("SDLM - " + dispositivo)
+    xlabel("$V_{gs}$" , "Interpreter","latex");
+    ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{gs}^2}$" , Interpreter="latex");
+    plot(vg(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
+    xline(vth_SDLM_noFit(end),"--","Color","r"); %Vth dati
+    plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
+    plot(vth_SDLM(end) , min_grafico(end) , "o") %minimo della polinomiale (Vth)
+    legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ grado, "Minimo del fit");
     
-    for i=1:length(vd)
-        vth_SDLM(i) = intervallo_vds_900mv_alta_ris(ind_grafico(i));
-    end
-    
-    % figure
-    % hold on
-    % title("SDLM - " + dispositivo)
-    % xlabel("$V_{gs}$" , "Interpreter","latex");
-    % ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{gs}^2}$" , Interpreter="latex");
-    % plot(vg(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
-    % xline(vth_SDLM_noFit(end),"--","Color","r"); %Vth dati
-    % plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
-    % plot(vth_SDLM(end) , min_grafico(end) , "o") %minimo della polinomiale (Vth)
-    % legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ grado, "Minimo del fit");
-    
-    %creo una matrice contenente le Vth calcolate
-    vth =  array2table([vd' , round(vth_RM' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
+    %% creo una tabella contenente le Vth calcolate al variare di Vds
+    vth =  array2table([vd' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
 
     cd ..
     
