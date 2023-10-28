@@ -3,9 +3,9 @@
 function [vth] = Id_Vgs_P(dispositivo)
 
     % abilitare i plot di verifica (si = 1, no = 0)  
-    PLOT_ON = 0;
+    PLOT_ON = 1;
     % Intensità dello smooth della SDLM
-    SPAN = 20;
+    SPAN = 5;
     % grado della polinomiale nella SDLM
     GRADO = 6;
     
@@ -15,7 +15,16 @@ function [vth] = Id_Vgs_P(dispositivo)
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
     file = "id-vgs.txt";
     
-    % Carico i file  
+    
+
+    %se il file non esiste ritorna una tabella vuota
+    if(~exist(file ,"file"))
+        vth = array2table([0 0 0 0]);
+        cd ..;
+        return;
+    end
+
+    % Carico i file
     id_Vgs_completo = readmatrix(file);
     % file composto da {Vg + (Id , Ig , Is , Iavdd , Igrd) * vd}
     % numero di colonne totali
@@ -42,6 +51,7 @@ function [vth] = Id_Vgs_P(dispositivo)
     
     % Plot di verifica
     if PLOT_ON
+        figure
         plot(vsg,id);
         title("Vsg - Id - " + dispositivo);
         xlabel("$V_{sg}$" , Interpreter="latex");
@@ -77,7 +87,6 @@ function [vth] = Id_Vgs_P(dispositivo)
                 plot([0 , 0.9] , val)
                 title("Fit lineare - " + dispositivo);
                 xlim([0 , 0.7])
-                ylim([-0.015 , 0.005])
                 xline(0.5 , "--")
                 xline(0.6 , "--")
                 yline(0 , "-.");

@@ -28,8 +28,11 @@ for i = 3 : length(fileInFolder)
         
         Cartella = "Vth";
        
-         mkdir(Cartella);  
-         cd(Cartella);
+        if ~exist(Cartella , "dir")
+            mkdir(Cartella);  
+        end
+        
+        cd(Cartella);
          
         
         %Salvo File nella cartella
@@ -39,3 +42,5 @@ for i = 3 : length(fileInFolder)
         
      end
 end
+
+clear;
