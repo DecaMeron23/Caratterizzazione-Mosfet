@@ -13,7 +13,8 @@ end
 
 for i = 3 : length(fileInFolder)
     dispositivo = char(fileInFolder(i));
-    if dispositivo(3) == '-' && ~strcmp(dispositivo,'N4-600-30')
+    if ((dispositivo(1) == 'N' || dispositivo(1) == 'P') && dispositivo(3) == '-' &&  ...
+            ~strcmp(dispositivo,'N4-600-30')  &&  ~strcmp(dispositivo,'P1-100-180_nf'))
 
         if dispositivo(1) == 'N' 
             vth = Id_Vgs_N(dispositivo);
@@ -25,7 +26,7 @@ for i = 3 : length(fileInFolder)
         %Rinonimo le intestazioni
         vth = renamevars(vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" ,"Lin_fit_Id", "Vth_TCM", "Vth_SDLM"]);
         
-        Cartella = "Vth" +  ;
+        Cartella = "Vth";
        
          mkdir(Cartella);  
          cd(Cartella);

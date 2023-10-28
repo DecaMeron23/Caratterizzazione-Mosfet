@@ -1,9 +1,9 @@
 %Calcolo Delle Vth con i metodo RM , TCM e SDLM
 
 function [vth] = Id_Vgs_P(dispositivo)
-    
+
     % abilitare i plot di verifica (si = 1, no = 0)  
-    PLOT_ON = 1;
+    PLOT_ON = 0;
     % Intensità dello smooth della SDLM
     SPAN = 20;
     % grado della polinomiale nella SDLM
@@ -11,9 +11,6 @@ function [vth] = Id_Vgs_P(dispositivo)
     
 
     cd (string(dispositivo))
-    
-    % Tipo del dispositivo
-    device_type = dispositivo(1);
     
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
     file = "id-vgs.txt";
@@ -78,7 +75,7 @@ function [vth] = Id_Vgs_P(dispositivo)
                 hold on
                 plot(vsg , id(: , i))
                 plot([0 , 0.9] , val)
-                title(dispositivo);
+                title("Fit lineare - " + dispositivo);
                 xlim([0 , 0.7])
                 ylim([-0.015 , 0.005])
                 xline(0.5 , "--")
@@ -119,7 +116,7 @@ function [vth] = Id_Vgs_P(dispositivo)
         % nome assi
         ylabel('$g_m$ [mS]','interpreter','latex')
         xlabel('$V_{sg}$ [V]','interpreter','latex')
-        title(dispositivo)
+        title("gm - " + dispositivo)
     end
     %% Calculate threshold - Transconductance Change Method (TCM)
     %Find the maximum point of the gm derivative
@@ -212,7 +209,7 @@ function [vth] = Id_Vgs_P(dispositivo)
         %Smooth della derivata seconda
         derivata_2_SDLM(:, i) = smooth(derivata_2_SDLM(:,i),SPAN);
         % prendiamo l'indice del minimo valore della derivataseconda
-        [ ~ , SDLM_Indice(i)] = min(derivata_2_SDLM( : , i));
+        [ ~ , SDLM_Indice(i)] = min(derivata_2_SDLM(1 : 180, i));
         % estraiamo la Vth
         vth_SDLM_noFit(i, 1) = vsg(SDLM_Indice(i));
     end
@@ -263,6 +260,7 @@ function [vth] = Id_Vgs_P(dispositivo)
         legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ grado, "Minimo del fit");
         hold off
     end
+    
     %% Creazione tabella contenente le Vth calcolate in base alle Vsd
     vth =  array2table([vsd' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
 

@@ -4,9 +4,6 @@ function [vth] = Id_Vgs_N(dispositivo)
 
     cd (string(dispositivo))
     
-    % Tipo del dispositivo
-    device_type = dispositivo(1);
-    
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
     file1 = "id-vgs.txt";
     file2 = "id-vgs-2.txt";
