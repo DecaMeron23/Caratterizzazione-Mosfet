@@ -1,6 +1,9 @@
 %Calcolo Delle Vth con i metodo RM , TCM e SDLM
 
-function [vth] = Id_Vgs_N(dispositivo)
+function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO)
+
+    % abilitare i plot di verifica (si = 1, no = 0)  
+    PLOT_ON = 1;
 
     cd (string(dispositivo))
     
@@ -29,9 +32,17 @@ function [vth] = Id_Vgs_N(dispositivo)
     %faccio il merge dei file
     id = [id_2(: , 2 : end) , id_1(: , 2:end)];
     % Valori di Vds in mV
-    vd = [10:10:100, 150:150:900];
+    vds = [10:10:100, 150:150:900];
+
+    if PLOT_ON
+        figure
+        plot(vgs,id);
+        title("Vgs - Id - " + dispositivo);
+        xlabel("$V_{gs}$" , Interpreter="latex");
+        ylabel("$I_{d}$" , Interpreter="latex");
+    end
    
-    %% Ratio Method
+    %% Fit lineare di Id-Vsg tra i punti 0.5 e 0.6
     
     % troviamo i punti un cui fare il fit
     pos_min = 1;
@@ -44,19 +55,21 @@ function [vth] = Id_Vgs_N(dispositivo)
         pos_max = pos_max +1;
     end
     
-    for i=1:length(vd)
+    for i=1:length(vds)
         P = polyfit(vgs(pos_min:pos_max), id(pos_min:pos_max,i), 1);
         vth_Lin_Fit(i) = -P(2)/P(1);
-
-        if vd(i) == 150
-            title(dispositivo);
-            val = polyval(P , [0 , 0.9]);
-            figure
-            plot(vgs , id(: , i))
-            xlim([0 , 0.6])
-            hold on
-            plot([0 , 0.9] , val)
-
+    
+        if PLOT_ON
+            if vds(i) == 150
+                val = polyval(P , [0 , 0.9]);
+                figure
+                title("Fit Lineare - " + dispositivo);
+                hold on
+                plot(vgs , id(: , i))
+                xlim([0 , 0.6])
+                plot([0 , 0.9] , val)
+                hold off
+            end
         end
     end
 
@@ -66,65 +79,61 @@ function [vth] = Id_Vgs_N(dispositivo)
     gm1 = zeros(size(id));
     gm2 = gm1;
     
-    for i=1:length(vd)
+    for i=1:length(vds)
         gm1(:,i) = gradient(id(:,i))./gradient(vgs);
     end
     
     gm2(1,:) = gm1(1,:);
     
-    for i=1:length(vd)
+    for i=1:length(vds)
         gm2(2:end,i) = gradient(id(1:end-1,i))./gradient(vgs(2:end));
     end
     
     gm = (gm1+gm2)/2;
     
-    for i=1:length(vd)
+    for i=1:length(vds)
         gm(:,i) = smooth(gm(:,i));
     end
     
-    % figure
-    % plot(vg , gm .* 1e3)
-    % 
-    % % nome assi
-    % ylabel('$g_m$ [mS]','interpreter','latex')
-    % xlabel('$V_{gs}$ [V]','interpreter','latex')
-    % 
-    % % titolo del plot
-    % title(device_type + " - $g_m$",'interpreter','latex')
-    % 
-    % % creo la legenda
-    % for i = 1: length(vd)
-    %     legend_text(i) = "Vds = " + (vd(i))+ " mV"; 
-    % end
-    % 
-    % if device_type == "N"
-    %     legend(legend_text,'Location','northwest')
-    % else
-    %     if device_type == "P"
-    %     legend(legend_text,'Location','southwest') 
-    %     end
-    % end
+    if PLOT_ON
+        figure
+        plot(vgs , gm .* 1e3)
     
+        % nome assi
+        ylabel('$g_m$ [mS]','interpreter','latex')
+        xlabel('$V_{gs}$ [V]','interpreter','latex')
+    
+        % titolo del plot
+        title(device_type + " - $g_m$",'interpreter','latex')
+    
+        % creo la legenda
+        for i = 1: length(vd)
+            legend_text(i) = "Vds = " + (vd(i))+ " mV"; 
+        end
+    
+        legend(legend_text,'Location','northwest')
+        
+    end
    
     %% Calculate threshold - Transconductance Change Method (TCM)
     %Find the maximum point of the gm derivative
     %valido per basse Vds
     
     % inizializzazione dei dati
-    TCM_data = zeros(length(id(:, 1)), length(vd));
+    TCM_data = zeros(length(id(:, 1)), length(vds));
     
-    for i=1:length(vd)
+    for i=1:length(vds)
         TCM_data(:,i) = gradient(gm(:,i))./gradient(vgs);
     end
     
     % Smooth della derivata
-    for i=1:length(vd)
+    for i=1:length(vds)
         TCM_data(: , i) = smooth(TCM_data(: , i));
     end
     
     [TCM_Max, TCM_Indice] = max(TCM_data(1:201,:)); % valore e indice massimo di di TCM per Vgs<=700mV
     
-    for i=1:length(vd)
+    for i=1:length(vds)
         vth_TCM_noFit(i, 1) = vgs(TCM_Indice(i));
     end
     
@@ -133,9 +142,9 @@ function [vth] = Id_Vgs_N(dispositivo)
     % in un intorno di Vth calcolata con TCM a Vgs = 10 mV e di raggio 100 mV
     
     grado = 2; % grado della polinomiale
-    coefficienti = zeros(length(vd), grado+1);
+    coefficienti = zeros(length(vds), grado+1);
     
-    for i = 1:length(vd)
+    for i = 1:length(vds)
         indici_intervallo = TCM_Indice(i)-20 : TCM_Indice(i)+20;
         intervallo_alta_ris = vgs(indici_intervallo(1)) : 0.0001 : vgs(indici_intervallo(end));
         coefficienti(i,:) = polyfit(vgs(indici_intervallo), TCM_data(indici_intervallo,i), grado);
@@ -146,24 +155,24 @@ function [vth] = Id_Vgs_N(dispositivo)
         vth_TCM(i) = intervallo_alta_ris(ind_grafico(i));
         % se Vds = 10mv (i == 1) teniamo gli intervalli per fare il grafico
         % dopo il for
-        if(i == 1)
+        if(vds(i) == 10)
             intervallo_vds_10mv = indici_intervallo;
             intervallo_vds_10mv_alta_ris = intervallo_alta_ris;
         end
     end
     
-    
-    % figure
-    % hold on
-    % title("TCM - " + dispositivo)
-    % plot(vg(intervallo_vds_10mv),TCM_data(intervallo_vds_10mv,1)); %grafico dati
-    % xline(vth_TCM_noFit(1),"--","Color","red");  %Vth dati
-    % xlabel("$V_{gs}$" , "Interpreter","latex");
-    % ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{gs}}$" , Interpreter="latex");
-    % plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
-    % plot(vth_TCM(1) , max_grafico(1) , "o") %minimo della polinomiale (Vth)
-    % legend("SDLM","Massimo di TCM","Fit di grado "+grado, "Massimo del fit")
-    
+    if PLOT_ON
+        figure
+        hold on
+        title("TCM - " + dispositivo)
+        plot(vg(intervallo_vds_10mv),TCM_data(intervallo_vds_10mv,1)); %grafico dati
+        xline(vth_TCM_noFit(1),"--","Color","red");  %Vth dati
+        xlabel("$V_{gs}$" , "Interpreter","latex");
+        ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{gs}}$" , Interpreter="latex");
+        plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
+        plot(vth_TCM(1) , max_grafico(1) , "o") %minimo della polinomiale (Vth)
+        legend("TCM","Massimo di TCM","Fit di grado " + grado, "Massimo del fit")
+    end
     
     %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
     
@@ -173,55 +182,52 @@ function [vth] = Id_Vgs_N(dispositivo)
     % SDLM_derivata_Smooth = log_Id_smooth;
     % SDLM_derivata_2_smooth = log_Id_smooth;
 
-    span = 5;
-    
     %calcoliamo il logaritmo di Id
     log_Id = log(abs(id));
     
     %Eseguiamo lo smooth
-    for i=1:length(vd)
-        log_Id_smooth(: , i) = smooth(log_Id(: , i),span);
+    for i=1:length(vds)
+        log_Id_smooth(: , i) = smooth(log_Id(: , i),SPAN);
     end
     
     %Deriviamo rispetto Vgs
-    for i = 1:length(vd) 
+    for i = 1:length(vds) 
         SDLM_derivata(: , i) = gradient(log_Id_smooth(: , i)) ./ gradient(vgs);
     end
     
     %Eseguiamo lo smooth della derivata
-    for i=1:length(vd)
-        SDLM_derivata(: , i) = smooth(SDLM_derivata(: , i),span);
+    for i=1:length(vds)
+        SDLM_derivata(: , i) = smooth(SDLM_derivata(: , i),SPAN);
     end
     
     %Deriviamo la seconda volta
-    for i= 1:length(vd)
+    for i= 1:length(vds)
         SDLM_derivata_2(: , i) = gradient(SDLM_derivata(:,i)) ./ gradient(vgs);
     end
     
     % per bassi valori di Vgs (da -0.3 a -0.2) sostituiamo i valori 
-    spuriousRemoved = [ones(20,length(vd))*200; SDLM_derivata_2(21:end,:)]; 
+    spuriousRemoved = [ones(20,length(vds))*200; SDLM_derivata_2(21:end,:)]; 
     
     %Smooth della derivata seconda
-    for i=1:length(vd)
-        SDLM_derivata_2(:, i) = smooth(spuriousRemoved(:,i),span);
+    for i=1:length(vds)
+        SDLM_derivata_2(:, i) = smooth(spuriousRemoved(:,i),SPAN);
     end
     
     [SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2); % #modifica: SDLM_derivata_2 --> SDLM_derivata_2_smooth
     
-    for i=1:length(vd)
+    for i=1:length(vds)
         vth_SDLM_noFit(i, 1) = vgs(SDLM_Indice(i));
     end
     
     %Calcolo del minimo della funzione polinomiale che interpola i punti 
     % in un intorno di Vth calcolata con SDLM a Vgs = 900 mV e di raggio 100 mV
+  
+    coefficienti = zeros(length(vds), GRADO+1);
     
-    grado = 6; % grado della polinomiale
-    coefficienti = zeros(length(vd), grado+1);
-    
-    for i = 1:length(vd)
+    for i = 1:length(vds)
         indici_intervallo = SDLM_Indice(i)-20 : SDLM_Indice(i)+20;
         intervallo_alta_ris = vgs(indici_intervallo(1)):0.0001:vgs(indici_intervallo(end));
-        coefficienti(i,:) = polyfit(vgs(indici_intervallo), SDLM_derivata_2(indici_intervallo,i), grado);
+        coefficienti(i,:) = polyfit(vgs(indici_intervallo), SDLM_derivata_2(indici_intervallo,i), GRADO);
         grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
         %minimo della polinomiale
         [~, ind_grafico(i)] = min(grafico( : , i));
@@ -229,25 +235,25 @@ function [vth] = Id_Vgs_N(dispositivo)
         vth_SDLM(i) = intervallo_alta_ris(ind_grafico(i));
         % se Vds = 900mv (i == length(Vds)) teniamo gli intervalli per fare il grafico
         % dopo il for
-        if vd(i) == 900
+        if vds(i) == 900
             indici_intervallo_vds_900mv = indici_intervallo;
             intervallo_vds_900mv_alta_ris = intervallo_alta_ris;
         end
     end
-    
-    figure
-    hold on
-    title("SDLM - " + dispositivo)
-    xlabel("$V_{gs}$" , "Interpreter","latex");
-    ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{gs}^2}$" , Interpreter="latex");
-    plot(vg(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
-    xline(vth_SDLM_noFit(end),"--","Color","r"); %Vth dati
-    plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
-    plot(vth_SDLM(end) , min_grafico(end) , "o") %minimo della polinomiale (Vth)
-    legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ grado, "Minimo del fit");
-    
+    if PLOT_ON
+        figure
+        hold on
+        title("SDLM - " + dispositivo)
+        xlabel("$V_{gs}$" , "Interpreter","latex");
+        ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{gs}^2}$" , Interpreter="latex");
+        plot(vg(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
+        xline(vth_SDLM_noFit(end),"--","Color","r"); %Vth dati
+        plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
+        plot(vth_SDLM(end) , min_grafico(end) , "o") %minimo della polinomiale (Vth)
+        legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
+    end
     %% creo una tabella contenente le Vth calcolate al variare di Vds
-    vth =  array2table([vd' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
+    vth =  array2table([vds' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
 
     cd ..
     

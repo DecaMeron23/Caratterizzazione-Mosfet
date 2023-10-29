@@ -1,13 +1,9 @@
 %Calcolo Delle Vth con i metodo RM , TCM e SDLM
 
-function [vth] = Id_Vgs_P(dispositivo)
+function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO)
 
     % abilitare i plot di verifica (si = 1, no = 0)  
     PLOT_ON = 1;
-    % Intensità dello smooth della SDLM
-    SPAN = 5;
-    % grado della polinomiale nella SDLM
-    GRADO = 6;
     
 
     cd (string(dispositivo))

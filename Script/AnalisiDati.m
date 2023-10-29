@@ -1,6 +1,17 @@
 %% inizializzazione
 clear; clc;
 
+% indichiamo se il dispositivo è pre irraggiato
+preIrraggiamento = 1;
+
+if preIrraggiamento == 1
+    SPAN = 20;
+    GRADO = 6;
+elseif preIrraggiamento == 0
+    SPAN = 5;
+    GRADO = 6;
+end
+
 % trovo la directory in cui ci troviamo
 fp = dir();
 % Lista dei file nella cartella
@@ -17,9 +28,9 @@ for i = 3 : length(fileInFolder)
             ~strcmp(dispositivo,'N4-600-30')  &&  ~strcmp(dispositivo,'P1-100-180_nf'))
 
         if dispositivo(1) == 'N' 
-            vth = Id_Vgs_N(dispositivo);
+            vth = Id_Vgs_N(dispositivo , SPAN , GRADO);
         elseif dispositivo(1) == 'P'
-            vth = Id_Vgs_P(dispositivo);
+            vth = Id_Vgs_P(dispositivo , SPAN , GRADO);
         end
       
         %% Save File
