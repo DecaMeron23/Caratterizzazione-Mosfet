@@ -66,8 +66,11 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO)
                 title("Fit Lineare - " + dispositivo);
                 hold on
                 plot(vgs , id(: , i))
-                xlim([0 , 0.6])
+                xline(0.6 , "--")
+                xline(0.5 , "--")
                 plot([0 , 0.9] , val)
+                yline(0 , "-.");
+                xline(vth_Lin_Fit(i) , "--");
                 hold off
             end
         end

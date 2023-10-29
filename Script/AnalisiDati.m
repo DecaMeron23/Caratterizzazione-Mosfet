@@ -2,7 +2,7 @@
 clear; clc;
 
 % indichiamo se il dispositivo è pre irraggiato
-preIrraggiamento = 1;
+preIrraggiamento = 0;
 
 if preIrraggiamento == 1
     SPAN = 20;
@@ -25,7 +25,7 @@ end
 for i = 3 : length(fileInFolder)
     dispositivo = char(fileInFolder(i));
     if ((dispositivo(1) == 'N' || dispositivo(1) == 'P') && dispositivo(3) == '-' &&  ...
-            ~strcmp(dispositivo,'N4-600-30')  &&  ~strcmp(dispositivo,'P1-100-180_nf'))
+            ~strcmp(dispositivo,'N3-600-30')  &&  ~strcmp(dispositivo,'P1-100-180_nf'))
 
         if dispositivo(1) == 'N' 
             vth = Id_Vgs_N(dispositivo , SPAN , GRADO);
