@@ -104,11 +104,11 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO)
         xlabel('$V_{gs}$ [V]','interpreter','latex')
     
         % titolo del plot
-        title(device_type + " - $g_m$",'interpreter','latex')
-    
+        title("$g_m$",'interpreter','latex')
+
         % creo la legenda
-        for i = 1: length(vd)
-            legend_text(i) = "Vds = " + (vd(i))+ " mV"; 
+        for i = 1: length(vds)
+            legend_text(i) = "Vds = " + (vds(i))+ " mV"; 
         end
     
         legend(legend_text,'Location','northwest')
@@ -150,9 +150,9 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO)
         coefficienti(i,:) = polyfit(vgs(indici_intervallo), TCM_data(indici_intervallo,i), grado);
         grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
         %massimo della polinomiale
-        [max_grafico(i), ind_grafico(i)] = max(grafico(: , i)); 
+        [max_grafico_TCM(i), ind_grafico_TCM(i)] = max(grafico(: , i)); 
         % Estraiamo la Vth dalla polinomiale
-        vth_TCM(i) = intervallo_alta_ris(ind_grafico(i));
+        vth_TCM(i) = intervallo_alta_ris(ind_grafico_TCM(i));
         % se Vds = 10mv (i == 1) teniamo gli intervalli per fare il grafico
         % dopo il for
         if(vds(i) == 10)
@@ -160,17 +160,17 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO)
             intervallo_vds_10mv_alta_ris = intervallo_alta_ris;
         end
     end
-    
+   
     if PLOT_ON
         figure
         hold on
         title("TCM - " + dispositivo)
-        plot(vg(intervallo_vds_10mv),TCM_data(intervallo_vds_10mv,1)); %grafico dati
+        plot(vgs(intervallo_vds_10mv),TCM_data(intervallo_vds_10mv,1)); %grafico dati
         xline(vth_TCM_noFit(1),"--","Color","red");  %Vth dati
         xlabel("$V_{gs}$" , "Interpreter","latex");
         ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{gs}}$" , Interpreter="latex");
         plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
-        plot(vth_TCM(1) , max_grafico(1) , "o") %minimo della polinomiale (Vth)
+        plot(vth_TCM(1) , max_grafico_TCM(1) , "o") %minimo della polinomiale (Vth)
         legend("TCM","Massimo di TCM","Fit di grado " + grado, "Massimo del fit")
     end
     
@@ -230,9 +230,9 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO)
         coefficienti(i,:) = polyfit(vgs(indici_intervallo), SDLM_derivata_2(indici_intervallo,i), GRADO);
         grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
         %minimo della polinomiale
-        [~, ind_grafico(i)] = min(grafico( : , i));
+        [min_grafico_SDLM(i), ind_grafico_SDLM(i)] = min(grafico( : , i));
         % Estraiamo la Vth della polinomiale
-        vth_SDLM(i) = intervallo_alta_ris(ind_grafico(i));
+        vth_SDLM(i) = intervallo_alta_ris(ind_grafico_SDLM(i));
         % se Vds = 900mv (i == length(Vds)) teniamo gli intervalli per fare il grafico
         % dopo il for
         if vds(i) == 900
@@ -240,16 +240,17 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO)
             intervallo_vds_900mv_alta_ris = intervallo_alta_ris;
         end
     end
+   
     if PLOT_ON
         figure
         hold on
         title("SDLM - " + dispositivo)
         xlabel("$V_{gs}$" , "Interpreter","latex");
         ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{gs}^2}$" , Interpreter="latex");
-        plot(vg(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
+        plot(vgs(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
         xline(vth_SDLM_noFit(end),"--","Color","r"); %Vth dati
         plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
-        plot(vth_SDLM(end) , min_grafico(end) , "o") %minimo della polinomiale (Vth)
+        plot(vth_SDLM(end) , min_grafico_SDLM(end) , "o") %minimo della polinomiale (Vth)
         legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
     end
     %% creo una tabella contenente le Vth calcolate al variare di Vds
