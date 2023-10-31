@@ -1,0 +1,12 @@
+# Chiamare la funzione loadPackage_static specificando
+	- tipo
+	- w
+	- l
+	- f
+
+# Modificare manualmente id_sqrt nel workspace nel caso ci siano spike indesiderati nell'ultimo grafico
+  (Per visualizzare gli effetti delle modifiche, chiamare plotVthData)
+  OPPURE
+  Trovare manualmente l'indice del massimo e inserirlo in calculateVth
+
+# Chiamare calculateVth, copiare e incollare la riga finale
