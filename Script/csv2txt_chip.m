@@ -28,7 +28,16 @@ function csv2txt_chip(path)
 
         %verifichaimo se esiste il file
         if exist(file_vds , "file")
-            csv2txt_ID_VDS(file_vds);
+            % convertiamo il file in txt
+            csv2txt(file_vds);
+        end
+        
+        if exist(file_vgs , "file")
+            csv2txt(file_vgs);
+        end
+
+        if exist(file_vgs2 , "file")
+            csv2txt_ID_VDS(file_vgs2);
         end
         
         %usciamo dalla cartella

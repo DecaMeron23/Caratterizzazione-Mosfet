@@ -24,17 +24,18 @@ function csv2txt(file)
     ind_correnti = 3 : width(data);
     num_correnti  = length(ind_correnti);
 
-
     for i  = 1 : num_vg
         indici_colonne_dati_finali = (num_correnti * (i-1) + 1) : num_correnti*i;
         indici_righe_data = ((num_vds * (i-1)) + 1):num_vds*i;
         dati_finali(1 : num_vds , indici_colonne_dati_finali) = data(indici_righe_data , ind_correnti );
     end
-
-    dati_finali = [ data(1:num_vds,1) , dati_finali];
-    vg = linspace(0 , max(data(: , 2)) , num_vg);
-    name_table = "v" + type_file;
     
+    dati_finali = [ data(1:num_vds,1) , dati_finali];
+    % vettore contenente tutte le vg (nel caso il file sia 'id-vds.csv') 
+    vg = linspace(0 , max(data(: , 2)) , num_vg);
+    
+    % creaiamo i nomi delle diverse colonne
+    name_table = "v" + type_file;
     for vg_i = vg
         if type_file == 'g'
             name_table = [name_table ,"id_vd = " + vg_i+ "V" ,  "ig_vd = " + vg_i+ "V" , "is_vd = " + vg_i+ "V" ,"iavdd_vd = " + vg_i+ "V" , "ignd_vd = " + vg_i+ "V"];
@@ -45,6 +46,5 @@ function csv2txt(file)
     end
     dati_finali = array2table(dati_finali , "VariableNames", name_table);
     %% Salvo il file nella cartella attuale
-    
-    writetable(dati_finali  , file(1:(end-4)) , "FileType","text" , "Delimiter","\t");
+    writetable(dati_finali  , file(1:(end-4)) , "FileType", "text", "Delimiter", "\t");
 end
