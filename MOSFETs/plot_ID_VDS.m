@@ -57,6 +57,5 @@ function plot_ID_VDS(data,text ,folderName)
     legend('boxoff')
     axis square; 
     % Save figure
-    saveas(h, [folderName, '\eps\id_vds.eps'], 'epsc')
-
+    saveas(gcf, [folderName, '\eps\id_vds.eps'], 'epsc') % #modifica inserito gcf, al posto di h, sennò dava errore e non salvava il file
 end
