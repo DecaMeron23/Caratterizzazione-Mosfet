@@ -1,11 +1,7 @@
 %Calcolo Delle Vth con i metodo RM , TCM e SDLM
 
-function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO)
-
-    % abilitare i plot di verifica (si = 1, no = 0)  
-    PLOT_ON = 1;
+function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     
-
     cd (string(dispositivo))
     
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs

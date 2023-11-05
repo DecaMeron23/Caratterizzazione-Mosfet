@@ -37,7 +37,7 @@ function csv2txt_chip(path)
         end
 
         if exist(file_vgs2 , "file")
-            csv2txt_ID_VDS(file_vgs2);
+            csv2txt(file_vgs2);
         end
         
         %usciamo dalla cartella
