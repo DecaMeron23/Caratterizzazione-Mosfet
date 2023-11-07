@@ -48,6 +48,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         title("Vsg - Id - " + dispositivo);
         xlabel("$V_{sg}$" , Interpreter="latex");
         ylabel("$I_{d}$" , Interpreter="latex");
+        
     end
 
     %% Fit lineare di Id-Vsg tra i punti 0.5 e 0.6
@@ -83,6 +84,9 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
                 xline(0.6 , "--")
                 yline(0 , "-.");
                 xline(vth_Lin_Fit(i) , "--");
+                xlabel("$V_{sg} [V]$" , "Interpreter","latex");
+                ylabel("$I_D [A]$" , Interpreter="latex");
+                legend( "$I_D$", "linear fit", Interpreter = "latex");
                 hold off
             end
         end
