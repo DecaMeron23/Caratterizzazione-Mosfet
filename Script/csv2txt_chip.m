@@ -18,9 +18,9 @@ function csv2txt_chip(path)
     clear j directory temp nameFolder i
 
     %% per ogni cartella prendiamo il file .csv e lo trasfotmiamo in txt
-    file_vds = "id-vds.csv";
-    file_vgs = "id-vgs.csv";
-    file_vgs2 = "id-vgs-2.csv";
+    file_vds = 'id_vds.csv';
+    file_vgs = "id_vgs.csv";
+    file_vgs2 = "id_vgs_2.csv";
 
     for i = folders
         %entriamo nella cartella
