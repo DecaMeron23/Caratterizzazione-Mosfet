@@ -18,7 +18,7 @@ function csv2txt_chip(path)
     clear j directory temp nameFolder i
 
     %% per ogni cartella prendiamo il file .csv e lo trasfotmiamo in txt
-    file_vds = 'id_vds.csv';
+    file_vds = "id_vds.csv";
     file_vgs = "id_vgs.csv";
     file_vgs2 = "id_vgs_2.csv";
 
@@ -39,7 +39,16 @@ function csv2txt_chip(path)
         if exist(file_vgs2 , "file")
             csv2txt(file_vgs2);
         end
-        
+
+        cartella_plot = "plot";
+        if(~exist(cartella_plot , "file"))
+            mkdir(cartella_plot);
+        end
+        %% salviamo i plot
+        cd(cartella_plot);        
+    
+        %facciamo i plot e li salviamo
+
         %usciamo dalla cartella
         cd ..
     end
