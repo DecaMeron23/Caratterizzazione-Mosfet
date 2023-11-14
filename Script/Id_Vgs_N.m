@@ -33,7 +33,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
 
     if PLOT_ON
         figure
-        plot(vgs,id);
+        plot(vgs,id(:,1));
         title("Vgs - Id - " + dispositivo);
         xlabel("$V_{gs}$" , Interpreter="latex");
         ylabel("$I_{d}$" , Interpreter="latex");
@@ -97,7 +97,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
     
     if PLOT_ON
         figure
-        plot(vgs , gm .* 1e3)
+        plot(vgs , gm(:,1) .* 1e3)
     
         % nome assi
         ylabel('$g_m$ [mS]','interpreter','latex')
@@ -141,13 +141,12 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
     %Calcolo del massimo della funzione polinomiale che interpola i punti 
     % in un intorno di Vth calcolata con TCM a Vgs = 10 mV e di raggio 100 mV
     
-    grado = 2; % grado della polinomiale
-    coefficienti = zeros(length(vds), grado+1);
+    coefficienti = zeros(length(vds), GRADO+1);
     
     for i = 1:length(vds)
         indici_intervallo = TCM_Indice(i)-20 : TCM_Indice(i)+20;
         intervallo_alta_ris = vgs(indici_intervallo(1)) : 0.0001 : vgs(indici_intervallo(end));
-        coefficienti(i,:) = polyfit(vgs(indici_intervallo), TCM_data(indici_intervallo,i), grado);
+        coefficienti(i,:) = polyfit(vgs(indici_intervallo), TCM_data(indici_intervallo,i), GRADO);
         grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
         %massimo della polinomiale
         [max_grafico_TCM(i), ind_grafico_TCM(i)] = max(grafico(: , i)); 
@@ -171,7 +170,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{gs}}$" , Interpreter="latex");
         plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
         plot(vth_TCM(1) , max_grafico_TCM(1) , "o") %minimo della polinomiale (Vth)
-        legend("TCM","Massimo di TCM","Fit di grado " + grado, "Massimo del fit")
+        legend("TCM","Massimo di TCM","Fit di grado " + GRADO, "Massimo del fit polinomiale")
     end
     
     %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
@@ -256,6 +255,6 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
     %% creo una tabella contenente le Vth calcolate al variare di Vds
     vth =  array2table([vds' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
 
-    cd ..
+    cd ..;
     
 end

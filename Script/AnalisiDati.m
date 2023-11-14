@@ -28,12 +28,14 @@ end
 for i = 3 : length(fileInFolder)
     dispositivo = char(fileInFolder(i));
     if ((dispositivo(1) == 'N' || dispositivo(1) == 'P') && dispositivo(3) == '-' &&  ...
-            ~strcmp(dispositivo,'N3-600-30')  &&  ~strcmp(dispositivo,'P1-100-180_nf'))
+            ~strcmp(dispositivo,'N4-600-30')  &&  ~strcmp(dispositivo,'P1-100-180_nf'))
 
+        for i = 2 : 2 : 8
         if dispositivo(1) == 'N' 
-            vth = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON);
+            vth = Id_Vgs_N(dispositivo , SPAN , i , PLOT_ON);
         elseif dispositivo(1) == 'P'
-            vth = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON);
+            vth = Id_Vgs_P(dispositivo , SPAN , i , PLOT_ON);
+        end
         end
       
         %% Save File
@@ -50,7 +52,7 @@ for i = 3 : length(fileInFolder)
          
         
         %Salvo File nella cartella
-        writetable( vth, "Vth_" + dispositivo + ".txt",  "Delimiter", "\t");
+        %writetable( vth, "Vth_" + dispositivo + ".txt",  "Delimiter", "\t");
 
         cd ..
         

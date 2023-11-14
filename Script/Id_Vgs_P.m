@@ -41,15 +41,15 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     %calcoliamo i valori di Vsg
     vsg = 0.9 - vsg;
     
-    % Plot di verifica
-    if PLOT_ON
-        figure
-        plot(vsg,id);
-        title("Vsg - Id - " + dispositivo);
-        xlabel("$V_{sg}$" , Interpreter="latex");
-        ylabel("$I_{d}$" , Interpreter="latex");
-        
-    end
+    % % Plot di verifica
+    % if PLOT_ON
+    %     figure
+    %     plot(vsg,id);
+    %     title("Vsg - Id - " + dispositivo);
+    %     xlabel("$V_{sg}$" , Interpreter="latex");
+    %     ylabel("$I_{d}$" , Interpreter="latex");
+    % 
+    % end
 
     %% Fit lineare di Id-Vsg tra i punti 0.5 e 0.6
     
@@ -70,26 +70,26 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         P = polyfit(vsg(pos_min:pos_max), id(pos_min:pos_max, i ), 1);
         vth_Lin_Fit(i) = -P(2)/P(1);
 
-        %plot di verifica del fit a Vsd = 150mV
-        if PLOT_ON
-            if vsd(i) == 150
-                val = polyval(P , [0 , 0.9]);
-                figure
-                hold on
-                plot(vsg , id(: , i))
-                plot([0 , 0.9] , val)
-                title("Fit lineare - " + dispositivo);
-                xlim([0 , 0.7])
-                xline(0.5 , "--")
-                xline(0.6 , "--")
-                yline(0 , "-.");
-                xline(vth_Lin_Fit(i) , "--");
-                xlabel("$V_{sg} [V]$" , "Interpreter","latex");
-                ylabel("$I_D [A]$" , Interpreter="latex");
-                legend( "$I_D$", "linear fit", Interpreter = "latex");
-                hold off
-            end
-        end
+        % %plot di verifica del fit a Vsd = 150mV
+        % if PLOT_ON
+        %     if vsd(i) == 150
+        %         val = polyval(P , [0 , 0.9]);
+        %         figure
+        %         hold on
+        %         plot(vsg , id(: , i))
+        %         plot([0 , 0.9] , val)
+        %         title("Fit lineare - " + dispositivo);
+        %         xlim([0 , 0.7])
+        %         xline(0.5 , "--")
+        %         xline(0.6 , "--")
+        %         yline(0 , "-.");
+        %         xline(vth_Lin_Fit(i) , "--");
+        %         xlabel("$V_{sg} [V]$" , "Interpreter","latex");
+        %         ylabel("$I_D [A]$" , Interpreter="latex");
+        %         legend( "$I_D$", "linear fit", Interpreter = "latex");
+        %         hold off
+        %     end
+        % end
     end
 
     %% Calcoliamo Gm
@@ -115,14 +115,14 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     end
     
     %Plot di verifica
-    if PLOT_ON
-        figure
-        plot(vsg , gm .* 1e3)
-        % nome assi
-        ylabel('$g_m$ [mS]','interpreter','latex')
-        xlabel('$V_{sg}$ [V]','interpreter','latex')
-        title("gm - " + dispositivo)
-    end
+    % if PLOT_ON
+    %     figure
+    %     plot(vsg , gm .* 1e3)
+    %     % nome assi
+    %     ylabel('$g_m$ [mS]','interpreter','latex')
+    %     xlabel('$V_{sg}$ [V]','interpreter','latex')
+    %     title("gm - " + dispositivo)
+    % end
     %% Calculate threshold - Transconductance Change Method (TCM)
     %Find the maximum point of the gm derivative
     %valido per basse Vds
@@ -148,10 +148,8 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     
     %Calcolo del massimo della funzione polinomiale che interpola i punti 
     % in un intorno di Vth calcolata con TCM a Vgs = 10 mV e di raggio 100 mV
-    
-    % grado della polinomiale
-    grado = 2; 
-    coefficienti = zeros(length(vsd), grado + 1);
+     
+    coefficienti = zeros(length(vsd), GRADO + 1);
 
     for i = 1:length(vsd)
         %prendiamo gli indici dell'intervallo +-100mV con centro Vth
@@ -160,7 +158,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         %incremento di 0.1mV
         intervallo_alta_ris = vsg(indici_intervallo(1)) : 0.0001 : vsg(indici_intervallo(end));
         %Troviamo il valori dei coefficenti della funzione polinomiale 
-        coefficienti(i,:) = polyfit(vsg(indici_intervallo), derivata_TCM(indici_intervallo, i), grado);
+        coefficienti(i,:) = polyfit(vsg(indici_intervallo), derivata_TCM(indici_intervallo, i), GRADO);
         % calcoliamo le y della funzione polinomiale trovata
         grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
         % massimo della polinomiale
@@ -187,11 +185,11 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         % plot della polinomiale
         plot(intervallo_vds_150mv_alta_ris,grafico(:, 1)); 
         % plot Vth calcolata con la polinomiale
-        plot(vth_TCM(1) , max_grafico(1) , "o");
+        plot(vth_TCM(1) , max_grafico(1) , "*", color = "r", MarkerSize=20);
 
         xlabel("$V_{sg}$" , "Interpreter","latex");
         ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{sg}}$" , Interpreter="latex");
-        legend("SDLM","Massimo di TCM","Fit di grado "+ grado, "Massimo del fit")
+        legend("SDLM","Massimo di TCM","Fit di grado "+ GRADO, "Massimo del fit")
     end
     
     %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
@@ -222,8 +220,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     %Calcolo del minimo della funzione polinomiale che interpola i punti 
     % in un intorno di Vth calcolata con SDLM a Vgs = 900 mV e di raggio 100 mV
     
-    grado = GRADO; % grado della polinomiale
-    coefficienti = zeros(length(vsd), grado+1);
+    coefficienti = zeros(length(vsd), GRADO+1);
     
     for i = 1:length(vsd)
         %prendiamo gli indici dell'intervallo +-100mV con centro Vth
@@ -232,7 +229,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         %incremento di 0.1mV
         intervallo_alta_ris = vsg(indici_intervallo(1)) : 0.0001 : vsg(indici_intervallo(end));
         %Troviamo il valori dei coefficenti della funzione polinomiale 
-        coefficienti(i,:) = polyfit(vsg(indici_intervallo), derivata_2_SDLM(indici_intervallo,i), grado);
+        coefficienti(i,:) = polyfit(vsg(indici_intervallo), derivata_2_SDLM(indici_intervallo,i), GRADO);
         % calcoliamo le y della funzione polinomiale trovata
         grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
         % estraiamo il minimo della polinomiale
@@ -248,23 +245,23 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     end
     
    % Plot di verifica
-   if PLOT_ON
-        figure
-        hold on
-        title("SDLM - " + dispositivo)
-        xlabel("$V_{sg}$" , "Interpreter","latex");
-        ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{sg}^2}$" , Interpreter="latex");
-        % Plot dei dati calcolati
-        plot(vsg(indici_intervallo_vsd_900mv),derivata_2_SDLM(indici_intervallo_vsd_900mv , end))
-        %plot della vth dei dati calcolati
-        xline(vth_SDLM_noFit(end),"--","Color","r");
-        % plot della polinomiale
-        plot(intervallo_vsd_900mv_alta_ris, grafico(:, end));
-        % plot vth della polinomiale
-        plot(vth_SDLM(end) , min_grafico(end) , "o")
-        legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ grado, "Minimo del fit");
-        hold off
-    end
+   % if PLOT_ON
+   %      figure
+   %      hold on
+   %      title("SDLM - " + dispositivo)
+   %      xlabel("$V_{sg}$" , "Interpreter","latex");
+   %      ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{sg}^2}$" , Interpreter="latex");
+   %      % Plot dei dati calcolati
+   %      plot(vsg(indici_intervallo_vsd_900mv),derivata_2_SDLM(indici_intervallo_vsd_900mv , end))
+   %      %plot della vth dei dati calcolati
+   %      xline(vth_SDLM_noFit(end),"--","Color","r");
+   %      % plot della polinomiale
+   %      plot(intervallo_vsd_900mv_alta_ris, grafico(:, end));
+   %      % plot vth della polinomiale
+   %      plot(vth_SDLM(end) , min_grafico(end) , "*", color="r", MarkerSize=20)
+   %      legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
+   %      hold off
+   %  end
     
     %% Creazione tabella contenente le Vth calcolate in base alle Vsd
     vth =  array2table([vsd' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
