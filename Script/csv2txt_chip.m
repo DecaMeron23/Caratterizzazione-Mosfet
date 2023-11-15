@@ -44,15 +44,12 @@ function csv2txt_chip(path)
         if(~exist(cartella_plot , "file"))
             mkdir(cartella_plot);
         end
+
+        
         %% salviamo i plot
         
         plot_id_vds('id_vds.txt');
         
-        cd(cartella_plot);        
-        
-        
-        
-        %usciamo dalla cartella
         cd ..
     end
 end

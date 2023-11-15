@@ -1,0 +1,5 @@
+function gm(data)
+    
+    
+    
+end
