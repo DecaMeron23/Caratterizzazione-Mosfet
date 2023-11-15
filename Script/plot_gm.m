@@ -38,12 +38,29 @@
         gm(:,i) = smooth(gm(:,i));
     end
     
-    %% Facciamo i plot
+    %% Facciamo il plot
     plot(vsg , gm , LineWidth=1);    
     title("$G_m - V_{SG}$" , Interpreter="latex");
     xlabel("$V_{GS} [V]$", Interpreter="latex");
     ylabel("$G_m [A/V]$" , Interpreter="latex");
     legend("$V_{SD}$ = " + vsd + " $[mV]$" , Location="best" , Interpreter="latex"  , FontSize= 12 );
 
+    %% Salviamo il plot
+    cd plot\
+    saveas(gcf, 'plot_gm_vds', 'eps');
+    saveas(gcf, 'plot_gm_vds', 'png');
+    cd ..
+    
+    %% Salviamo Gm
+    
+    varName(1) = "Vsg";
+    for i = 1 : length(vsd)
+        varName(i+1) = "Vsd = " + vsd(i);
+    end
+    gm_table = [vsg(:) , gm(: , :)];
+    gm_table = array2table(gm_table , "VariableNames" , varName);
+
+    writetable(gm_table , "gm.txt" , Delimiter='\t')
     clear
+
 %end
