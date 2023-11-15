@@ -1,5 +1,0 @@
-function gm(data)
-    
-    
-    
-end

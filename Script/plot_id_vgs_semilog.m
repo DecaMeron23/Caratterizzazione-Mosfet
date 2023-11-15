@@ -1,8 +1,9 @@
 %function plot_id_vgs(dati)
     dati = readmatrix("id_vgs.txt");
     %% estraiamo i dati 
-    vg = dati(: , 1);
-    
+    vsg = dati(: , 1);
+    vsg = 0.9 - vsg;
+
     vsd = 150:150:900;
 
     COLONNE_ID = 2:5:width(dati); 
@@ -14,7 +15,7 @@
 
     %% facciamo il plot
     for i = 1:width(id)
-    semilogy(vg, id(: , i) , 'LineWidth', 1);
+    semilogy(vsg, id(: , i) , LineWidth=1);
     hold all
     end 
     legend("$V_{SG} = " + vsd + " mV$", interpreter = "latex" ,  FontSize=12 , Location="best");
@@ -28,4 +29,6 @@
     saveas(gcf, 'plot_id_vds_semilog', 'eps');
     saveas(gcf, 'plot_id_vds_semilog', 'png');
     cd ..
+
+    clear
 %end
