@@ -47,10 +47,14 @@ function csv2txt_chip(path)
         %% salviamo i plot
         
         plot_id_vds('id_vds.txt');
+        plot_id_vgs('id_vgs.txt');
+        log_id_vgs('id_vgs.txt');
+        plot_gm_vgs('id_vgs.txt');
+        plot_gds_vds('id_vds.txt');
+        log_gm_id('id_vds.txt');
         
         cd(cartella_plot);        
-        
-        
+             
         
         %usciamo dalla cartella
         cd ..

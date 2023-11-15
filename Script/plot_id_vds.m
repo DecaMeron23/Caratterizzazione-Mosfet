@@ -1,5 +1,5 @@
 %function plot_id_vds(dati)
-    dati = readmatrix("id_vds.txt");
+    dati = readmatrix("id-vds.txt");
     vds = dati(2:end , 1);
     vsg = 900:-150:0;
     id = dati(2:end , 7:5:end);
