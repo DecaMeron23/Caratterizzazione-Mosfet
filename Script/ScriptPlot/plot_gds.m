@@ -1,6 +1,6 @@
-% function plot_gds(dati , type)
+function plot_gds(name_file , type)
      
-    dati = readmatrix("id_vds.txt");
+    dati = readmatrix(name_file);
     %% Estraiamo i dati
     vds = dati(: , 1);
     
@@ -76,4 +76,4 @@
     writetable(gm_table , "gds.txt" , Delimiter='\t')
     clear
 
-% end
+end

@@ -47,8 +47,12 @@ function csv2txt_chip(path)
 
         
         %% salviamo i plot
-        
-        plot_id_vds('id_vds.txt');
+    
+        [~, nomeCartella, ~] = fileparts(pwd);
+        type = nomeCartella(1);
+
+        plot_gds("id_vds.txt" , type);
+        plot_gm("id_vgs.txt" , type);
         
         cd ..
     end

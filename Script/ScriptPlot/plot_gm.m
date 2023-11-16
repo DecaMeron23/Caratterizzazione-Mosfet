@@ -1,6 +1,6 @@
-%function plot_gm(dati)
+function plot_gm(dati ,type)
     
-    dati = readmatrix("id_vgs.txt");
+    % dati = readmatrix("id_vgs.txt");
     %% Estraiamo i dati
     vsg = dati(: , 1);
     
@@ -63,4 +63,4 @@
     writetable(gm_table , "gm.txt" , Delimiter='\t')
     clear
 
-%end
+end
