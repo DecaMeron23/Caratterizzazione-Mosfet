@@ -7,7 +7,9 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
     file = "id-vgs.txt";
     
-    
+     if(exist("id_vgs.txt" , "file"))
+        file = "id_vgs.txt";
+     end
 
     %se il file non esiste ritorna una tabella vuota
     if(~exist(file ,"file"))

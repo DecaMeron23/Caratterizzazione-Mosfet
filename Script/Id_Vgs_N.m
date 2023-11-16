@@ -8,6 +8,14 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
     file1 = "id-vgs.txt";
     file2 = "id-vgs-2.txt";
     
+    if(exist("id_vgs.txt" , "file"))
+        file1 = "id_vgs.txt";
+    end
+    
+    if(exist("id_vgs_2.txt" , "file"))
+        file1 = "id_vgs_2.txt";
+    end
+
     % Carico i file
     id_Vgs_completo_1 = readmatrix(file1); 
     id_Vgs_completo_2 = readmatrix(file2);    

@@ -27,7 +27,7 @@ classdef rumore
         end
 
         function noise_out (file1,file2)
-            const = 4.14E-19;
+            const = 4.14E-19; %densità spettrale di potenza di rumore di una resisenza da 25 Ohm
             tipo1=extractBefore(file1,'_');
             tipo2=extractBefore(file2,'_');
             if strcmp (tipo1,'fondo')==1
@@ -48,7 +48,7 @@ classdef rumore
                     if noise(i,2) >= fondo(i,2)
                         x=noise(i,2)^2;
                         y=fondo(i,2)^2;
-                        c0 = (x-y);
+                        c0 = x-y;
                     else 
                         c0 = -1;
                     end
@@ -93,7 +93,7 @@ classdef rumore
                     den=10^(fdt(i,2)/20);
                     noise_in(i,2)=string(noise_out(i,2)/den);
                 else 
-                    noise_in(i,2) = "\t";
+                    noise_in(i,2) = "";
                 end
             end
             assignin("base","noise_in",noise_in);

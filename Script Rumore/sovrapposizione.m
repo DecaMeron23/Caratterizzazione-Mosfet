@@ -60,7 +60,6 @@ saveas(gcf, 'noise_in_sovr.png', 'png');
 hold off;
 for i=1:4
     loglog(vect_noise_out{1,i}(:,1),vect_noise_out{1,i}(:,2));
-    
     hold all;
 end
 rumore.connected( cell2mat(vect_noise_out));
