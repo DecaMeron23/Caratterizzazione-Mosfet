@@ -32,11 +32,17 @@ function csv2txt(file)
     
     dati_finali = [ data(1:num_vds,1) , dati_finali];
     % vettore contenente tutte le vg (nel caso il file sia 'id-vds.csv') 
-    vg = linspace(0 , max(data(: , 2)) , num_vg);
+    vg = unique(data(: , 2));
     
+    [ ~ , nome_cartella  , ~]  = fileparts(pwd);
+     
+    if nome_cartella(1) == 'P'
+        vg  = flipud(0.9 - vg);
+    end
+
     % creaiamo i nomi delle diverse colonne
     name_table = "v" + type_file;
-    for vg_i = vg
+    for vg_i = vg'
         if type_file == 'g'
             name_table = [name_table ,"id_vd = " + vg_i+ "V" ,  "ig_vd = " + vg_i+ "V" , "is_vd = " + vg_i+ "V" ,"iavdd_vd = " + vg_i+ "V" , "ignd_vd = " + vg_i+ "V"];
         elseif type_file == 'd'
