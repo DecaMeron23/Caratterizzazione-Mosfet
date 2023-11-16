@@ -1,13 +1,12 @@
-% function plot_gds(dati)
+function plot_gds(name_file , type)
      
-    dati = readmatrix("id_vds.txt");
+    dati = readmatrix(name_file);
     %% Estraiamo i dati
     vds = dati(: , 1);
     
     vds = 0.9 - vds;
-
-    vgs = 150:150:900;
-
+    
+    
     COLONNE_ID = 2:5:width(dati); 
 
     id = dati(: , COLONNE_ID);
@@ -15,6 +14,14 @@
     id = fliplr(id);
     % escludiamo la vd a 900mV (Vsd = 0mV)
     id = id(: , 2:end);
+
+    % verifichiamo se il file è "_2" o normale
+    if width(id) == 6
+        vgs = 150:150:900;
+    elseif width(id) == 10
+        vgs = 10:10:100;
+    end
+    
 
     %% calcoliamo la gm
     
@@ -40,17 +47,21 @@
 
     %% Facciamo il plot
 
+    figure(Visible="off");
+
     plot(vds , gds , LineWidth=1);    
-    title("$G_{ds} - V_{SG}$" , Interpreter="latex");
-    xlabel("$V_{SG} [V]$", Interpreter="latex");
+    title("$G_{ds} - V_{SD}$" , Interpreter="latex");
+    xlabel("$V_{SD} [V]$", Interpreter="latex");
     ylabel("$G_{ds} [A/V]$" , Interpreter="latex");
-    legend("$V_{SD}$ = " + vgs + " $[mV]$" , Location="best" , Interpreter="latex"  , FontSize= 12 );
+    legend("$V_{SG}$ = " + vgs + " $[mV]$" , Location="best" , Interpreter="latex"  , FontSize= 12 );
+
 
     %% Salviamo il plot
     
     cd plot\
     saveas(gcf, 'plot_gds_vgs', 'eps');
     saveas(gcf, 'plot_gds_vgs', 'png');
+    close(gcf)
     cd ..
     
     %% Salviamo Gm
@@ -65,5 +76,4 @@
     writetable(gm_table , "gds.txt" , Delimiter='\t')
     clear
 
-
-% end
+end
