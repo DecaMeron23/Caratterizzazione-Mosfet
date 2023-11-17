@@ -21,9 +21,19 @@ function plot_id_vgs(file , type)
     ylabel("$" + nome_id+ " [A] $", Interpreter="latex");
 
     %% salviamo il plot
-    cd plot;        
-        saveas(gcf, 'plot_id_vds_semilog', 'eps');
-        saveas(gcf, 'plot_id_vds_semilog', 'png');
+
+    if (contains(file  , '2'))
+        name = "plot_id_vgs_2";
+    else
+        name = "plot_id_vgs";
+    end
+        
+    cd plot\eps;        
+        saveas(gcf, name, 'eps');
+    cd ..
+    cd png\
+        saveas(gcf, name, 'png');
+    cd ..
     cd ..
 
-%end
+end

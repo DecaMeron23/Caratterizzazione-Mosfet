@@ -21,9 +21,18 @@ function plot_gm(file ,type)
     legend("$"+ nome_vds +" = " + vds + " [mV]$" , Location="best" , Interpreter="latex" , FontSize=12);
 
     %% Salviamo il plot
-    cd plot\
-        saveas(gcf, 'plot_gm_vds', 'eps');
-        saveas(gcf, 'plot_gm_vds', 'png');
+    
+    if (contains(file  , '2'))
+        name = "plot_gm_vgs_2";
+    else
+        name = "plot_gm_vgs";
+    end
+    cd plot\eps
+        saveas(gcf, name, 'eps');
+    cd ..
+    cd png\
+        saveas(gcf, name, 'png');
+    cd ..
     cd ..
     
     %% Salviamo Gm
@@ -43,6 +52,12 @@ function plot_gm(file ,type)
     gm_table = [vgs(:) , gm(: , :)];
     gm_table = array2table(gm_table , "VariableNames" , varName);
 
-    writetable(gm_table , "gm.txt" , Delimiter='\t');
+    if (contains(file  , '2'))
+        name = "gm_2";
+    else
+        name = "gm";
+    end
+
+    writetable(gm_table, name , Delimiter='\t' , FileType='text');
 
 end

@@ -24,9 +24,12 @@ function plot_gds(file , type)
 
     %% Salviamo il plot
     
-    cd plot\
+    cd plot\eps
         saveas(gcf, 'plot_gds_vgs', 'eps');
+    cd ..
+    cd png\
         saveas(gcf, 'plot_gds_vgs', 'png');
+    cd ..
     cd ..
     
     %% Salviamo Gm
@@ -48,6 +51,6 @@ function plot_gds(file , type)
     gm_table = array2table(gm_table , "VariableNames" , varName);
 
     writetable(gm_table , "gds.txt" , Delimiter='\t')
-    clear
+    
 
 end

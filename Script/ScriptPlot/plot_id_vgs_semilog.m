@@ -1,34 +1,7 @@
 function plot_id_vgs_semilog(file , type)
-    % type = 'P';
-    dati = readmatrix(file);
     %% estraiamo i dati     
-    vg = dati(: , 1);
-
-    % per i dispositivi P consideriamo il -Vgs
-    if(type == 'P')
-        vgs = vg - 0.9;
-        vgs = -vgs;
-    elseif(type == 'N')
-        vgs = vg;
-    end
     
-    
-    COLONNE_ID = 2:5:width(dati); 
-    id = dati(: , COLONNE_ID);
-
-    if(type == 'P')
-        id = fliplr(id);
-        id = abs(id);
-    end
-    
-    id = id(: , 2:end); % escludiamo lo zero
-
-    %per i dispositivi P si intende |Vds|
-    if(length(COLONNE_ID) == 7) % file
-        vds = 150 : 150 : 900;
-    elseif(length(COLONNE_ID) == 11) % file _2.txt
-        vds = 10 : 10 : 100; 
-    end
+    [vgs , id , vds] = estrazione_dati_vgs(file , type);
 
     %% facciamo il plot
     semilogy(vgs, id , LineWidth = 1);
@@ -49,8 +22,18 @@ function plot_id_vgs_semilog(file , type)
     ylabel("$" + nome_id+ " [A] $", Interpreter="latex");
 
     %% salviamo il plot
-    cd plot;        
-    saveas(gcf, 'plot_id_vds_semilog', 'eps');
-    saveas(gcf, 'plot_id_vds_semilog', 'png');
+
+    if (contains(file  , '2'))
+        name = "plot_id_vgs_semilog_2";
+    else
+        name = "plot_id_vgs_semilog";
+    end
+
+    cd plot\eps;        
+        saveas(gcf, name , 'eps');
+    cd ..
+    cd png
+        saveas(gcf, name , 'png');
+    cd ..
     cd ..
 end
