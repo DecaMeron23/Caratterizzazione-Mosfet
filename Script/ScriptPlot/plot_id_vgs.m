@@ -16,7 +16,7 @@ function plot_id_vgs(file , type)
         nome_vds = "V_{DS}";
     end
 
-    legend("$"+ nome_vds+ "  = " + vds + " mV$", interpreter = "latex" ,  FontSize=12 , Location="best");
+    legend("$"+ nome_vds+ "  = " + vds + " mV$", interpreter = "latex", Location="best");
     xlabel("$" + nome_vgs +"[V]$", Interpreter="latex")
     ylabel("$" + nome_id+ " [A] $", Interpreter="latex");
 

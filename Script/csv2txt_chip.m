@@ -3,7 +3,12 @@ function csv2txt_chip(path)
 %   path è la directory del chip che vogliamo analizzare   
     tic;
     cd(path);
-
+    
+    % disabilitiamo i plot
+    set(0,'DefaultFigureVisible','off');
+    % inizzializzazione
+    mod_id = zeros(241 , 9);
+    vgs = zeros(241 , 9);
     %% estraiamo le cartelle dei dispositivi e le salviamo in folders
     directory = dir();
     j = 1;
@@ -11,11 +16,13 @@ function csv2txt_chip(path)
         temp = directory(folder_iesima);
         if temp.isdir == 1
             nameFolder = temp.name;
-            folders(j) = string(nameFolder);
-            j = j+1;
+            % escludiamo la cartella plot
+            if(strcmp(nameFolder , "plot") == 0)
+                folders(j) = string(nameFolder);
+                j = j+1;
+            end        
         end
     end
-
     clear j directory temp nameFolder folder_iesima
 
     %% per ogni cartella prendiamo il file .csv e lo trasfotmiamo in txt
@@ -47,6 +54,7 @@ function csv2txt_chip(path)
         end
     
         %% creaiamo le cartelle necessarie
+        
         cartella_plot = "plot";
         if(~exist(cartella_plot , "file"))
             mkdir(cartella_plot);
@@ -75,16 +83,31 @@ function csv2txt_chip(path)
         plot_id_vgs_semilog(fileVg , type); 
         plot_gm(fileVg , type);
         plot_gds(fileVd , type);
-        
+
         plot_id_vgs(fileVg2 , type);
         plot_id_vgs_semilog(fileVg2 , type); 
         plot_gm(fileVg2 , type);
         
+        [mod_id_i , vgs_i] = estrazione_ig_vgs(fileVg , type);
+        mod_id(: , i) = mod_id_i;
+        vgs(: , i) = vgs_i;
         %usciamo dalla cartella
         cd ..
 
         disp("["+i +"/" + length(folders) +"]"+ "Fine cartella: " + folders(i));
     end
+    %% Plot della Ig
 
+    if(~exist("plot" , "file"))
+        mkdir plot;
+    end
+    
+    disp("Inizio plot ig")
+    plot_ig_vgs(mod_id , vgs  , type , folders);
+    disp("Fine plot ig")
+    
+    
+    %% end
+    set(0,'DefaultFigureVisible','on');
     disp("Tempo Trascorso: " + toc + "s");
 end

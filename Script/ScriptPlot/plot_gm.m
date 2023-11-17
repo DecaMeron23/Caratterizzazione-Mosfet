@@ -18,7 +18,7 @@ function plot_gm(file ,type)
     end
     xlabel("$" + nome_vgs +" [V]$", Interpreter="latex");
     ylabel("$G_m [A/V]$" , Interpreter="latex");
-    legend("$"+ nome_vds +" = " + vds + " [mV]$" , Location="best" , Interpreter="latex" , FontSize=12);
+    legend("$"+ nome_vds +" = " + vds + " [mV]$" , Location="best" , Interpreter="latex");
 
     %% Salviamo il plot
     
