@@ -1,31 +1,29 @@
-%function plot_id_vgs(dati)
-    dati = readmatrix("id_vgs.txt");
-    %% estraiamo i dati 
-    vg = dati(: , 1);
+function plot_id_vgs(file , type)    
+    %% estraiamo i dati     
     
-    vsd = 150:150:900;
-
-    COLONNE_ID = 2:5:width(dati); 
-
-    id = dati(: , COLONNE_ID);
-
-    id = fliplr(id);
-    id = id(: , 2:end);
-    
+    [vgs , id , vds] = estrazione_dati_vgs(file , type);
 
     %% facciamo il plot
-    for i = 1 : width(id)
-        plot(vg, id , 'LineWidth', 1)
-        hold all
+    plot(vgs, id , LineWidth = 1);
+
+    if(type == 'P')
+        nome_vgs = "V_{SG}";
+        nome_id = "|I_D|";
+        nome_vds = "|V_{DS}|";
+    elseif(type == 'N')
+        nome_vgs = "V_{GS}";
+        nome_id = "I_D";
+        nome_vds = "V_{DS}";
     end
-    legend("$V_{SG} = " + vsd + " mV$", interpreter = "latex" ,  FontSize=12 , Location="best");
-    title("$I_D - V_{GS}$", Interpreter="latex")
-    xlabel("$V_{GS} [V]$", Interpreter="latex")
-    ylabel("$I_D [A] $", Interpreter="latex");
-    hold off;
+
+    legend("$"+ nome_vds+ "  = " + vds + " mV$", interpreter = "latex" ,  FontSize=12 , Location="best");
+    xlabel("$" + nome_vgs +"[V]$", Interpreter="latex")
+    ylabel("$" + nome_id+ " [A] $", Interpreter="latex");
+
     %% salviamo il plot
     cd plot;        
-    saveas(gcf, 'plot_id_vds', 'eps');
-    saveas(gcf, 'plot_id_vds', 'png');
+        saveas(gcf, 'plot_id_vds_semilog', 'eps');
+        saveas(gcf, 'plot_id_vds_semilog', 'png');
     cd ..
+
 %end

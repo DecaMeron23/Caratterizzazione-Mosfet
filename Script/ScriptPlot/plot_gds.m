@@ -1,75 +1,49 @@
-function plot_gds(name_file , type)
-     
-    dati = readmatrix(name_file);
+function plot_gds(file , type) 
     %% Estraiamo i dati
-    vds = dati(: , 1);
-    
-    vds = 0.9 - vds;
-    
-    
-    COLONNE_ID = 2:5:width(dati); 
 
-    id = dati(: , COLONNE_ID);
-
-    id = fliplr(id);
-    % escludiamo la vd a 900mV (Vsd = 0mV)
-    id = id(: , 2:end);
-
-    % verifichiamo se il file è "_2" o normale
-    if width(id) == 6
-        vgs = 150:150:900;
-    elseif width(id) == 10
-        vgs = 10:10:100;
-    end
-    
+    [vds , id , vgs] = estrazione_dati_vds(file , type);
 
     %% calcoliamo la gm
     
-     % inizializzazione matrici
-    gds1 = zeros(size(id));
-    gds2 = gds1;
-    
-    for i=1:width(id)
-        gds1(:,i) = gradient(id(:,i)) ./ gradient(vds);
-    end
-
-    gds2(1,:) = gds1(1,:);
-
-    for i=1:width(id)
-        gds2(2:end,i) = gradient(id(1:end-1,i))./gradient(vds(2:end));
-    end
-
-    gds = (gds1+gds2)/2;
-
-    for i=1:length(vgs)
-        gds(:,i) = smooth(gds(:,i));
-    end
+    gds = gm_gds(id , vds);
 
     %% Facciamo il plot
 
-    figure(Visible="off");
+    plot(vds , gds , LineWidth=1);
 
-    plot(vds , gds , LineWidth=1);    
-    title("$G_{ds} - V_{SD}$" , Interpreter="latex");
-    xlabel("$V_{SD} [V]$", Interpreter="latex");
+    if(type == 'P')
+        nome_vgs = "|V_{GS}|";
+        nome_vds = "|V_{DS}|";
+    elseif(type == 'N')
+        nome_vgs = "V_{GS}";
+        nome_vds = "V_{DS}";
+    end
+    xlabel("$" + nome_vds +" [V]$", Interpreter="latex");
     ylabel("$G_{ds} [A/V]$" , Interpreter="latex");
-    legend("$V_{SG}$ = " + vgs + " $[mV]$" , Location="best" , Interpreter="latex"  , FontSize= 12 );
-
+    legend("$"+ nome_vgs +" = " + vgs + " [mV]$" , Location="best" , Interpreter="latex" , FontSize=12);
 
     %% Salviamo il plot
     
     cd plot\
-    saveas(gcf, 'plot_gds_vgs', 'eps');
-    saveas(gcf, 'plot_gds_vgs', 'png');
-    close(gcf)
+        saveas(gcf, 'plot_gds_vgs', 'eps');
+        saveas(gcf, 'plot_gds_vgs', 'png');
     cd ..
     
     %% Salviamo Gm
     
-    varName(1) = "Vds";
-    for i = 1 : length(vgs)
-        varName(i+1) = "Vsg = " + vgs(i);
+    if(type == 'P')
+        varName(1) = "|Vds|";
+        nome_vgs = "|Vgs|";
+    elseif(type == 'N')
+        varName(1) = "Vds";
+        nome_vgs = "Vgs";
     end
+    
+    
+    for i = 1 : length(vgs)
+        varName(i+1) = "Gm_"+nome_vgs + "=" + vgs(i) * 1e-3 + "V";
+    end
+    
     gm_table = [vds(:) , gds(: , :)];
     gm_table = array2table(gm_table , "VariableNames" , varName);
 
