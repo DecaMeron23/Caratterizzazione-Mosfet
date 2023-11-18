@@ -30,15 +30,17 @@ function csv2txt_chip(path)
     file_vgs = "id_vgs.csv";
     file_vgs2 = "id_vgs_2.csv";
 
+    type = char(folders(1));
+    type = type(1);
+
+
     for i = 1:length(folders)
 
         disp("["+i +"/" + length(folders) +"]"+ "Inizio cartella: " + folders(i));
         %entriamo nella cartella
         cd(folders(i));
 
-        type = char(folders(i));
-        type = type(1);
-
+        
         %verifichaimo se esiste il file
         if exist(file_vds , "file")
             % convertiamo il file in txt
@@ -97,6 +99,8 @@ function csv2txt_chip(path)
         disp("["+i +"/" + length(folders) +"]"+ "Fine cartella: " + folders(i));
     end
     %% Plot della Ig
+
+    
 
     if(~exist("plot" , "file"))
         mkdir plot;
