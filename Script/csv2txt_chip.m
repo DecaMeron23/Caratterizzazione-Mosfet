@@ -45,6 +45,7 @@ function csv2txt_chip(path)
             mkdir(cartella_plot);
         end
         %% salviamo i plot
+<<<<<<< HEAD
         
         plot_id_vds('id_vds.txt');
         plot_id_vgs('id_vgs.txt');
@@ -52,6 +53,14 @@ function csv2txt_chip(path)
         plot_gm_vgs('id_vgs.txt');
         plot_gds_vds('id_vds.txt');
         log_gm_id('id_vds.txt');
+=======
+    
+        [~, nomeCartella, ~] = fileparts(pwd);
+        type = nomeCartella(1);
+
+        plot_gds("id_vds.txt" , type);
+        plot_gm("id_vgs.txt" , type);
+>>>>>>> 4f88560d204a1a22415b69232c092fa4009a9052
         
         cd(cartella_plot);        
              
