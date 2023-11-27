@@ -2,7 +2,7 @@
 
 function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     
-    cd (string(dispositivo))
+   cd (string(dispositivo))
     
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
     file = "id-vgs.txt";
@@ -148,52 +148,52 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
 
             
     
-    %Calcolo del massimo della funzione polinomiale che interpola i punti 
+    % Calcolo del massimo della funzione polinomiale che interpola i punti 
     % in un intorno di Vth calcolata con TCM a Vgs = 10 mV e di raggio 100 mV
     % for GRADO = 2:2:8
-    % coefficienti = zeros(length(vsd), GRADO + 1);
-    % 
-    % for i = 1:length(vsd)
-    %     %prendiamo gli indici dell'intervallo +-100mV con centro Vth
-    %     indici_intervallo = indice_TCM(i)-20 : indice_TCM(i)+20;
-    %     %creaiamo dei valori vsg nell'intervallo calcolato con un
-    %     %incremento di 0.1mV
-    %     intervallo_alta_ris = vsg(indici_intervallo(1)) : 0.0001 : vsg(indici_intervallo(end));
-    %     %Troviamo il valori dei coefficenti della funzione polinomiale 
-    %     coefficienti(i,:) = polyfit(vsg(indici_intervallo), derivata_TCM(indici_intervallo, i), GRADO);
-    %     % calcoliamo le y della funzione polinomiale trovata
-    %     grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
-    %     % massimo della polinomiale
-    %     [max_grafico(i), ind_grafico(i)] = max(grafico(: , i)); 
-    %     % Estraiamo la Vth dalla polinomiale
-    %     vth_TCM(i) = intervallo_alta_ris(ind_grafico(i));    
-    %     % se Vsd = 150mv teniamo gli intervalli per fare il grafico
-    %     % dopo il for
-    %     if vsd(i) == 150 
-    %         intervallo_vds_150mv = indici_intervallo;
-    %         intervallo_vds_150mv_alta_ris = intervallo_alta_ris;
-    %     end
+    coefficienti = zeros(length(vsd), GRADO + 1);
+
+    for i = 1:length(vsd)
+        %prendiamo gli indici dell'intervallo +-100mV con centro Vth
+        indici_intervallo = indice_TCM(i)-20 : indice_TCM(i)+20;
+        %creaiamo dei valori vsg nell'intervallo calcolato con un
+        %incremento di 0.1mV
+        intervallo_alta_ris = vsg(indici_intervallo(1)) : 0.0001 : vsg(indici_intervallo(end));
+        %Troviamo il valori dei coefficenti della funzione polinomiale 
+        coefficienti(i,:) = polyfit(vsg(indici_intervallo), derivata_TCM(indici_intervallo, i), GRADO);
+        % calcoliamo le y della funzione polinomiale trovata
+        grafico(:,i) = polyval(coefficienti(i,:), intervallo_alta_ris);
+        % massimo della polinomiale
+        [max_grafico(i), ind_grafico(i)] = max(grafico(: , i)); 
+        % Estraiamo la Vth dalla polinomiale
+        vth_TCM(i) = intervallo_alta_ris(ind_grafico(i));    
+        % se Vsd = 150mv teniamo gli intervalli per fare il grafico
+        % dopo il for
+        if vsd(i) == 150 
+            intervallo_vds_150mv = indici_intervallo;
+            intervallo_vds_150mv_alta_ris = intervallo_alta_ris;
+        end
     % end
-    % 
-    % % Plot di verifica
-    % if PLOT_ON
-    %     figure
-    %     hold on
-    %     title("TCM - " + dispositivo)
-    %     % plot dati calcolati
-    %     plot(vsg(intervallo_vds_150mv),derivata_TCM(intervallo_vds_150mv,1));
-    %     % plot Vth calcolato senza il fit
-    %     xline(vth_TCM_noFit(1),"--","Color","red");
-    %     % plot della polinomiale
-    %     plot(intervallo_vds_150mv_alta_ris,grafico(:, 1)); 
-    %     % plot Vth calcolata con la polinomiale
-    %     plot(vth_TCM(1) , max_grafico(1) , "*", color = "r", MarkerSize=20);
-    % 
-    %     xlabel("$V_{sg}$" , "Interpreter","latex");
-    %     ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{sg}}$" , Interpreter="latex");
-    %     legend("SDLM","Massimo di TCM","Fit di grado "+ GRADO, "Massimo del fit")
-    % end
-    % end
+
+    % Plot di verifica
+    if PLOT_ON
+        figure
+        hold on
+        title("TCM - " + dispositivo)
+        % plot dati calcolati
+        plot(vsg(intervallo_vds_150mv),derivata_TCM(intervallo_vds_150mv,1));
+        % plot Vth calcolato senza il fit
+        xline(vth_TCM_noFit(1),"--","Color","red");
+        % plot della polinomiale
+        plot(intervallo_vds_150mv_alta_ris,grafico(:, 1)); 
+        % plot Vth calcolata con la polinomiale
+        plot(vth_TCM(1) , max_grafico(1) , "o");
+
+        xlabel("$V_{sg}$" , "Interpreter","latex");
+        ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{sg}}$" , Interpreter="latex");
+        legend("TCM","Massimo di TCM","Fit di grado "+ GRADO, "Massimo del fit")
+    end
+    end
     
     %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
     
