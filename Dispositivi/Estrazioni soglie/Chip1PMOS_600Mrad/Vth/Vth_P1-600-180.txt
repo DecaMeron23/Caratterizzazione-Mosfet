@@ -1,2 +1,0 @@
-Vd	Lin_fit_Id	Vth_TCM	Vth_SDLM
-0	0	0	0
