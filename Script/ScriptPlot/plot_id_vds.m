@@ -1,8 +1,11 @@
-function plot_id_vds(file , type)    
+function plot_id_vds(file , nomeCartella)    
     %% estraiamo i dati     
     
+    type = nomeCartella(1);
+
     [vds , id , vgs] = estrazione_dati_vds(file , type);
 
+    titolo = titoloPlot(nomeCartella);
     %% facciamo i plot
 
     plot(vds, id , LineWidth=1);
@@ -16,7 +19,7 @@ function plot_id_vds(file , type)
         nome_id = "I_D";
         nome_vds = "V_{DS}";
     end
-
+    title(titolo);
     legend("$"+ nome_vgs+ "  = " + vgs + " mV$", interpreter = "latex" , Location="best");
     xlabel("$" + nome_vds +"[V]$", Interpreter="latex")
     ylabel("$" + nome_id+ " [A] $", Interpreter="latex");

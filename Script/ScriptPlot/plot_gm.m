@@ -1,8 +1,11 @@
-function plot_gm(file ,type)
+function plot_gm(file ,nomeCartella)
     %% Estraiamo i dati
     
+    type = nomeCartella(1); 
+
     [vgs , id , vds] = estrazione_dati_vgs(file , type);
 
+    titolo = titoloPlot(nomeCartella);
     %% calcoliamo Gm
     gm = gm_gds(id , vgs);
     
@@ -18,8 +21,8 @@ function plot_gm(file ,type)
     end
     xlabel("$" + nome_vgs +" [V]$", Interpreter="latex");
     ylabel("$G_m [A/V]$" , Interpreter="latex");
-    legend("$"+ nome_vds +" = " + vds + " [mV]$" , Location="best" , Interpreter="latex");
-
+    legend("$"+ nome_vds +" = " + vds + " mV$" , Location="best" , Interpreter="latex");
+    title(titolo);
     %% Salviamo il plot
     
     if (contains(file  , '2'))
