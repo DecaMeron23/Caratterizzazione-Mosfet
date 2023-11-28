@@ -17,7 +17,7 @@ function csv2txt_chip(path)
         if temp.isdir == 1
             nameFolder = temp.name;
             % escludiamo la cartella plot
-            if(strcmp(nameFolder , "plot") == 0)
+            if(strcmp(nameFolder , "plot") == 0 && strcmp(nameFolder,"Vth") == 0)
                 folders(j) = string(nameFolder);
                 j = j+1;
             end        
@@ -79,21 +79,20 @@ function csv2txt_chip(path)
     
             %% salviamo i plot
             [~, nomeCartella, ~] = fileparts(pwd);
-            type = nomeCartella(1);
     
             fileVg = "id_vgs.txt";
             fileVg2 = "id_vgs_2.txt";
             fileVd = "id_vds.txt";
             
-            plot_id_vds(fileVd , type);
-            plot_id_vgs(fileVg , type);
-            plot_id_vgs_semilog(fileVg , type); 
-            plot_gm(fileVg , type);
-            plot_gds(fileVd , type);
+            plot_id_vds(fileVd , nomeCartella);
+            plot_id_vgs(fileVg , nomeCartella);
+            plot_id_vgs_semilog(fileVg , nomeCartella); 
+            plot_gm(fileVg , nomeCartella);
+            plot_gds(fileVd , nomeCartella);
     
-            plot_id_vgs(fileVg2 , type);
-            plot_id_vgs_semilog(fileVg2 , type); 
-            plot_gm(fileVg2 , type);
+            plot_id_vgs(fileVg2 , nomeCartella);
+            plot_id_vgs_semilog(fileVg2 , nomeCartella); 
+            plot_gm(fileVg2 , nomeCartella);
            
             [mod_id_i , vgs_i] = estrazione_ig_vgs(fileVg , type);
             mod_id(: , i) = mod_id_i;

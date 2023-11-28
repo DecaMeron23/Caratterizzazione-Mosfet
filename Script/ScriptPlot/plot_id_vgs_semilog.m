@@ -1,8 +1,11 @@
-function plot_id_vgs_semilog(file , type)
+function plot_id_vgs_semilog(file , nomeCartella)
     %% estraiamo i dati     
     
+    type = nomeCartella(1);
+
     [vgs , id , vds] = estrazione_dati_vgs(file , type);
 
+    titolo = titoloPlot(nomeCartella);
     %% facciamo il plot
     semilogy(vgs, id , LineWidth = 1);
 
@@ -16,7 +19,7 @@ function plot_id_vgs_semilog(file , type)
         nome_vds = "V_{DS}";
     end
 
-
+    title(titolo);
     legend("$"+nome_vds+ "  = " + vds + " mV$", interpreter = "latex", Location="best");
     xlabel("$" + nome_vgs +"[V]$", Interpreter="latex")
     ylabel("$" + nome_id+ " [A] $", Interpreter="latex");

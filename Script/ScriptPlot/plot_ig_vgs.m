@@ -9,7 +9,7 @@ function plot_ig_vgs(mod_id , vgs , type , folders)
     end
 
     xlabel("$" + name_vg + "[V]$" , Interpreter="latex");
-    ylabel("$|I_D|[A]$" , Interpreter="latex");
+    ylabel("$|I_G|[A]$" , Interpreter="latex");
     legend(folders , Location="best");
 
     %% salviamo il plot
