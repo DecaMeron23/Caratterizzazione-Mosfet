@@ -3,7 +3,7 @@ function plot_id_vds(file , nomeCartella)
     
     type = nomeCartella(1);
 
-    [vds , id , vgs] = estrazione_dati_vds(file , type);
+    [vds , id , vgs] = EstrazioneDati.estrazione_dati_vds(file , type);
 
     titolo = titoloPlot(nomeCartella);
     %% facciamo i plot

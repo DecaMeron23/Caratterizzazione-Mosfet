@@ -101,12 +101,13 @@ function csv2txt_chip(path)
 
             if(~strcmp(folders(i) , 'P1-100-180-nf'))
                 
-                [mod_id_i , vgs_i] = estrazione_ig_vgs(fileVg , type);
+                [mod_id_i , vgs_i] = EstrazioneDati.estrazione_dati_ig_vgs(fileVg , type);
                 mod_id(: , i) = mod_id_i;
                 vgs(: , i) = vgs_i;
                 legendaIg{end+1} = folders(i);
-            %usciamo dalla cartella
+            
             end
+            %usciamo dalla cartella
             cd ..
     
             disp("["+i +"/" + length(folders) +"]"+ "Fine cartella: " + folders(i));

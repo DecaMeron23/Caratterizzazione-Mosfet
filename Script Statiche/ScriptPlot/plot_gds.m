@@ -2,7 +2,7 @@ function plot_gds(file , nomeCartella)
     %% Estraiamo i dati
     type = nomeCartella(1);
 
-    [vds , id , vgs] = estrazione_dati_vds(file , type);
+    [vds , id , vgs] = EstrazioneDati.estrazione_dati_vds(file , type);
 
     titolo = titoloPlot(nomeCartella);
     %% calcoliamo la gm

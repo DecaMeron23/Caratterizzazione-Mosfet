@@ -3,7 +3,7 @@ function plot_id_vgs_semilog(file , nomeCartella)
     
     type = nomeCartella(1);
 
-    [vgs , id , vds] = estrazione_dati_vgs(file , type);
+    [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file , type);
 
     titolo = titoloPlot(nomeCartella);
     %% facciamo il plot
