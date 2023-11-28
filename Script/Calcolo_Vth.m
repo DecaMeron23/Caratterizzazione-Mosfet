@@ -32,7 +32,7 @@ end
 for i = 3 : length(fileInFolder)
     dispositivo = char(fileInFolder(i));
     if ((dispositivo(1) == 'N' || dispositivo(1) == 'P') && (dispositivo(3) == '-')&&  ...
-            ~strcmp(dispositivo,'N4-600-30')  &&  ~strcmp(dispositivo,'P1-600-180'))
+            ~strcmp(dispositivo,'N4-600-30')  &&  ~strcmp(dispositivo,'P1-100-180-nf'))
 
         for i = 2 : 2 : 8
             if dispositivo(1) == 'N' 

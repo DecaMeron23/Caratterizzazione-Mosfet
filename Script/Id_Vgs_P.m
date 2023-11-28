@@ -173,7 +173,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
             intervallo_vds_150mv = indici_intervallo;
             intervallo_vds_150mv_alta_ris = intervallo_alta_ris;
         end
-    % end
+     end
 
     % Plot di verifica
     if PLOT_ON
@@ -193,7 +193,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{sg}}$" , Interpreter="latex");
         legend("TCM","Massimo di TCM","Fit di grado "+ GRADO, "Massimo del fit")
     end
-    end
+    %end
     
     %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
     
@@ -223,7 +223,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     %Calcolo del minimo della funzione polinomiale che interpola i punti 
     % in un intorno di Vth calcolata con SDLM a Vgs = 900 mV e di raggio 100 mV
     
-    for GRADO = 2:2:8
+    %%for GRADO = 2:2:8
 
     coefficienti = zeros(length(vsd), GRADO+1);
 
@@ -267,7 +267,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
         hold off
     end
-    end
+    %%end
     
     %% Creazione tabella contenente le Vth calcolate in base alle Vsd
     vth =  array2table([vsd' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
