@@ -36,93 +36,75 @@ function csv2txt_chip(path)
 
     for i = 1:length(folders)
 
-        disp("["+i +"/" + length(folders) +"]"+ "Inizio cartella: " + folders(i));
-        %entriamo nella cartella
-        cd(folders(i));
-
-        
-        %verifichaimo se esiste il file
-        if exist(file_vds , "file")
-            % convertiamo il file in txt
-            csv2txt(file_vds);
-        end
-        
-        if exist(file_vgs , "file")
-            csv2txt(file_vgs);
-        end
-
-        if exist(file_vgs2 , "file")
-            csv2txt(file_vgs2);
-        end
+        temp = char(folders(i));
+        temp = temp(1:2);
+        if(strcmp(temp , "P1") || strcmp(temp , "N4"))
+            disp("["+i +"/" + length(folders) +"]"+ "Inizio cartella: " + folders(i));
+            %entriamo nella cartella
+            cd(folders(i));
     
-        %% creaiamo le cartelle necessarie
-        
-        cartella_plot = "plot";
-        if(~exist(cartella_plot , "file"))
-            mkdir(cartella_plot);
-        end
-
-        cd plot\
-        
-        if(~exist("eps" , "file"))
-            mkdir eps;
-        end
-
-        if(~exist("png" , "file"))
-            mkdir png;
-        end
-
-        cd ..
-
-        %% salviamo i plot
-<<<<<<< HEAD
-<<<<<<< HEAD
-        
-        plot_id_vds('id_vds.txt');
-        plot_id_vgs('id_vgs.txt');
-        log_id_vgs('id_vgs.txt');
-        plot_gm_vgs('id_vgs.txt');
-        plot_gds_vds('id_vds.txt');
-        log_gm_id('id_vds.txt');
-=======
+            
+            %verifichaimo se esiste il file
+            if exist(file_vds , "file")
+                % convertiamo il file in txt
+                csv2txt(file_vds);
+            end
+            
+            if exist(file_vgs , "file")
+                csv2txt(file_vgs);
+            end
     
-        [~, nomeCartella, ~] = fileparts(pwd);
-        type = nomeCartella(1);
-
-        plot_gds("id_vds.txt" , type);
-        plot_gm("id_vgs.txt" , type);
->>>>>>> 4f88560d204a1a22415b69232c092fa4009a9052
+            if exist(file_vgs2 , "file")
+                csv2txt(file_vgs2);
+            end
         
-        cd(cartella_plot);        
-             
-=======
-       
-        fileVg = "id_vgs.txt";
-        fileVg2 = "id_vgs_2.txt";
-        fileVd = "id_vds.txt";
-        
-        plot_id_vds(fileVd , type);
-        plot_id_vgs(fileVg , type);
-        plot_id_vgs_semilog(fileVg , type); 
-        plot_gm(fileVg , type);
-        plot_gds(fileVd , type);
-
-        plot_id_vgs(fileVg2 , type);
-        plot_id_vgs_semilog(fileVg2 , type); 
-        plot_gm(fileVg2 , type);
->>>>>>> 9f8fc33558e016a114252c9571aa09f57737e86a
-        
-        [mod_id_i , vgs_i] = estrazione_ig_vgs(fileVg , type);
-        mod_id(: , i) = mod_id_i;
-        vgs(: , i) = vgs_i;
-        %usciamo dalla cartella
-        cd ..
-
-        disp("["+i +"/" + length(folders) +"]"+ "Fine cartella: " + folders(i));
+            %% creaiamo le cartelle necessarie
+            
+            cartella_plot = "plot";
+            if(~exist(cartella_plot , "file"))
+                mkdir(cartella_plot);
+            end
+    
+            cd plot\
+            
+            if(~exist("eps" , "file"))
+                mkdir eps;
+            end
+    
+            if(~exist("png" , "file"))
+                mkdir png;
+            end
+    
+            cd ..
+    
+            %% salviamo i plot
+            [~, nomeCartella, ~] = fileparts(pwd);
+            type = nomeCartella(1);
+    
+            fileVg = "id_vgs.txt";
+            fileVg2 = "id_vgs_2.txt";
+            fileVd = "id_vds.txt";
+            
+            plot_id_vds(fileVd , type);
+            plot_id_vgs(fileVg , type);
+            plot_id_vgs_semilog(fileVg , type); 
+            plot_gm(fileVg , type);
+            plot_gds(fileVd , type);
+    
+            plot_id_vgs(fileVg2 , type);
+            plot_id_vgs_semilog(fileVg2 , type); 
+            plot_gm(fileVg2 , type);
+           
+            [mod_id_i , vgs_i] = estrazione_ig_vgs(fileVg , type);
+            mod_id(: , i) = mod_id_i;
+            vgs(: , i) = vgs_i;
+            %usciamo dalla cartella
+            cd ..
+    
+            disp("["+i +"/" + length(folders) +"]"+ "Fine cartella: " + folders(i));
+        end
     end
     %% Plot della Ig
-
-    
 
     if(~exist("plot" , "file"))
         mkdir plot;

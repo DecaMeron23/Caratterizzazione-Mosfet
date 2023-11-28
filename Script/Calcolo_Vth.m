@@ -1,10 +1,14 @@
+%% Posizionarsi nella cartella dell'ASIC, a un certo grado di irraggiamento, con all'interno tutte le cartelle dei dispositivi
+%% Impostare a 1 la variabile PLOT_ON se si vogliono vedere tutti i plot che elabora lo script
+%% Impostare a 1 se la variabile preIrreggiamento se il dispositivo non è ancora stato irraggiato
+%% per ogni cartella serve avere i fle .txt delle misurazioni
 %% inizializzazione
 clear; clc;
 
  % abilitare i plot di verifica (si = 1, no = 0)  
-    PLOT_ON = 1;
+PLOT_ON = 0;
 
-% indichiamo se il dispositivo è pre irraggiato
+% indichiamo se il dispositivo è pre irraggiamento
 preIrraggiamento = 0;
 
 if preIrraggiamento == 1
@@ -28,7 +32,7 @@ end
 for i = 3 : length(fileInFolder)
     dispositivo = char(fileInFolder(i));
     if ((dispositivo(1) == 'N' || dispositivo(1) == 'P') && (dispositivo(3) == '-')&&  ...
-            ~strcmp(dispositivo,'N4-600-30')  &&  ~strcmp(dispositivo,'P1-100-180_nf'))
+            ~strcmp(dispositivo,'N4-600-30')  &&  ~strcmp(dispositivo,'P1-600-180'))
 
         for i = 2 : 2 : 8
             if dispositivo(1) == 'N' 
@@ -52,7 +56,7 @@ for i = 3 : length(fileInFolder)
          
         
         %Salvo File nella cartella
-        %writetable( vth, "Vth_" + dispositivo + ".txt",  "Delimiter", "\t");
+        writetable( vth, "Vth_" + dispositivo + ".txt",  "Delimiter", "\t");
 
         cd ..
         

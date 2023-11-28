@@ -43,15 +43,15 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     %calcoliamo i valori di Vsg
     vsg = 0.9 - vsg;
     
-    % % Plot di verifica
-    % if PLOT_ON
-    %     figure
-    %     plot(vsg,id);
-    %     title("Vsg - Id - " + dispositivo);
-    %     xlabel("$V_{sg}$" , Interpreter="latex");
-    %     ylabel("$I_{d}$" , Interpreter="latex");
-    % 
-    % end
+    % Plot di verifica
+    if PLOT_ON
+        figure
+        plot(vsg,id);
+        title("Vsg - Id - " + dispositivo);
+        xlabel("$V_{sg}$" , Interpreter="latex");
+        ylabel("$I_{d}$" , Interpreter="latex");
+
+    end
 
     %% Fit lineare di Id-Vsg tra i punti 0.5 e 0.6
     
@@ -72,26 +72,26 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         P = polyfit(vsg(pos_min:pos_max), id(pos_min:pos_max, i ), 1);
         vth_Lin_Fit(i) = -P(2)/P(1);
 
-        % %plot di verifica del fit a Vsd = 150mV
-        % if PLOT_ON
-        %     if vsd(i) == 150
-        %         val = polyval(P , [0 , 0.9]);
-        %         figure
-        %         hold on
-        %         plot(vsg , id(: , i))
-        %         plot([0 , 0.9] , val)
-        %         title("Fit lineare - " + dispositivo);
-        %         xlim([0 , 0.7])
-        %         xline(0.5 , "--")
-        %         xline(0.6 , "--")
-        %         yline(0 , "-.");
-        %         xline(vth_Lin_Fit(i) , "--");
-        %         xlabel("$V_{sg} [V]$" , "Interpreter","latex");
-        %         ylabel("$I_D [A]$" , Interpreter="latex");
-        %         legend( "$I_D$", "linear fit", Interpreter = "latex");
-        %         hold off
-        %     end
-        % end
+        %plot di verifica del fit a Vsd = 150mV
+        if PLOT_ON
+            if vsd(i) == 150
+                val = polyval(P , [0 , 0.9]);
+                figure
+                hold on
+                plot(vsg , id(: , i))
+                plot([0 , 0.9] , val)
+                title("Fit lineare - " + dispositivo);
+                xlim([0 , 0.7])
+                xline(0.5 , "--")
+                xline(0.6 , "--")
+                yline(0 , "-.");
+                xline(vth_Lin_Fit(i) , "--");
+                xlabel("$V_{sg} [V]$" , "Interpreter","latex");
+                ylabel("$I_D [A]$" , Interpreter="latex");
+                legend( "$I_D$", "linear fit", Interpreter = "latex");
+                hold off
+            end
+        end
     end
 
     %% Calcoliamo Gm
@@ -117,14 +117,14 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     end
     
     %Plot di verifica
-    % if PLOT_ON
-    %     figure
-    %     plot(vsg , gm .* 1e3)
-    %     % nome assi
-    %     ylabel('$g_m$ [mS]','interpreter','latex')
-    %     xlabel('$V_{sg}$ [V]','interpreter','latex')
-    %     title("gm - " + dispositivo)
-    % end
+    if PLOT_ON
+        figure
+        plot(vsg , gm .* 1e3)
+        % nome assi
+        ylabel('$g_m$ [mS]','interpreter','latex')
+        xlabel('$V_{sg}$ [V]','interpreter','latex')
+        title("gm - " + dispositivo)
+    end
     %% Calculate threshold - Transconductance Change Method (TCM)
     %Find the maximum point of the gm derivative
     %valido per basse Vds
