@@ -1,7 +1,10 @@
-function plot_gds(file , type) 
+function plot_gds(file , nomeCartella) 
     %% Estraiamo i dati
+    type = nomeCartella(1);
+
     [vds , id , vgs] = estrazione_dati_vds(file , type);
 
+    titolo = titoloPlot(nomeCartella);
     %% calcoliamo la gm
     
     gds = gm_gds(id , vds);
@@ -19,8 +22,8 @@ function plot_gds(file , type)
     end
     xlabel("$" + nome_vds +" [V]$", Interpreter="latex");
     ylabel("$G_{ds} [A/V]$" , Interpreter="latex");
-    legend("$"+ nome_vgs +" = " + vgs + " [mV]$" , Location="best" , Interpreter="latex");
-
+    legend("$"+ nome_vgs +" = " + vgs + " mV$" , Location="best" , Interpreter="latex");
+    title(titolo);
     %% Salviamo il plot
     
     cd plot\eps
