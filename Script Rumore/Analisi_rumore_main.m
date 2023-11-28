@@ -45,7 +45,7 @@ for i = 1:length(lista_dispositivi)
                             noise  = misurazione;
                         elseif strcmp(misurazione(1:8), 'fondo_P1') || strcmp(misurazione(1:8), 'fondo_N1')
                             fondo  = misurazione;
-                        elseif strcmp(misurazione(1:6), 'fdt_P1') || strcmp(misurazione(1:8), 'fdt_N1')
+                        elseif strcmp(misurazione(1:6), 'fdt_P1') || strcmp(misurazione(1:6), 'fdt_N1')
                             fdt  = misurazione;
                         end
                     end
