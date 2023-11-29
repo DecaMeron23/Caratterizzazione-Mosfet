@@ -23,9 +23,9 @@ function plot_gm_id_w_l(file , type , W  , L)
         nome_vds = "V_{DS}";
     end
     
-    ylabel("$g_m [A/V]$" , Interpreter="latex");
-    xlabel("$" + nome_id +"\cdot W/L [A]$", Interpreter="latex");
-    legend("$"+ nome_vds +" = " + vds + " [mV]$" , Location="best" , Interpreter="latex");
+    ylabel("$g_m [A/V]$" , Interpreter="latex" , FontSize= 12);
+    xlabel("$" + nome_id +"\cdot W/L [A]$", Interpreter="latex" , FontSize= 12);
+    legend("$"+ nome_vds +" = " + vds + " mV$" , Location="best" , Interpreter="latex");
 
     %% salviamo i plot
     
