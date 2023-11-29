@@ -89,14 +89,14 @@ function csv2txt_chip(path)
             fileVg2 = "id_vgs_2.txt";
             fileVd = "id_vds.txt";
 
-            plot_id_vds(fileVd , nomeCartella);
-            plot_id_vgs(fileVg , nomeCartella);
-            plot_id_vgs_semilog(fileVg , nomeCartella); 
+            % plot_id_vds(fileVd , nomeCartella);
+            % plot_id_vgs(fileVg , nomeCartella);
+            % plot_id_vgs_semilog(fileVg , nomeCartella); 
             plot_gm(fileVg , nomeCartella);
             plot_gds(fileVd , nomeCartella);
 
-            plot_id_vgs(fileVg2 , nomeCartella);
-            plot_id_vgs_semilog(fileVg2 , nomeCartella); 
+            % plot_id_vgs(fileVg2 , nomeCartella);
+            % plot_id_vgs_semilog(fileVg2 , nomeCartella); 
             plot_gm(fileVg2 , nomeCartella);
 
             if(~strcmp(folders(i) , 'P1-100-180-nf'))

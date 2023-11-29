@@ -20,7 +20,7 @@ function plot_gm(file ,nomeCartella)
         nome_vds = "V_{DS}";
     end
     xlabel("$" + nome_vgs +" [V]$", Interpreter="latex");
-    ylabel("$G_m [A/V]$" , Interpreter="latex");
+    ylabel("$g_m [A/V]$" , Interpreter="latex");
     legend("$"+ nome_vds +" = " + vds + " mV$" , Location="best" , Interpreter="latex");
     title(titolo);
     %% Salviamo il plot

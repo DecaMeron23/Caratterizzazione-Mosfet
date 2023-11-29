@@ -22,7 +22,7 @@ function plot_gm_id_w_l(file , type , W  , L)
         nome_vds = "V_{DS}";
     end
     
-    ylabel("$G_m [A/V]$" , Interpreter="latex");
+    ylabel("$g_m [A/V]$" , Interpreter="latex");
     xlabel("$" + nome_id +"\cdot W/L [A]$", Interpreter="latex");
     legend("$"+ nome_vds +" = " + vds + " [mV]$" , Location="best" , Interpreter="latex");
 

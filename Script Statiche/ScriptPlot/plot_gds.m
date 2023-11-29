@@ -21,7 +21,7 @@ function plot_gds(file , nomeCartella)
         nome_vds = "V_{DS}";
     end
     xlabel("$" + nome_vds +" [V]$", Interpreter="latex");
-    ylabel("$G_{ds} [A/V]$" , Interpreter="latex");
+    ylabel("$g_{ds} [A/V]$" , Interpreter="latex");
     legend("$"+ nome_vgs +" = " + vgs + " mV$" , Location="best" , Interpreter="latex");
     title(titolo);
     %% Salviamo il plot
