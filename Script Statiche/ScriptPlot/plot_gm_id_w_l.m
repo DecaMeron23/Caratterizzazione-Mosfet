@@ -1,14 +1,15 @@
 function plot_gm_id_w_l(file , type , W  , L)
     %% estrazione data
-    
-    [vgs , id , vds] = estrazione_dati_vgs(file , type);
+
+    [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file , type);
 
     %% calcolo Gm
 
     gm = gm_gds(id , vgs);
 
+    gm = abs(gm);
     %% Calcolo Id * W/L
-    id_w_l = id .* (W/L);
+    id_w_l = id .* (W/(L*1e-3));
 
     %% facciamo il plot
 

@@ -1,5 +1,5 @@
 function csv2txt_chip(path)
-%   trasforma i file .csv in file .txt
+%%   trasforma i file .csv in file .txt e fa i plot necessari
 %   path è la directory del chip che vogliamo analizzare   
      if nargin == 0
         % Se la funzione è chiamata senza argomenti, utilizza la directory corrente
