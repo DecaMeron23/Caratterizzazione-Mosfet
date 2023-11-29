@@ -16,7 +16,7 @@ Per lo studio della $V_{th}$ sono stati presi in considerazione vari metodi, in 
 
 Il primo metodo analizzato è chiamato \emph{Transconductance Change Method, TCM,} che defiscisce la tensione di soglia come la tensione di gate $V_{GS}$ corrispondente al picco massimo della derivata della transconduttanza $g_m$ rispetto alla tensione di gate ($\frac{dg_m}{dV_ {GS}}$) ed è valido per bassi valori della tensione $V_{DS}$.\\
 Questa definizione si basa sul fatto che, quando il dispositivo passa dalla regione di debole inversione alla regione di forte inversione, la dipendenza di $I_D$ ripetto a $V_{GS}$ passa dall'essere esponenziale all'essere quesi constante. 
-La transconduttanza non è altro che la derivata prima della corrente $I_D$ rispetto alla tensione $V_{GS}$. Dunque la derivata della di $g_m$ corrisponde alla derivata seconda di $I_D$ che quindi avrà il suo massimo nel punto corrispondente alla tensione per la quale il grafico della corrente passa dalla forma esponenziale a quella quasi constante, ovvero la tensione $V_{GS}+V_{DS}$. Se $V_{DS}$ è piccola, la tensione per la quale la $g_m$ è massima è molto simile a $V_{th}$.\\
+La transconduttanza non è altro che la derivata prima della corrente $I_D$ rispetto alla tensione $V_{GS}$. Dunque la derivata della $g_m$ corrisponde alla derivata seconda di $I_D$ che quindi avrà il suo massimo nel punto corrispondente alla tensione per la quale il grafico della corrente passa dalla forma esponenziale a quella quasi constante, ovvero la tensione $V_{GS}+V_{DS}$. Se $V_{DS}$ è piccola, la tensione per la quale la $g_m$ è massima è molto simile a $V_{th}$.\\
 
 \begin{figure}[h!]
 \centering
@@ -25,7 +25,7 @@ La transconduttanza non è altro che la derivata prima della corrente $I_D$ risp
  \caption{Esempio di \emph{TCM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-30 a $V_{DS} = 150 mV$}
 \end{figure}
 
-Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per il quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ ripetto alla tensione di gate ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$. \\
+Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ ripetto alla tensione di gate ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$. \\
 
 \begin{figure}[h!]
 \centering
@@ -52,16 +52,17 @@ Per valutare l'accuratezza di questi due metodi si sono quindi calcolate le $V_{
 \begin{center}
 \begin{tabular}{| c | c | c |}
 \hline
-Dispositivo & TCM ($V_{SD} = 150 mV$) & SDLM ($V_{SD} = 900 mV$) \\
+Dispositivo &  $V_{th}$  calcolata con TCM $[mV]$  & $V_{th}$  calcolata con SDLM $[mV]$ \\
+ & ($V_{SD} = 150 mV$) & ($V_{SD} = 900 mV$) \\
 \hline
-100 - 30  & 0.4806 V & 0.4414 V \\
-100 - 60  & 0.4693 V & 0.4116 V \\
-200 - 30  & 0.3993 V & 0.2965 V \\
-200 - 60  & 0.4535 V & 0.4049 V \\
-200 - 180 & 0.4953 V & 0.4493 V \\
-600 - 30 & 0.3859 V & 0.2897 V \\
-600 - 60 & 0.4347 V & 0.3918 V \\
-600 - 180 & 0.4806 V & 0.4414 V \\
+100 - 30  & 480.6 & 441.4 \\
+100 - 60  & 469.3 & 411.6 \\
+200 - 30  & 399.3 & 296.5 \\
+200 - 60  & 453.5 & 404.9 \\
+200 - 180 & 495.3 & 449.3 \\
+600 - 30 & 385.9 & 289.7 \\
+600 - 60 & 434.7 & 391.8 \\
+600 - 180 & 480.6 & 441.4 \\
 \hline
 
 \end{tabular}
