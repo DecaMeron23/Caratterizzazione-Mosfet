@@ -1,6 +1,11 @@
 function csv2txt_chip(path)
 %   trasforma i file .csv in file .txt
 %   path è la directory del chip che vogliamo analizzare   
+     if nargin == 0
+        % Se la funzione è chiamata senza argomenti, utilizza la directory corrente
+        path = pwd;
+     end
+
     tic;
     cd(path);
     
@@ -89,14 +94,14 @@ function csv2txt_chip(path)
             fileVg2 = "id_vgs_2.txt";
             fileVd = "id_vds.txt";
 
-            % plot_id_vds(fileVd , nomeCartella);
-            % plot_id_vgs(fileVg , nomeCartella);
-            % plot_id_vgs_semilog(fileVg , nomeCartella); 
+            plot_id_vds(fileVd , nomeCartella);
+            plot_id_vgs(fileVg , nomeCartella);
+            plot_id_vgs_semilog(fileVg , nomeCartella); 
             plot_gm(fileVg , nomeCartella);
             plot_gds(fileVd , nomeCartella);
 
-            % plot_id_vgs(fileVg2 , nomeCartella);
-            % plot_id_vgs_semilog(fileVg2 , nomeCartella); 
+            plot_id_vgs(fileVg2 , nomeCartella);
+            plot_id_vgs_semilog(fileVg2 , nomeCartella); 
             plot_gm(fileVg2 , nomeCartella);
 
             if(~strcmp(folders(i) , 'P1-100-180-nf'))
