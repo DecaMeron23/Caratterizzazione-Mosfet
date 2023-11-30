@@ -11,8 +11,10 @@ function csv2txt_chip(path)
     
     % disabilitiamo i plot
     set(0,'DefaultFigureVisible','off');
+    %disabilitiamo i warnign
+    warning('off', 'all');
     % inizzializzazione
-    mod_id = zeros(241 , 9);
+    mod_jg = zeros(241 , 9);
     vgs = zeros(241 , 9);
     %% estraiamo le cartelle dei dispositivi e le salviamo in folders
     directory = dir();
@@ -93,13 +95,23 @@ function csv2txt_chip(path)
             fileVg = "id_vgs.txt";
             fileVg2 = "id_vgs_2.txt";
             fileVd = "id_vds.txt";
+            
+            [vds , id , vgs] = EstrazioneDati.estrazione_dati_vds(fileVd , type);
+            DatiVd{1} = vds;
+            DatiVd{2} = id;
+            DatiVd{3} = vgs;
 
-            plot_id_vds(fileVd , nomeCartella);
-            plot_id_vgs(fileVg , nomeCartella);
-            plot_id_vgs_semilog(fileVg , nomeCartella); 
-            plot_gm(fileVg , nomeCartella);
-            plot_gds(fileVd , nomeCartella);
-            plot_gm_id_w_l(fileVg , nomeCartella);
+            [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(fileVg , type);
+            DatiVg{1} = vgs;
+            DatiVg{2} = id;
+            DatiVg{3} = vds;
+
+            plot_id_vds(fileVd , nomeCartella , DatiVd);
+            plot_id_vgs(fileVg , nomeCartella , DatiVg);
+            plot_id_vgs_semilog(fileVg , nomeCartella , DatiVg); 
+            plot_gm(fileVg , nomeCartella , DatiVg);
+            plot_gds(fileVd , nomeCartella , DatiVd);
+            plot_gm_id_w_l(fileVg , nomeCartella , DatiVg);
 
             plot_id_vgs(fileVg2 , nomeCartella);
             plot_id_vgs_semilog(fileVg2 , nomeCartella); 
@@ -108,7 +120,10 @@ function csv2txt_chip(path)
             if(~strcmp(folders(i) , 'P1-100-180-nf'))
 
                 [mod_id_i , vgs_i] = EstrazioneDati.estrazione_dati_ig_vgs(fileVg , type);
-                mod_id(: , i) = mod_id_i;
+                [~  , W , L] = titoloPlot(folders(i));
+                W = W * 1e-4; %trasformiamo in cm
+                L = L * 1e-4;
+                mod_jg(: , i) = mod_id_i / (W * L);
                 vgs(: , i) = vgs_i;
                 legendaIg{end+1} = folders(i);
 
@@ -128,11 +143,12 @@ function csv2txt_chip(path)
     legendaIg = string(legendaIg);
 
     disp("Inizio plot ig")
-    plot_ig_vgs(mod_id , vgs  , type , legendaIg);
+    plot_jg_vgs(mod_jg , vgs  , type , legendaIg);
     disp("Fine plot ig")
     
     
     %% end
     set(0,'DefaultFigureVisible','on');
+    warning('on', 'all');
     disp("Tempo Trascorso: " + toc + "s");
 end

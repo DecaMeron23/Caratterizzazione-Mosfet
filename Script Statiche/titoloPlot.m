@@ -1,5 +1,8 @@
 function [titolo, W , L] = titoloPlot(nomeCartella)
-    
+    %titolo: il titolo del plot (es NMOS 100/0.030)
+    %W : la largezza del canale in um (es 100)
+    %L : la lunghezza del canale in um (es 0.03)
+
     type = nomeCartella(1);
     % Dividi la stringa usando il carattere "-"
     tokens = strsplit(nomeCartella, '-');
@@ -14,6 +17,8 @@ function [titolo, W , L] = titoloPlot(nomeCartella)
     
     % Costruisci la nuova stringa
     titolo = sprintf('%s %s/%s', tipoTransistor, larghezzaCanale, lunghezzaCanale);
+    
+    %sono in micro-metri
     W = str2double(larghezzaCanale);
     L = str2double(lunghezzaCanale);
 

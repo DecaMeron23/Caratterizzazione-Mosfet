@@ -1,11 +1,19 @@
-function plot_gm_id_w_l(file , nomeCartella)
+function plot_gm_id_w_l(file , nomeCartella , dati)
     %% estrazione data
     addpath '..\..\..\Script Statiche\ScriptPlot';
 
     type = nomeCartella(1);
-
-    [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file , type);
-
+    
+    if nargin == 3
+        % Se la funzione è chiamata con 3 argomenti prendiamo i dati dal
+        % terzo
+        vgs = dati{1};
+        id = dati{2};
+        vds = dati{3};
+    elseif nargin == 2
+        [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file , type);
+    end
+   
     id_vds_max = id(: , end);
     vds_max = vds(end);
 

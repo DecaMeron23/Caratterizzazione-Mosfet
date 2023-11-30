@@ -1,11 +1,19 @@
-function plot_gm(file ,nomeCartella)
+function plot_gm(file ,nomeCartella , dati)
     %% Estraiamo i dati
-    
-    type = nomeCartella(1); 
-
-    [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file , type);
-
+     
+    type = nomeCartella(1);
     titolo = titoloPlot(nomeCartella);
+    
+    if nargin == 3
+        % Se la funzione è chiamata con 3 argomenti prendiamo i dati dal
+        % terzo
+        vgs = dati{1};
+        id = dati{2};
+        vds = dati{3};
+    elseif nargin == 2
+        [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file , type);
+    end
+   
     %% calcoliamo Gm
     gm = gm_gds(id , vgs);
     

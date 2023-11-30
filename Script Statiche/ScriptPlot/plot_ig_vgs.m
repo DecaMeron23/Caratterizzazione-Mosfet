@@ -1,4 +1,4 @@
-function plot_ig_vgs(mod_id , vgs , type , folders)
+function plot_jg_vgs(mod_id , vgs , type , folders)
     %% facciamo il plot
     semilogy(vgs, mod_id)
     
@@ -9,7 +9,7 @@ function plot_ig_vgs(mod_id , vgs , type , folders)
     end
 
     xlabel("$" + name_vg + "[V]$" , Interpreter="latex");
-    ylabel("$|I_G|[A]$" , Interpreter="latex");
+    ylabel("$|J_G|[A]$" , Interpreter="latex");
     legend(folders , Location="best");
 
     %% salviamo il plot
