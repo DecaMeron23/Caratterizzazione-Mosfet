@@ -1,4 +1,4 @@
-function titolo = titoloPlot(nomeCartella)
+function [titolo, W , L] = titoloPlot(nomeCartella)
     
     type = nomeCartella(1);
     % Dividi la stringa usando il carattere "-"
@@ -6,13 +6,15 @@ function titolo = titoloPlot(nomeCartella)
     
     % Estrai i componenti
     tipoTransistor = type + "MOS";
-    lunghezzaCanale = tokens{2};
-    larghezzaCanale = tokens{3};
+    larghezzaCanale = tokens{2};
+    lunghezzaCanale = tokens{3};
     
     % Converti la larghezza del canale in formato corretto
-    larghezzaCanale = sprintf('%.3f', str2double(larghezzaCanale) / 1000);
+    lunghezzaCanale = sprintf('%.3f', str2double(lunghezzaCanale) / 1000);
     
     % Costruisci la nuova stringa
-    titolo = sprintf('%s %s/%s', tipoTransistor, lunghezzaCanale, larghezzaCanale);
+    titolo = sprintf('%s %s/%s', tipoTransistor, larghezzaCanale, lunghezzaCanale);
+    W = str2double(larghezzaCanale);
+    L = str2double(lunghezzaCanale);
 
 end

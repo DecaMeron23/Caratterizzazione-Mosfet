@@ -99,18 +99,19 @@ function csv2txt_chip(path)
             plot_id_vgs_semilog(fileVg , nomeCartella); 
             plot_gm(fileVg , nomeCartella);
             plot_gds(fileVd , nomeCartella);
+            plot_gm_id_w_l(fileVg , nomeCartella);
 
             plot_id_vgs(fileVg2 , nomeCartella);
             plot_id_vgs_semilog(fileVg2 , nomeCartella); 
             plot_gm(fileVg2 , nomeCartella);
 
             if(~strcmp(folders(i) , 'P1-100-180-nf'))
-                
+
                 [mod_id_i , vgs_i] = EstrazioneDati.estrazione_dati_ig_vgs(fileVg , type);
                 mod_id(: , i) = mod_id_i;
                 vgs(: , i) = vgs_i;
                 legendaIg{end+1} = folders(i);
-            
+
             end
             %usciamo dalla cartella
             cd ..
@@ -123,7 +124,7 @@ function csv2txt_chip(path)
     if(~exist("plot" , "file"))
         mkdir plot;
     end
-    
+
     legendaIg = string(legendaIg);
 
     disp("Inizio plot ig")
