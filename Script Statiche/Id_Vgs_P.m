@@ -187,10 +187,10 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         % plot della polinomiale
         plot(intervallo_vds_150mv_alta_ris,grafico(:, 1)); 
         % plot Vth calcolata con la polinomiale
-        plot(vth_TCM(1) , max_grafico(1) , "o");
+        plot(vth_TCM(1) , max_grafico(1) , "*", color="r", MarkerSize=20);
 
-        xlabel("$V_{sg}$" , "Interpreter","latex");
-        ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{sg}}$" , Interpreter="latex");
+        xlabel("$V_{SG} [V]$" , Interpreter="latex", FontSize = 15);
+        ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{SG}}$" , Interpreter="latex", FontSize = 15);
         legend("TCM","Massimo di TCM","Fit di grado "+ GRADO, "Massimo del fit")
     end
     %end
