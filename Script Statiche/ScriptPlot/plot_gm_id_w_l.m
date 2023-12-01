@@ -1,20 +1,48 @@
-function plot_gm_id_w_l(file , type , W  , L)
+function plot_gm_id_w_l(file , nomeCartella , dati)
     %% estrazione data
+    addpath '..\..\..\Script Statiche\ScriptPlot';
 
-    [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file , type);
+    type = nomeCartella(1);
+    
+    if nargin == 3
+        % Se la funzione è chiamata con 3 argomenti prendiamo i dati dal
+        % terzo
+        vgs = dati{1};
+        id = dati{2};
+        vds = dati{3};
+    elseif nargin == 2
+        [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file , type);
+    end
+   
+    id_vds_max = id(: , end);
+    vds_max = vds(end);
 
+    [titolo , W , L] = titoloPlot(nomeCartella);
     %% calcolo Gm
 
-    gm = gm_gds(id , vgs);
+    gm_vds_max = gm_gds(id_vds_max , vgs);
 
-    gm = abs(gm);
-    %% Calcolo Id * W/L
-    id_w_l = id .* (W/(L*1e-3));
+    gm_id = gm_vds_max ./ id_vds_max;
+
+    %% Calcolo Id * L/W
+    
+    id_l_w = id_vds_max * (L/W);
+
+    %% Calcolo intercette
+    
+    [val_y , val_x , x ,y ]= intercette(id_l_w , gm_id , gm_vds_max , id_vds_max);
+    
+
 
     %% facciamo il plot
-
-    semilogx(id_w_l  , gm , LineWidth=1);
     
+    loglog(id_l_w , gm_id , LineWidth=2);
+    hold on
+    grid on
+    yline(val_y , '--');
+    plot(x , y , '--', 'Color' , [0 0 0]);
+    xline(val_x , '--');
+    hold off
     if(type == 'P')
         nome_id = "|I_D|";
         nome_vds = "|V_{DS}|";
@@ -22,13 +50,18 @@ function plot_gm_id_w_l(file , type , W  , L)
         nome_id = "I_D";
         nome_vds = "V_{DS}";
     end
-    
-    ylabel("$g_m [A/V]$" , Interpreter="latex" , FontSize= 12);
-    xlabel("$" + nome_id +"\cdot W/L [A]$", Interpreter="latex" , FontSize= 12);
-    legend("$"+ nome_vds +" = " + vds + " mV$" , Location="best" , Interpreter="latex");
 
-    %% salviamo i plot
+    title(titolo);
+    ylabel("$g_m / I_d [1/V]$" , Interpreter="latex" , FontSize= 12);
+    xlabel("$" + nome_id +"\cdot L/W [A]$", Interpreter="latex" , FontSize= 12);
+    % legend("$"+ nome_vds +" = " + vds_max + " mV$" , Location="best" , Interpreter="latex");
     
+
+    ylim([1 100]);
+    xlim([1e-9 1e-5]);
+    
+    %% salviamo i plot
+
     if (contains(file  , '2'))
         name = "plot_gm_id_w_l_2";
     else
@@ -43,4 +76,40 @@ function plot_gm_id_w_l(file , type , W  , L)
     cd ..
     cd ..
 
+end
+% troviamo le intercette per fare il plot
+function [val_y , val_x , x , y] = intercette(id_l_w ,gm_id , gm , id)
+    
+    val_y = max(gm_id);
+
+    valori_giusti = gm ./ sqrt(id);
+
+    valori_assoluti = abs(valori_giusti - 1);
+    indici_valori(1) = find( valori_assoluti == min(valori_assoluti));
+        
+    array_Booleano = true(1 , length(id_l_w));
+
+    array_Booleano(indici_valori(1)) = false;
+
+    indici_valori(2) = find(valori_assoluti == min(valori_assoluti(array_Booleano)));
+
+    coefficenti = polyfit(log(id_l_w(indici_valori)), log(gm_id(indici_valori)) , 1);
+
+    x = linspace(id_l_w(1) , id_l_w(end) , 1e6);
+
+    y = polyval(coefficenti , log(x));
+
+    y = exp(y);
+    
+        
+    valori_vicini = abs(y-val_y);
+    indice = (valori_vicini == min(valori_vicini));
+    val_x = x(indice);
+
+    x  = linspace(id_l_w(1) , id_l_w(end) , 2);
+  
+    y = polyval(coefficenti , log(x));
+
+    y = exp(y);
+    
 end

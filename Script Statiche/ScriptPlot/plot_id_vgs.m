@@ -1,11 +1,19 @@
-function plot_id_vgs(file , nomeCartella)    
+function plot_id_vgs(file , nomeCartella , dati)    
 %% estraiamo i dati     
     
     type = nomeCartella(1);
-
-    [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file , type);
-
     titolo = titoloPlot(nomeCartella);
+    
+    if nargin == 3
+        % Se la funzione è chiamata con 3 argomenti prendiamo i dati dal
+        % terzo
+        vgs = dati{1};
+        id = dati{2};
+        vds = dati{3};
+    elseif nargin == 2
+        [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file , type);
+    end
+   
     %% facciamo il plot
     plot(vgs, id , LineWidth = 1);
 
