@@ -1,6 +1,6 @@
 function vth = TCM_P(dispositivo , GRADO , PLOT_ON)
 
-cd (string(dispositivo))
+    cd (string(dispositivo))
     
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
     file = "id-vgs.txt";
@@ -77,7 +77,7 @@ cd (string(dispositivo))
         % plot della polinomiale
         plot(intervallo_alta_ris,grafico); 
         % plot Vth calcolata con la polinomiale
-        plot(vth , max_grafico, "*", color="r", MarkerSize=20 );
+        plot(vth , max_grafico, '*', color="r", MarkerSize=20 );
 
         xlabel("$V_{sg}$" , "Interpreter","latex");
         ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{sg}}$" , Interpreter="latex");

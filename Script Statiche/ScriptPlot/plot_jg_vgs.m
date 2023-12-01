@@ -4,6 +4,7 @@ function plot_jg_vgs(mod_jg , vgs , type , folders)
     for i = 1 : width(mod_jg) 
         mod_jg(i) = smooth(mod_jg(i));
     end
+    
     semilogy(vgs, mod_jg)
     
     if(type == 'P')
