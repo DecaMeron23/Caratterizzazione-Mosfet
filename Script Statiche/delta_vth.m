@@ -29,7 +29,7 @@ function delta_vth(dispositivo)
     for i = 1:length(cartelleDispostivo)
 
          folder = string(cartelleDispostivo(i));
-         grado = gradoIrraggiamento(folder);
+         grado(i) = gradoIrraggiamento(folder);
             
          folder = folder + "\Vth\";
          if(exist(folder , "dir"))
@@ -38,23 +38,40 @@ function delta_vth(dispositivo)
                 % estraiamo i dati
                 delta_FIT{end+1} = estraiVth(fileVth , "FIT");
                 delta_TCM{end+1} = estraiVth(fileVth , "TCM");
-                delta_SDLM{end+1} = estriVth(fileVth , "SDLM");
+                delta_SDLM{end+1} = estraiVth(fileVth , "SDLM");
                 
                 %facciamo i delta
                 if (length(delta_FIT) > 1) % se non sono i pre
-                    delta_FIT{end+1} = cell2mat(delta_FIT{end}) - cell2mat(delta_FIT{1}) ;
-                    delta_TCM{end+1} = ;
-                    delta_SDLM{end+1} =;
+                    delta_FIT{end} = (delta_FIT{end}) - (delta_FIT{1}) ;
+                    delta_TCM{end} = (delta_TCM{end}) - (delta_TCM{1});
+                    delta_SDLM{end} = (delta_SDLM{end}) - (delta_SDLM{1});
                 end
             cd ..\..
          else
-             disp("Per l'irraggiamento a " + grado + " non c'è la cartella Vth");
+             disp("Per l'irraggiamento a " + grado(i) + " non c'è la cartella Vth");
          end
          
-
     end
 
+    if(~exist("DeltaVth\" , 'dir'))
+        mkdir("DeltaVth\");
+    end
 
+    cd DeltaVth\
+        
+        delta_FIT{1} = [];
+        delta_SDLM{1} = [];
+        delta_TCM{1} = [];
+
+        name = grado(2:end);
+        table_FIT = celleATabelle(delta_FIT);
+        table_TCM = celleATabelle(delta_TCM);
+        table_SDLM = celleATabelle(delta_SDLM);
+        
+        table_FIT.Properties.VariableNames = name;
+        table_TCM.Properties.VariableNames = name;
+        table_SDLM.Properties.VariableNames = name;
+    cd ..
 end
 
 % funzione che data la cartella restituisce il grado di irraggiamento se è
@@ -137,13 +154,13 @@ function Vth =  estraiVth(fileVth , tipo_estrazione)
     end
 
 
-    Vth = zero(9 , 1); % creaimo l'array di 9 righe
+    Vth = zeros(9 , 1); % creaimo l'array di 9 righe
 
     fileVth = sortVthFile(fileVth);
 
     for i = 1:length(fileVth) 
         % se non c'è la Vth per quel dispositivo la settiamo a 0
-        if(ismissing(fileVth{i}))
+        if(isempty(fileVth{i}))
             Vth(i) = 0;
         else
             file = char(fileVth{i});
@@ -163,7 +180,8 @@ function fileVth_sort = sortVthFile(fileVth)
     fileVth_sort = {};
 
     for i = fileVth
-        file = char(i);
+        file = string(i);
+        file = char(file);
         file_noEst = file(1:(end-4)); %togliamo l'estensione.
     
         [~ , W , L] = titoloPlot(file_noEst); % se file è cosi: Vth_P1-600-180 ci ritorna W = 600 e L = 0.18
@@ -194,4 +212,17 @@ function fileVth_sort = sortVthFile(fileVth)
             end
         end
     end
+end
+
+function tabella = celleATabelle(cella)
+    dimensioni = [length(cella{1}) ,length(cella)];
+
+    tabella = zeros(dimensioni);
+
+    for i = 1:dimensioni(2)
+        tabella(: , i) = cella{i};
+    end
+
+    tabella = array2table(tabella);
+
 end
