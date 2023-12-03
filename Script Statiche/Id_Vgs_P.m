@@ -223,7 +223,6 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     %Calcolo del minimo della funzione polinomiale che interpola i punti 
     % in un intorno di Vth calcolata con SDLM a Vgs = 900 mV e di raggio 100 mV
     
-    %%for GRADO = 2:2:8
 
     coefficienti = zeros(length(vsd), GRADO+1);
 
@@ -267,7 +266,6 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
         hold off
     end
-    %%end
     
     %% Creazione tabella contenente le Vth calcolate in base alle Vsd
     vth =  array2table([vsd' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);

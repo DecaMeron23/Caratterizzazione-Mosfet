@@ -1,4 +1,4 @@
-%% mettersi nella dirctory con i dispositivi di un certo chip 
+%% mettersi nella dirctory con i dispositivi di un certo chip (es: Misure_staiche/Chip1PMOS)
 
 PLOT_ON = 0;
 
@@ -24,9 +24,10 @@ for i = 1 : length(lista_dispositivi)
      end
 end
 
-vth = [dispositivi_funzionanti Vth_SDLM Vth_TCM];
-vth = renamevars(vth , ["Var1", "Var2", "Var3", "Var4", "Var5", "Var6", "Var7", "Var8", "var9"] , ...
+
+vth = array2table([dispositivi_funzionanti Vth_SDLM Vth_TCM]);
+vth = renamevars(vth , ["Var1", "Var2", "Var3", "Var4", "Var5", "Var6", "Var7", "Var8", "Var9"] , ...
     ["Dispositivi" ,"SDLM grado 2", "SDLM grado 4", "SDLM grado 6", ...
-    "TCM grado 8", "TCM grado 2", "TCM grado 4", "TCM grado 6", "TCM grado 8"]);
+    "SDLM grado 8", "TCM grado 2", "TCM grado 4", "TCM grado 6", "TCM grado 8"]);
 writetable( vth, "Confronto_Vth.txt",  "Delimiter", "\t");
 
