@@ -24,16 +24,19 @@ function delta_vth(dispositivo)
     delta_FIT = {};
     delta_TCM = {};
     delta_SDLM = {};
+
+    grado = {};
+
     % scorriamo tutte le cartelle del dispositivo e facciamo le nostre
     % operazioni
     for i = 1:length(cartelleDispostivo)
 
-         folder = string(cartelleDispostivo(i));
-         grado(i) = gradoIrraggiamento(folder);
-            
-         folder = folder + "\Vth\";
+         folder_main = string(cartelleDispostivo(i));
+                     
+         folder = folder_main + "\Vth\";
          if(exist(folder , "dir"))
             cd(folder);
+                grado{end+1} = gradoIrraggiamento(folder_main);
                 fileVth = getFileCartella("Vth");
                 % estraiamo i dati
                 delta_FIT{end+1} = estraiVth(fileVth , "FIT");
@@ -48,7 +51,7 @@ function delta_vth(dispositivo)
                 end
             cd ..\..
          else
-             disp("Per l'irraggiamento a " + grado(i) + " non c'è la cartella Vth");
+             disp("Per l'irraggiamento a " + gradoIrraggiamento(folder_main) + " non c'è la cartella Vth");
          end
          
     end
@@ -59,11 +62,17 @@ function delta_vth(dispositivo)
 
     cd DeltaVth\
         
-        delta_FIT{1} = [];
-        delta_SDLM{1} = [];
-        delta_TCM{1} = [];
+        delta_FIT(1) = [];
+        delta_SDLM(1) = [];
+        delta_TCM(1) = [];
 
-        name = grado(2:end);
+        dispositivi = {["100/30" ; "100/60" ; "100/180" ; "200/30" ; "200/60" ; "200/180" ; "600/30" ; "600/60" ; "600/180"]};
+
+        delta_FIT = [dispositivi , delta_FIT];
+        delta_TCM = [dispositivi , delta_TCM];
+        delta_SDLM = [dispositivi , delta_SDLM];
+
+        name = ["dispositivo" , string(grado(2:end))];
         table_FIT = celleATabelle(delta_FIT);
         table_TCM = celleATabelle(delta_TCM);
         table_SDLM = celleATabelle(delta_SDLM);
@@ -71,6 +80,10 @@ function delta_vth(dispositivo)
         table_FIT.Properties.VariableNames = name;
         table_TCM.Properties.VariableNames = name;
         table_SDLM.Properties.VariableNames = name;
+
+        writetable(table_FIT , "Delta_FIT.txt" , "Delimiter", '\t');
+        writetable(table_TCM , "Delta_TCM.txt" , "Delimiter", '\t');
+        writetable(table_SDLM , "Delta_SDLM.txt" , "Delimiter", '\t');
     cd ..
 end
 
@@ -219,10 +232,11 @@ function tabella = celleATabelle(cella)
 
     tabella = zeros(dimensioni);
 
-    for i = 1:dimensioni(2)
+    for i = 2:dimensioni(2)
         tabella(: , i) = cella{i};
     end
-
+    
     tabella = array2table(tabella);
+    tabella.tabella1 = cella{1};
 
 end
