@@ -94,9 +94,12 @@ function grado = gradoIrraggiamento(nomeCartella)
         nomeCartella = extractAfter(nomeCartella ,"_");
         if ismissing(nomeCartella)
             nomeCartella = "Pre";
-        else
+        elseif(~contains(nomeCartella , "Grad"))
             nomeCartella = extractBefore(nomeCartella, "M");
             nomeCartella = nomeCartella + "Mrad";
+        else
+            nomeCartella = extractBefore(nomeCartella, "G");
+            nomeCartella = nomeCartella + "Grad";
         end
 
         grado = nomeCartella;
