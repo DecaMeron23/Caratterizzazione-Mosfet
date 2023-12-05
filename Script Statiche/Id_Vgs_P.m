@@ -193,6 +193,9 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{SG}}$" , Interpreter="latex", FontSize = 15);
         legend("TCM","Massimo di TCM","Fit di grado "+ GRADO, "Massimo del fit")
     end
+
+    clear grafico;
+
     %end
     
     %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
