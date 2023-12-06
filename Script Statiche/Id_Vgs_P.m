@@ -235,6 +235,9 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         %creaiamo dei valori vsg nell'intervallo calcolato con un
         %incremento di 0.1mV
         intervallo_alta_ris = vsg(indici_intervallo(1)) : 0.0001 : vsg(indici_intervallo(end));
+        if length(intervallo_alta_ris) == 2000
+            intervallo_alta_ris = [intervallo_alta_ris (intervallo_alta_ris(end)+0.0001)];
+        end
         %Troviamo il valori dei coefficenti della funzione polinomiale 
         coefficienti(i,:) = polyfit(vsg(indici_intervallo), derivata_2_SDLM(indici_intervallo,i), GRADO);
         %calcoliamo le y della funzione polinomiale trovata
