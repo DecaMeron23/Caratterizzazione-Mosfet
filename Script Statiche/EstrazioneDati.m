@@ -81,7 +81,7 @@ classdef EstrazioneDati
         end
 
         %% Estrazione dati ig
-        function  [mod_ig , vgs] = estrazione_dati_ig_vgs(file , type)
+        function  [mod_jg , vgs] = estrazione_dati_ig_vgs(file , type , nomeCartela)
             
             dati = readmatrix(file);
             vg = dati(: , 1);
@@ -102,6 +102,12 @@ classdef EstrazioneDati
             
             % prendiamo la |ig| a vds = 0
             mod_ig = abs(dati(: , COLONNA_IG_VDS_0));
+
+
+            [~  , W , L] = titoloPlot(nomeCartela);
+            W = W * 1e-4; %trasformiamo in cm
+            L = L * 1e-4;
+            mod_jg = mod_ig / (W * L);
             
         end
     end

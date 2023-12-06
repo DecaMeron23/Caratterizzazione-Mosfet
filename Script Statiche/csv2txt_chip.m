@@ -107,23 +107,18 @@ function csv2txt_chip(path)
         DatiVg{2} = id;
         DatiVg{3} = vds;
         
-        % plot_id_vds(fileVd , nomeCartella , DatiVd);
-        % plot_id_vgs(fileVg , nomeCartella , DatiVg);
-        % plot_id_vgs_semilog(fileVg , nomeCartella , DatiVg); 
-        % plot_gm(fileVg , nomeCartella , DatiVg);
-        % plot_gds(fileVd , nomeCartella , DatiVd);
-        % plot_gm_id_w_l(fileVg , nomeCartella , DatiVg);
-        % 
-        % plot_id_vgs(fileVg2 , nomeCartella);
-        % plot_id_vgs_semilog(fileVg2 , nomeCartella); 
-        % plot_gm(fileVg2 , nomeCartella);
+        plot_id_vds(fileVd , nomeCartella , DatiVd);
+        plot_id_vgs(fileVg , nomeCartella , DatiVg);
+        plot_id_vgs_semilog(fileVg , nomeCartella , DatiVg); 
+        plot_gm(fileVg , nomeCartella , DatiVg);
+        plot_gds(fileVd , nomeCartella , DatiVd);
+        plot_gm_id_w_l(fileVg , nomeCartella , DatiVg);
+
+        plot_id_vgs(fileVg2 , nomeCartella);
+        plot_id_vgs_semilog(fileVg2 , nomeCartella); 
+        plot_gm(fileVg2 , nomeCartella);
         if(~contains(cartella_attuale , "P1-100-180-nf"))
-            [mod_id_i , vgs_i] = EstrazioneDati.estrazione_dati_ig_vgs(fileVg , type);
-            [~  , W , L] = titoloPlot(cartella_attuale);
-            W = W * 1e-4; %trasformiamo in cm
-            L = L * 1e-4;
-            mod_jg(: , i) = mod_id_i / (W * L);
-            vgs_jg(: , i) = vgs_i;
+            [mod_jg(: , i) , vgs_jg(: , i)] = EstrazioneDati.estrazione_dati_ig_vgs(fileVg , type , cartella_attuale);
             legendaIg{end+1} = cartella_attuale;
         end
         %usciamo dalla cartella
