@@ -32,7 +32,7 @@ end
 for i = 3 : length(fileInFolder)
     dispositivo = char(fileInFolder(i));
     if ((dispositivo(1) == 'N' || dispositivo(1) == 'P') && (dispositivo(3) == '-')&&  ...
-            ~strcmp(dispositivo,'N4-600-30')  &&  ~strcmp(dispositivo(end-1:end),'nf'))
+            ~contains(dispositivo,'nf'))
 
         if dispositivo(1) == 'N' 
             vth = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON);
