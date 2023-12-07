@@ -81,8 +81,12 @@ classdef EstrazioneDati
         end
 
         %% Estrazione dati ig
-        function  [mod_jg , vgs] = estrazione_dati_ig_vgs(file , type , nomeCartela)
+        function  [mod_jg , vgs] = estrazione_dati_jg_vgs(file , type , nomeCartela)
             
+            if(exist("id-vgs.txt" , "file"))
+                file = "id-vgs.txt";
+            end
+
             dati = readmatrix(file);
             vg = dati(: , 1);
             
