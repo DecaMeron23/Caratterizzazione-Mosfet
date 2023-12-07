@@ -1,5 +1,7 @@
 function plot_delta_Jg(cartella)
-% Funzione che per ogni dispositivo prende le diverse Jg e le mette insieme.    
+%% Posizionarsi nella cartella di un dispositivo con i diversi irraggiamenti
+% Funzione che per ogni dispositivo prende le diverse Jg a diversi
+% irraggiamenti e li mette nello stesso plot.
     if nargin == 0
         cartella = pwd;
     else

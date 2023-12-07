@@ -118,7 +118,7 @@ function csv2txt_chip(path)
         plot_id_vgs_semilog(fileVg2 , nomeCartella); 
         plot_gm(fileVg2 , nomeCartella);
         if(~contains(cartella_attuale , "P1-100-180-nf"))
-            [mod_jg(: , i) , vgs_jg(: , i)] = EstrazioneDati.estrazione_dati_ig_vgs(fileVg , type , cartella_attuale);
+            [mod_jg(: , i) , vgs_jg(: , i)] = EstrazioneDati.estrazione_dati_jg_vgs(fileVg , type , cartella_attuale);
             legendaIg{end+1} = cartella_attuale;
         end
         %usciamo dalla cartella
