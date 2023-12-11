@@ -13,7 +13,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
     end
     
     if(exist("id_vgs_2.txt" , "file"))
-        file1 = "id_vgs_2.txt";
+        file2 = "id_vgs_2.txt";
     end
 
     % Carico i file
@@ -41,10 +41,13 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
 
     if PLOT_ON
         figure
-        plot(vgs,id(:,1));
-        title("Vgs - Id - " + dispositivo);
-        xlabel("$V_{gs}$" , Interpreter="latex");
-        ylabel("$I_{d}$" , Interpreter="latex");
+        set(gca , "FontSize" ,  12);
+        plot(vgs,id(:,:) , LineWidth=1);
+        titolo = titoloPlot(dispositivo);
+        xlabel("$V_{gs}[V]$" , Interpreter="latex" , FontSize=15);
+        ylabel("$I_{d}[A]$" , Interpreter="latex" , FontSize=15);
+        title(titolo , FontSize=10);
+        legend(("Vds ="+ vds + "mV") , "Location" , "northwest");
     end
    
     %% Fit lineare di Id-Vsg tra i punti 0.5 e 0.6
@@ -65,17 +68,21 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         vth_Lin_Fit(i) = -P(2)/P(1);
     
         if PLOT_ON
-            if vds(i) == 150
+            if vds(i) == 10
                 val = polyval(P , [0 , 0.9]);
                 figure
-                title("Fit Lineare - " + dispositivo);
+                set(gca , "FontSize" ,  12);
+                title(titoloPlot(dispositivo) , FontSize=10);
                 hold on
-                plot(vgs , id(: , i))
+                plot(vgs , id(: , i) , LineWidth=1);
+                plot([0 , 0.9] , val , LineWidth=1);
                 xline(0.6 , "--")
                 xline(0.5 , "--")
-                plot([0 , 0.9] , val)
                 yline(0 , "-.");
                 xline(vth_Lin_Fit(i) , "--");
+                legend(["Vds = 10 mV", "Fit Lineare" ], Location="northwest" , FontSize=10);
+                ylabel("$I_{d} [A]$" , Interpreter="latex" , FontSize=15);
+                xlabel("$V_{gs} [V]$" , Interpreter="latex" , FontSize=15);
                 hold off
             end
         end
@@ -105,22 +112,17 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
     
     if PLOT_ON
         figure
-        plot(vgs , gm(:,1) .* 1e3)
+        set(gca , "FontSize" ,  12);
+        plot(vgs , gm .* 1e3 , LineWidth=1);
     
         % nome assi
-        ylabel('$g_m$ [mS]','interpreter','latex')
-        xlabel('$V_{gs}$ [V]','interpreter','latex')
+        ylabel('$g_m$ [mS]','interpreter','latex' , FontSize = 15);
+        xlabel('$V_{gs}$ [V]','interpreter','latex' , FontSize = 15);
     
         % titolo del plot
-        title("$g_m$",'interpreter','latex')
-
+        title(titoloPlot(dispositivo) , FontSize=10);
         % creo la legenda
-        for i = 1: length(vds)
-            legend_text(i) = "Vds = " + (vds(i))+ " mV"; 
-        end
-    
-        legend(legend_text,'Location','northwest')
-        
+        legend(("Vds = " + (vds)+ " mV"),'Location','northwest');      
     end
    
     %% Calculate threshold - Transconductance Change Method (TCM)
@@ -171,7 +173,8 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
     if PLOT_ON
         figure
         hold on
-        title("TCM - " + dispositivo)
+        set(gca , "FontSize" ,  12);
+        title(titoloPlot(dispositivo));
         plot(vgs(intervallo_vds_10mv),TCM_data(intervallo_vds_10mv,1)); %grafico dati
         xline(vth_TCM_noFit(1),"--","Color","red");  %Vth dati
         xlabel("$V_{gs}$" , "Interpreter","latex");

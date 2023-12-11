@@ -41,11 +41,11 @@ for i = 1:length(lista_dispositivi)
                 for k = 1:length(lista_misurazioni)
                     misurazione = char(lista_misurazioni(k));
                     if length(misurazione) >= 8 %se il nome del file è piu' corto di otto caratteri non posso fare la successive comparazioni
-                        if strcmp(misurazione(1:8), 'noise_P1') || strcmp(misurazione(1:8), 'noise_N1')
+                        if strcmp(misurazione(1:8), 'noise_P1') || strcmp(misurazione(1:8), 'noise_N4')
                             noise  = misurazione;
-                        elseif strcmp(misurazione(1:8), 'fondo_P1') || strcmp(misurazione(1:8), 'fondo_N1')
+                        elseif strcmp(misurazione(1:8), 'fondo_P1') || strcmp(misurazione(1:8), 'fondo_N4')
                             fondo  = misurazione;
-                        elseif strcmp(misurazione(1:6), 'fdt_P1') || strcmp(misurazione(1:6), 'fdt_N1')
+                        elseif strcmp(misurazione(1:6), 'fdt_P1') || strcmp(misurazione(1:6), 'fdt_N4')
                             fdt  = misurazione;
                         end
                     end
