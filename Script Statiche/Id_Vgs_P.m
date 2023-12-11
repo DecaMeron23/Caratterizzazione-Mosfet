@@ -46,10 +46,11 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     % Plot di verifica
     if PLOT_ON
         figure
+        set(gca , "FontSize" , 12)
         plot(vsg,id);
-        title("Vsg - Id - " + dispositivo);
-        xlabel("$V_{sg}$" , Interpreter="latex");
-        ylabel("$I_{d}$" , Interpreter="latex");
+        title("Vsg - Id - " + dispositivo , FontSize=10);
+        xlabel("$V_{sg}$" , Interpreter="latex" , FontSize=15);
+        ylabel("$I_{d}$" , Interpreter="latex" , FontSize=15);
 
     end
 
@@ -77,17 +78,18 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
             if vsd(i) == 150
                 val = polyval(P , [0 , 0.9]);
                 figure
+                set(gca , "FontSize" , 12)
                 hold on
                 plot(vsg , id(: , i))
                 plot([0 , 0.9] , val)
-                title("Fit lineare - " + dispositivo);
+                title("Fit lineare - " + dispositivo , FontSize=10);
                 xlim([0 , 0.7])
                 xline(0.5 , "--")
                 xline(0.6 , "--")
                 yline(0 , "-.");
                 xline(vth_Lin_Fit(i) , "--");
-                xlabel("$V_{sg} [V]$" , "Interpreter","latex");
-                ylabel("$I_D [A]$" , Interpreter="latex");
+                xlabel("$V_{sg} [V]$" , "Interpreter","latex" , FontSize=15);
+                ylabel("$I_D [A]$" , Interpreter="latex" , FontSize=15);
                 legend( "$I_D$", "linear fit", Interpreter = "latex");
                 hold off
             end
@@ -119,11 +121,12 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     %Plot di verifica
     if PLOT_ON
         figure
+        set(gca , "FontSize" , 12)
         plot(vsg , gm .* 1e3)
         % nome assi
-        ylabel('$g_m$ [mS]','interpreter','latex')
-        xlabel('$V_{sg}$ [V]','interpreter','latex')
-        title("gm - " + dispositivo)
+        ylabel('$g_m$ [mS]','interpreter','latex' , FontSize=15)
+        xlabel('$V_{sg}$ [V]','interpreter','latex' , FontSize=15)
+        title("gm - " + dispositivo , FontSize=10)
     end
     %% Calculate threshold - Transconductance Change Method (TCM)
     %Find the maximum point of the gm derivative
@@ -178,16 +181,17 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     % Plot di verifica
     if PLOT_ON
         figure
+        set(gca , "FontSize" , 12)
         hold on
-        title("TCM - " + dispositivo)
+        title("TCM - " + dispositivo , FontSize=10)
         % plot dati calcolati
         plot(vsg(intervallo_vds_150mv),derivata_TCM(intervallo_vds_150mv,1));
         % plot Vth calcolato senza il fit
         xline(vth_TCM_noFit(1),"--","Color","red");
         % plot della polinomiale
-        plot(intervallo_vds_150mv_alta_ris,grafico(:, 1)); 
+        % plot(intervallo_vds_150mv_alta_ris,grafico(:, 1)); 
         % plot Vth calcolata con la polinomiale
-        plot(vth_TCM(1) , max_grafico(1) , "*", color="r", MarkerSize=20);
+        % plot(vth_TCM(1) , max_grafico(1) , "*", color="r", MarkerSize=20);
 
         xlabel("$V_{SG} [V]$" , Interpreter="latex", FontSize = 15);
         ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{SG}}$" , Interpreter="latex", FontSize = 15);
@@ -257,8 +261,9 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     %Plot di verifica
     if PLOT_ON
         figure
+        set(gca , "FontSize" , 12)
         hold on
-        title("SDLM - " + dispositivo)
+        title("SDLM - " + dispositivo , FontSize=10)
         xlabel("$V_{SG}[V]$" , "Interpreter","latex", "FontSize",15);
         ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{SG}^2}[\frac{A}{V^2}]$" , "Interpreter", "latex", "FontSize", 15);
         %Plot dei dati calcolati
@@ -266,9 +271,9 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         %plot della vth dei dati calcolati
         xline(vth_SDLM_noFit(end),"--","Color","r");
         %plot della polinomiale
-        plot(intervallo_vsd_900mv_alta_ris, grafico(:, end));
+        % plot(intervallo_vsd_900mv_alta_ris, grafico(:, end));
         %plot vth della polinomiale
-        plot(vth_SDLM(end) , min_grafico(end) , "*", color="r", MarkerSize=20)
+        % plot(vth_SDLM(end) , min_grafico(end) , "*", color="r", MarkerSize=20)
         legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
         hold off
     end

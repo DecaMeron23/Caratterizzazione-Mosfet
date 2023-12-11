@@ -5,7 +5,7 @@ clear; clc;
     PLOT_ON = 1;
 
 % indichiamo se il dispositivo è pre irraggiato
-preIrraggiamento = 0;
+preIrraggiamento = 1;
 
 if preIrraggiamento == 1
     SPAN = 20;
@@ -27,16 +27,15 @@ end
 
 for i = 3 : length(fileInFolder)
     dispositivo = char(fileInFolder(i));
-    if ((dispositivo(1) == 'N' || dispositivo(1) == 'P') && dispositivo(3) == '-' &&  ...
-            ~strcmp(dispositivo,'N4-600-30')  &&  ~strcmp(dispositivo,'P1-100-180_nf'))
+    if (strcmp(dispositivo , 'N4-100-30'))
 
-        for i = 2 : 2 : 8
+        % for i = 2 : 2 : 8
         if dispositivo(1) == 'N' 
-            vth = Id_Vgs_N(dispositivo , SPAN , i , PLOT_ON);
+            vth = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON);
         elseif dispositivo(1) == 'P'
-            vth = Id_Vgs_P(dispositivo , SPAN , i , PLOT_ON);
+            vth = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON);
         end
-        end
+        % end
       
         %% Save File
         %Rinonimo le intestazioni

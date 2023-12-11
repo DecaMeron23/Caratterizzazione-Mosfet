@@ -174,13 +174,13 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         figure
         hold on
         set(gca , "FontSize" ,  12);
-        title(titoloPlot(dispositivo));
+        title(titoloPlot(dispositivo), FontSize=10);
         plot(vgs(intervallo_vds_10mv),TCM_data(intervallo_vds_10mv,1)); %grafico dati
         xline(vth_TCM_noFit(1),"--","Color","red");  %Vth dati
-        xlabel("$V_{gs}$" , "Interpreter","latex");
-        ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{gs}}$" , Interpreter="latex");
-        plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
-        plot(vth_TCM(1) , max_grafico_TCM(1) , "o") %minimo della polinomiale (Vth)
+        xlabel("$V_{gs}$" , "Interpreter","latex" , "FontSize",15);
+        ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{gs}}$" , Interpreter="latex" , FontSize=15);
+        % plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
+        % plot(vth_TCM(1) , max_grafico_TCM(1) , "o") %minimo della polinomiale (Vth)
         legend("TCM","Massimo di TCM","Fit di grado " + GRADO, "Massimo del fit polinomiale")
     end
     
@@ -253,14 +253,15 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
    
     if PLOT_ON
         figure
+        set(gca , "FontSize" , 12)
         hold on
-        title("SDLM - " + dispositivo)
-        xlabel("$V_{gs}$" , "Interpreter","latex");
-        ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{gs}^2}$" , Interpreter="latex");
+        title("SDLM - " + dispositivo , FontSize=10)
+        xlabel("$V_{gs}$" , "Interpreter","latex" , FontSize=15);
+        ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{gs}^2}$" , Interpreter="latex" , FontSize=15);
         plot(vgs(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
         xline(vth_SDLM_noFit(end),"--","Color","r"); %Vth dati
-        plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
-        plot(vth_SDLM(end) , min_grafico_SDLM(end) , "o") %minimo della polinomiale (Vth)
+        % plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
+        % plot(vth_SDLM(end) , min_grafico_SDLM(end) , "o") %minimo della polinomiale (Vth)
         legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
     end
     %% creo una tabella contenente le Vth calcolate al variare di Vds
