@@ -4,6 +4,11 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
 
     cd (string(dispositivo))
     
+    if (~exist("fig" , "dir"))
+        mkdir fig;
+    end
+
+
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
     file1 = "id-vgs.txt";
     file2 = "id-vgs-2.txt";
@@ -67,7 +72,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         P = polyfit(vgs(pos_min:pos_max), id(pos_min:pos_max,i), 1);
         vth_Lin_Fit(i) = -P(2)/P(1);
     
-        if PLOT_ON
+        % if PLOT_ON
             if vds(i) == 10
                 val = polyval(P , [0 , 0.9]);
                 figure
@@ -84,8 +89,16 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
                 ylabel("$I_{d} [A]$" , Interpreter="latex" , FontSize=15);
                 xlabel("$V_{gs} [V]$" , Interpreter="latex" , FontSize=15);
                 hold off
+
+                cd fig\
+                saveas(gca , "FIT")
+                cd ..
+                
+                if(PLOT_ON == 0)
+                    close all;
+                end
             end
-        end
+        % end
     end
 
     
@@ -170,7 +183,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         end
     end
    
-    if PLOT_ON
+    % if PLOT_ON
         figure
         hold on
         set(gca , "FontSize" ,  12);
@@ -179,10 +192,19 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         xline(vth_TCM_noFit(1),"--","Color","red");  %Vth dati
         xlabel("$V_{gs}$" , "Interpreter","latex" , "FontSize",15);
         ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{gs}}$" , Interpreter="latex" , FontSize=15);
-        % plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
-        % plot(vth_TCM(1) , max_grafico_TCM(1) , "o") %minimo della polinomiale (Vth)
+        plot(intervallo_vds_10mv_alta_ris,grafico(:, 1)); %grafico polinomiale
+        plot(vth_TCM(1) , max_grafico_TCM(1) , "o") %minimo della polinomiale (Vth)
         legend("TCM","Massimo di TCM","Fit di grado " + GRADO, "Massimo del fit polinomiale")
-    end
+        
+        cd fig\
+        saveas(gca , "TCM")
+        cd ..
+        
+        if(PLOT_ON == 0)
+            close all;
+        end
+        
+    % end
     
     %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
     
@@ -251,7 +273,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         end
     end
    
-    if PLOT_ON
+    % if PLOT_ON
         figure
         set(gca , "FontSize" , 12)
         hold on
@@ -260,10 +282,18 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{gs}^2}$" , Interpreter="latex" , FontSize=15);
         plot(vgs(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
         xline(vth_SDLM_noFit(end),"--","Color","r"); %Vth dati
-        % plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
-        % plot(vth_SDLM(end) , min_grafico_SDLM(end) , "o") %minimo della polinomiale (Vth)
+        plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
+        plot(vth_SDLM(end) , min_grafico_SDLM(end) , "o") %minimo della polinomiale (Vth)
         legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
-    end
+
+        cd fig\
+        saveas(gca , "SDLM")
+        cd ..
+        
+        if(PLOT_ON == 0)
+            close all;
+        end
+    % end
     %% creo una tabella contenente le Vth calcolate al variare di Vds
     vth =  array2table([vds' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
 

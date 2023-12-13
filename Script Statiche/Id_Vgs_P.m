@@ -3,7 +3,11 @@
 function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     
    cd (string(dispositivo))
-    
+   
+    if (~exist("fig" , "dir"))
+        mkdir fig;
+    end
+
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
     file = "id-vgs.txt";
     
@@ -74,7 +78,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         vth_Lin_Fit(i) = -P(2)/P(1);
 
         %plot di verifica del fit a Vsd = 150mV
-        if PLOT_ON
+        %if PLOT_ON
             if vsd(i) == 150
                 val = polyval(P , [0 , 0.9]);
                 figure
@@ -92,8 +96,16 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
                 ylabel("$I_D [A]$" , Interpreter="latex" , FontSize=15);
                 legend( "$I_D$", "linear fit", Interpreter = "latex");
                 hold off
+                
+                cd fig\
+                saveas(gca , "FIT")
+                cd ..
+                
+                if(PLOT_ON == 0)
+                    close all;
+                end
             end
-        end
+        %end
     end
 
     %% Calcoliamo Gm
@@ -179,7 +191,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
      end
 
     % Plot di verifica
-    if PLOT_ON
+    % if PLOT_ON
         figure
         set(gca , "FontSize" , 12)
         hold on
@@ -189,14 +201,22 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         % plot Vth calcolato senza il fit
         xline(vth_TCM_noFit(1),"--","Color","red");
         % plot della polinomiale
-        % plot(intervallo_vds_150mv_alta_ris,grafico(:, 1)); 
+        plot(intervallo_vds_150mv_alta_ris,grafico(:, 1)); 
         % plot Vth calcolata con la polinomiale
-        % plot(vth_TCM(1) , max_grafico(1) , "*", color="r", MarkerSize=20);
+        plot(vth_TCM(1) , max_grafico(1) , "*", color="r", MarkerSize=20);
 
         xlabel("$V_{SG} [V]$" , Interpreter="latex", FontSize = 15);
         ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{SG}}$" , Interpreter="latex", FontSize = 15);
         legend("TCM","Massimo di TCM","Fit di grado "+ GRADO, "Massimo del fit")
-    end
+
+        cd fig\
+        saveas(gca , "TCM")
+        cd ..
+            
+        if(PLOT_ON == 0)
+            close all;
+        end
+    % end
 
     clear grafico;
 
@@ -259,7 +279,7 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
     end
 
     %Plot di verifica
-    if PLOT_ON
+    % if PLOT_ON
         figure
         set(gca , "FontSize" , 12)
         hold on
@@ -271,12 +291,21 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         %plot della vth dei dati calcolati
         xline(vth_SDLM_noFit(end),"--","Color","r");
         %plot della polinomiale
-        % plot(intervallo_vsd_900mv_alta_ris, grafico(:, end));
+        plot(intervallo_vsd_900mv_alta_ris, grafico(:, end));
         %plot vth della polinomiale
-        % plot(vth_SDLM(end) , min_grafico(end) , "*", color="r", MarkerSize=20)
+        plot(vth_SDLM(end) , min_grafico(end) , "*", color="r", MarkerSize=20)
         legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
         hold off
-    end
+
+        cd fig\
+        saveas(gca , "SDLM")
+        cd ..
+        
+        if(PLOT_ON == 0)
+            close all;
+        end
+
+    % end
     
     %% Creazione tabella contenente le Vth calcolate in base alle Vsd
     vth =  array2table([vsd' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);

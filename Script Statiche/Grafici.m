@@ -27,7 +27,7 @@ end
 
 for i = 3 : length(fileInFolder)
     dispositivo = char(fileInFolder(i));
-    if (strcmp(dispositivo , 'N4-100-30'))
+    if (strcmp(dispositivo , 'P1-100-30'))
 
         % for i = 2 : 2 : 8
         if dispositivo(1) == 'N' 
