@@ -1,4 +1,4 @@
-%% mettersi nella dirctory con i dispositivi di un certo chip (es: Misure_staiche/Chip1PMOS)
+%% mettersi nella dirctory con i dispositivi di un certo chip (es: Misure_statiche/Chip1PMOS)
 
 PLOT_ON = 0;
 
@@ -18,8 +18,8 @@ for i = 1 : length(lista_dispositivi)
     if strcmp(dispositivo(1), 'N') || strcmp(dispositivo(1), 'P') && ~strcmp(dispositivo(end-1:end), 'nf')
         dispositivi_funzionanti = [dispositivi_funzionanti; string(dispositivo)];
         for j = 1:4
-            Vth_TCM(length(dispositivi_funzionanti),j) = TCM_P(dispositivo , j*2 , PLOT_ON);
-            Vth_SDLM(length(dispositivi_funzionanti),j) = SDLM_P(dispositivo , j*2 , PLOT_ON);
+            Vth_TCM(length(dispositivi_funzionanti),j) = TCM(dispositivo , j*2 , 0)*1000;
+            Vth_SDLM(length(dispositivi_funzionanti),j) = SDLM(dispositivo , j*2 , PLOT_ON)*1000;
         end
      end
 end

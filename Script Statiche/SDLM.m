@@ -1,16 +1,18 @@
-function vth = SDLM_P(dispositivo , GRADO , PLOT_ON)
+function vth = SDLM(dispositivo , GRADO , PLOT_ON)
 
-cd (string(dispositivo))
+    cd (string(dispositivo))
+
+    tipo = dispositivo(1);
     
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
     file = "id-vgs.txt";
     
-     if(exist("id_vgs.txt" , "file"))
+     if exist("id_vgs.txt" , "file")
         file = "id_vgs.txt";
      end
 
     %se il file non esiste ritorna una tabella vuota
-    if(~exist(file ,"file"))
+    if ~exist(file ,"file")
         vth = 0;
         cd ..;
         return;
@@ -18,16 +20,20 @@ cd (string(dispositivo))
 
      % Carico i file
     id_Vgs_completo = readmatrix(file);
-    % file composto da {Vg + (Id , Ig , Is , Iavdd , Igrd) * vd}
+
+    % estraggo le Vg (sono uguali per entrambi i tipi)
+    vgs = id_Vgs_completo(: , 1);
+
+    if tipo == 'P'
     
-    %predo le id_vgs per Vds massima (900mV)
-    id = id_Vgs_completo(:,2);
-    
-    % estraggo le Vg (sono uguali per entrambi i file)
-    vsg = id_Vgs_completo(: , 1);
-    
-    %calcoliamo i valori di Vsg
-    vsg = 0.9 - vsg;
+        %predo le id_vsg per Vsd massima (900mV)
+        id = id_Vgs_completo(:,2);        
+        
+        %calcoliamo i valori di Vsg
+        vgs = 0.9 - vgs;
+    else 
+        id = id_Vgs_completo(:, end - 4);
+    end
 
     
     %calcoliamo il logaritmo di Id
@@ -38,11 +44,11 @@ cd (string(dispositivo))
     %Eseguiamo lo smooth
     log_Id_smooth = smooth(log_Id);
     %Deriviamo log(id) rispetto Vsg
-    derivata_SDLM = gradient(log_Id_smooth) ./ gradient(vsg);
+    derivata_SDLM = gradient(log_Id_smooth) ./ gradient(vgs);
     %Eseguiamo lo smooth della derivata
     derivata_SDLM = smooth(derivata_SDLM);
     %Deriviamo la seconda volta
-    derivata_2_SDLM = gradient(derivata_SDLM) ./ gradient(vsg);
+    derivata_2_SDLM = gradient(derivata_SDLM) ./ gradient(vgs);
     % per bassi valori di Vsg (da -0.3 a -0.2) sostituiamo i valori ponendoli a 200 
     derivata_2_SDLM = [ones(20, 1)*200; derivata_2_SDLM(21:end)];
     %Smooth della derivata seconda
@@ -51,7 +57,7 @@ cd (string(dispositivo))
     [ ~ , SDLM_Indice] = min(derivata_2_SDLM(1 : 180));
     SDLM_Indice = SDLM_Indice;
     % estraiamo la Vth
-    vth_SDLM_noFit = vsg(SDLM_Indice);
+    vth_SDLM_noFit = vgs(SDLM_Indice);
     
     %Calcolo del minimo della funzione polinomiale che interpola i punti 
     % in un intorno di Vth calcolata con SDLM a Vgs = 900 mV e di raggio 100 mV
@@ -61,9 +67,9 @@ cd (string(dispositivo))
     indici_intervallo = SDLM_Indice-20 : SDLM_Indice+20;
     %creaiamo dei valori vsg nell'intervallo calcolato con un
     %incremento di 0.1mV
-    intervallo_alta_ris = vsg(indici_intervallo(1)) : 0.0001 : vsg(indici_intervallo(end));
+    intervallo_alta_ris = vgs(indici_intervallo(1)) : 0.0001 : vgs(indici_intervallo(end));
     %Troviamo il valori dei coefficenti della funzione polinomiale 
-    coefficienti = polyfit(vsg(indici_intervallo), derivata_2_SDLM(indici_intervallo), GRADO);
+    coefficienti = polyfit(vgs(indici_intervallo), derivata_2_SDLM(indici_intervallo), GRADO);
     %calcoliamo le y della funzione polinomiale trovata
     grafico = polyval(coefficienti, intervallo_alta_ris);
     %estraiamo il minimo della polinomiale
@@ -80,7 +86,7 @@ cd (string(dispositivo))
         xlabel("$V_{SG}[V]$" , "Interpreter","latex", "FontSize",15);
         ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{SG}^2}[\frac{A}{V^2}]$" , "Interpreter", "latex", "FontSize", 15);
         %Plot dei dati calcolati
-        plot(vsg(indici_intervallo),derivata_2_SDLM(indici_intervallo))
+        plot(vgs(indici_intervallo),derivata_2_SDLM(indici_intervallo))
         %plot della vth dei dati calcolati
         xline(vth_SDLM_noFit,"--","Color","r");
         %plot della polinomiale

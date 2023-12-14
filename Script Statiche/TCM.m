@@ -1,6 +1,8 @@
-function vth = TCM_P(dispositivo , GRADO , PLOT_ON)
+function vth = TCM(dispositivo , GRADO , PLOT_ON)
 
     cd (string(dispositivo))
+
+    tipo = dispositivo(1);
     
     % Nomi dei file contenenti il le Id, al variare di Vds, e Vgs
     file = "id-vgs.txt";
@@ -20,29 +22,33 @@ function vth = TCM_P(dispositivo , GRADO , PLOT_ON)
     id_Vgs_completo = readmatrix(file);
     % file composto da {Vg + (Id , Ig , Is , Iavdd , Igrd) * vd}
     
-    %predo le id_vgs per Vds minima (150mV)
-    id = id_Vgs_completo(: , 27);
-
-    
     % estraggo le Vg (sono uguali per entrambi i file)
-    vsg = id_Vgs_completo(: , 1);
-    
-    
-    %calcoliamo i valori di Vsg
-    vsg = 0.9 - vsg;
+    vgs = id_Vgs_completo(: , 1);
 
-    gm = gm_gds(id, vsg);
+    if tipo == 'P'
+        %predo le id_vgs per Vsd minima (150mV)
+        id = id_Vgs_completo(: , end - 9);
+        
+        %calcoliamo i valori di Vsg
+        vgs = 0.9 - vgs;
+    else
+        %predo le id_vgs per Vsd minima (150mV)
+        id = id_Vgs_completo(: , 7);
+    end
+
+
+    gm = gm_gds(id, vgs);
     gm = abs(gm);
     
     
     % Derivata della gm rispetto Vsg
-    derivata_TCM = gradient(gm) ./ gradient(vsg);
+    derivata_TCM = gradient(gm) ./ gradient(vgs);
     % Smooth della derivata
     derivata_TCM = smooth(derivata_TCM);
     % indice del valore massimo di di TCM per Vgs <= 700mV (700mV in posizione 201)
     [ ~ , indice_TCM] = max(derivata_TCM(1:201));
 
-    vth_TCM_noFit = vsg(indice_TCM);
+    vth_TCM_noFit = vgs(indice_TCM);
             
     
     % Calcolo del massimo della funzione polinomiale che interpola i punti 
@@ -52,9 +58,9 @@ function vth = TCM_P(dispositivo , GRADO , PLOT_ON)
     indici_intervallo = indice_TCM-20 : indice_TCM+20;
     %creaiamo dei valori vsg nell'intervallo calcolato con un
     %incremento di 0.1mV
-    intervallo_alta_ris = vsg(indici_intervallo(1)) : 0.0001 : vsg(indici_intervallo(end));
+    intervallo_alta_ris = vgs(indici_intervallo(1)) : 0.0001 : vgs(indici_intervallo(end));
     %Troviamo il valori dei coefficenti della funzione polinomiale 
-    coefficienti = polyfit(vsg(indici_intervallo), derivata_TCM(indici_intervallo), GRADO);
+    coefficienti = polyfit(vgs(indici_intervallo), derivata_TCM(indici_intervallo), GRADO);
     % calcoliamo le y della funzione polinomiale trovata
     grafico = polyval(coefficienti, intervallo_alta_ris);
     % massimo della polinomiale
@@ -71,16 +77,16 @@ function vth = TCM_P(dispositivo , GRADO , PLOT_ON)
         hold on
         title("TCM - " + dispositivo)
         % plot dati calcolati
-        plot(vsg(indici_intervallo),derivata_TCM(indici_intervallo));
+        plot(vgs(indici_intervallo),derivata_TCM(indici_intervallo));
         % plot Vth calcolato senza il fit
         xline(vth_TCM_noFit,"--","Color","red");
         % plot della polinomiale
         plot(intervallo_alta_ris,grafico); 
         % plot Vth calcolata con la polinomiale
-        plot(vth , max_grafico, '*', color="r", MarkerSize=20 );
+        plot(vth , max_grafico, '*', color="r", MarkerSize=20);
 
-        xlabel("$V_{sg}$" , "Interpreter","latex");
-        ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{sg}}$" , Interpreter="latex");
+        xlabel("$V_{sg}$" , Interpreter="latex", FontSize=15);
+        ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{sg}}$" , Interpreter="latex", FontSize=15);
         legend("TCM","Massimo di TCM","Fit di grado "+ GRADO, "Massimo del fit")
     end
 
