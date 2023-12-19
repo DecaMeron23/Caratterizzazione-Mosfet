@@ -82,7 +82,9 @@ function vth = SDLM(dispositivo , GRADO , PLOT_ON)
     if PLOT_ON
         figure
         hold on
-        title("SDLM - " + dispositivo)
+        set(gca , "FontSize" , 12)
+        titolo = titoloPlot(dispositivo);
+        title("SDLM - " + titolo , FontSize=10);
         xlabel("$V_{SG}[V]$" , "Interpreter","latex", "FontSize",15);
         ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{SG}^2}[\frac{A}{V^2}]$" , "Interpreter", "latex", "FontSize", 15);
         %Plot dei dati calcolati
