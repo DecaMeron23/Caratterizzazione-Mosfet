@@ -88,6 +88,15 @@ Dispositivo &  $V_{th}$  con fit di & $V_{th}$  con fit di & $V_{th}$  con fit d
 \end{center}
 \end{table} 
 
+\begin{figure}[h!]
+\centering
+ \includegraphics[width=0.49\textwidth]{TCM-P1-100-30-grado2}
+ \includegraphics[width=0.49\textwidth]{TCM-P1-100-30-grado4}
+ \includegraphics[width=0.49\textwidth]{TCM-P1-100-30-grado6}
+ \includegraphics[width=0.49\textwidth]{TCM-P1-100-30-grado8}
+ \caption{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{TCM} con fit polinomiale di diversi gradi}
+\end{figure}
+
 Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei fit fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con fit di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere sia molto diverso da quelli calcolati con fit di grado maggiore, sia da quello di ottenuto senza fit. Dunque di sicuro usare un fit di grado 2 porta a risultati scorretti, mentre usare un fit di grado superiore dovrebbe portare a risultati sicuramente accettabili. Per il confronto con altri metodi per l'estrazione della $V_{th}$ si terrà quindi conto del TCM con fit polinomiale di grado 6.
 
 
@@ -162,14 +171,11 @@ Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of t
  \caption{Esempio di \emph{SDLM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-30 a $V_{DS} = 900 mV$}
 \end{figure}
 
-I due metodi appena esposti, però, sono molto sensibili ai picchi dovuti ad errori di misura e perciò sono difficilmente utlizzabili se prima non si rendono i grafici più puliti. Inoltre, la risoluzione del dispositivo di misura utilizzato e di $5 mV$, il che rende i valori ottenuti della $V_{th}$ molto approssimativi.
-Per far fronte a questi due problemi, si è scelto di non tenere conto del minimo e del massimo direttamente ottenuti dalle derivate delle misure fatte, ma di interpolare prima i punti dei grafici ottenuti con una funzione polinomiale e solo a questo punto di prendere in considerazione i picchi di minimo o di massimo. \\
+Anche questo metodo ha le stesse problematiche presenti per il \emph{TCM}: il valore minimo della funzione analizzata è fortemente influenzata dai valori fuori scala e la risoluzione dello strumento di misura è di $5 mV$ e dunque troppo grossolana per ottenere un valore di $V_{th}$ precisa.
+Quindi, anche per questo metodo, abbiamo deciso di interpolare la funzione ottenuta con una polinomiale e considerare il minimo di quest'ultima. \\
 
 \begin{figure}[h!]
 \centering
- \includegraphics[width=0.49\textwidth]{TCM-N4-100-30}
- \includegraphics[width=0.49\textwidth]{TCM-P1-100-30}
- \caption{Esempio di \emph{TCM} con fit polinomiale usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-30 a $V_{DS} = 150 mV$}
  \includegraphics[width=0.49\textwidth]{SDLM-N4-100-30}
  \includegraphics[width=0.49\textwidth]{SDLM-P1-100-30}
  \caption{Esempio di \emph{SDLM} con fit polinomiale usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-30 a $V_{DS} = 900 mV$}
