@@ -75,7 +75,9 @@ function vth = TCM(dispositivo , GRADO , PLOT_ON)
     if PLOT_ON
         figure
         hold on
-        title("TCM - " + dispositivo)
+        set(gca , "FontSize" , 12)
+        titolo = titoloPlot(dispositivo);
+        title("TCM - " + titolo , FontSize= 10)
         % plot dati calcolati
         plot(vgs(indici_intervallo),derivata_TCM(indici_intervallo));
         % plot Vth calcolato senza il fit
@@ -85,8 +87,16 @@ function vth = TCM(dispositivo , GRADO , PLOT_ON)
         % plot Vth calcolata con la polinomiale
         plot(vth , max_grafico, '*', color="r", MarkerSize=20);
 
-        xlabel("$V_{sg}$" , Interpreter="latex", FontSize=15);
-        ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{sg}}$" , Interpreter="latex", FontSize=15);
+        if tipo == 'P'
+            xlabeltxt = "$V_{SG}[V]$";
+            ylabeltxt = "$\frac{\mathrm {d} g_m}{\mathrm {d} V_{SG}}[\frac{A}{V^2}]$";
+        elseif tipo == 'N'
+            xlabeltxt = "$V_{GS}[V]$";
+            ylabeltxt = "$\frac{\mathrm {d} g_m}{\mathrm {d} V_{GS}}[\frac{A}{V^2}]$";
+        end
+
+        xlabel(xlabeltxt , Interpreter="latex", FontSize=15);
+        ylabel(ylabeltxt , Interpreter="latex", FontSize=15);
         legend("TCM","Massimo di TCM","Fit di grado "+ GRADO, "Massimo del fit")
     end
 

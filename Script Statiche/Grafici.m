@@ -27,7 +27,7 @@ end
 
 for i = 3 : length(fileInFolder)
     dispositivo = char(fileInFolder(i));
-    if (strcmp(dispositivo , 'P1-600-30'))
+    if (strcmp(dispositivo , 'N4-100-180'))
 
         if dispositivo(1) == 'N' 
             vth = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON);
