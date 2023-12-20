@@ -1,4 +1,4 @@
-function vth = TCM(dispositivo , GRADO , PLOT_ON)
+function vth = TCM(dispositivo , GRADO ,SPAN , PLOT_ON)
 
     cd (string(dispositivo))
 
@@ -44,7 +44,7 @@ function vth = TCM(dispositivo , GRADO , PLOT_ON)
     % Derivata della gm rispetto Vsg
     derivata_TCM = gradient(gm) ./ gradient(vgs);
     % Smooth della derivata
-    derivata_TCM = smooth(derivata_TCM);
+    derivata_TCM = smooth(derivata_TCM , SPAN);
     % indice del valore massimo di di TCM per Vgs <= 700mV (700mV in posizione 201)
     [ ~ , indice_TCM] = max(derivata_TCM(1:201));
 
@@ -83,9 +83,9 @@ function vth = TCM(dispositivo , GRADO , PLOT_ON)
         % plot Vth calcolato senza il fit
         xline(vth_TCM_noFit,"--","Color","red");
         % plot della polinomiale
-        plot(intervallo_alta_ris,grafico); 
+        % plot(intervallo_alta_ris,grafico); 
         % plot Vth calcolata con la polinomiale
-        plot(vth , max_grafico, '*', color="r", MarkerSize=20);
+        % plot(vth , max_grafico, '*', color="r", MarkerSize=20);
 
         if tipo == 'P'
             xlabeltxt = "$V_{SG}[V]$";
