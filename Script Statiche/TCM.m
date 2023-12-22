@@ -1,5 +1,7 @@
 function vth = TCM(dispositivo , GRADO ,SPAN , PLOT_ON)
 
+    dispositivo = char(dispositivo);
+
     cd (string(dispositivo))
 
     tipo = dispositivo(1);

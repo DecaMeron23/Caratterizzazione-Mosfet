@@ -1,8 +1,8 @@
 function vth = SDLM(dispositivo , GRADO  , SPAN, PLOT_ON)
 
-    cd (string(dispositivo))
-
     dispositivo = char(dispositivo);
+
+    cd (string(dispositivo))
 
     tipo = dispositivo(1);
     
