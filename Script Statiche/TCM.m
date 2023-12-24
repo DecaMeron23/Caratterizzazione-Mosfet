@@ -1,4 +1,4 @@
-function vth = TCM(dispositivo , GRADO ,SPAN , PLOT_ON)
+function vth = TCM(dispositivo , GRADO , PLOT_ON)
 
     dispositivo = char(dispositivo);
 

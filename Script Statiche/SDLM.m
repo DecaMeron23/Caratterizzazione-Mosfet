@@ -1,4 +1,4 @@
-function vth = SDLM(dispositivo , GRADO  , SPAN, PLOT_ON)
+function vth = SDLM(dispositivo , GRADO , PLOT_ON)
 
     dispositivo = char(dispositivo);
 
