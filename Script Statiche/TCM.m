@@ -85,9 +85,9 @@ function vth = TCM(dispositivo , GRADO , PLOT_ON)
         % plot Vth calcolato senza il fit
         xline(vth_TCM_noFit,"--","Color","red");
         % plot della polinomiale
-        % plot(intervallo_alta_ris,grafico); 
+        plot(intervallo_alta_ris,grafico); 
         % plot Vth calcolata con la polinomiale
-        % plot(vth , max_grafico, '*', color="r", MarkerSize=20);
+        plot(vth , max_grafico, '*', color="r", MarkerSize=20);
 
         if tipo == 'P'
             xlabeltxt = "$V_{SG}[V]$";
