@@ -60,8 +60,8 @@ Per far fronte a questi due problemi, si è scelto di non tenere conto del massi
   \caption{Esempio di \emph{TCM} con fit polinomiale usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-30 a $V_{DS} = 150 mV$}
 \end{figure}
 
-Lo studio del fit polinomiale risolve il problema della bassa risolizione di misura e il problema della presenza di valori fuori scala, ma presenta una potenziale nuovo problema: il valore della $V_{th}$ calcolata potrebbe variare significativamente al variare del grado della funzione polinomiale interpolante.
-Prendendo come esempio i dispositivi PMOS, si è studiato quanto cambia il valore della tenzione di soglia al variare del grado del fit polinomiale, prendendo in considerazione i gradi di valore 2, 4, 6 e 8, tabella \ref{tab:GradiTCM}.\\
+Lo studio del fit polinomiale risolve il problema della bassa risolizione di misura e il problema della presenza di valori fuori scala, ma presenta una potenziale nuovo problema: il valore della $V_{th}$ calcolata potrebbe variare significativamente al variare del grado della funzione polinomiale interpolante. Questa differenza non è molto alta, si parla di pochi millivolt, perciò non influenza considerevolmente il valore della singola estrazione. Questa dipendenza, però, è problematica nel momento in cui si vuole studiare con precisione la degradazione delle prestazioni di un dispositivo all'aumentare dell'irraggiamento subito, in quanto piccoli spostamenti del valore di $V_{th}$ dovuti alla scelta arbitraria del grado della polinomiale può far variare eccessivamente le differenze delle misure tra un irraggiamento e l'altro, elemento inaccettabile se si considera che già le misure sono influenzate da errori casuali in fase di misura.\\
+Prendendo come esempio i dispositivi PMOS, si è studiato quanto cambia il valore della tenzione di soglia al variare del grado del fit polinomiale, prendendo in considerazione i gradi di valore 2, 4, 6 e 8.\\
 
 \begin{table}[h]
   \renewcommand{\arraystretch}{1.3}
@@ -140,7 +140,7 @@ Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of t
   \caption{Esempio di \emph{SDLM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-30 a $V_{DS} = 900 mV$}
 \end{figure}
 
-<<<<<<< HEAD
+
 Anche per questo metodo si ritovano le problematiche presenti per il \emph{TCM}: il valore minimo della funzione analizzata è fortemente influenzata dai valori fuori scala e la risoluzione dello strumento di misura è di $5 mV$ e dunque troppo grossolana per ottenere un valore preciso di $V_{th}$.
 Quindi, anche per questo metodo, abbiamo deciso di interpolare la funzione ottenuta con una polinomiale e considerare il minimo di quest'ultima. \\
 
@@ -177,35 +177,20 @@ Dispositivo &  $V_{th}$  con fit di & $V_{th}$  con fit di & $V_{th}$  con fit d
 \begin{figure}[h!]
 \label{fig:GradiSDLM} 
 \centering
- \includegraphics[width=0.49\textwidth]{SDLM-P1-100-30-grado2}
- \includegraphics[width=0.49\textwidth]{SDLM-P1-100-30-grado4}
- \includegraphics[width=0.49\textwidth]{SDLM-P1-100-30-grado6}
- \includegraphics[width=0.49\textwidth]{SDLM-P1-100-30-grado8}
+ \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado2}
+ \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado4}
+ \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado6}
+ \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado8}
  \caption{Confronto dei valori di $V_{th}$ del dispositivo PMOS 200-30 ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
-=======
-
-% già detto prima
-I due metodi appena esposti, però, sono molto sensibili ai picchi dovuti ad errori di misura e perciò sono difficilmente utlizzabili se prima non si rendono i grafici più puliti. Inoltre, la risoluzione del dispositivo di misura utilizzato e di $5 mV$, il che rende i valori ottenuti della $V_{th}$ molto approssimativi.
-Per far fronte a questi due problemi, si è scelto di non tenere conto del minimo e del massimo direttamente ottenuti dalle derivate delle misure fatte, ma d'interpolare prima i punti dei grafici ottenuti con una funzione polinomiale e solo a questo punto di prendere in considerazione i picchi di minimo o di massimo. \\
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.49\textwidth]{TCM-N4-100-30}
-  \includegraphics[width=0.49\textwidth]{TCM-P1-100-30}
-  \caption{Esempio di \emph{TCM} con fit polinomiale usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-30 a $V_{DS} = 150 mV$}
-  \includegraphics[width=0.49\textwidth]{SDLM-N4-100-30}
-  \includegraphics[width=0.49\textwidth]{SDLM-P1-100-30}
-  \caption{Esempio di \emph{SDLM} con fit polinomiale usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-30 a $V_{DS} = 900 mV$}
->>>>>>> c81c1e965d8174ecd32ba6bbfabf234a0cefd85a
 \end{figure}
 
-Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiTCM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), metre le misure ottenute con quete ultime sono, in genere, molto simili tra loro. Osservando i grafici relativi alla SDLM del PMOS 200-30 (figura \ref{fig:GradiTCM}), si può nota che il plot della funzione $\frac{d^2lnI_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado, i cui valori minimi, quindi, si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta, infatti, che \enph{SDLM} è più sensibile agli errori di misurazioni rispetto a \emph{TCM} e quindi i grafici sono meno approssimabili a polinomiali di baso grado. Si ha dunque che:
+Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiTCM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), metre le misure ottenute con quete ultime sono, in genere, molto simili tra loro. Osservando i grafici relativi alla SDLM del PMOS 200-30 (figura \ref{fig:GradiTCM}), si può nota che il plot della funzione $\frac{d^2lnI_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta, infatti, che \emph{SDLM} è più sensibile agli errori di misurazioni rispetto a \emph{TCM} e quindi i grafici sono meno approssimabili a polinomiali di baso grado. Si ha dunque che:
 \begin{itemize}
   \item i fit di grado basso non interpolano in modo preciso il grafico di $\frac{d^2lnI_D}{dV_{GS}^2}$ i valori minimi variano considerevolmente al variere del grado.
   \item i fit di grado alto interpolano beneil grafico di partenza e i valori minimi sono simili tra loro, ma influenzati dagli errori di misura
 \end{itemize}
 
-Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}{dV_{GS}^2}$ e, in generale, abbiamo concluso che questo metodo non pare molto affidabile per questo studio. In ogni caso, per i futuri confronti tra i metodi siterrà lo stesso in conti l'\emph{SDLM}, usando un fit di grado 6, che può essere considerata un'accettabile via di mezzo tra le polinomiali che non interpolano bene il grafico di partenza e quelle che sono troppo ifluenzate dagli errori di misurazione.
+Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}{dV_{GS}^2}$ e, in generale, abbiamo concluso che questo metodo non pare molto affidabile per questo studio. In ogni caso, per i futuri confronti tra i metodi si terrà lo stesso in conti l'\emph{SDLM}, usando un fit di grado 6, che può essere considerata un'accettabile via di mezzo tra le polinomiali che non interpolano bene il grafico di partenza e quelle che sono troppo ifluenzate dagli errori di misura.
 
 
 

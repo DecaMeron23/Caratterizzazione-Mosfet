@@ -46,13 +46,13 @@ function vth = SDLM(dispositivo , GRADO , PLOT_ON)
     %Deriviamo log(id) rispetto Vsg
     derivata_SDLM = gradient(log_Id) ./ gradient(vgs);
     %Eseguiamo lo smooth della derivata
-    derivata_SDLM = smooth(derivata_SDLM , SPAN);
+    derivata_SDLM = smooth(derivata_SDLM );
     %Deriviamo la seconda volta
     derivata_2_SDLM = gradient(derivata_SDLM) ./ gradient(vgs);
     % per bassi valori di Vsg (da -0.3 a -0.2) sostituiamo i valori ponendoli a 200 
     derivata_2_SDLM = [ones(20, 1)*200; derivata_2_SDLM(21:end)];
     %Smooth della derivata seconda
-    derivata_2_SDLM = smooth(derivata_2_SDLM , SPAN);
+    derivata_2_SDLM = smooth(derivata_2_SDLM );
     % prendiamo l'indice del minimo valore della derivata seconda
     [ ~ , SDLM_Indice] = min(derivata_2_SDLM(1 : 180));
     % estraiamo la Vth
