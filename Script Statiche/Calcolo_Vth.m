@@ -37,20 +37,22 @@ for i = 3 : length(fileInFolder)
         vth_FIT = FIT_LIN(dispositivo , PLOT_ON);
         vth_TCM= TCM(dispositivo , GRADO , PLOT_ON);
         vth_SDLM = SDLM (dispositivo , GRADO , PLOT_ON);
+        vth_RM = RM(dispositivo , PLOT_ON);
       
         formato = '%5.5f';
 
         vth_FIT = string(sprintf(formato, vth_FIT));
         vth_TCM = string(sprintf(formato, vth_TCM));
         vth_SDLM = string(sprintf(formato, vth_SDLM));
-
-        vth = [vth_FIT , vth_TCM , vth_SDLM];
+        vth_RM = string(sprintf(formato, vth_RM));
+        
+        vth = [vth_FIT , vth_TCM , vth_SDLM , vth_RM];
         
         %% Save File
         %Rinonimo le intestazioni
 
         vth = array2table(vth);
-        vth = renamevars(vth , ["vth1" , "vth2" "vth3"] , ["Lin_fit_Id", "Vth_TCM", "Vth_SDLM"]);
+        vth = renamevars(vth , ["vth1" , "vth2" "vth3" , "vth4"] , ["Lin_fit_Id", "Vth_TCM", "Vth_SDLM" ,"Vth_RM"]);
         
         Cartella = "Vth";
        
