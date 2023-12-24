@@ -41,14 +41,14 @@ function vth = FIT_LIN(dispositivo , PLOT_ON)
     %settiamo l'R^2 migliore a 0
     R_migliore = 0;
 
-    % per colpa di chi ha inventato i floatign point 0.3 non è uguale a
-    % 0.3 e devo scrivere più codice
+    % per colpa di chi ha inventato i floatingpoint 0.3 non è uguale a
+    % 0.3 e devo scrivere più codice...
     [~, indice1] = min(abs(vgs - 0.3));
     [~, indice2] = min(abs(vgs - (0.75)));
     % dalla posizione in cui è a 0.3V fino a (0.9-0.15)V
     for i = indice1:indice2
         
-        % prendiamo l'intervallod 
+        % prendiamo l'intervallo
         x = vgs(i : i+30);
         y = id(i : i+30);
 

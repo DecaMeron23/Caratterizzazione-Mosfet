@@ -1,6 +1,10 @@
 function vth = RM(dispositivo , PLOT_ON)
 
+    dispositivo = char(dispositivo);
+
     cd (string(dispositivo))
+
+
 
     tipo = dispositivo(1);
     
@@ -39,53 +43,81 @@ function vth = RM(dispositivo , PLOT_ON)
     gm = abs(gm_gds(id, vgs));
     rm_data = id./sqrt(gm);
 
-    % ricerca del punto con vsg = 0.7V
-    pos_min = 1;
-    while(vgs(pos_min) < 0.6)
-        pos_min = pos_min+1;
-    end
+    %settiamo l'R^2 migliore a 0
+    R_migliore = 0;
 
-    % ricerca del punto con vsg = 0.9V
-    pos_max = pos_min;
-    while(vgs(pos_max) < 0.9)
-        pos_max = pos_max +1;
-    end
-
-    P = polyfit(vgs(pos_min:pos_max), rm_data(pos_min:pos_max), 1);
-    vth = -P(2)/P(1);
+    % per colpa di chi ha inventato i floatingpoint 0.3 non è uguale a
+    % 0.3 e devo scrivere più codice...
+    [~, indice1] = min(abs(vgs - 0.1));
+    [~, indice2] = min(abs(vgs - (0.75)));
+    % dalla posizione in cui è a 0.3V fino a (0.9-0.15)V
+    for i = indice1:indice2
     
+        % prendiamo l'intervallo
+        x = vgs(i : i+30);
+        y = rm_data(i : i+30);
 
-
-    if PLOT_ON
-        val = polyval(P , vgs);
-        figure
-        set(gca , "FontSize" , 12)
-        titolo = titoloPlot(dispositivo);
-        hold on
-        plot(vgs , rm_data)
-        plot(vgs , val)
-        xlim([0 , 0.9])
-        ylim([-0.15, 0.15])
-        title("Fit lineare - " + titolo , FontSize=10);
-        xline(vth , "--");
-        yline(0, "--");
-        plot(vth,  0 , "*" ,color = "r" , MarkerSize=20);
-
-        if tipo == 'P'
-            xlabelb_txt = "$V_{SG} [V]$";
-        elseif tipo == 'N'
-            xlabelb_txt = "$V_{GS} [V]$";
+        modello_Fit = fitlm(x , y);
+        
+        R_attuale = modello_Fit.Rsquared.Ordinary;
+        
+        % se questo fit è migliore lo salviamo
+        if(R_attuale > R_migliore)
+            R_migliore = R_attuale;
+            modello_migliore = modello_Fit;
+            intervallo = [vgs(i) , vgs(i+30)];
         end
-
-
-        xlabel( xlabelb_txt, "Interpreter","latex" , FontSize=15);
-        ylabel("$\frac{I_D}{g_m^(\frac{1}{2})} [\sqrt{\frac{A^3}{V}}]$" , Interpreter="latex" , FontSize=15);
-        legend( "$I_D$", "Ratio Method", Interpreter = "latex" , Location = "northwest");
-        hold off
-
     end
 
-    cd ..;
+    disp(dispositivo + " coefficente R^2 migliore è: "+ R_migliore);
+
+    % troviamo la vth
+    coefficenti = modello_migliore.Coefficients.Estimate;
+    
+    vth = -coefficenti(1) / coefficenti(2);   
+    
+    x_new = [vth-0.2 , 0.9];
+    y_fit = predict(modello_migliore , x_new');
+    figure
+    set(gca , "FontSize" , 12)
+    titolo = titoloPlot(dispositivo);
+    hold on
+    plot(vgs , rm_data)
+    plot(x_new , y_fit)
+    xlim([0 , 0.9])
+    %ylim([-0.15, 0.15])
+    title("RM - " + titolo , FontSize=10);
+    xline(vth , "--");
+    yline(0, "-.");
+    xline(intervallo(1) , '--');
+    xline(intervallo(2) , '--');
+    plot(vth,  0 , "*" ,color = "r" , MarkerSize=20);
+
+    if tipo == 'P'
+        xlabelb_txt = "$V_{SG} [V]$";
+    elseif tipo == 'N'
+        xlabelb_txt = "$V_{GS} [V]$";
+    end
+
+
+    xlabel( xlabelb_txt, "Interpreter","latex" , FontSize=15);
+    ylabel("$\frac{I_D}{g_m^(\frac{1}{2})} [\sqrt{\frac{A^3}{V}}]$" , Interpreter="latex" , FontSize=15);
+    legend( "$I_D$", "Ratio Method", Interpreter = "latex" , Location = "northwest");
+    hold off
+
+    if ~exist("fig\" , "dir")
+        mkdir("fig\")
+    end
+
+    cd fig\
+
+    saveas(gca , "RM.fig")
+
+    cd ..\..
+      
+    if ~PLOT_ON
+        close all
+    end
 
 end
 
