@@ -1,5 +1,7 @@
 function vth = SDLM(dispositivo , GRADO , PLOT_ON)
 
+    dispositivo = char(dispositivo);
+
     cd (string(dispositivo))
 
     tipo = dispositivo(1);
@@ -31,7 +33,7 @@ function vth = SDLM(dispositivo , GRADO , PLOT_ON)
         
         %calcoliamo i valori di Vsg
         vgs = 0.9 - vgs;
-    else 
+    elseif tipo == 'N'
         id = id_Vgs_completo(:, end - 4);
     end
 
@@ -39,23 +41,20 @@ function vth = SDLM(dispositivo , GRADO , PLOT_ON)
     %calcoliamo il logaritmo di Id
     log_Id = log(abs(id));
     
-    
-
     %Eseguiamo lo smooth
-    log_Id_smooth = smooth(log_Id);
+    log_Id = smooth(log_Id);
     %Deriviamo log(id) rispetto Vsg
-    derivata_SDLM = gradient(log_Id_smooth) ./ gradient(vgs);
+    derivata_SDLM = gradient(log_Id) ./ gradient(vgs);
     %Eseguiamo lo smooth della derivata
-    derivata_SDLM = smooth(derivata_SDLM);
+    derivata_SDLM = smooth(derivata_SDLM , SPAN);
     %Deriviamo la seconda volta
     derivata_2_SDLM = gradient(derivata_SDLM) ./ gradient(vgs);
     % per bassi valori di Vsg (da -0.3 a -0.2) sostituiamo i valori ponendoli a 200 
     derivata_2_SDLM = [ones(20, 1)*200; derivata_2_SDLM(21:end)];
     %Smooth della derivata seconda
-    derivata_2_SDLM = smooth(derivata_2_SDLM);
+    derivata_2_SDLM = smooth(derivata_2_SDLM , SPAN);
     % prendiamo l'indice del minimo valore della derivata seconda
     [ ~ , SDLM_Indice] = min(derivata_2_SDLM(1 : 180));
-    SDLM_Indice = SDLM_Indice;
     % estraiamo la Vth
     vth_SDLM_noFit = vgs(SDLM_Indice);
     
@@ -82,9 +81,20 @@ function vth = SDLM(dispositivo , GRADO , PLOT_ON)
     if PLOT_ON
         figure
         hold on
-        title("SDLM - " + dispositivo)
-        xlabel("$V_{SG}[V]$" , "Interpreter","latex", "FontSize",15);
-        ylabel("$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{SG}^2}[\frac{A}{V^2}]$" , "Interpreter", "latex", "FontSize", 15);
+        set(gca , "FontSize" , 12)
+        titolo = titoloPlot(dispositivo);
+        title("SDLM - " + titolo , FontSize=10);
+        
+         if tipo == 'P'
+            xlabeltxt = "$V_{SG}[V]$";
+            ylabeltxt = "$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{SG}^2}[\frac{A}{V^2}]$";
+         elseif tipo == 'N'
+            xlabeltxt = "$V_{GS}[V]$";
+            ylabeltxt = "$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{GS}^2}[\frac{A}{V^2}]$";
+        end
+
+        xlabel(xlabeltxt , "Interpreter","latex", "FontSize",15);
+        ylabel(ylabeltxt , "Interpreter", "latex", "FontSize", 15);
         %Plot dei dati calcolati
         plot(vgs(indici_intervallo),derivata_2_SDLM(indici_intervallo))
         %plot della vth dei dati calcolati

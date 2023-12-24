@@ -1,5 +1,7 @@
 function vth = TCM(dispositivo , GRADO , PLOT_ON)
 
+    dispositivo = char(dispositivo);
+
     cd (string(dispositivo))
 
     tipo = dispositivo(1);
@@ -44,7 +46,7 @@ function vth = TCM(dispositivo , GRADO , PLOT_ON)
     % Derivata della gm rispetto Vsg
     derivata_TCM = gradient(gm) ./ gradient(vgs);
     % Smooth della derivata
-    derivata_TCM = smooth(derivata_TCM);
+    derivata_TCM = smooth(derivata_TCM , SPAN);
     % indice del valore massimo di di TCM per Vgs <= 700mV (700mV in posizione 201)
     [ ~ , indice_TCM] = max(derivata_TCM(1:201));
 
@@ -75,18 +77,28 @@ function vth = TCM(dispositivo , GRADO , PLOT_ON)
     if PLOT_ON
         figure
         hold on
-        title("TCM - " + dispositivo)
+        set(gca , "FontSize" , 12)
+        titolo = titoloPlot(dispositivo);
+        title("TCM - " + titolo , FontSize= 10)
         % plot dati calcolati
         plot(vgs(indici_intervallo),derivata_TCM(indici_intervallo));
         % plot Vth calcolato senza il fit
         xline(vth_TCM_noFit,"--","Color","red");
         % plot della polinomiale
-        plot(intervallo_alta_ris,grafico); 
+        % plot(intervallo_alta_ris,grafico); 
         % plot Vth calcolata con la polinomiale
-        plot(vth , max_grafico, '*', color="r", MarkerSize=20);
+        % plot(vth , max_grafico, '*', color="r", MarkerSize=20);
 
-        xlabel("$V_{sg}$" , Interpreter="latex", FontSize=15);
-        ylabel("$\frac{\mathrm {d} g_m}{\mathrm {d} V_{sg}}$" , Interpreter="latex", FontSize=15);
+        if tipo == 'P'
+            xlabeltxt = "$V_{SG}[V]$";
+            ylabeltxt = "$\frac{\mathrm {d} g_m}{\mathrm {d} V_{SG}}[\frac{A}{V^2}]$";
+        elseif tipo == 'N'
+            xlabeltxt = "$V_{GS}[V]$";
+            ylabeltxt = "$\frac{\mathrm {d} g_m}{\mathrm {d} V_{GS}}[\frac{A}{V^2}]$";
+        end
+
+        xlabel(xlabeltxt , Interpreter="latex", FontSize=15);
+        ylabel(ylabeltxt , Interpreter="latex", FontSize=15);
         legend("TCM","Massimo di TCM","Fit di grado "+ GRADO, "Massimo del fit")
     end
 

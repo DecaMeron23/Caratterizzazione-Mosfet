@@ -207,13 +207,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
     % end
     
     %% Calculate threshold - Second Difference of the Logarithm of the drain current Minimum (SDLM) method
-    
-    % inizzializzazione parametri
-    % vth_SDLM = zeros(length(Vds),1);
-    % log_Id_smooth = zeros(size(Id));
-    % SDLM_derivata_Smooth = log_Id_smooth;
-    % SDLM_derivata_2_smooth = log_Id_smooth;
-
+   
     %calcoliamo il logaritmo di Id
     log_Id = log(abs(id));
     
@@ -245,7 +239,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         SDLM_derivata_2(:, i) = smooth(spuriousRemoved(:,i),SPAN);
     end
     
-    [SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2); % #modifica: SDLM_derivata_2 --> SDLM_derivata_2_smooth
+    [SDLM_Min, SDLM_Indice] = min(SDLM_derivata_2);
     
     for i=1:length(vds)
         vth_SDLM_noFit(i, 1) = vgs(SDLM_Indice(i));
@@ -283,7 +277,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         plot(vgs(indici_intervallo_vds_900mv),SDLM_derivata_2(indici_intervallo_vds_900mv,end)) %grafico dati
         xline(vth_SDLM_noFit(end),"--","Color","r"); %Vth dati
         plot(intervallo_vds_900mv_alta_ris, grafico(:, end)); %grafico polinomiale
-        plot(vth_SDLM(end) , min_grafico_SDLM(end) , "o") %minimo della polinomiale (Vth)
+        plot(vth_SDLM(end) , min_grafico_SDLM(end) , "*" , color="r", MarkerSize=20) %minimo della polinomiale (Vth)
         legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
 
         cd fig\
@@ -295,7 +289,7 @@ function [vth] = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON)
         end
     % end
     %% creo una tabella contenente le Vth calcolate al variare di Vds
-    vth =  array2table([vds' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
+        vth =  array2table([vds' , round(vth_Lin_Fit' , 6), round(vth_TCM' , 6) , round(vth_SDLM' , 6)]);
 
     cd ..;
     

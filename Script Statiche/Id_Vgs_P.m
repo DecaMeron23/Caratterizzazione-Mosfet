@@ -80,12 +80,29 @@ function [vth] = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON)
         %plot di verifica del fit a Vsd = 150mV
         %if PLOT_ON
             if vsd(i) == 150
+
+                % val = polyval(P , [0 , 0.9]);
+                % figure
+                % set(gca , "FontSize" ,  12);
+                % title(titoloPlot(dispositivo) , FontSize=10);
+                % hold on
+                % plot(vgs , id(: , i) , LineWidth=1);
+                % plot([0 , 0.9] , val , LineWidth=1);
+                % xline(0.6 , "--")
+                % xline(0.5 , "--")
+                % yline(0 , "-.");
+                % xline(vth_Lin_Fit(i) , "--");
+                % legend(["Vds = 10 mV", "Fit Lineare" ], Location="northwest" , FontSize=10);
+                % ylabel("$I_{d} [A]$" , Interpreter="latex" , FontSize=15);
+                % xlabel("$V_{gs} [V]$" , Interpreter="latex" , FontSize=15);
+
+
                 val = polyval(P , [0 , 0.9]);
                 figure
                 set(gca , "FontSize" , 12)
                 hold on
-                plot(vsg , id(: , i))
-                plot([0 , 0.9] , val)
+                plot(vsg , id(: , i) , LineWidth=1)
+                plot([0 , 0.9] , val , LineWidth=1)
                 title("Fit lineare - " + dispositivo , FontSize=10);
                 xlim([0 , 0.7])
                 xline(0.5 , "--")

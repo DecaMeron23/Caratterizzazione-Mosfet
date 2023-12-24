@@ -72,7 +72,7 @@ function delta_vth(dispositivo)
         delta_TCM = [dispositivi , delta_TCM];
         delta_SDLM = [dispositivi , delta_SDLM];
 
-        name = ["dispositivo" , string(grado(2:end))];
+        name = ["disp" , string(grado(2:end))];
         table_FIT = celleATabelle(delta_FIT);
         table_TCM = celleATabelle(delta_TCM);
         table_SDLM = celleATabelle(delta_SDLM);
@@ -233,10 +233,15 @@ end
 function tabella = celleATabelle(cella)
     dimensioni = [length(cella{1}) ,length(cella)];
 
-    tabella = zeros(dimensioni);
-
     for i = 2:dimensioni(2)
-        tabella(: , i) = cella{i};
+        for j = 1:length(cella{i})
+            temp = cella{i};
+            temp = temp(j);
+            formato = '%5.5f';
+            numeriFormattati(j) = string(sprintf(formato, temp));
+
+        end
+        tabella(: , i) = numeriFormattati;
     end
     
     tabella = array2table(tabella);
