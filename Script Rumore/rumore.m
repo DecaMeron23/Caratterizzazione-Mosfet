@@ -27,7 +27,7 @@ classdef rumore
         end
 
         function noise_out (file1,file2)
-            const = 4.14E-19; %densità spettrale di potenza di rumore di una resisenza da 25 Ohm
+            const = 4 * 300 * 25 * 1.38E-23; %densità spettrale di potenza di rumore di una resistenza da 25 Ohm
             tipo1=extractBefore(file1,'_');
             tipo2=extractBefore(file2,'_');
             if strcmp (tipo1,'fondo')==1
@@ -41,23 +41,19 @@ classdef rumore
             end
             assignin("base","noise",noise);
             if height(noise)==height(fondo)
-                noise_out=zeros(height(noise),2);
+                noise_out=zeros(height(noise),2).*-1;
                 noise_out(:,1)=noise(:,1);
 
                 for i=1:height(noise)
-                    if noise(i,2) >= fondo(i,2)
+                    if  noise(i,2)>fondo(i,2)
                         x=noise(i,2)^2;
                         y=fondo(i,2)^2;
-                        c0 = x-y;
-                    else 
-                        c0 = -1;
-                    end
-                    if c0 >= const
-                        c0 = sqrt(c0 - const)* 1E9;
-                    else 
-                        c0 = -1;
-                    end
+                        c0 = sqrt(x-y);
+                    % else
+                    %     c0 = -1;
+                    
                     noise_out(i,2) = c0;
+                    end
                 end
             end
             assignin("base","noise_out",noise_out);
@@ -68,6 +64,15 @@ classdef rumore
             hold on;
             
             rumore.connected(noise_out);
+            %noise_out_nozeroes=[];
+            %j=1;
+             %    for i=1:height(noise_out)
+              %      if noise_out(i,2)~=0 
+               %         noise_out_nozeroes(j,:)=noise_out(i,:);
+                %        j=j+1;
+                 %   end
+                 %end
+                 %writematrix(noise_out_nozeroes,'noise_out_nozeroes.txt','delimiter', ' ');
             
             %saveas(gcf, 'noise_out.png', 'png');
             writematrix(noise_out,'noise_out.txt','delimiter', ' ');
@@ -87,17 +92,18 @@ classdef rumore
                 fdt=table2array(y);
             end
             assignin("base","fdt",fdt);
+            noise_in=zeros(height(fdt),2);
             noise_in(:,1)=fdt(:,1);
             for i=1:height(fdt)
-                if noise_out(i,2) >= 0
+                %if noise_out(i,2) >= 0
                     den=10^(fdt(i,2)/20);
-                    noise_in(i,2)=string(noise_out(i,2)/den);
-                else 
-                    noise_in(i,2) = "";
-                end
+                    noise_in(i,2)=noise_out(i,2)/den;
+                % else 
+                %     noise_in(1,2) = "";
+                % end
             end
             assignin("base","noise_in",noise_in);
-            
+            %noise_in(:,2)=medfilt1(noise_in(:,2),2);
             writematrix(noise_in,'noise_in.txt','delimiter', ' ')
             loglog(noise_in(:,1),noise_in(:,2));
             xlabel('Frequency [Hz]');

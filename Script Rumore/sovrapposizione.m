@@ -44,6 +44,21 @@ end
 assignin("base","vect_noise_in",vect_noise_in);
 assignin("base","vect_noise_out",vect_noise_out);
 
+%noise out
+for i=1:4
+    loglog(vect_noise_out{1,i}(:,1),vect_noise_out{1,i}(:,2));
+    
+    hold all;
+end
+rumore.connected( cell2mat(vect_noise_out));
+title('noise-out');
+legend('I=50 uA', 'I=100 uA', 'I=250 uA','I=500 uA');
+xlim([10^3, 10^8]);
+axis square;
+saveas(gcf, 'noise_out_sovr.png', 'png');
+hold off;
+
+% noise in
 for i=1:4
     loglog(vect_noise_in{1,i}(:,1),vect_noise_in{1,i}(:,2));
     
@@ -52,21 +67,10 @@ end
 rumore.connected(cell2mat(vect_noise_in));
 title('noise-in');
 legend('I=50 uA', 'I=100 uA', 'I=250 uA','I=500 uA');
-xlim([10^2, 10^8]);
+xlim([10^3, 10^8]);
 axis square;
 xlabel('Frequency [Hz]');
 ylabel('Noise Voltage Spectrum $\mathrm{[V/Hz^{1/2}]}$', 'Interpreter', 'latex');
 saveas(gcf, 'noise_in_sovr.png', 'png');
-hold off;
-for i=1:4
-    loglog(vect_noise_out{1,i}(:,1),vect_noise_out{1,i}(:,2));
-    hold all;
-end
-rumore.connected( cell2mat(vect_noise_out));
-title('noise-out');
-legend('I=50 uA', 'I=100 uA', 'I=250 uA','I=500 uA');
-xlim([10^2, 10^8]);
-axis square;
-saveas(gcf, 'noise_out_sovr.png', 'png');
 hold off;
 end

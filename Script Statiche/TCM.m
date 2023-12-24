@@ -32,7 +32,7 @@ function vth = TCM(dispositivo , GRADO , PLOT_ON)
         %calcoliamo i valori di Vsg
         vgs = 0.9 - vgs;
     else
-        %predo le id_vgs per Vsd minima (150mV)
+        %predo le id_vgs per Vds minima (150mV)
         id = id_Vgs_completo(: , 7);
     end
 
