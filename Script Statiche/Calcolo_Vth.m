@@ -34,15 +34,23 @@ for i = 3 : length(fileInFolder)
     if ((dispositivo(1) == 'N' || dispositivo(1) == 'P') && (dispositivo(3) == '-')&&  ...
             ~contains(dispositivo,'nf'))
 
-        if dispositivo(1) == 'N' 
-            vth = Id_Vgs_N(dispositivo , SPAN , GRADO , PLOT_ON);
-        elseif dispositivo(1) == 'P'
-            vth = Id_Vgs_P(dispositivo , SPAN , GRADO , PLOT_ON);
-        end
+        vth_FIT = FIT_LIN(dispositivo , PLOT_ON);
+        vth_TCM= TCM(dispositivo , GRADO , PLOT_ON);
+        vth_SDLM = SDLM (dispositivo , GRADO , PLOT_ON);
       
+        formato = '%5.5f';
+
+        vth_FIT = string(sprintf(formato, vth_FIT));
+        vth_TCM = string(sprintf(formato, vth_TCM));
+        vth_SDLM = string(sprintf(formato, vth_SDLM));
+
+        vth = [vth_FIT , vth_TCM , vth_SDLM];
+        
         %% Save File
         %Rinonimo le intestazioni
-        vth = renamevars(vth , ["Var1", "Var2", "Var3", "Var4"] , ["Vd" ,"Lin_fit_Id", "Vth_TCM", "Vth_SDLM"]);
+
+        vth = array2table(vth);
+        vth = renamevars(vth , ["vth1" , "vth2" "vth3"] , ["Lin_fit_Id", "Vth_TCM", "Vth_SDLM"]);
         
         Cartella = "Vth";
        

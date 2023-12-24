@@ -37,53 +37,79 @@ function vth = FIT_LIN(dispositivo , PLOT_ON)
         %predo le id_vgs per Vsd minima (150mV)
         id = id_Vgs_completo(: , 7);
     end
+    
+    %settiamo l'R^2 migliore a 0
+    R_migliore = 0;
 
-    % ricerca del punto con vsg = 0.5V
-    pos_min = 1;
-    while(vgs(pos_min) < 0.5)
-        pos_min = pos_min+1;
+    % dalla posizione in cui è a 0.3V fino a (0.9-0.15)V
+    for i = find(vgs == 0.3):find(vgs == (0.9-0.15))
+        
+        % prendiamo l'intervallod 
+        x = vgs(i : i+30);
+        y = id(i : i+30);
+
+        modello_Fit = fitlm(x , y);
+        
+        R_attuale = modello_Fit.Rsquared.Ordinary;
+        
+        % se questo fit è migliore lo salviamo
+        if(R_attuale > R_migliore)
+            R_migliore = R_attuale;
+            modello_migliore = modello_Fit;
+            intervallo = [vgs(i) , vgs(i+30)];
+        end
     end
 
-    % ricerca del punto con vsg = 0.6V
-    pos_max = pos_min;
-    while(vgs(pos_max) < 0.6)
-        pos_max = pos_max +1;
-    end
-  
-    %calcolo dei coefficenti
-    P = polyfit(vgs(pos_min:pos_max), id(pos_min:pos_max), 1);
-    vth_Lin_Fit = -P(2)/P(1);
+    disp(dispositivo + " coefficente R^2 migliore è: "+ R_migliore);
 
+    % troviamo la vth
+    coefficenti = modello_migliore.Coefficients.Estimate;
+    
+    vth = -coefficenti(1) / coefficenti(2);   
+    
     %plot di verifica del fit a Vsd = 150mV
-    if PLOT_ON
-            val = polyval(P , [0 , 0.9]);
-            figure
-            set(gca , "FontSize" , 12)
-            titolo = titoloPlot(dispositivo);
-            hold on
-            plot(vgs , id)
-            plot([0 , 0.9] , val)
-            title("Fit lineare - " + titolo , FontSize=10);
-            xlim([0 , 0.7])
-            xline(0.5 , "--")
-            xline(0.6 , "--")
-            yline(0 , "-.");
-            xline(vth_Lin_Fit , "--");
-            plot(vth_Lin_Fit ,  0 , "*" ,color = "r" , MarkerSize=20);
+    x_new = [vth-0.2 , 0.9];
+    y_fit = predict(modello_migliore ,x_new' );
+    figure
+    set(gca , "FontSize" , 12)
+    titolo = titoloPlot(dispositivo);
+    hold on
+    plot(vgs , id)
+    plot(x_new , y_fit)
+    title("Fit lineare - " + titolo , FontSize=10);
+    xlim([0.2 , 0.9])
+    xline(intervallo(1) , "--")
+    xline(intervallo(2) , "--")
+    yline(0 , "-.");
+    xline(vth , "--");
+    plot(vth ,  0 , "*" ,color = "r" , MarkerSize=20);
 
-            if tipo == 'P'
-                xlabelb_txt = "$V_{SG} [V]$";
-            elseif tipo == 'N'
-                xlabelb_txt = "$V_{GS} [V]$";
-            end
+    if tipo == 'P'
+        xlabelb_txt = "$V_{SG} [V]$";
+    elseif tipo == 'N'
+        xlabelb_txt = "$V_{GS} [V]$";
+    end
+    
+
+    xlabel( xlabelb_txt, "Interpreter","latex" , FontSize=15);
+    ylabel("$I_D [A]$" , Interpreter="latex" , FontSize=15);
+    legend( "$I_D$", "fit lineare", Interpreter = "latex" , Location = "northwest");
+    hold off
+    
+    %salvo il plot
+    if(~exist("fig\" , "dir"))
+        mkdir("fig\")
+    end
+    
+    cd fig\
+
+    saveas(gca , "FIT.fig");
 
 
-            xlabel( xlabelb_txt, "Interpreter","latex" , FontSize=15);
-            ylabel("$I_D [A]$" , Interpreter="latex" , FontSize=15);
-            legend( "$I_D$", "fit lineare", Interpreter = "latex" , Location = "northwest");
-            hold off
+    if ~PLOT_ON
+        close all
     end
 
-    cd ..
+    cd ..\..
 
 end
