@@ -1,0 +1,2 @@
+Lin_fit_Id	Vth_TCM	Vth_SDLM
+0.45417	0.49120	0.40480

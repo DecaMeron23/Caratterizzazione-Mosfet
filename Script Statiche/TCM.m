@@ -46,7 +46,7 @@ function vth = TCM(dispositivo , GRADO , PLOT_ON)
     % Derivata della gm rispetto Vsg
     derivata_TCM = gradient(gm) ./ gradient(vgs);
     % Smooth della derivata
-    derivata_TCM = smooth(derivata_TCM , SPAN);
+    derivata_TCM = smooth(derivata_TCM);
     % indice del valore massimo di di TCM per Vgs <= 700mV (700mV in posizione 201)
     [ ~ , indice_TCM] = max(derivata_TCM(1:201));
 

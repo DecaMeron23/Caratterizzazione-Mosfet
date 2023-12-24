@@ -162,11 +162,11 @@ end
 function Vth =  estraiVth(fileVth , tipo_estrazione)
     
     if(strcmp(tipo_estrazione , "FIT"))
-        posizione = [1 , 2]; % posizione intesa come riga colonna
+        posizione = [1 , 1]; % posizione intesa come riga colonna
     elseif(strcmp(tipo_estrazione , "TCM"))
-        posizione = [1 , 3];
+        posizione = [1 , 2];
     elseif(strcmp(tipo_estrazione , "SDLM"))
-        posizione = [6 , 4];
+        posizione = [1 , 3];
     end
 
 

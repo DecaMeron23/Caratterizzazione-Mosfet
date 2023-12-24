@@ -52,7 +52,7 @@ function vth = FIT_LIN(dispositivo , PLOT_ON)
   
     %calcolo dei coefficenti
     P = polyfit(vgs(pos_min:pos_max), id(pos_min:pos_max), 1);
-    vth_Lin_Fit = -P(2)/P(1);
+    vth = -P(2)/P(1);
 
     %plot di verifica del fit a Vsd = 150mV
     if PLOT_ON
@@ -68,8 +68,8 @@ function vth = FIT_LIN(dispositivo , PLOT_ON)
             xline(0.5 , "--")
             xline(0.6 , "--")
             yline(0 , "-.");
-            xline(vth_Lin_Fit , "--");
-            plot(vth_Lin_Fit ,  0 , "*" ,color = "r" , MarkerSize=20);
+            xline(vth , "--");
+            plot(vth ,  0 , "*" ,color = "r" , MarkerSize=20);
 
             if tipo == 'P'
                 xlabelb_txt = "$V_{SG} [V]$";
