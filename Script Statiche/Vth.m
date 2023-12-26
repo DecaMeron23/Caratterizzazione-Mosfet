@@ -526,7 +526,8 @@ classdef Vth
 
         end
 
-   
+    end
+    methods (Access = private , Static)
         %Funzione per RM_Estremi_preIrraggiamento quale trova gli estremi
         %su cui fare il fit
         function [estremo_sx , estremo_dx , vth] = getEstremi_RM(dispositivo)
