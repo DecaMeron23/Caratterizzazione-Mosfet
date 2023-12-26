@@ -68,14 +68,15 @@ Prendendo come esempio i dispositivi PMOS, si è studiato quanto cambia il valor
   \centering
   \begin{tabular}{m{2cm} m{2cm} m{2cm} m{2cm} m{2cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{4}{c}{$V_{th} [mV] \text{ con grado:}$} \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{4}{c}{$V_{th} [mV] \text{ con grado:}$}                         \\
     \cmidrule{2-5}
-                                  & 2 &4 &  6 & 8 \\
+                                 & 2                                                    & 4     & 6     & 8     \\
     \midrule
-    100 - 30                     & 426.9   & 429.4   & 429.4   & 430.8   \\
+    100 - 30                     & 426.9                                                & 429.4 & 429.4 & 430.8 \\
     \hline
-    100 - 60                     & 467.6   & 469.5   & 469.3   & 468.9   \\
+    100 - 60                     & 467.6                                                & 469.5 & 469.3 & 468.9 \\
     \hline
+<<<<<<< HEAD
     200 - 30                     & 397.8   & 399.7   & 399.3   & 399.8   \\
     \hline
     200 - 60                    & 452.2   & 454.1   & 453.5   & 453.5   \\
@@ -88,6 +89,19 @@ Prendendo come esempio i dispositivi PMOS, si è studiato quanto cambia il valor
     \hline
     600 - 180                     & 478.5   & 480.8   & 480.6   & 480.0   \\
    
+=======
+    200 - 30                     & 495.6                                                & 495.6 & 495.3 & 495.5 \\
+    \hline
+    200 - 60                     & 397.8                                                & 399.7 & 399.3 & 399.8 \\
+    \hline
+    200 - 180                    & 452.2                                                & 454.1 & 453.5 & 453.5 \\
+    \hline
+    600 - 30                     & 478.5                                                & 480.8 & 480.6 & 480.0 \\
+    \hline
+    600 - 60                     & 383.0                                                & 387.4 & 385.9 & 386.2 \\
+    \hline
+    600 - 180                    & 431.1                                                & 434.3 & 434.7 & 435.6 \\
+>>>>>>> 28a55acbd602e97861f7df7b92c64dfb0de9305d
     \bottomrule
   \end{tabular}
   \caption{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{TCM} con fit polinomiale di diversi gradi}
@@ -99,6 +113,7 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
+<<<<<<< HEAD
     \begin{tabular}{m{2cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
       \toprule
       \multirow{2}{*}{Dispositivo} & \multicolumn{7}{c}{$V_{th} [mV] $}                                                                    \\
@@ -122,6 +137,31 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
       600 - 180              	& 480.6                             & 481.5   & 483.7    & 486.0     & 492.0     & 507.2     & 519.6   \\
       \bottomrule
     \end{tabular}
+=======
+  \begin{tabular}{m{2cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
+    \toprule
+    \multirow{2}{*}{Dispositivo} & \multicolumn{7}{c}{$V_{th} [mV] $}                                                                    \\
+    \cmidrule{2-8}
+                                 & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
+    \midrule
+    100 - 30                     & 429.4                              & 430.7   & 432.2    & 434.4     & 439.0     & 452.6     & 459.4   \\
+    \hline
+    100 - 60                     & 469.3                              & 469.6   & 471.4    & 472.7     & 479.7     & 491.8     & 500.8   \\
+    \hline
+    200 - 30                     & 495.3                              & 497.1   & 503.9    & 506.5     & 511.3     & 524.1     & 535.3   \\
+    \hline
+    200 - 60                     & 399.3                              & 401.0   & 403.1    & 404.8     & 410.2     & 422.3     & 429.8   \\
+    \hline
+    200 - 180                    & 453.5                              & 455.2   & 456.2    & 458.6     & 463.8     & 476.9     & 485.8   \\
+    \hline
+    600 - 30                     & 480.6                              & 481.5   & 483.7    & 486.0     & 492.0     & 507.2     & 519.6   \\
+    \hline
+    600 - 60                     & 385.9                              & 386.6   & 388.8    & 391.0     & 394.5     & 405.5     & 412.3   \\
+    \hline
+    600 - 180                    & 434.7                              & 435.4   & 438.5    & 438.9     & 445.6     & 458.4     & 467.8   \\
+    \bottomrule
+  \end{tabular}
+>>>>>>> 28a55acbd602e97861f7df7b92c64dfb0de9305d
   \caption{$V_{th}$ dei dispositivi PMOS estratte con \emph{TCM}}
   \label{tab:VthTCMP}
 \end{table}
@@ -174,6 +214,7 @@ Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of t
 Anche per questo metodo si ritovano le problematiche presenti per il \emph{TCM}: il valore minimo della funzione analizzata è fortemente influenzata dai valori fuori scala e la risoluzione dello strumento di misura è di $5 mV$ e dunque troppo grossolana per ottenere un valore preciso di $V_{th}$.
 Quindi, anche per questo metodo, abbiamo deciso di interpolare la funzione ottenuta con una polinomiale e considerare il minimo di quest'ultima. \\
 
+<<<<<<< HEAD
 \begin{table}[htp] 
 \renewcommand{\arraystretch}{1.3}
 \caption{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
@@ -203,24 +244,59 @@ Dispositivo &  $V_{th}$  con fit di & $V_{th}$  con fit di & $V_{th}$  con fit d
 \end{tabular}
 \end{center}
 \end{table} 
+=======
+\begin{table}[htp]
+  \renewcommand{\arraystretch}{1.3}
+  \caption{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
+  \label{tab:GradiSDLM}
+  \begin{center}
+    \begin{tabular}{c c c c c}
+      \hline
+      Dispositivo & $V_{th}$  con fit di & $V_{th}$  con fit di & $V_{th}$  con fit di & $V_{th}$  con fit di \\
+                  & grado 2 $[mV]$       & grado 4 $[mV]$       & grado 6 $[mV]$       & grado 8 $[mV]$       \\
+      \hline
+      100 - 30    & 332.0                & 322.3                & 323.5                & 327.2                \\
+      \hline
+      100 - 60    & 423.1                & 416.1                & 411.6                & 411.7                \\
+      \hline
+      200 - 30    & 460.4                & 453.5                & 449.3                & 448.7                \\
+      \hline
+      200 - 60    & 303.2                & 298.8                & 296.5                & 296.7                \\
+      \hline
+      200 - 180   & 413.1                & 404.4                & 404.9                & 405.0                \\
+      \hline
+      600 - 30    & 454.7                & 446.7                & 441.4                & 441.3                \\
+      \hline
+      600 - 60    & 296.0                & 291.4                & 289.7                & 298.1                \\
+      \hline
+      600 - 180   & 398.3                & 393.3                & 391.8                & 389.6                \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+>>>>>>> 28a55acbd602e97861f7df7b92c64dfb0de9305d
 
 \begin{figure}[h!]
-\label{fig:GradiSDLM} 
-\centering
- \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado2}
- \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado4}
- \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado6}
- \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado8}
- \caption{Confronto dei valori di $V_{th}$ del dispositivo PMOS 200-30 ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
+  \label{fig:GradiSDLM}
+  \centering
+  \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado2}
+  \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado4}
+  \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado6}
+  \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado8}
+  \caption{Confronto dei valori di $V_{th}$ del dispositivo PMOS 200-30 ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
 \end{figure}
 
 Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiTCM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), metre le misure ottenute con quete ultime sono, in genere, molto simili tra loro. Osservando i grafici relativi alla SDLM del PMOS 200-30 (figura \ref{fig:GradiTCM}), si può nota che il plot della funzione $\frac{d^2lnI_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta, infatti, che \emph{SDLM} è più sensibile agli errori di misurazioni rispetto a \emph{TCM} e quindi i grafici sono meno approssimabili a polinomiali di baso grado. Si ha dunque che:
 \begin{itemize}
-  \item i fit di grado basso non interpolano in modo preciso il grafico di $\frac{d^2lnI_D}{dV_{GS}^2}$ i valori minimi variano considerevolmente al variere del grado.
-  \item i fit di grado alto interpolano beneil grafico di partenza e i valori minimi sono simili tra loro, ma influenzati dagli errori di misura
+  \item I fit di grado basso non interpolano in modo preciso il grafico di $\frac{d^2lnI_D}{dV_{GS}^2}$ i valori minimi variano considerevolmente al variare del grado.
+  \item I fit di grado alto interpolano bene il grafico di partenza e i valori minimi sono simili tra loro, ma influenzati dagli errori di misura
 \end{itemize}
 
+<<<<<<< HEAD
 Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}{dV_{GS}^2}$ e, in generale, abbiamo concluso che questo metodo non pare molto affidabile per questo studio. In ogni caso, per i futuri confronti tra i metodi si terrà lo stesso in conti l'\emph{SDLM}, usando un fit di grado 6, che può essere considerata un'accettabile via di mezzo tra le polinomiali che non interpolano bene il grafico di partenza e quelle che sono troppo influenzate dagli errori di misura. 
+=======
+Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}{dV_{GS}^2}$ e, in generale, abbiamo concluso che questo metodo non pare molto affidabile per questo studio. In ogni caso, per i futuri confronti tra i metodi si terrà lo stesso in conti l'\emph{SDLM}, usando un fit di grado 6, che può essere considerata un'accettabile via di mezzo tra le polinomiali che non interpolano bene il grafico di partenza e quelle che sono troppo influenzate dagli errori di misura.
+>>>>>>> 28a55acbd602e97861f7df7b92c64dfb0de9305d
 
 
 \begin{table}[H]

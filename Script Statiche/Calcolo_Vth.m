@@ -5,7 +5,7 @@
 %% inizializzazione
 clear; clc;
 
- % abilitare i plot di verifica (si = 1, no = 0)  
+% abilitare i plot di verifica (si = 1, no = 0)  
 PLOT_ON = 0;
 
 % indichiamo se il dispositivo è pre irraggiamento
@@ -34,23 +34,46 @@ for i = 3 : length(fileInFolder)
     if ((dispositivo(1) == 'N' || dispositivo(1) == 'P') && (dispositivo(3) == '-')&&  ...
             ~contains(dispositivo,'nf'))
 
+<<<<<<< HEAD
         vth_FIT = FIT_LIN(dispositivo , PLOT_ON)*1000;
         vth_TCM= TCM(dispositivo , GRADO , PLOT_ON)*1000;
         vth_SDLM = SDLM (dispositivo , GRADO , PLOT_ON)*1000;
       
         formato = '%3.1f';
+=======
+        disp(dispositivo + ":");
+
+        if ~PLOT_ON
+            set(0, 'DefaultFigureVisible', 'off');
+        end
+
+        vth_FIT = Vth.FIT_LIN(dispositivo , PLOT_ON);
+        vth_TCM= Vth.TCM(dispositivo , GRADO , PLOT_ON);
+        vth_SDLM = Vth.SDLM (dispositivo , GRADO , PLOT_ON);
+        vth_RM = Vth.RM(dispositivo , PLOT_ON);
+        vth_RM_fitEstratti = Vth.RM_Estremi_PreIrraggiamento(dispositivo , PLOT_ON);
+        
+        if ~PLOT_ON
+            set(0, 'DefaultFigureVisible', 'on');
+        end
+        
+        formato = '%5.5f';
+        
+>>>>>>> 28a55acbd602e97861f7df7b92c64dfb0de9305d
 
         vth_FIT = string(sprintf(formato, vth_FIT));
         vth_TCM = string(sprintf(formato, vth_TCM));
         vth_SDLM = string(sprintf(formato, vth_SDLM));
-
-        vth = [vth_FIT , vth_TCM , vth_SDLM];
+        vth_RM = string(sprintf(formato, vth_RM));
+        vth_RM_fitEstratti = string(sprintf(formato, vth_RM_fitEstratti));
+        
+        vth = [vth_FIT , vth_TCM , vth_SDLM , vth_RM , vth_RM_fitEstratti];
         
         %% Save File
         %Rinonimo le intestazioni
 
         vth = array2table(vth);
-        vth = renamevars(vth , ["vth1" , "vth2" "vth3"] , ["Lin_fit_Id", "Vth_TCM", "Vth_SDLM"]);
+        vth = renamevars(vth , ["vth1" , "vth2" "vth3" , "vth4" , "vth5"] , ["Lin_fit_Id", "Vth_TCM", "Vth_SDLM" ,"Vth_RM" , "Vth_RM_Fit_Pre"]);
         
         Cartella = "Vth";
        
