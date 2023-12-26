@@ -42,7 +42,7 @@ function vth = FIT_LIN(dispositivo , PLOT_ON)
     R_migliore = 0;
 
     % dalla posizione in cui è a 0.3V fino a (0.9-0.15)V
-    for i = find(vgs == 0.3):find(vgs == (0.9-0.15))
+    for i = 121:211
         
         % prendiamo l'intervallod 
         x = vgs(i : i+30);

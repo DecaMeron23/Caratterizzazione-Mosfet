@@ -15,7 +15,7 @@ dispositivi_funzionanti = [];
 
 for i = 1 : length(lista_dispositivi)
     dispositivo = char(lista_dispositivi(i));
-    if strcmp(dispositivo(1), 'N') || strcmp(dispositivo(1), 'P') && ~strcmp(dispositivo(end-1:end), 'nf')
+    if (strcmp(dispositivo(1), 'N') || strcmp(dispositivo(1), 'P')) && ~strcmp(dispositivo(end-1:end), 'nf')
         dispositivi_funzionanti = [dispositivi_funzionanti; string(dispositivo)];
         for j = 1:4
             Vth_TCM(length(dispositivi_funzionanti),j) = TCM(dispositivo , j*2 , 0)*1000;
