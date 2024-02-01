@@ -48,7 +48,7 @@ function delta_vth(dispositivo)
                 delta_TCM{end+1} = estraiVth(fileVth , "TCM");
                 delta_SDLM{end+1} = estraiVth(fileVth , "SDLM");
                 delta_RM{end+1} = estraiVth(fileVth , "RM");
-                delte_RM_pre{end+1} = estraiVth(fileVth , "RM_pre");
+                delta_RM_pre{end+1} = estraiVth(fileVth , "RM_pre");
 
                 %facciamo i delta
                 if (length(delta_FIT) > 1) % se non sono i pre
@@ -102,7 +102,7 @@ function delta_vth(dispositivo)
         writetable(table_TCM , "Delta_TCM.txt" , "Delimiter", '\t');
         writetable(table_SDLM , "Delta_SDLM.txt" , "Delimiter", '\t');
         writetable(table_RM , "Delta_RM.txt" , "Delimiter", '\t');
-        writetable(table_RM_pre , "Delta_RM.txt" , "Delimiter", '\t');
+        writetable(table_RM_pre , "Delta_RM_pre.txt" , "Delimiter", '\t');
     cd ..
 end
 
