@@ -46,11 +46,7 @@ function vth = FIT_LIN(dispositivo , PLOT_ON)
     [~, indice1] = min(abs(vgs - 0.3));
     [~, indice2] = min(abs(vgs - (0.75)));
     % dalla posizione in cui è a 0.3V fino a (0.9-0.15)V
-<<<<<<< HEAD
-    for i = 121:211
-=======
     for i = indice1:indice2
->>>>>>> 28a55acbd602e97861f7df7b92c64dfb0de9305d
         
         % prendiamo l'intervallo
         x = vgs(i : i+30);

@@ -29,7 +29,7 @@ function delta_vth(dispositivo)
     delta_TCM = {};
     delta_SDLM = {};
     delta_RM = {};
-
+    delta_RM_pre = {};
     grado = {};
 
     % scorriamo tutte le cartelle del dispositivo e facciamo le nostre
@@ -48,13 +48,15 @@ function delta_vth(dispositivo)
                 delta_TCM{end+1} = estraiVth(fileVth , "TCM");
                 delta_SDLM{end+1} = estraiVth(fileVth , "SDLM");
                 delta_RM{end+1} = estraiVth(fileVth , "RM");
-                
+                delte_RM_pre{end+1} = estraiVth(fileVth , "RM_pre");
+
                 %facciamo i delta
                 if (length(delta_FIT) > 1) % se non sono i pre
                     delta_FIT{end} = (delta_FIT{end}) - (delta_FIT{1}) ;
                     delta_TCM{end} = (delta_TCM{end}) - (delta_TCM{1});
                     delta_SDLM{end} = (delta_SDLM{end}) - (delta_SDLM{1});
                     delta_RM{end} = (delta_RM{end}) - (delta_RM{1});
+                    delta_RM_pre{end} = (delta_RM_pre{end}) - (delta_RM_pre{1});
                 end
             cd ..\..
          else
@@ -73,6 +75,7 @@ function delta_vth(dispositivo)
         delta_SDLM(1) = [];
         delta_TCM(1) = [];
         delta_RM(1) = [];
+        delta_RM_pre(1) = [];
 
         dispositivi = {["100/30" ; "100/60" ; "100/180" ; "200/30" ; "200/60" ; "200/180" ; "600/30" ; "600/60" ; "600/180"]};
 
@@ -80,22 +83,26 @@ function delta_vth(dispositivo)
         delta_TCM = [dispositivi , delta_TCM];
         delta_SDLM = [dispositivi , delta_SDLM];
         delta_RM = [dispositivi , delta_RM];
+        delta_RM_pre = [dispositivi , delta_RM_pre];
 
         name = ["disp" , string(grado(2:end))];
         table_FIT = celleATabelle(delta_FIT);
         table_TCM = celleATabelle(delta_TCM);
         table_SDLM = celleATabelle(delta_SDLM);
         table_RM = celleATabelle(delta_RM);
+        table_RM_pre = celleATabelle(delta_RM_pre);
 
         table_FIT.Properties.VariableNames = name;
         table_TCM.Properties.VariableNames = name;
         table_SDLM.Properties.VariableNames = name;
         table_RM.Properties.VariableNames = name;
+        table_RM_pre.Properties.VariableNames = name;
 
         writetable(table_FIT , "Delta_FIT.txt" , "Delimiter", '\t');
         writetable(table_TCM , "Delta_TCM.txt" , "Delimiter", '\t');
         writetable(table_SDLM , "Delta_SDLM.txt" , "Delimiter", '\t');
         writetable(table_RM , "Delta_RM.txt" , "Delimiter", '\t');
+        writetable(table_RM_pre , "Delta_RM.txt" , "Delimiter", '\t');
     cd ..
 end
 
@@ -181,6 +188,8 @@ function Vth =  estraiVth(fileVth , tipo_estrazione)
         posizione = [1 , 3];
     elseif(strcmp(tipo_estrazione , "RM"))
         posizione = [1 , 4];
+    elseif(strcmp(tipo_estrazione , "RM_pre"))
+        posizione = [1 , 5];
     end
 
 
