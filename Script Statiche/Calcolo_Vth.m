@@ -34,13 +34,6 @@ for i = 3 : length(fileInFolder)
     if ((dispositivo(1) == 'N' || dispositivo(1) == 'P') && (dispositivo(3) == '-')&&  ...
             ~contains(dispositivo,'nf'))
 
-<<<<<<< HEAD
-        vth_FIT = FIT_LIN(dispositivo , PLOT_ON)*1000;
-        vth_TCM= TCM(dispositivo , GRADO , PLOT_ON)*1000;
-        vth_SDLM = SDLM (dispositivo , GRADO , PLOT_ON)*1000;
-      
-        formato = '%3.1f';
-=======
         disp(dispositivo + ":");
 
         if ~PLOT_ON
@@ -59,7 +52,6 @@ for i = 3 : length(fileInFolder)
         
         formato = '%5.5f';
         
->>>>>>> 28a55acbd602e97861f7df7b92c64dfb0de9305d
 
         vth_FIT = string(sprintf(formato, vth_FIT));
         vth_TCM = string(sprintf(formato, vth_TCM));
