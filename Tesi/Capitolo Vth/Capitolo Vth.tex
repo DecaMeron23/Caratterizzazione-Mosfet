@@ -381,8 +381,8 @@ Il terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method,
   \caption{Fit lineare della caratteristica  $I_D$-$V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-30 nell'intorno $[0,5V ; 0,6V]$ di $V_{GS}$}
 \end{figure}
 
-Di per sé, questo metodo è meno preciso di quelli esposti precedentemente: la posizione del punto di flesso può essere incerto, perché, già a $V_{GS}$ leggermente superiori a $V_{th}$, la caratteristica $I_D-V_{GS}$ può deviare dall'andamento lineare previsto a causa di errori dovuti alle resistenze parassite presenti al source e al drain dei dispositivi.
-Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace, in quanto non siamo interessati al valore della tensione di soglia dei dispositivi, ma alla differenza di tale parametro all'aumentare dell'irraggiamento subito dai dispositivi. Dunque l'errore prodotto dalle resistenze parassite divenata irrilevante, perché è un offfset che viene eliminato nel momento in cui si calcola la differenza tra due misure di $V_{th}$ dello stesso dispositivo.
+Di per sé, questo metodo è meno preciso di quelli esposti precedentemente: la posizione del punto di flesso può essere incerto, perché, già a $V_{GS}$ leggermente superiori a $V_{th}$, la caratteristica $I_D-V_{GS}$ può deviare dall'andamento lineare previsto a causa di errori dovuti alle resistenze parassite presenti al source e al drain dei dispositivi e alla degradazione della mobilità dei portatori di carica
+Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace, in quanto non siamo interessati al valore della tensione di soglia dei dispositivi, ma alla differenza di tale parametro all'aumentare dell'irraggiamento subito dai dispositivi. Dunque gli errori prodotti dalle resistenze parassite e dalla degradazione di mobilità divenatano irrilevanti, perché sono offfset che vengono eliminati nel momento in cui si calcola la differenza tra due misure di $V_{th}$ dello stesso dispositivo.
 
 
 \begin{table}[H]
@@ -447,8 +447,9 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
 
 
 
+\subsection{Ratio Method}
 
-
+Il \emph{Ratio Method, RM} è stato sviluppato per far fronte alle problematicità dell'\emph{ELR}: è stato infatti dimostrato che questo metodo non è influenzato 
 
 
 
