@@ -1,7 +1,2 @@
-<<<<<<< HEAD
-Lin_fit_Id	Vth_TCM	Vth_SDLM
-483.5	497.1	452.1
-=======
-Lin_fit_Id	Vth_TCM	Vth_SDLM	Vth_RM
-0.48346	0.49710	0.45210	0.55311
->>>>>>> 28a55acbd602e97861f7df7b92c64dfb0de9305d
+Lin_fit_Id	Vth_TCM	Vth_SDLM	Vth_RM	Vth_RM_Fit_Pre
+0.48346	0.49710	0.45210	0.55311	0.55311
