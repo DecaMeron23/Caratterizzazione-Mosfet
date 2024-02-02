@@ -40,17 +40,17 @@ for i = 3 : length(fileInFolder)
             set(0, 'DefaultFigureVisible', 'off');
         end
 
-        vth_FIT = Vth.FIT_LIN(dispositivo , PLOT_ON);
-        vth_TCM= Vth.TCM(dispositivo , GRADO , PLOT_ON);
-        vth_SDLM = Vth.SDLM (dispositivo , GRADO , PLOT_ON);
-        vth_RM = Vth.RM(dispositivo , PLOT_ON);
-        vth_RM_fitEstratti = Vth.RM_Estremi_PreIrraggiamento(dispositivo , PLOT_ON);
+        vth_FIT = Vth.FIT_LIN(dispositivo , PLOT_ON)*1e3;
+        vth_TCM= Vth.TCM(dispositivo , GRADO , PLOT_ON)*1e3;
+        vth_SDLM = Vth.SDLM (dispositivo , GRADO , PLOT_ON)*1e3;
+        vth_RM = Vth.RM(dispositivo , PLOT_ON)*1e3;
+        vth_RM_fitEstratti = Vth.RM_Estremi_PreIrraggiamento(dispositivo , PLOT_ON)*1e3;
         
         if ~PLOT_ON
             set(0, 'DefaultFigureVisible', 'on');
         end
         
-        formato = '%5.5f';
+        formato = '%5.1f';
         
 
         vth_FIT = string(sprintf(formato, vth_FIT));
