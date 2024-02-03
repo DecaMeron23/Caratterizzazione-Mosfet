@@ -21,7 +21,7 @@ function EstraiVth
     % carichiamo i file
     for i = 1: length(vth_file)
         if ~isnumeric(vth_file{1, i})
-            matrice(i , :) = readmatrix(string(vth_file(i)))' * 1e3;   
+            matrice(i , :) = readmatrix(string(vth_file(i)))';   
         end
     end
 
