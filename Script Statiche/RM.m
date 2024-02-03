@@ -101,7 +101,7 @@ function vth = RM(dispositivo , PLOT_ON)
 
 
     xlabel( xlabelb_txt, "Interpreter","latex" , FontSize=15);
-    ylabel("$\frac{I_D}{g_m^(\frac{1}{2})} [\sqrt{\frac{A^3}{V}}]$" , Interpreter="latex" , FontSize=15);
+    ylabel("$\frac{I_D}{{g_m}^\frac{1}{2}} [\sqrt{\frac{A^3}{V}}]$" , Interpreter="latex" , FontSize=15);
     legend( "$I_D$", "Ratio Method", Interpreter = "latex" , Location = "northwest");
     hold off
 

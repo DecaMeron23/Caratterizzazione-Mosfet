@@ -21,14 +21,18 @@ function EstraiVth
     % carichiamo i file
     for i = 1: length(vth_file)
         if ~isnumeric(vth_file{1, i})
-            matrice(: , i) = readmatrix(string(vth_file(i)));   
+            matrice(i , :) = readmatrix(string(vth_file(i)))' * 1e3;   
         end
     end
 
-    tabella = array2table( matrice , VariableNames=dispositivi);
-    tabella = addvars(tabella, ["Fit Lin" ;"TCM" ; "SDLM" ; "RM " ; "RM_FIT_PRE" ] , 'Before', 1 , 'NewVariableNames', 'Metodo');
+    tabella = array2table( matrice , VariableNames= ["Fit Lin" ,"TCM" , "SDLM" , "RM " , "RM_FIT_PRE" ]);
+    tabella = addvars(tabella, dispositivi' , 'Before', 1 , 'NewVariableNames', 'Dispositivi');
     
+
     cd tabelle
+    if exist("Vth.xls" , "file")
+        delete Vth.xls
+    end
     writetable(tabella , "Vth" , FileType="spreadsheet");
     cd ..
 end

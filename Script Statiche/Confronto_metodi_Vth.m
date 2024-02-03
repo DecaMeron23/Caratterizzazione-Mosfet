@@ -30,4 +30,4 @@ vth = renamevars(vth , ["Var1", "Var2", "Var3", "Var4", "Var5", "Var6", "Var7", 
     ["Dispositivi" ,"SDLM grado 2", "SDLM grado 4", "SDLM grado 6", ...
     "SDLM grado 8", "TCM grado 2", "TCM grado 4", "TCM grado 6", "TCM grado 8"]);
 writetable( vth, "Confronto_Vth.txt",  "Delimiter", "\t");
-
+writetable( vth, "Confronto_Vth" , "FileType","spreadsheet");
