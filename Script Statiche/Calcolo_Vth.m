@@ -41,11 +41,11 @@ function Calcolo_Vth()
                 set(0, 'DefaultFigureVisible', 'off');
             end
     
-            vth_FIT = Vth.FIT_LIN(dispositivo , PLOT_ON)*1e3;;
-            vth_TCM= Vth.TCM(dispositivo , GRADO , PLOT_ON)*1e3;;
-            vth_SDLM = Vth.SDLM (dispositivo , GRADO , PLOT_ON)*1e3;;
-            vth_RM = Vth.RM(dispositivo , PLOT_ON)*1e3;;
-            vth_RM_fitEstratti = Vth.RM_Estremi_PreIrraggiamento(dispositivo , PLOT_ON)*1e3;;
+            vth_FIT = Vth.FIT_LIN(dispositivo , PLOT_ON)*1e3;
+            vth_TCM= Vth.TCM(dispositivo , GRADO , PLOT_ON)*1e3;
+            vth_SDLM = Vth.SDLM (dispositivo , GRADO , PLOT_ON)*1e3;
+            vth_RM = Vth.RM(dispositivo , PLOT_ON)*1e3;
+            vth_RM_fitEstratti = Vth.RM_Estremi_PreIrraggiamento(dispositivo , PLOT_ON)*1e3;
             
             if ~PLOT_ON
                 set(0, 'DefaultFigureVisible', 'on');
