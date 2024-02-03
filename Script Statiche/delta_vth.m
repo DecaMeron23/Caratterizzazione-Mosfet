@@ -50,8 +50,9 @@ function delta_vth(dispositivo)
                 delta_RM{end+1} = estraiVth(fileVth , "RM");
                 delta_RM_pre{end+1} = estraiVth(fileVth , "RM_pre");
 
-                %facciamo i delta
-                if (length(delta_FIT) > 1) % se non sono i pre
+                %facciamo i delta sottraendo al valore della vth il valore
+                % della vth a pre-irraggiamento
+                if (length(delta_FIT) > 1) % se vth è irraggiata
                     delta_FIT{end} = (delta_FIT{end}) - (delta_FIT{1}) ;
                     delta_TCM{end} = (delta_TCM{end}) - (delta_TCM{1});
                     delta_SDLM{end} = (delta_SDLM{end}) - (delta_SDLM{1});
@@ -103,7 +104,29 @@ function delta_vth(dispositivo)
         writetable(table_SDLM , "Delta_SDLM.txt" , "Delimiter", '\t');
         writetable(table_RM , "Delta_RM.txt" , "Delimiter", '\t');
         writetable(table_RM_pre , "Delta_RM_pre.txt" , "Delimiter", '\t');
+    
+        
+        %creaiamo i plot per le delta Vth
+        
+        %prendiamo i file delle delta
+        directory = dir;
+        file = {directory.name};
+        for i = 3:length(file)
+           if contains(string(file{i}) , "Delta")
+               deltaFile(i)= string(file{i});
+           end
+        end
+        
+        for i = deltaFile
+            if ~ismissing(i)
+                plot_deltaVth(i);
+            end
+        end
+
     cd ..
+
+    
+
 end
 
 % funzione che data la cartella restituisce il grado di irraggiamento se è
