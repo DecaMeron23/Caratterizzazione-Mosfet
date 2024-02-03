@@ -58,6 +58,7 @@ function delta_vth(dispositivo)
                     delta_SDLM{end} = (delta_SDLM{end}) - (delta_SDLM{1});
                     delta_RM{end} = (delta_RM{end}) - (delta_RM{1});
                     delta_RM_pre{end} = (delta_RM_pre{end}) - (delta_RM_pre{1});
+
                 end
             cd ..\..
          else
