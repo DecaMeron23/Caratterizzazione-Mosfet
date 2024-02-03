@@ -141,7 +141,7 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
     \hline
     100 - 60                     & 405.0                              & 399.9   & 390.0    & 419.8     & 418.8     &  414.0         &         \\
     \hline
-    100 - 180                    & 476.0                              & 472.4   & 459.5    & 491.9     & 491.2     &  492         &         \\
+    100 - 180                    & 476.0                              & 472.4   & 459.5    & 491.9     & 491.2     &  492.0         &         \\
     \hline
     200 - 30                     & 359.5                              & 357.9   & 348.1    & 369.2     & 367.0     &  363.8         &         \\
     \hline
@@ -272,16 +272,16 @@ Quindi, anche per questo metodo, abbiamo deciso di interpolare la funzione otten
 
 
 \begin{figure}[h!]
-  \label{fig:GradiSDLM}
   \centering
   \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado2}
   \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado4}
   \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado6}
   \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado8}
   \caption{Confronto dei valori di $V_{th}$ del dispositivo PMOS 200-30 ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
+  \label{fig:GradiSDLM}
 \end{figure}
 
-Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiTCM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), metre le misure ottenute con quete ultime sono, in genere, molto simili tra loro. Osservando i grafici relativi alla SDLM del PMOS 200-30 (figura \ref{fig:GradiTCM}), si può nota che il plot della funzione $\frac{d^2lnI_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta, infatti, che \emph{SDLM} è più sensibile agli errori di misurazioni rispetto a \emph{TCM} e quindi i grafici sono meno approssimabili a polinomiali di baso grado. Si ha dunque che:
+Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiTCM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), metre le misure ottenute con quete ultime sono, in genere, molto simili tra loro. Osservando i grafici relativi alla SDLM del PMOS 200-30 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2lnI_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta, infatti, che \emph{SDLM} è più sensibile agli errori di misurazioni rispetto a \emph{TCM} e quindi i grafici sono meno approssimabili a polinomiali di baso grado. Si ha dunque che:
 \begin{itemize}
   \item I fit di grado basso non interpolano in modo preciso il grafico di $\frac{d^2lnI_D}{dV_{GS}^2}$ i valori minimi variano considerevolmente al variare del grado.
   \item I fit di grado alto interpolano bene il grafico di partenza e i valori minimi sono simili tra loro, ma influenzati dagli errori di misura
