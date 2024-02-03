@@ -52,7 +52,7 @@ classdef Vth
             if DISP_ON
                 disp("RM: il coefficente R^2 migliore è " + R_migliore);
             end
-            vth = -coefficenti(1) / coefficenti(2);
+            vth = round(-coefficenti(1) / coefficenti(2), 2);
 
             x_new = [vth-0.2 , 0.9];
             y_fit = predict(modello_migliore , x_new');
@@ -132,7 +132,7 @@ classdef Vth
 
             coefficenti = modello.Coefficients.Estimate;
 
-            vth = -coefficenti(1) / coefficenti(2);
+            vth = round(-coefficenti(1) / coefficenti(2),1);
 
             x_new = [vth-0.2 , 0.9];
             y_fit = predict(modello , x_new');
@@ -254,7 +254,7 @@ classdef Vth
             % troviamo la vth
             coefficenti = modello_migliore.Coefficients.Estimate;
 
-            vth = -coefficenti(1) / coefficenti(2);
+            vth = round(-coefficenti(1) / coefficenti(2),1);
 
             %plot di verifica del fit a Vsd = 150mV
             x_new = [vth-0.2 , 0.9];
