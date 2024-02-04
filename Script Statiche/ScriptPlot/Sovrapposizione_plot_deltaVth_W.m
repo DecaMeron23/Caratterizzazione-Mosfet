@@ -11,7 +11,7 @@ function Sovrapposizione_plot_deltaVth_W(file)
     %estraiamo il nome del metodo per il plot
     nome_metodo = nomeMetodo(metodo);
     
-    dispositivi = ["100/30" "100/60" "100/180" "200/30" "200/60" "200/180" "600/30" "600/60" "600/180"];
+    dispositivi = ["100 / 0.030" "100 / 0.060" "100 / 0.180" "200 / 0.030" "200 / 0.060" "200 / 0.180" "600 / 0.030" "600 / 0.060" "600 / 0.180"];
     irraggiamenti = [5 50 100 200 600 1000];
     delta_Vth = readmatrix(file);
 
@@ -44,20 +44,20 @@ function Sovrapposizione_plot_deltaVth_W(file)
             end
         end
         yline(0 , "-.") 
-        title("Delta Vth " + nome_metodo +" W = "+ W );
-        xlabel("$Mrad$" , Interpreter= "latex");
-        ylabel("$\Delta V_{th}$", Interpreter="latex");
-        legend(dispositivi(3*i+1:3*(i+1)), "Location","northwest")
+        title("Delta Vth " + nome_metodo +" W = "+ W);
+        xlabel("Irraggiamento $[Mrad]$" , Interpreter= "latex");
+        ylabel("$\Delta V_{th}$ $[mV]$", Interpreter="latex");
+        legend(dispositivi(3*i+1:3*(i+1)), "Location","southeast")
         hold off
         grid on
 
 
          cd eps
-        saveas(gcf , "sovrapposizione-delta-vth-"+metodo+ "-P" + W + ".eps");
+        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-N" + W + ".eps");
         cd ..\png
-        saveas(gcf , "sovrapposizione-delta-vth-"+metodo+ "-P" + W +".png");
+        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-N" + W +".png");
         cd ..\fig
-        saveas(gcf , "sovrapposizione-delta-vth-"+metodo+ "-P" + W +".fig");
+        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-N" + W +".fig");
         cd ..
     end
     cd ..

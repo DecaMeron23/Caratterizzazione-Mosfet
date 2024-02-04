@@ -194,30 +194,44 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
     \toprule
     \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$V_{th} [mV] $}                                                          \\
     \cmidrule{2-7}
-                                 & $5Mrad$                            & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
+                                 & $5Mrad$		& $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
-    100 - 30                     & -0.7                               & -10.3    & 9.3       & 7.4       & 3.8       &         \\
+    100 - 30				& -0.7		& -10.3    & 9.3       & 7.4       & 3.8       &         \\
     \hline
-    100 - 60                     & -5.1                               & -15.0    & 14.8      & 13.8      & 9.0       &         \\
+    100 - 60				& -5.1		& -15.0    & 14.8      & 13.8      & 9.0       &         \\
     \hline
-    200 - 30                     & -3.6                               & -16.5    & 15.9      & 15.2      & 16.0      &         \\
+    100 - 180				& -3.6		& -16.5    & 15.9      & 15.2      & 16.0      &         \\
     \hline
-    200 - 60                     & -1.6                               & -11.4    & 9.7       & 7.5       & 4.3       &         \\
+    200 - 30				& -1.6		& -11.4    & 9.7       & 7.5       & 4.3       &         \\
     \hline
-    200 - 180                    & -3.9                               & -17.2    & 13.3      & 11.5      & 10.1      &         \\
+    200 - 60				& -3.9		& -17.2    & 13.3      & 11.5      & 10.1      &         \\
     \hline
-    600 - 30                     & -2.9                               & -14.6    & 18.2      & 17.4      & 20.1      &         \\
+    200 -180				& -2.9		& -14.6    & 18.2      & 17.4      & 20.1      &         \\
     \hline
-    600 - 60                     & -5.8                               & -10.9    & 9.3       & 10.8      & 7.9       &         \\
+    600 - 60				& -5.8		& -10.9    & 9.3       & 10.8      & 7.9       &         \\
     \hline
-    600 - 180                    & -1.7                               & -18.9    & 9.2       & 8.8       & 9.3       &         \\
+    600 - 180				& -1.7		& -18.9    & 9.2       & 8.8       & 9.3       &         \\
     \bottomrule
   \end{tabular}
   \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
   \label{tab:deltaVthTCMN}
 \end{table}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-P100}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-P200}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-P600}
+  \caption{Variazioni di $V_{th}$ dei dispositivi PMOS estratte con \emph{TCM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
+\end{figure}
 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-N100}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-N200}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-N600}
+  \caption{Variazioni di $V_{th}$ dei dispositivi NMOS estratte con \emph{TCM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
+\end{figure}
 
 
 
@@ -391,13 +405,13 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}
     \hline
     100 - 60                     & 12.1                               & 7.6      & 45.8      & 41.7      & 41.5      &         \\
     \hline
-    200 - 30                     & 12.1                               & -0.3     & 52.7      & 35.4      & 52.7      &         \\
+    100 - 180                     & 12.1                               & -0.3     & 52.7      & 35.4      & 52.7      &         \\
     \hline
-    200 - 60                     & -2.5                               & 4.9      & 13.2      & 15.0      & 2.6       &         \\
+    200 - 30                     & -2.5                               & 4.9      & 13.2      & 15.0      & 2.6       &         \\
     \hline
-    200 - 180                    & -0.6                               & -12.7    & 31.4      & 29.3      & 25.1      &         \\
+    200 - 60                    & -0.6                               & -12.7    & 31.4      & 29.3      & 25.1      &         \\
     \hline
-    600 - 30                     & 7.1                                & 0.7      & 47.0      & 46.1      & 48.3      &         \\
+    200 - 180                     & 7.1                                & 0.7      & 47.0      & 46.1      & 48.3      &         \\
     \hline
     600 - 60                     & -29.1                              & -1.1     & 31.0      & 29.3      & 27.6      &         \\
     \hline
@@ -407,6 +421,23 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}
   \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
   \label{tab:deltaVthSDLMN}
 \end{table}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-P100}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-P200}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-P600}
+  \caption{Variazioni di $V_{th}$ dei dispositivi PMOS estratte con \emph{SDLM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-N100}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-N200}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-N600}
+  \caption{Variazioni di $V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
+\end{figure}
 
 
 
@@ -534,13 +565,13 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
     \hline
     100 - 60                     & -3.5                               & -15.8    & 15.0      & 13.1      & 10.0      &         \\
     \hline
-    200 - 30                     & -4.3                               & -16.5    & 16.6      & 15.8      & 16.3      &         \\
+    100 - 180                     & -4.3                               & -16.5    & 16.6      & 15.8      & 16.3      &         \\
     \hline
-    200 - 60                     & -2.3                               & -12.3    & 9.1       & 7.9       & 4.5       &         \\
+    200 - 30                     & -2.3                               & -12.3    & 9.1       & 7.9       & 4.5       &         \\
     \hline
-    200 - 180                    & -3.5                               & -16.5    & 13.6      & 12.2      & 10.5      &         \\
+    200 - 60                    & -3.5                               & -16.5    & 13.6      & 12.2      & 10.5      &         \\
     \hline
-    600 - 30                     & -4.9                               & -16.5    & 16.5      & 16.4      & 19.1      &         \\
+    200 - 180                     & -4.9                               & -16.5    & 16.5      & 16.4      & 19.1      &         \\
     \hline
     600 - 60                     & -2.2                               & -12.7    & 11.8      & 12.0      & 8.8       &         \\
     \hline
@@ -550,6 +581,22 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
   \label{tab:deltaVthELRN}
 \end{table}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-P100}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-P200}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-P600}
+  \caption{Variazioni di $V_{th}$ dei dispositivi PMOS estratte con \emph{ELR} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-N100}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-N200}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-N600}
+  \caption{Variazioni di $V_{th}$ dei dispositivi NMOS estratte con \emph{ELR} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
+\end{figure}
 
 
 
@@ -671,13 +718,13 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
     \hline
     100 - 60                     & -3.9                               & -14.7    & 16.8      & 13.8      & 14.7      &         \\
     \hline
-    200 - 30                     & -1.6                               & -25.6    & 11.6      & 12.6      & 12.0      &         \\
+    100 - 180                     & -1.6                               & -25.6    & 11.6      & 12.6      & 12.0      &         \\
     \hline
-    200 - 60                     & 12.2                               & -2.1     & 1.7       & 11.5      & 19.0      &         \\
+    200 - 30                     & 12.2                               & -2.1     & 1.7       & 11.5      & 19.0      &         \\
     \hline
-    200 - 180                    & -16.9                              & -32.5    & -0.2      & -0.9      & 3.3       &         \\
+    200 - 60                    & -16.9                              & -32.5    & -0.2      & -0.9      & 3.3       &         \\
     \hline
-    600 - 30                     & -7.6                               & -15.9    & 18.7      & 15.2      & 20.7      &         \\
+    200 - 180                    & -7.6                               & -15.9    & 18.7      & 15.2      & 20.7      &         \\
     \hline
     600 - 60                     & -7.5                               & -9.9     & 2.4       & 6.5       & 6.3       &         \\
     \hline
@@ -687,6 +734,23 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
   \label{tab:deltaVthRMN}
 \end{table}
+
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-P100}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-P200}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-P600}
+  \caption{Variazioni di $V_{th}$ dei dispositivi PMOS estratte con \emph{RM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-N100}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-N200}
+  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-N600}
+  \caption{Variazioni di $V_{th}$ dei dispositivi NMOS estratte con \emph{RM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
+\end{figure}
 
 
 
