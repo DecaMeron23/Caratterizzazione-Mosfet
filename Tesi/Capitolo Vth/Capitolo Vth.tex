@@ -36,12 +36,15 @@ Per l'estrazione del parametro $V_{th}$ esistono numerosi metodi, ognuno con pun
   \item \emph{Extrapolation in the Linear Region method (ELR)}.
 \end{itemize}
 
-Per il nostro studio, però, non si è tanto interessati al valore in sé della tensione di soglia dei dispositivi, quanto più a come questa varia all'aumentare dell'irragiamento. Dunque, per ogni metodo non ci si ferma all'estrazione della $V_{th}$ dei dispositivi non irraggiati, ma la si estrae anche per ogni fase di irraggiamento e, per ciascuno di questi, si calcola la $\Delta V_{th} = V_{th, Irraggiato}-V_{th, non Irraggiato}$. La scelta di quale metodo effettivamente usare per le analisi successive viene presa sulla qualità del parametro $\Delta V_{th}$.
+Per il nostro studio, però, non si è tanto interessati al valore in sé della tensione di soglia dei dispositivi, quanto più a come questa varia all'aumentare dell'irragiamento. Dunque, per ogni metodo non ci si ferma all'estrazione della $V_{th}$ dei dispositivi non irraggiati, ma la si estrae anche per ogni fase d'irraggiamento e, per ciascuno di questi, si calcola la $\Delta V_{th} = V_{th, Irraggiato}-V_{th, non Irraggiato}$. La scelta di quale metodo effettivamente usare per le analisi successive viene presa sulla qualità del parametro $\Delta V_{th}$.
 
 
 \subsection{Transconductance Change Method}
 
-Il \emph{Transconductance Change Method, TCM,} defiscisce la tensione di soglia come la tensione di gate $V_{GS}$ corrispondente al picco massimo della derivata della transconduttanza $g_m$ rispetto alla tensione di gate ($\frac{dg_m}{dV_ {GS}}$) ed è valido per bassi valori della tensione $V_{DS}$.\\
+Il
+\emph{Transconductance Change Method, TCM,} defiscisce la tensione di soglia come la tensione di gate $V_{GS}$ corrispondente al picco massimo 
+della derivata della transconduttanza $g_m$ rispetto alla tensione di gate 
+($\frac{dg_m}{dV_ {GS}}$) ed è valido per bassi valori della tensione $V_{DS}$.\\
 Questa definizione si basa sul fatto che, quando il dispositivo passa dalla regione di debole inversione alla regione di forte inversione, la dipendenza della corrente di drain ripetto a $V_{GS}$ passa dall'essere esponenziale all'essere quasi constante.
 La transconduttanza è definita come la derivata prima della corrente $I_D$ rispetto alla tensione $V_{GS}$, dunque la derivata della $g_m$ corrisponde alla derivata seconda di $I_D$. Per questo motivo, il massimo di $\frac{dg_m}{dV_{GS}}$ coincide con la tensione alla quale il grafico della corrente passa dalla forma esponenziale a quella quasi constante, ovvero la tensione $V_{GS}+V_{DS}$. Se $V_{DS}$ è piccola, la tensione per la quale la $g_m$ è massima è molto simile a $V_{th}$.\\
 
@@ -52,8 +55,10 @@ La transconduttanza è definita come la derivata prima della corrente $I_D$ risp
   \caption{Esempio di \emph{TCM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-30 a $V_{DS} = 150 mV$}
 \end{figure}
 
-\emph{TCM}, poiché si basa sul massimo di una funzione, è molto sensibile ai picchi dovuti ad errori di misura e perciò non è molto affidabile: è quindi necessario rendere la funzione studiata meno dipendente dai campionamenti fuori scala. Inoltre, la risoluzione del dispositivo di misura utilizzato e di $5 mV$, il che rende i valori ottenuti della $V_{th}$ molto approssimativi.
-Per far fronte a questi due problemi, si è scelto di non tenere conto del massimo direttamente ottenuto dallo studio di $\frac{dg_m}{dV_{GS}}$ ottenuto dai valori delle misure, ma di interpolare prima i punti del grafico con una funzione polinomiale e, solo a questo punto, di prendere in considerazione il picco di massimo. \\
+\emph{TCM}, 
+poiché si basa sul massimo di una funzione, è molto sensibile ai picchi dovuti a errori di misura e perciò non è molto affidabile:
+è quindi necessario rendere la funzione studiata meno dipendente dai campionamenti fuori scala. Inoltre, la risoluzione del dispositivo di misura utilizzato e di $5 mV$, il che rende i valori ottenuti della $V_{th}$ molto approssimativi.
+Per far fronte a questi due problemi, si è scelto di non tenere conto del massimo direttamente ottenuto dallo studio di $\frac{dg_m}{dV_{GS}}$ ottenuto dai valori delle misure, ma d'interpolare prima i punti del grafico con una funzione polinomiale e, solo a questo punto, di prendere in considerazione il picco di massimo. \\
 
 \begin{figure}[H]
   \centering
@@ -62,7 +67,8 @@ Per far fronte a questi due problemi, si è scelto di non tenere conto del massi
   \caption{Esempio di \emph{TCM} con fit polinomiale usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-30 a $V_{DS} = 150 mV$}
 \end{figure}
 
-Lo studio del fit polinomiale risolve il problema della bassa risolizione di misura e il problema della presenza di valori fuori scala, ma presenta una potenziale nuovo problema: il valore della $V_{th}$ calcolata potrebbe variare significativamente al variare del grado della funzione polinomiale interpolante. Questa differenza non è molto alta, si parla di pochi millivolt, perciò non influenza considerevolmente il valore della singola estrazione. Questa dipendenza, però, è problematica nel momento in cui si vuole studiare con precisione la degradazione delle prestazioni di un dispositivo all'aumentare dell'irraggiamento subito, in quanto piccoli spostamenti del valore di $V_{th}$ dovuti alla scelta arbitraria del grado della polinomiale può far variare eccessivamente le differenze delle misure tra un irraggiamento e l'altro, elemento inaccettabile se si considera che già le misure sono influenzate da errori casuali in fase di misura.\\
+Lo 
+studio del fit polinomiale risolve il problema della bassa risoluzione di misura e il problema della presenza di valori fuori scala, ma presenta una potenziale nuovo problema: il valore della $V_{th}$ calcolata potrebbe variare significativamente al variare del grado della funzione polinomiale interpolante. Questa differenza non è molto alta, si parla di pochi millivolt, perciò non influenza considerevolmente il valore della singola estrazione. Questa dipendenza, però, è problematica nel momento in cui si vuole studiare con precisione la degradazione delle prestazioni di un dispositivo all'aumentare dell'irraggiamento subito, in quanto piccoli spostamenti del valore di $V_{th}$ dovuti alla scelta arbitraria del grado della polinomiale può far variare eccessivamente le differenze delle misure tra un irraggiamento e l'altro, elemento inaccettabile se si considera che già le misure sono influenzate da errori casuali in fase di misura.\\
 Prendendo come esempio i dispositivi PMOS, si è studiato quanto cambia il valore della tenzione di soglia al variare del grado del fit polinomiale, prendendo in considerazione i gradi di valore 2, 4, 6 e 8.\\
 
 \begin{table}[h]
@@ -163,7 +169,7 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$V_{th} [mV] $}                                                          \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
     \cmidrule{2-7}
                                  & $5Mrad$                            & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
@@ -192,7 +198,7 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$V_{th} [mV] $}                                                          \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
     \cmidrule{2-7}
                                  & $5Mrad$		& $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
@@ -219,17 +225,17 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-P100}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-P200}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-P600}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-TCM-P100}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-TCM-P200}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-TCM-P600}
   \caption{Variazioni di $V_{th}$ dei dispositivi PMOS estratte con \emph{TCM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-N100}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-N200}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-TCM-N600}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-TCM-N100}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-TCM-N200}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-TCM-N600}
   \caption{Variazioni di $V_{th}$ dei dispositivi NMOS estratte con \emph{TCM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
 \end{figure}
 
@@ -240,7 +246,8 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
 
 \subsection{Second Difference of the Logarithm of the drain current Minimum method}
 
-Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ ripetto alla tensione di gate ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$. \\
+Il secondo metodo analizzato 
+è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ ripetto alla tensione di gate ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$. \\
 
 \begin{figure}[H]
   \centering
@@ -250,13 +257,12 @@ Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of t
 \end{figure}
 
 
-Anche per questo metodo si ritovano le problematiche presenti per il \emph{TCM}: il valore minimo della funzione analizzata è fortemente influenzata dai valori fuori scala e la risoluzione dello strumento di misura è di $5 mV$ e dunque troppo grossolana per ottenere un valore preciso di $V_{th}$.
-Quindi, anche per questo metodo, abbiamo deciso di interpolare la funzione ottenuta con una polinomiale e considerare il minimo di quest'ultima. \\
+Anche per questo metodo si ritovano le problematiche
+presenti per il \emph{TCM}: il valore minimo della funzione analizzata è fortemente influenzata dai valori fuori scala e la risoluzione dello strumento di misura è di $5 mV$ e dunque troppo grossolana per ottenere un valore preciso di $V_{th}$.
+Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenuta con una polinomiale e considerare il minimo di quest'ultima. \\
 
 \begin{table}[htp]
   \renewcommand{\arraystretch}{1.3}
-  \caption{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
-  \label{tab:GradiSDLM}
   \begin{center}
     \begin{tabular}{c c c c c}
       \hline
@@ -281,6 +287,8 @@ Quindi, anche per questo metodo, abbiamo deciso di interpolare la funzione otten
       \hline
     \end{tabular}
   \end{center}
+  \caption{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
+  \label{tab:GradiSDLM}
 \end{table}
 
 
@@ -295,13 +303,13 @@ Quindi, anche per questo metodo, abbiamo deciso di interpolare la funzione otten
   \label{fig:GradiSDLM}
 \end{figure}
 
-Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiTCM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), metre le misure ottenute con quete ultime sono, in genere, molto simili tra loro. Osservando i grafici relativi alla SDLM del PMOS 200-30 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2lnI_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta, infatti, che \emph{SDLM} è più sensibile agli errori di misurazioni rispetto a \emph{TCM} e quindi i grafici sono meno approssimabili a polinomiali di baso grado. Si ha dunque che:
+Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), metre le misure ottenute con quete ultime sono, in genere, molto simili tra loro. Osservando i grafici relativi alla SDLM del PMOS 200-30 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2 \ln I_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta, infatti, che \emph{SDLM} è più sensibile agli errori di misurazioni rispetto a \emph{TCM} e quindi i grafici sono meno approssimabili a polinomiali di baso grado. Si ha dunque che:
 \begin{itemize}
-  \item I fit di grado basso non interpolano in modo preciso il grafico di $\frac{d^2lnI_D}{dV_{GS}^2}$ i valori minimi variano considerevolmente al variare del grado.
+  \item I fit di grado basso non interpolano in modo preciso il grafico di $\frac{d^2 \ln I_D}{dV_{GS}^2}$ i valori minimi variano considerevolmente al variare del grado.
   \item I fit di grado alto interpolano bene il grafico di partenza e i valori minimi sono simili tra loro, ma influenzati dagli errori di misura
 \end{itemize}
 
-Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}{dV_{GS}^2}$ e, in generale, abbiamo concluso che questo metodo non pare molto affidabile per questo studio. In ogni caso, per i futuri confronti tra i metodi si terrà lo stesso in conto l'\emph{SDLM}, usando un fit di grado 6, che può essere considerata un'accettabile via di mezzo tra le polinomiali che non interpolano bene il grafico di partenza e quelle che sono troppo influenzate dagli errori di misura.
+Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_D}{dV_{GS}^2}$ e, in generale, abbiamo concluso che questo metodo non pare molto affidabile per questo studio. In ogni caso, per i futuri confronti tra i metodi si terrà lo stesso in conto l'\emph{SDLM}, usando un fit di grado 6, che può essere considerata un'accettabile via di mezzo tra le polinomiali che non interpolano bene il grafico di partenza e quelle che sono troppo influenzate dagli errori di misura.
 
 
 \begin{table}[H]
@@ -368,7 +376,7 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$V_{th} [mV] $}                                                          \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
     \cmidrule{2-7}
                                  & $5Mrad$                            & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
@@ -397,7 +405,7 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$V_{th} [mV] $}                                                          \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
     \cmidrule{2-7}
                                  & $5Mrad$                            & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
@@ -425,17 +433,17 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-P100}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-P200}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-P600}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-SDLM-P100}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-SDLM-P200}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-SDLM-P600}
   \caption{Variazioni di $V_{th}$ dei dispositivi PMOS estratte con \emph{SDLM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-N100}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-N200}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-SDLM-N600}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-SDLM-N100}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-SDLM-N200}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-SDLM-N600}
   \caption{Variazioni di $V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
 \end{figure}
 
@@ -448,8 +456,8 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2lnI_D}
 
 \subsection{Extrapolation in the Linear Region method}
 
-
-Il terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR}, con il quale si ottiene la misura della $V_{th}$ attraverso l'analisi della caratteristica $I_D-V_{GS}$.  Tale grafico presenta un punto di flesso attorno al quale il grafico è linearizzabile. Il valore di $V_{th}$ si ottiene sommando la metà del valore di $V_{DS}$ al valore di $V_{GS}$ al quale il fit lineare, ottenuto nell'intorno del punto di flesso, interseca l'asse delle ascisse.\\
+Il
+terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR}, con il quale si ottiene la misura della $V_{th}$ attraverso l'analisi della caratteristica $I_D-V_{GS}$.  Tale grafico presenta un punto di flesso attorno al quale il grafico è linearizzabile. Il valore di $V_{th}$ si ottiene sommando la metà del valore di $V_{DS}$ al valore di $V_{GS}$ al quale il fit lineare, ottenuto nell'intorno del punto di flesso, interseca l'asse delle ascisse.\\
 
 
 \begin{figure}[h!]
@@ -528,7 +536,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$V_{th} [mV] $}                                                          \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
     \cmidrule{2-7}
                                  & $5Mrad$                            & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
@@ -557,7 +565,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$V_{th} [mV] $}                                                          \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
     \cmidrule{2-7}
                                  & $5Mrad$                            & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
@@ -584,17 +592,17 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-P100}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-P200}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-P600}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-FIT-P100}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-FIT-P200}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-FIT-P600}
   \caption{Variazioni di $V_{th}$ dei dispositivi PMOS estratte con \emph{ELR} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-N100}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-N200}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-FIT-N600}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-FIT-N100}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-FIT-N200}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-FIT-N600}
   \caption{Variazioni di $V_{th}$ dei dispositivi NMOS estratte con \emph{ELR} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
 \end{figure}
 
@@ -679,7 +687,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$V_{th} [mV] $}                                                          \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
     \cmidrule{2-7}
                                  & $5Mrad$                            & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
@@ -710,7 +718,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$V_{th} [mV] $}                                                          \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
     \cmidrule{2-7}
                                  & $5Mrad$                            & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
@@ -738,27 +746,19 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-P100}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-P200}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-P600}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-RM-P100}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-RM-P200}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-RM-P600}
   \caption{Variazioni di $V_{th}$ dei dispositivi PMOS estratte con \emph{RM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
 \end{figure}
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-N100}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-N200}
-  \includegraphics[width=0.3\textwidth]{sovrapposizione-deltaVth-RM-N600}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-RM-N100}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-RM-N200}
+  \includegraphics[width=0.6\textwidth]{sovrapposizione-deltaVth-RM-N600}
   \caption{Variazioni di $V_{th}$ dei dispositivi NMOS estratte con \emph{RM} in funzione dell'irraggiamento, raggruppate per dimensione dello spessore dei dispositivi}
 \end{figure}
-
-
-
-
-
-
-
-
 
 
 
