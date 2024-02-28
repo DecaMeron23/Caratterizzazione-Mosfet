@@ -20,11 +20,6 @@
 \usepackage{float}
 \usepackage{hyperref}
 
-%Domande:
-%1) nei dispositivi che stiamo studiando il body è cortocircuitato con il source? 
-
-% grafici che rappresentano l'andamaneto delle Vth al variare di W e L con i tre metodi 
-% 
 
 \begin{document}
 
@@ -43,7 +38,8 @@ Per l'estrazione del parametro $V_{th}$ esistono numerosi metodi, ognuno con pun
 \begin{itemize}
   \item \emph{Transconductance Change Method (TCM)};
   \item \emph{Second Difference of the Logarithm of the drain current Minimum method (SDLM)};
-  \item \emph{Extrapolation in the Linear Region method (ELR)}.
+  \item \emph{Extrapolation in the Linear Region method (ELR)};
+  \item \emph{Ratio Method (RM)}. 
 \end{itemize}
 
 Per il nostro studio, però, non si è tanto interessati al valore in sé della tensione di soglia dei dispositivi, quanto più a come questa varia all'aumentare dell'irragiamento. Dunque, per ogni metodo non ci si ferma all'estrazione della $V_{th}$ dei dispositivi non irraggiati, ma la si estrae anche per ogni fase d'irraggiamento e, per ciascuno di questi, si calcola la $\Delta V_{th} = V_{th, Irraggiato}-V_{th, non Irraggiato}$. La scelta di quale metodo effettivamente usare per le analisi successive viene presa sulla qualità del parametro $\Delta V_{th}$.
@@ -51,10 +47,7 @@ Per il nostro studio, però, non si è tanto interessati al valore in sé della 
 
 \subsection{Transconductance Change Method}
 
-Il
-\emph{Transconductance Change Method, TCM,} defiscisce la tensione di soglia come la tensione di gate $V_{GS}$ corrispondente al picco massimo
-della derivata della transconduttanza $g_m$ rispetto alla tensione di gate
-($\frac{dg_m}{dV_ {GS}}$) ed è valido per bassi valori della tensione $V_{DS}$.\\
+Il \emph{Transconductance Change Method, TCM,} defiscisce la tensione di soglia come la tensione di gate $V_{GS}$ corrispondente al picco massimo della derivata della transconduttanza $g_m$ rispetto alla tensione di gate ($\frac{dg_m}{dV_ {GS}}$) ed è valido per bassi valori della tensione $V_{DS}$.\\
 Questa definizione si basa sul fatto che, quando il dispositivo passa dalla regione di debole inversione alla regione di forte inversione, la dipendenza della corrente di drain ripetto a $V_{GS}$ passa dall'essere esponenziale all'essere quasi constante.
 La transconduttanza è definita come la derivata prima della corrente $I_D$ rispetto alla tensione $V_{GS}$, dunque la derivata della $g_m$ corrisponde alla derivata seconda di $I_D$. Per questo motivo, il massimo di $\frac{dg_m}{dV_{GS}}$ coincide con la tensione alla quale il grafico della corrente passa dalla forma esponenziale a quella quasi constante, ovvero la tensione $V_{GS}+V_{DS}$. Se $V_{DS}$ è piccola, la tensione per la quale la $g_m$ è massima è molto simile a $V_{th}$.\\
 
@@ -66,7 +59,7 @@ La transconduttanza è definita come la derivata prima della corrente $I_D$ risp
 \end{figure}
 
 \emph{TCM},
-poiché si basa sul massimo di una funzione, è molto sensibile ai picchi dovuti a errori di misura e perciò non è molto affidabile:
+Poiché si basa sul massimo di una funzione, è molto sensibile ai picchi dovuti a errori di misura e perciò non è molto affidabile:
 è quindi necessario rendere la funzione studiata meno dipendente dai campionamenti fuori scala. Inoltre, la risoluzione del dispositivo di misura utilizzato e di $5 mV$, il che rende i valori ottenuti della $V_{th}$ molto approssimativi.
 Per far fronte a questi due problemi, si è scelto di non tenere conto del massimo direttamente ottenuto dallo studio di $\frac{dg_m}{dV_{GS}}$ ottenuto dai valori delle misure, ma d'interpolare prima i punti del grafico con una funzione polinomiale e, solo a questo punto, di prendere in considerazione il picco di massimo. \\
 
@@ -123,6 +116,36 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
     \cmidrule{2-8}
                                  & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
+    100 - 0.030                     & 371.3                              & 370.6   & 361.0    & 380.6     & 378.7     & 375.1     & 371.1        \\
+    \hline
+    100 - 0.060                     & 405.0                              & 399.9   & 390.0    & 419.8     & 418.8     & 414.0     & 412.8        \\
+    \hline
+    100 - 0.0180                    & 476.0                              & 472.4   & 459.5    & 491.9     & 491.2     & 492.0     & 491.1        \\
+    \hline
+    200 - 0.030                     & 359.5                              & 357.9   & 348.1    & 369.2     & 367.0     & 363.8     & 361.7        \\
+    \hline
+    200 - 0.060                     & 402.2                              & 398.3   & 385.0    & 415.5     & 413.7     & 412.3     &  411.0       \\
+    \hline
+    200 - 0.0180                    & 466.4                              & 463.5   & 451.8    & 484.6     & 483.8     & 486.5     & 487.0        \\
+    \hline
+    600 - 0.060                     & 370.2                              & 364.4   & 359.3    & 379.5     & 381.0     & 378.1     & 377.2        \\
+    \hline
+    600 - 0.0180                    & 449.6                              & 447.9   & 430.7    & 458.8     & 458.4     & 458.9     & 458.4        \\
+    \bottomrule
+  \end{tabular}
+  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
+  \label{tab:VthTCMN}
+\end{table}
+
+
+\begin{table}[H]
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
+    \toprule
+    \multirow{2}{*}{Dispositivo} & \multicolumn{7}{c}{$V_{th} [mV] $}                                                                    \\
+    \cmidrule{2-8}
+                                 & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
+    \midrule
     100 - 0.030                     & 429.4                              & 430.7   & 432.2    & 434.4     & 439.0     & 452.6     & 459.4   \\
     \hline
     100 - 0.060                     & 469.3                              & 469.6   & 471.4    & 472.7     & 479.7     & 491.8     & 500.8   \\
@@ -147,33 +170,32 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
+  \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{7}{c}{$V_{th} [mV] $}                                                                    \\
-    \cmidrule{2-8}
-                                 & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
+    \cmidrule{2-7}
+                                 & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
-    100 - 0.030                     & 371.3                              & 370.6   & 361.0    & 380.6     & 378.7     & 375.1     &         \\
+    100 - 0.030                     & -0.7                                      & -10.3    & 9.3       & 7.4       & 3.8       & -0.2        \\
     \hline
-    100 - 0.060                     & 405.0                              & 399.9   & 390.0    & 419.8     & 418.8     & 414.0     &         \\
+    100 - 0.060                     & -5.1                                      & -15.0    & 14.8      & 13.8      & 9.0       & 7.8        \\
     \hline
-    100 - 0.0180                    & 476.0                              & 472.4   & 459.5    & 491.9     & 491.2     & 492.0     &         \\
+    100 - 0.0180                    & -3.6                                      & -16.5    & 15.9      & 15.2      & 16.0      & 15.1        \\
     \hline
-    200 - 0.030                     & 359.5                              & 357.9   & 348.1    & 369.2     & 367.0     & 363.8     &         \\
+    200 - 0.030                     & -1.6                                      & -11.4    & 9.7       & 7.5       & 4.3       & 2.2        \\
     \hline
-    200 - 0.060                     & 402.2                              & 398.3   & 385.0    & 415.5     & 413.7     & 412.3     &         \\
+    200 - 0.060                     & -3.9                                      & -17.2    & 13.3      & 11.5      & 10.1      & 8.8        \\
     \hline
-    200 - 0.0180                    & 466.4                              & 463.5   & 451.8    & 484.6     & 483.8     & 486.5     &         \\
+    200 -180                     & -2.9                                      & -14.6    & 18.2      & 17.4      & 20.1      & 20.6        \\
     \hline
-    600 - 0.060                     & 370.2                              & 364.4   & 359.3    & 379.5     & 381.0     & 378.1     &         \\
+    600 - 0.060                     & -5.8                                      & -10.9    & 9.3       & 10.8      & 7.9       & 7.0        \\
     \hline
-    600 - 0.0180                    & 449.6                              & 447.9   & 430.7    & 458.8     & 458.4     & 458.9     &         \\
+    600 - 0.0180                    & -1.7                                      & -18.9    & 9.2       & 8.8       & 9.3       & 8.8        \\
     \bottomrule
   \end{tabular}
-  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
-  \label{tab:VthTCMN}
+  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
+  \label{tab:deltaVthTCMN}
 \end{table}
-
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -204,34 +226,6 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
   \label{tab:deltaVthTCMP}
 \end{table}
 
-\begin{table}[H]
-  \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
-    \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
-    \cmidrule{2-7}
-                                 & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
-    \midrule
-    100 - 0.030                     & -0.7                                      & -10.3    & 9.3       & 7.4       & 3.8       &         \\
-    \hline
-    100 - 0.060                     & -5.1                                      & -15.0    & 14.8      & 13.8      & 9.0       &         \\
-    \hline
-    100 - 0.0180                    & -3.6                                      & -16.5    & 15.9      & 15.2      & 16.0      &         \\
-    \hline
-    200 - 0.030                     & -1.6                                      & -11.4    & 9.7       & 7.5       & 4.3       &         \\
-    \hline
-    200 - 0.060                     & -3.9                                      & -17.2    & 13.3      & 11.5      & 10.1      &         \\
-    \hline
-    200 -180                     & -2.9                                      & -14.6    & 18.2      & 17.4      & 20.1      &         \\
-    \hline
-    600 - 0.060                     & -5.8                                      & -10.9    & 9.3       & 10.8      & 7.9       &         \\
-    \hline
-    600 - 0.0180                    & -1.7                                      & -18.9    & 9.2       & 8.8       & 9.3       &         \\
-    \bottomrule
-  \end{tabular}
-  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
-  \label{tab:deltaVthTCMN}
-\end{table}
 
 % Plot Delta Vth TCM
 \begin{figure}[H]
@@ -248,6 +242,8 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
 
   \caption{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) e PMOS (a destra) estratte con \emph{TCM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente. Raggruppate per dimensione dello spessore dei dispositivi}
 \end{figure}
+
+
 
 \subsection{Second Difference of the Logarithm of the drain current Minimum method}
 
@@ -326,6 +322,35 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_
     \cmidrule{2-8}
                                  & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
+    100 - 0.030                     & 287.7                              & 259.5   & 271.2    & 289.8     & 287.7     & 278.5     & 276.4        \\
+    \hline
+    100 - 0.060                     & 356.8                              & 327.2   & 322.7    & 360.9     & 356.8     & 356.6     & 352.6        \\
+    \hline
+    100 - 0.0180                    & 404.8                              & 381.5   & 369.1    & 422.1     & 404.8     & 422.1     & 418.2        \\
+    \hline
+    200 - 0.030                     & 279.7                              & 262.2   & 269.6    & 277.9     & 279.7     & 267.3     & 268.5         \\
+    \hline
+    200 - 0.060                     & 355.3                              & 325.4   & 313.3    & 357.4     & 355.3     & 351.1     & 348.7       \\
+    \hline
+    200 - 0.0180                    & 417.9                              & 378.9   & 372.5    & 418.8     & 417.9     & 420.1     & 416.7        \\
+    \hline
+    600 - 0.060                     & 334.4                              & 276.0   & 304.0    & 336.1     & 334.4     & 332.7     & 331.6        \\
+    \hline
+    600 - 0.0180                    & 417.1                              & 381.5   & 379.6    & 418.4     & 417.1     & 416.2     & 414.3        \\
+    \bottomrule
+  \end{tabular}
+  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
+  \label{tab:VthSDLMN}
+\end{table}
+
+\begin{table}[H]
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
+    \toprule
+    \multirow{2}{*}{Dispositivo} & \multicolumn{7}{c}{$V_{th} [mV] $}                                                                    \\
+    \cmidrule{2-8}
+                                 & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
+    \midrule
     100 - 0.030                     & 323.5                              & 329.9   & 327.3    & 330.7     & 329.7     & 343.2     & 355.8   \\
     \hline
     100 - 0.060                     & 411.6                              & 409.9   & 412.3    & 415.5     & 416.8     & 428.3     & 435.8   \\
@@ -350,33 +375,32 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
+  \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{7}{c}{$V_{th} [mV] $}                                                                    \\
-    \cmidrule{2-8}
-                                 & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
+    \cmidrule{2-7}
+                                 & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
-    100 - 0.030                     & 287.7                              & 259.5   & 271.2    & 289.8     & 287.7     & 278.5     &         \\
+    100 - 0.030                     & -20.2                                     & -8.5     & 10.1      & 8.0       & -1.2      & -3.3        \\
     \hline
-    100 - 0.060                     & 356.8                              & 327.2   & 322.7    & 360.9     & 356.8     & 356.6     &         \\
+    100 - 0.060                     & 12.1                                      & 7.6      & 45.8      & 41.7      & 41.5      & 37.5        \\
     \hline
-    100 - 0.0180                    & 404.8                              & 381.5   & 369.1    & 422.1     & 404.8     & 422.1     &         \\
+    100 - 0.0180                    & 12.1                                      & -0.3     & 52.7      & 35.4      & 52.7      & 48.8        \\
     \hline
-    200 - 0.030                     & 279.7                              & 262.2   & 269.6    & 277.9     & 279.7     & 267.3     &         \\
+    200 - 0.030                     & -2.5                                      & 4.9      & 13.2      & 15.0      & 2.6       &  3.8       \\
     \hline
-    200 - 0.060                     & 355.3                              & 325.4   & 313.3    & 357.4     & 355.3     & 351.1     &         \\
+    200 - 0.060                     & -0.6                                      & -12.7    & 31.4      & 29.3      & 25.1      & 22.7        \\
     \hline
-    200 - 0.0180                    & 417.9                              & 378.9   & 372.5    & 418.8     & 417.9     & 420.1     &         \\
+    200 - 0.0180                    & 7.1                                       & 0.7      & 47.0      & 46.1      & 48.3      & 44.9        \\
     \hline
-    600 - 0.060                     & 334.4                              & 276.0   & 304.0    & 336.1     & 334.4     & 332.7     &         \\
+    600 - 0.060                     & -29.1                                     & -1.1     & 31.0      & 29.3      & 27.6      & 26.5        \\
     \hline
-    600 - 0.0180                    & 417.1                              & 381.5   & 379.6    & 418.4     & 417.1     & 416.2     &         \\
+    600 - 0.0180                    & -3.3                                      & --5.2    & 33.6      & 32.3      & 31.4      & 29.5        \\
     \bottomrule
   \end{tabular}
-  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
-  \label{tab:VthSDLMN}
+  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
+  \label{tab:deltaVthSDLMN}
 \end{table}
-
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -407,34 +431,6 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_
   \label{tab:deltaVthSDLMP}
 \end{table}
 
-\begin{table}[H]
-  \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
-    \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
-    \cmidrule{2-7}
-                                 & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
-    \midrule
-    100 - 0.030                     & -20.2                                     & -8.5     & 10.1      & 8.0       & -1.2      &         \\
-    \hline
-    100 - 0.060                     & 12.1                                      & 7.6      & 45.8      & 41.7      & 41.5      &         \\
-    \hline
-    100 - 0.0180                    & 12.1                                      & -0.3     & 52.7      & 35.4      & 52.7      &         \\
-    \hline
-    200 - 0.030                     & -2.5                                      & 4.9      & 13.2      & 15.0      & 2.6       &         \\
-    \hline
-    200 - 0.060                     & -0.6                                      & -12.7    & 31.4      & 29.3      & 25.1      &         \\
-    \hline
-    200 - 0.0180                    & 7.1                                       & 0.7      & 47.0      & 46.1      & 48.3      &         \\
-    \hline
-    600 - 0.060                     & -29.1                                     & -1.1     & 31.0      & 29.3      & 27.6      &         \\
-    \hline
-    600 - 0.0180                    & -3.3                                      & --5.2    & 33.6      & 32.3      & 31.4      &         \\
-    \bottomrule
-  \end{tabular}
-  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
-  \label{tab:deltaVthSDLMN}
-\end{table}
 
 
 % Plot Delta Vth, SDLM
@@ -466,9 +462,38 @@ terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, EL
 \end{figure}
 
 Di per sé, questo metodo è meno preciso di quelli esposti precedentemente: la posizione del punto di flesso può essere incerto, perché, già a $V_{GS}$ leggermente superiori a $V_{th}$, la caratteristica $I_D-V_{GS}$ può deviare dall'andamento lineare previsto a causa di errori dovuti alle resistenze parassite presenti al source e al drain dei dispositivi e alla degradazione della mobilità dei portatori di carica.
-Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace, in quanto non siamo interessati al valore della tensione di soglia dei dispositivi, ma alla differenza di tale parametro all'aumentare dell'irraggiamento subito dai dispositivi. Dunque gli errori prodotti dalle resistenze parassite e dalla degradazione di mobilità divenatano irrilevanti, perché sono offset che vengono eliminati nel momento in cui si calcola la differenza tra due misure di $V_{th}$ dello stesso dispositivo.\\
+Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace, in quanto non siamo interessati al valore della tensione di soglia dei dispositivi, ma alla variazione di tale parametro all'aumentare dell'irraggiamento subito dai dispositivi. Dunque gli errori prodotti dalle resistenze parassite e dalla degradazione di mobilità divenatano irrilevanti, perché sono offset che vengono eliminati nel momento in cui si calcola la differenza tra due misure di $V_{th}$ dello stesso dispositivo.\\
 È infine doveroso fare una parentesi sulla regione di linearizzazione considerata per questo studio: infatti non è possibile stabilire con certezza una regione fissa in cui la funzione, ottenuta con misure sperimentali, può essere linearizzata. Il metodo da noi applicato è stato quello di analizzare tutti i possibili intervalli di linearizzazione di dimensione $100 mV$ i cui estremi ricadono nell'intervallo $[300 mV ; 750mV]$ e scegliere quello il cui il fit approssimava meglio la funzione. All'atto pratico abbiamo considerato l'intervallo il cui fit ha il coefficiente di determinazione $R^2$ piu alto, che è risultato essere sempre maggiore di $0.999$.
 
+
+\begin{table}[H]
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
+    \toprule
+    \multirow{2}{*}{Dispositivo} & \multicolumn{7}{c}{$V_{th} [mV] $}                                                                    \\
+    \cmidrule{2-8}
+                                 & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
+    \midrule
+    100 - 0.030                     & 351.0                              & 348.5   & 338.8    & 360.4     & 358.4     & 353.1     & 348.6        \\
+    \hline
+    100 - 0.060                     & 388.8                              & 385.3   & 373.1    & 403.8     & 402.0     & 398.8     & 396.0        \\
+    \hline
+    100 - 0.0180                    & 465.9                              & 461.6   & 449.4    & 482.5     & 481.7     & 482.3     & 481.9        \\
+    \hline
+    200 - 0.030                     & 336.9                              & 334.6   & 324.6    & 346.0     & 344.7     & 341.3     & 338.7        \\
+    \hline
+    200 - 0.060                     & 382.9                              & 379.4   & 366.4    & 396.6     & 395.1     & 393.4     & 391.6   \\
+    \hline
+    200 - 0.0180                    & 454.6                              & 449.8   & 438.1    & 471.1     & 471.0     & 473.6     & 474.4        \\
+    \hline
+    600 - 0.060                     & 349.3                              & 347.2   & 336.7    & 361.2     & 361.4     & 358.1     & 356.7        \\
+    \hline
+    600 - 0.0180                    & 431.8                              & 427.5   & 412.4    & 440.6     & 440.1     & 440.8     & 440.4        \\
+    \bottomrule
+  \end{tabular}
+  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
+  \label{tab:VthELRN}
+\end{table}
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -503,31 +528,31 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
+  \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{7}{c}{$V_{th} [mV] $}                                                                    \\
-    \cmidrule{2-8}
-                                 & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
+    \cmidrule{2-7}
+                                 & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
-    100 - 0.030                     & 351.0                              & 348.5   & 338.8    & 360.4     & 358.4     & 353.1     &         \\
+    100 - 0.030                     & -2.5                                      & -12.1    & 9.4       & 7.4       & 2.1       & -2.4        \\
     \hline
-    100 - 0.060                     & 388.8                              & 385.3   & 373.1    & 403.8     & 402.0     & 398.8     &         \\
+    100 - 0.060                     & -3.5                                      & -15.8    & 15.0      & 13.1      & 10.0      & 7.2        \\
     \hline
-    100 - 0.0180                    & 465.9                              & 461.6   & 449.4    & 482.5     & 481.7     & 482.3     &         \\
+    100 - 0.0180                    & -4.3                                      & -16.5    & 16.6      & 15.8      & 16.3      & 16.0        \\
     \hline
-    200 - 0.030                     & 336.9                              & 334.6   & 324.6    & 346.0     & 344.7     & 341.3     &         \\
+    200 - 0.030                     & -2.3                                      & -12.3    & 9.1       & 7.9       & 4.5       & 1.8        \\
     \hline
-    200 - 0.060                     & 382.9                              & 379.4   & 366.4    & 396.6     & 395.1     & 393.4     &         \\
+    200 - 0.060                     & -3.5                                      & -16.5    & 13.6      & 12.2      & 10.5      & 8.7        \\
     \hline
-    200 - 0.0180                    & 454.6                              & 449.8   & 438.1    & 471.1     & 471.0     & 473.6     &         \\
+    200 - 0.0180                    & -4.9                                      & -16.5    & 16.5      & 16.4      & 19.1      & 19.8        \\
     \hline
-    600 - 0.060                     & 349.3                              & 347.2   & 336.7    & 361.2     & 361.4     & 358.1     &         \\
+    600 - 0.060                     & -2.2                                      & -12.7    & 11.8      & 12.0      & 8.8       &  7.4       \\
     \hline
-    600 - 0.0180                    & 431.8                              & 427.5   & 412.4    & 440.6     & 440.1     & 440.8     &         \\
+    600 - 0.0180                    & -4.3                                      & -19.4    & 8.8       & 8.2       & 9.0       & 8.6        \\
     \bottomrule
   \end{tabular}
-  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
-  \label{tab:VthELRN}
+  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
+  \label{tab:deltaVthELRN}
 \end{table}
 
 \begin{table}[H]
@@ -559,34 +584,6 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \label{tab:deltaVthELRP}
 \end{table}
 
-\begin{table}[H]
-  \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
-    \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
-    \cmidrule{2-7}
-                                 & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
-    \midrule
-    100 - 0.030                     & -2.5                                      & -12.1    & 9.4       & 7.4       & 2.1       &         \\
-    \hline
-    100 - 0.060                     & -3.5                                      & -15.8    & 15.0      & 13.1      & 10.0      &         \\
-    \hline
-    100 - 0.0180                    & -4.3                                      & -16.5    & 16.6      & 15.8      & 16.3      &         \\
-    \hline
-    200 - 0.030                     & -2.3                                      & -12.3    & 9.1       & 7.9       & 4.5       &         \\
-    \hline
-    200 - 0.060                     & -3.5                                      & -16.5    & 13.6      & 12.2      & 10.5      &         \\
-    \hline
-    200 - 0.0180                    & -4.9                                      & -16.5    & 16.5      & 16.4      & 19.1      &         \\
-    \hline
-    600 - 0.060                     & -2.2                                      & -12.7    & 11.8      & 12.0      & 8.8       &         \\
-    \hline
-    600 - 0.0180                    & -4.3                                      & -19.4    & 8.8       & 8.2       & 9.0       &         \\
-    \bottomrule
-  \end{tabular}
-  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
-  \label{tab:deltaVthELRN}
-\end{table}
 
 % Plot Delta Vth, ELR
 \begin{figure}[H]
@@ -610,6 +607,37 @@ Il \emph{Ratio Method, RM} è stato sviluppato per far fronte alle problematicit
 Come detto, questo metodo supera alcuni limiti dei metodi descritti in precedenza, però presenta una problematicità non indifferente: tracciando il grafico di $\frac{I_D}{g_m^{0.5}}$ in funzione di $V_{GS}$, questo non verifica appieno l'assunzione di linearità. Dunque non esiste un intervallo in cui il grafico è chiaramente linearizzabile e quindi la misura di $V_{th}$ non rispecchia del tutto il valore reale della tensione di soglia, ma è comunque una buona approssimazione, soprattutto se si considera il $\Delta V_{th}$ al crecere dell'irraggiamento.\\
 Anche il questo caso, per ottenere il fit lineare più accurato possibile è stato usato lo stesso metodo esposto per l'\emph{ELR}.
 
+
+
+
+\begin{table}[H]
+  \renewcommand{\arraystretch}{1.3}
+  \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
+    \toprule
+    \multirow{2}{*}{Dispositivo} & \multicolumn{7}{c}{$V_{th} [mV] $}                                                                    \\
+    \cmidrule{2-8}
+                                 & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
+    \midrule
+    100 - 0.030                     & 494.2                              & 490.9   & 476.2    & 449.9     & 447.5     & 478.7     & 478.4        \\
+    \hline
+    100 - 0.060                     & 485.6                              & 481.8   & 470.9    & 502.5     & 499.4     & 500.3     & 499.4        \\
+    \hline
+    100 - 0.0180                    & 529.4                              & 527.8   & 503.8    & 541.0     & 541.9     & 541.4     & 540.9        \\
+    \hline
+    200 - 0.030                     & 485.2                              & 497.4   & 483.1    & 486.8     & 496.7     & 504.1     & 497.3        \\
+    \hline
+    200 - 0.060                     & 499.8                              & 482.9   & 467.2    & 499.6     & 498.9     & 503.1     & 514.1        \\
+    \hline
+    200 - 0.0180                    & 523.4                              & 515.8   & 507.5    & 542.1     & 538.6     & 544.1     & 546.2        \\
+    \hline
+    600 - 0.060                     & 514.9                              & 507.4   & 504.9    & 517.3     & 521.4     & 521.2     & 514.3        \\
+    \hline
+    600 - 0.0180                    & 539.0                              & 537.0   & 525.9    & 546.6     & 546.2     & 545.6     & 546.1        \\
+    \bottomrule
+  \end{tabular}
+  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
+  \label{tab:VthRMN}
+\end{table}
 
 \begin{figure}[h!]
   \centering
@@ -649,31 +677,31 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
+  \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{7}{c}{$V_{th} [mV] $}                                                                    \\
-    \cmidrule{2-8}
-                                 & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
+    \cmidrule{2-7}
+                                 & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
     \midrule
-    100 - 0.030                     & 494.2                              & 490.9   & 476.2    & 449.9     & 447.5     & 478.7     &         \\
+    100 - 0.030                     & -3.3                                      & -18.0    & -44.3     & -46.7     & -15.4     & -15.8        \\
     \hline
-    100 - 0.060                     & 485.6                              & 481.8   & 470.9    & 502.5     & 499.4     & 500.3     &         \\
+    100 - 0.060                     & -3.9                                      & -14.7    & 16.8      & 13.8      & 14.7      & 13.8        \\
     \hline
-    100 - 0.0180                    & 529.4                              & 527.8   & 503.8    & 541.0     & 541.9     & 541.4     &         \\
+    100 - 0.0180                    & -1.6                                      & -25.6    & 11.6      & 12.6      & 12.0      & 11.5        \\
     \hline
-    200 - 0.030                     & 485.2                              & 497.4   & 483.1    & 486.8     & 496.7     & 504.1     &         \\
+    200 - 0.030                     & 12.2                                      & -2.1     & 1.7       & 11.5      & 19.0      & 12.1        \\
     \hline
-    200 - 0.060                     & 499.8                              & 482.9   & 467.2    & 499.6     & 498.9     & 503.1     &         \\
+    200 - 0.060                     & -16.9                                     & -32.5    & -0.2      & -0.9      & 3.3       & 14.3        \\
     \hline
-    200 - 0.0180                    & 523.4                              & 515.8   & 507.5    & 542.1     & 538.6     & 544.1     &         \\
+    200 - 0.0180                    & -7.6                                      & -15.9    & 18.7      & 15.2      & 20.7      & 22.8        \\
     \hline
-    600 - 0.060                     & 514.9                              & 507.4   & 504.9    & 517.3     & 521.4     & 521.2     &         \\
+    600 - 0.060                     & -7.5                                      & -9.9     & 2.4       & 6.5       & 6.3       & -0.6        \\
     \hline
-    600 - 0.0180                    & 539.0                              & 537.0   & 525.9    & 546.6     & 546.2     & 545.6     &         \\
+    600 - 0.0180                    & -1.9                                      & -13.0    & 7.6       & 7.2       & 6.7       & 7.1        \\
     \bottomrule
   \end{tabular}
-  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
-  \label{tab:VthRMN}
+  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
+  \label{tab:deltaVthRMN}
 \end{table}
 
 \begin{table}[H]
@@ -703,37 +731,6 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   \end{tabular}
   \caption{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{RM}}
   \label{tab:deltaVthRMP}
-\end{table}
-
-
-
-\begin{table}[H]
-  \renewcommand{\arraystretch}{1.3}
-  \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
-    \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{6}{c}{$\Delta V_{th} [mV] $}                                                          \\
-    \cmidrule{2-7}
-                                 & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ \\
-    \midrule
-    100 - 0.030                     & -3.3                                      & -18.0    & -44.3     & -46.7     & -15.4     &         \\
-    \hline
-    100 - 0.060                     & -3.9                                      & -14.7    & 16.8      & 13.8      & 14.7      &         \\
-    \hline
-    100 - 0.0180                    & -1.6                                      & -25.6    & 11.6      & 12.6      & 12.0      &         \\
-    \hline
-    200 - 0.030                     & 12.2                                      & -2.1     & 1.7       & 11.5      & 19.0      &         \\
-    \hline
-    200 - 0.060                     & -16.9                                     & -32.5    & -0.2      & -0.9      & 3.3       &         \\
-    \hline
-    200 - 0.0180                    & -7.6                                      & -15.9    & 18.7      & 15.2      & 20.7      &         \\
-    \hline
-    600 - 0.060                     & -7.5                                      & -9.9     & 2.4       & 6.5       & 6.3       &         \\
-    \hline
-    600 - 0.0180                    & -1.9                                      & -13.0    & 7.6       & 7.2       & 6.7       &         \\
-    \bottomrule
-  \end{tabular}
-  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
-  \label{tab:deltaVthRMN}
 \end{table}
 
 

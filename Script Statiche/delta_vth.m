@@ -1,5 +1,5 @@
 %% posizionarsi nella cartella dei chip (misurazioni statiche) e 
-%% digitare il nome della funzione con parametro il nome del chip (P1, N1)
+%% digitare il nome della funzione con parametro il nome del chip (P1, N4)
 
 function delta_vth(dispositivo)
     
@@ -118,11 +118,10 @@ function delta_vth(dispositivo)
            end
         end
         
-        for i = deltaFile
-            if ~ismissing(i)
-                plot_deltaVth(i);
-            end
-        end
+        % Sovrapposizione_plot_deltaVth_W("Delta_FIT.txt");
+        % Sovrapposizione_plot_deltaVth_W("Delta_TCM.txt");
+        % Sovrapposizione_plot_deltaVth_W("Delta_SDLM.txt");
+        % Sovrapposizione_plot_deltaVth_W("Delta_RM.txt");
 
     cd ..
 

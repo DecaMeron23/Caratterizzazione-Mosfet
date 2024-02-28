@@ -51,7 +51,7 @@ function Calcolo_Vth()
                 set(0, 'DefaultFigureVisible', 'on');
             end
             
-            formato = '%5.4f';
+            formato = '%5.1f';
             
     
             vth_FIT = string(sprintf(formato, vth_FIT));
