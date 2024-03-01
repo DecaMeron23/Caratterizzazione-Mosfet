@@ -1,0 +1,1 @@
+{"rule":"GR_04_002","sentence":"^\\QLa transconduttanza è definita come la derivata prima della corrente \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q rispetto alla tensione \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, dunque la derivata della \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q corrisponde alla derivata seconda di \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}

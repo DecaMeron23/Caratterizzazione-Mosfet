@@ -21,12 +21,7 @@
 \usepackage{hyperref}
 \usepackage{todonotes}
 
-
-
-
 \begin{document}
-
-
 
 \chapter{Estrazione dei parametri statici}
 In questo capitolo si tratteranno i paramentri statici di transistori \emph{MOS} in tecnologia $28 nm$ per comprendere come variano le prestazioni statiche all'aumentare dell'irraggiamento subito. Si tratteranno:\todo{Aggiungere i parametri statici che studieremo}
@@ -36,7 +31,7 @@ In questo capitolo si tratteranno i paramentri statici di transistori \emph{MOS}
 \section{Tensione di soglia}
 
 La tensione di soglia $V_{th}$ di un transistore MOS è definita come quella tensione tra gate e bulk per la quale la popolazione di minoritari all'interfaccia è uguale alla popolazione di maggioritari nel bulk. Questa definizione non può essere usata direttamente per il calcolo della tensione di soglia dei dispositivi, ma si deve passare attraverso l'analisi delle caratteristiche corrente-tensione dei dispositivi. \\
-Per l'estrazione del parametro $V_{th}$ esistono numerosi metodi, ognuno con punti di forza e punti di debolezza diversi. La scelta di quale metodo utilizzare non è banale e per farla occorre analizzare le caratteristiche di ciascun metodo e confrontare i risultati che offrono. Per questo studio sono stati presi in considerazione:
+Per l'estrazione del parametro $V_{th}$ esistono numerosi metodi\cite{art2}, la scelta è solitamente dettata da un compromesso che si deve trovare fra complessità della procedura di estrazione della soglia e risultato ottenuto per la specifica applicazione. Per questo studio sono stati presi in considerazione:
 
 \begin{itemize}
   \item \emph{Transconductance Change Method (TCM)};
@@ -71,7 +66,7 @@ Per far fronte a questi due problemi, si è scelto di non tenere conto del massi
 \end{figure}
 
 Lo studio del fit polinomiale risolve il problema della bassa risoluzione di misura e il problema della presenza di valori fuori scala, ma presenta una potenziale nuovo problema: il valore della $V_{th}$ calcolata potrebbe variare significativamente al variare del grado della funzione polinomiale interpolante. Questa differenza non è molto alta, si parla di pochi millivolt, perciò non influenza considerevolmente il valore della singola estrazione. Questa dipendenza, però, è problematica nel momento in cui si vuole studiare con precisione la degradazione delle prestazioni di un dispositivo all'aumentare dell'irraggiamento subito, in quanto piccoli spostamenti del valore di $V_{th}$ dovuti alla scelta arbitraria del grado della polinomiale può far variare eccessivamente le differenze delle misure tra un irraggiamento e l'altro, elemento inaccettabile se si considera che già le misure sono influenzate da errori casuali in fase di misura.\\
-Prendendo come esempio i dispositivi PMOS, si è studiato quanto cambia il valore della tenzione di soglia al variare del grado del fit polinomiale, prendendo in considerazione i gradi di valore 2, 4, 6 e 8.\\
+Prendendo come esempio i dispositivi PMOS, si è studiato quanto cambia il valore della tenzione di soglia al variare del grado del fit polinomiale, prendendo in considerazione i gradi di valore 2, 4, 6 e 8.
 
 \begin{table}[h]
   \renewcommand{\arraystretch}{1.3}
@@ -240,7 +235,7 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
 
 \subsection{Second Difference of the Logarithm of the drain current Minimum method}
 Il 
-secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ ripetto alla tensione di gate ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$.
+secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ ripetto alla tensione di gate ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$\cite{art1}.
 
 \begin{figure}[H]
   \centering
@@ -293,7 +288,7 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
   \label{fig:GradiSDLM}
 \end{figure}
 
-Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), metre le misure ottenute con quete ultime sono, in genere, molto simili tra loro. Osservando i grafici relativi alla SDLM del PMOS 200-0.030 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2 \ln I_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta, infatti, che \emph{SDLM} è più sensibile agli errori di misurazioni rispetto a \emph{TCM} e quindi i grafici sono meno approssimabili a polinomiali di baso grado. Si ha dunque che:
+Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), mentre le misure ottenute con queste ultime sono, in genere, molto simili tra loro. Osservando i grafici relativi alla SDLM del PMOS 200-0.030 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2 \ln I_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta, infatti, che \emph{SDLM} è più sensibile agli errori di misurazioni rispetto a \emph{TCM} e quindi i grafici sono meno approssimabili a polinomiali di baso grado. Si ha dunque che:
 \begin{itemize}
   \item I fit di grado basso non interpolano in modo preciso il grafico di $\frac{d^2 \ln I_D}{dV_{GS}^2}$ i valori minimi variano considerevolmente al variare del grado.
   \item I fit di grado alto interpolano bene il grafico di partenza e i valori minimi sono simili tra loro, ma influenzati dagli errori di misura
@@ -432,9 +427,7 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_
 \end{figure}
 
 \subsection{Extrapolation in the Linear Region method}
-
-Il
-terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR}, con il quale si ottiene la misura della $V_{th}$ attraverso l'analisi della caratteristica $I_D-V_{GS}$.  Tale grafico presenta un punto di flesso attorno al quale il grafico è linearizzabile. Il valore di $V_{th}$ si ottiene sommando la metà del valore di $V_{DS}$ al valore di $V_{GS}$ al quale il fit lineare, ottenuto nell'intorno del punto di flesso, interseca l'asse delle ascisse.
+Il terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR}, con il quale si ottiene la misura della $V_{th}$ attraverso l'analisi della caratteristica $I_D-V_{GS}$.  Tale grafico presenta un punto di flesso attorno al quale il grafico è linearizzabile. Il valore di $V_{th}$ si ottiene sommando la metà del valore di $V_{DS}$ al valore di $V_{GS}$ al quale il fit lineare, ottenuto nell'intorno del punto di flesso, interseca l'asse delle ascisse\cite{art2}.
 
 \begin{figure}[h!]
   \centering
@@ -721,12 +714,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   \caption{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{RM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
 \end{figure}
 
+\bibliographystyle{IEEEtrans}
+\bibliography{../bibliography.bib}
+
 \end{document}
-
-
-
-
-
-
-
-
