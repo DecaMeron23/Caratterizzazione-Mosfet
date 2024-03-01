@@ -287,12 +287,9 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
   \label{fig:GradiSDLM}
 \end{figure}
 
-Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), mentre le misure ottenute con queste ultime sono, in genere, molto simili tra loro. Osservando i grafici relativi alla SDLM del PMOS 200-0.030 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2 \ln I_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta, infatti, che \emph{SDLM} è più sensibile agli errori di misurazioni rispetto a \emph{TCM} e quindi i grafici sono meno approssimabili a polinomiali di baso grado. Si ha dunque che:
-\begin{itemize}
-  \item I fit di grado basso non interpolano in modo preciso il grafico di $\frac{d^2 \ln I_D}{dV_{GS}^2}$ i valori minimi variano considerevolmente al variare del grado.
-  \item I fit di grado alto interpolano bene il grafico di partenza e i valori minimi sono simili tra loro, ma influenzati dagli errori di misura
-\end{itemize}
-Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_D}{dV_{GS}^2}$ e, in generale, abbiamo concluso che questo metodo non pare molto affidabile per questo studio. In ogni caso, per i futuri confronti tra i metodi si terrà lo stesso in conto l'\emph{SDLM}, usando un fit di grado 6, che può essere considerata un'accettabile via di mezzo tra le polinomiali che non interpolano bene il grafico di partenza e quelle che sono troppo influenzate dagli errori di misura.
+Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), mentre le misure ottenute con queste ultime sono, in genere, molto simili tra loro. Ad esempio, osservando i grafici relativi alla SDLM del PMOS 200-0.030 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2 \ln I_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta pertanto necessario estrarre le tensioni di soglia utilizzando una funzione polinomiale di grado 6.
+
+Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i dispositivi NMOS: tabelle \ref{tab:VthSDLMN} e \ref{tab:deltaVthSDLMN}, e per i PMOS: tabelle \ref{tab:VthSDLMP} e \ref{tab:deltaVthSDLMP}. Mentre in figura \ref{fig:deltaVthSDLM} si riportano i grafici che mostrano l'andamento della variazione della tensione di soglia, in funzione della dose assorbita.   
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -423,6 +420,7 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_
   \includegraphics[width=0.49\textwidth]{sovrapposizione-deltaVth-SDLM-N600}
   \includegraphics[width=0.49\textwidth]{sovrapposizione-deltaVth-SDLM-P600}
   \caption{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{SDLM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente. Raggruppate per dimensione dello spessore dei dispositivi}
+  \label{fig:deltaVthSDLM}
 \end{figure}
 
 \subsection{Extrapolation in the Linear Region method}
