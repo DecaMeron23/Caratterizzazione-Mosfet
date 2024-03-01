@@ -30,15 +30,9 @@
 
 \chapter{Estrazione dei parametri statici}
 In questo capitolo si tratteranno i paramentri statici di transistori \emph{MOS} in tecnologia $28 nm$ per comprendere come variano le prestazioni statiche all'aumentare dell'irraggiamento subito. Si tratteranno:\todo{Aggiungere i parametri statici che studieremo}
-
 \begin{itemize}
   \item Tensione di soglia
 \end{itemize}
-
-
-
-%% Aggiungere introduzione
-
 \section{Tensione di soglia}
 
 La tensione di soglia $V_{th}$ di un transistore MOS è definita come quella tensione tra gate e bulk per la quale la popolazione di minoritari all'interfaccia è uguale alla popolazione di maggioritari nel bulk. Questa definizione non può essere usata direttamente per il calcolo della tensione di soglia dei dispositivi, ma si deve passare attraverso l'analisi delle caratteristiche corrente-tensione dei dispositivi. \\
@@ -68,6 +62,7 @@ La transconduttanza è definita come la derivata prima della corrente $I_D$ risp
 \emph{TCM}, Poiché si basa sul massimo di una funzione, è molto sensibile ai picchi dovuti a errori di misura e perciò non è molto affidabile:
 è quindi necessario rendere la funzione studiata meno dipendente dai campionamenti fuori scala. Inoltre, la risoluzione del dispositivo di misura utilizzato e di $5 mV$, il che rende i valori ottenuti della $V_{th}$ molto approssimativi.
 Per far fronte a questi due problemi, si è scelto di non tenere conto del massimo direttamente ottenuto dallo studio di $\frac{dg_m}{dV_{GS}}$ ottenuto dai valori delle misure, ma d'interpolare prima i punti del grafico con una funzione polinomiale e, solo a questo punto, di prendere in considerazione il picco di massimo.
+
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.49\textwidth]{TCM-N4-100-30}
@@ -111,7 +106,6 @@ Prendendo come esempio i dispositivi PMOS, si è studiato quanto cambia il valor
 
 Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei fit fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con fit di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere sia molto diverso da quelli calcolati con fit di grado maggiore, sia da quello di ottenuto senza fit. Dunque di sicuro usare un fit di grado 2 porta a risultati scorretti, mentre usare un fit di grado superiore dovrebbe portare a risultati sicuramente accettabili. Per il confronto con altri metodi per l'estrazione della $V_{th}$ si terrà quindi conto del TCM con fit polinomiale di grado 6, tabelle \ref{tab:VthTCMP} e \ref{tab:VthTCMN}.
 
-
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
@@ -141,7 +135,6 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
   \label{tab:VthTCMN}
 \end{table}
 
-
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
@@ -170,7 +163,6 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
   \caption{$V_{th}$ dei dispositivi PMOS estratte con \emph{TCM}}
   \label{tab:VthTCMP}
 \end{table}
-
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -229,7 +221,6 @@ Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tens
   \caption{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{TCM}}
   \label{tab:deltaVthTCMP}
 \end{table}
-
 
 % Plot Delta Vth TCM
 \begin{figure}[H]
@@ -292,8 +283,6 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
   \label{tab:GradiSDLM}
 \end{table}
 
-
-
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.49\textwidth]{SDLM-P1-200-30-grado2}
@@ -309,9 +298,7 @@ Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, s
   \item I fit di grado basso non interpolano in modo preciso il grafico di $\frac{d^2 \ln I_D}{dV_{GS}^2}$ i valori minimi variano considerevolmente al variare del grado.
   \item I fit di grado alto interpolano bene il grafico di partenza e i valori minimi sono simili tra loro, ma influenzati dagli errori di misura
 \end{itemize}
-
 Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_D}{dV_{GS}^2}$ e, in generale, abbiamo concluso che questo metodo non pare molto affidabile per questo studio. In ogni caso, per i futuri confronti tra i metodi si terrà lo stesso in conto l'\emph{SDLM}, usando un fit di grado 6, che può essere considerata un'accettabile via di mezzo tra le polinomiali che non interpolano bene il grafico di partenza e quelle che sono troppo influenzate dagli errori di misura.
-
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -371,7 +358,6 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_
   \label{tab:VthSDLMP}
 \end{table}
 
-
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
@@ -430,8 +416,6 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_
   \label{tab:deltaVthSDLMP}
 \end{table}
 
-
-
 % Plot Delta Vth, SDLM
 \begin{figure}[H]
   \centering
@@ -450,8 +434,7 @@ Non è quindi semplice capire quale grado usare per interpolare $\frac{d^2\ln I_
 \subsection{Extrapolation in the Linear Region method}
 
 Il
-terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR}, con il quale si ottiene la misura della $V_{th}$ attraverso l'analisi della caratteristica $I_D-V_{GS}$.  Tale grafico presenta un punto di flesso attorno al quale il grafico è linearizzabile. Il valore di $V_{th}$ si ottiene sommando la metà del valore di $V_{DS}$ al valore di $V_{GS}$ al quale il fit lineare, ottenuto nell'intorno del punto di flesso, interseca l'asse delle ascisse.\\
-
+terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR}, con il quale si ottiene la misura della $V_{th}$ attraverso l'analisi della caratteristica $I_D-V_{GS}$.  Tale grafico presenta un punto di flesso attorno al quale il grafico è linearizzabile. Il valore di $V_{th}$ si ottiene sommando la metà del valore di $V_{DS}$ al valore di $V_{GS}$ al quale il fit lineare, ottenuto nell'intorno del punto di flesso, interseca l'asse delle ascisse.
 
 \begin{figure}[h!]
   \centering
@@ -463,7 +446,6 @@ terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, EL
 Di per sé, questo metodo è meno preciso di quelli esposti precedentemente: la posizione del punto di flesso può essere incerto, perché, già a $V_{GS}$ leggermente superiori a $V_{th}$, la caratteristica $I_D-V_{GS}$ può deviare dall'andamento lineare previsto a causa di errori dovuti alle resistenze parassite presenti al source e al drain dei dispositivi e alla degradazione della mobilità dei portatori di carica.
 Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace, in quanto non siamo interessati al valore della tensione di soglia dei dispositivi, ma alla variazione di tale parametro all'aumentare dell'irraggiamento subito dai dispositivi. Dunque gli errori prodotti dalle resistenze parassite e dalla degradazione di mobilità divenatano irrilevanti, perché sono offset che vengono eliminati nel momento in cui si calcola la differenza tra due misure di $V_{th}$ dello stesso dispositivo.\\
 È infine doveroso fare una parentesi sulla regione di linearizzazione considerata per questo studio: infatti non è possibile stabilire con certezza una regione fissa in cui la funzione, ottenuta con misure sperimentali, può essere linearizzata. Il metodo da noi applicato è stato quello di analizzare tutti i possibili intervalli di linearizzazione di dimensione $100 mV$ i cui estremi ricadono nell'intervallo $[300 mV ; 750mV]$ e scegliere quello il cui il fit approssimava meglio la funzione. All'atto pratico abbiamo considerato l'intervallo il cui fit ha il coefficiente di determinazione $R^2$ piu alto, che è risultato essere sempre maggiore di $0.999$.
-
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -524,7 +506,6 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \label{tab:VthELRP}
 \end{table}
 
-
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
@@ -583,7 +564,6 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \label{tab:deltaVthELRP}
 \end{table}
 
-
 % Plot Delta Vth, ELR
 \begin{figure}[H]
   \centering
@@ -599,15 +579,10 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \caption{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{ELR} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
 \end{figure}
 
-
 \subsection{Ratio Method}
-
 Il \emph{Ratio Method, RM} è stato sviluppato per far fronte alle problematicità dell'\emph{ELR}: è stato infatti dimostrato che questo metodo non è influenzato dalla degradazione della mobilità dei portatori di carica né dalle correnti parassite. Questo metodo si basa sull'assunzione che, a bassi valori di tensione di drain $V_{DS}$, il rapporto tra la corrente di drain $I_D$ e la radice quadrata della transcondutanza $g_m$ ($\frac{I_D}{g_m^{0.5}}$) in funzione della tensione di gate $V_{GS}$ si comporti come una funzione lineare. La tensione di soglia $V_{th}$ coincide con il valore della tensione $V_{GS}$ a cui la funzione interseca l'asse della ascisse. \\
 Come detto, questo metodo supera alcuni limiti dei metodi descritti in precedenza, però presenta una problematicità non indifferente: tracciando il grafico di $\frac{I_D}{g_m^{0.5}}$ in funzione di $V_{GS}$, questo non verifica appieno l'assunzione di linearità. Dunque non esiste un intervallo in cui il grafico è chiaramente linearizzabile e quindi la misura di $V_{th}$ non rispecchia del tutto il valore reale della tensione di soglia, ma è comunque una buona approssimazione, soprattutto se si considera il $\Delta V_{th}$ al crecere dell'irraggiamento.\\
 Anche il questo caso, per ottenere il fit lineare più accurato possibile è stato usato lo stesso metodo esposto per l'\emph{ELR}.
-
-
-
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -731,7 +706,6 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   \caption{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{RM}}
   \label{tab:deltaVthRMP}
 \end{table}
-
 
 \begin{figure}[H]
   \centering
