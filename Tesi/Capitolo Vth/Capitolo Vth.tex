@@ -424,7 +424,8 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
 \end{figure}
 
 \subsection{Extrapolation in the Linear Region method}
-Il terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR}, con il quale si ottiene la misura della $V_{th}$ attraverso l'analisi della caratteristica $I_D-V_{GS}$.  Tale grafico presenta un punto di flesso attorno al quale il grafico è linearizzabile. Il valore di $V_{th}$ si ottiene sommando la metà del valore di $V_{DS}$ al valore di $V_{GS}$ al quale il fit lineare, ottenuto nell'intorno del punto di flesso, interseca l'asse delle ascisse\cite{art2}.
+Il terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR}\cite{art2}. La tensione di soglia estratta con questo medoto è data dall'intercetta della estrapolazione lineare della caratteristica $I_D-V_{GS}$ nel suo punto di massima pendenza (cioè il punto di massima transconduttanza, $g_m$) con l'asse delle ascisse ($V_{GS}$). Alla tensione così ottenuta, per ottenere la tensione di soglia, si dovrà aggiungere $V_{DS}/2$, dove $V_{DS}$ è la tensione alla quale è stata misurata la caratteristica $I_D-V_{GS}$ interpolata linearmente. 
+Operativamente, il tratto sul quale fare il fit lineare è ottenuto prendendo un determinato intervallo nell'intorno del punto di flesso della $I_D-V_{GS}$.
 
 \begin{figure}[h!]
   \centering
