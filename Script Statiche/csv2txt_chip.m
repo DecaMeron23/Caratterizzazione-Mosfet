@@ -29,9 +29,9 @@ function csv2txt_chip(path)
     clear j directory temp nameFolder folder_iesima
 
     %% per ogni cartella prendiamo il file .csv e lo trasfotmiamo in txt
-    file_vds = "id_vds.csv";
-    file_vgs = "id_vgs.csv";
-    file_vgs2 = "id_vgs_2.csv";
+    file_vds = "id-vds.csv";
+    file_vgs = "id-vgs.csv";
+    file_vgs2 = "id-vgs-2.csv";
 
     type = char(folders(1));
     type = type(1);
@@ -42,7 +42,7 @@ function csv2txt_chip(path)
     for i = 1:length(folders)
         
         cartella_attuale = char(folders(i));
-
+         
         disp("["+i +"/" + length(folders) +"]"+ "Inizio cartella: " + cartella_attuale);
         %entriamo nella cartella
         cd(cartella_attuale);
@@ -114,9 +114,11 @@ function csv2txt_chip(path)
         plot_gds(fileVd , nomeCartella , DatiVd);
         plot_gm_id_w_l(fileVg , nomeCartella , DatiVg);
 
-        plot_id_vgs(fileVg2 , nomeCartella);
-        plot_id_vgs_semilog(fileVg2 , nomeCartella); 
-        plot_gm(fileVg2 , nomeCartella);
+        if exist(fileVg2 , "file")
+            plot_id_vgs(fileVg2 , nomeCartella);
+            plot_id_vgs_semilog(fileVg2 , nomeCartella); 
+            plot_gm(fileVg2 , nomeCartella);
+        end
         if(~contains(cartella_attuale , "P1-100-180-nf"))
             [mod_jg(: , i) , vgs_jg(: , i)] = EstrazioneDati.estrazione_dati_jg_vgs(fileVg , type , cartella_attuale);
             legendaIg{end+1} = cartella_attuale;
