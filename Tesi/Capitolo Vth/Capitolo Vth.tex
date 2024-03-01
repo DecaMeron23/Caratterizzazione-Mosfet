@@ -99,7 +99,6 @@ Lo studio del fit polinomiale risolve il problema della bassa risoluzione di mis
 
 Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei fit fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con fit di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere sia molto diverso da quelli calcolati con fit di grado maggiore. Dunque, al fine di fittare al meglio la curva, si è scelto un fit polinomiale di grado 6. In Tabella \ref{tab:VthTCMN} e \ref{tab:VthTCMP} sono ripostati i risulati ottenuti con il metodo \emph{TCM} e fit polinomiale di grado 6 su dispositivi PMOS e NMOS pre e post irraggiamento.
 Nelle tabelle \ref{tab:deltaVthTCMN} e \ref{tab:deltaVthTCMP} e nei grafici a figura \ref{fig:deltaVthTCM} vengono riportati i valori della $\Delta V_{th}$.
-%%%%% Aggiungere commento che spiega cosa è riportato nelle tabelle
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -235,8 +234,7 @@ Nelle tabelle \ref{tab:deltaVthTCMN} e \ref{tab:deltaVthTCMP} e nei grafici a fi
 \end{figure}
 
 \subsection{Second Difference of the Logarithm of the drain current Minimum method}
-Il 
-secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ ripetto alla tensione di gate ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$\cite{art1}.
+Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ ripetto alla tensione di gate ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$\cite{art1}.
 
 \begin{figure}[H]
   \centering
@@ -245,7 +243,7 @@ secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the 
   \caption{Esempio di \emph{SDLM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 900 mV$}
 \end{figure}
 
-Anche per questo metodo si ritovano le problematiche presenti per il \emph{TCM}: il valore minimo della funzione analizzata è fortemente influenzata dai valori fuori scala e la risoluzione dello strumento di misura è di $5 mV$ e dunque troppo grossolana per ottenere un valore preciso di $V_{th}$.
+Anche per questo metodo si ritovano le problematiche presenti per il \emph{TCM}: si deve fare il fit di una curva ottenuta come derivata seconda e inoltre la risoluzione della $V_gs$ è $5mV$.
 Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenuta con una polinomiale e considerare il minimo di quest'ultima. \\
 
 % Tabella con i diversi gradi per SDLM
