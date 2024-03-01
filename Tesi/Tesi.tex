@@ -1,0 +1,33 @@
+\documentclass[
+	a4paper,
+	cleardoublepage=empty,
+	headings=twolinechapter,
+	numbers=autoenddot,
+]{scrbook}
+
+%% Vecchia template
+%\documentclass[12pt, letterpaper]{book}
+\usepackage{graphicx} %LaTeX package to import graphics
+\graphicspath{{./Immagini}} %configuring the graphicx package
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{hyphenat}
+\usepackage{array}
+\usepackage{booktabs} % Per linee orizzontali migliori
+\usepackage{siunitx}  % Per formattare le unità di misura
+\usepackage{caption}  % Per personalizzare le didascalie
+\usepackage{multirow} % Per combinare celle nelle colonne
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{todonotes}
+
+\usepackage{import}
+
+\begin{document}
+
+\import{./capitoli}{capitolo_vth.tex}
+
+\bibliographystyle{IEEEtrans}
+\bibliography{./bibliografia/bibliography.bib}
+
+\end{document}

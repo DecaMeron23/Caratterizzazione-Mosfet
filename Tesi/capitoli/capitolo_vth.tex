@@ -1,27 +1,3 @@
-\documentclass[
-	a4paper,
-	cleardoublepage=empty,
-	headings=twolinechapter,
-	numbers=autoenddot,
-]{scrbook}
-
-%% Vecchia template
-%\documentclass[12pt, letterpaper]{book}
-\usepackage{graphicx} %LaTeX package to import graphics
-\graphicspath{{../Immagini}} %configuring the graphicx package
-\usepackage[T1]{fontenc}
-\usepackage[italian]{babel}
-\usepackage{hyphenat}
-\usepackage{array}
-\usepackage{booktabs} % Per linee orizzontali migliori
-\usepackage{siunitx}  % Per formattare le unità di misura
-\usepackage{caption}  % Per personalizzare le didascalie
-\usepackage{multirow} % Per combinare celle nelle colonne
-\usepackage{float}
-\usepackage{hyperref}
-\usepackage{todonotes}
-
-\begin{document}
 
 \chapter{Estrazione dei parametri statici}
 In questo capitolo si tratteranno i paramentri statici di transistori \emph{MOS} in tecnologia $28 nm$ per comprendere come variano le prestazioni statiche all'aumentare dell'irraggiamento subito. Si tratteranno:\todo{Aggiungere i parametri statici che studieremo}
@@ -714,9 +690,5 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   \includegraphics[width=0.49\textwidth]{sovrapposizione-deltaVth-RM-N600}
   \includegraphics[width=0.49\textwidth]{sovrapposizione-deltaVth-RM-P600}
   \caption{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{RM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
+  
 \end{figure}
-
-\bibliographystyle{IEEEtrans}
-\bibliography{../bibliography.bib}
-
-\end{document}
