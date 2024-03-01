@@ -10,7 +10,7 @@
 \usepackage{graphicx} %LaTeX package to import graphics
 \graphicspath{{../Immagini}} %configuring the graphicx package
 \usepackage[T1]{fontenc}
-\usepackage[english,italian]{babel}
+\usepackage[italian]{babel}
 \usepackage{hyphenat}
 \usepackage{array}
 \usepackage{booktabs} % Per linee orizzontali migliori
@@ -54,7 +54,7 @@ La transconduttanza è definita come la derivata prima della corrente $I_D$ risp
   \caption{Esempio di \emph{TCM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 150 mV$}
 \end{figure}
 
-Per calcolare il \emph{TCM} si deve trovare il masimo di una funzione, ovvero calcolarne la derivata prima. In questo caso si tratta in realtà di una derivata seconda, essendo già gm calcolato con una derivata. Il calcolo della derivata non è effetuato su una funzione ontinua ma su dati misurati con uno step di 5mV di Vgs. Questo fa si che la derivata prima e in modo maggiore la derivata seconda, siano affette da vere e proprie variazioni repentine dovuto alla natura granulare dei dati e non da feenomeni fisici. È quindi necessario rendere la funzione studiata meno dipendente dai questo effetto. Inoltre, come detto in precendenza, la risoluzione con la quale sono state fatte le misure della corrente di drain è $5mV$ (di $V_{gs}$). Pertanto, con questo metodo si estrarrebbe una soglia che avrebbe una risoluzione di $5mV$, del tutto inaccettabile in quanto sarebbe maggiore delle variazioni di soglia che potrebbero essere indotte dall'irraggiamento.
+Per calcolare il \emph{TCM} si deve trovare il masimo di una funzione, ovvero calcolarne la derivata prima. In questo caso si tratta in realtà di una derivata seconda, essendo già $g_m$ calcolato con una derivata. Il calcolo della derivata non è effetuato su una funzione continua ma su dati misurati con uno step di $5mV$ di $V_{GS}$. Questo fa si che la derivata prima e in modo maggiore la derivata seconda, siano affette da vere e proprie variazioni repentine dovute alla natura granulare dei dati e non da fenomeni fisici. È quindi necessario rendere la funzione studiata meno dipendente da questo effetto. Inoltre, come detto in precendenza, la risoluzione con la quale sono state fatte le misure della corrente di drain è $5mV$ (di $V_{GS}$). Pertanto, con questo metodo si estrarrebbe una soglia che avrebbe una risoluzione di $5mV$, del tutto inaccettabile in quanto sarebbe maggiore delle variazioni di soglia che potrebbero essere indotte dall'irraggiamento.
 Per far fronte a questi due problemi, si è scelto di non tenere conto del massimo direttamente ottenuto dallo studio di $\frac{dg_m}{dV_{GS}}$ ottenuto dai valori delle misure, ma d'interpolare prima i punti del grafico con una funzione polinomiale e, di ricavare il valore di soglia da questa funzione.
 
 \begin{figure}[H]
@@ -97,10 +97,11 @@ Lo studio del fit polinomiale risolve il problema della bassa risoluzione di mis
   \label{tab:GradiTCM}
 \end{table}
 
-Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei fit fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con fit di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere sia molto diverso da quelli calcolati con fit di grado maggiore. Dunque, al fine di fittare al meglio la curva, si è scelto un fit polinomiale di grado 6. In Tabella \ref{tab:VthTCMN} e \ref{tab:VthTCMP} sono ripostati i risulati ottenuti con il metodo \emph{TCM} e fit polinomiale di grado 6 su dispositivi PMOS e NMOS pre e post irraggiamento.
-Nelle tabelle \ref{tab:deltaVthTCMN} e \ref{tab:deltaVthTCMP} e nei grafici a figura \ref{fig:deltaVthTCM} vengono riportati i valori della $\Delta V_{th}$.
+Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei fit fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con fit di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere molto diverso da quelli calcolati con fit di grado maggiore. Dunque, al fine di fittare al meglio la curva, si è scelto un fit polinomiale di grado 6. In Tabella \ref{tab:VthTCMN} e \ref{tab:VthTCMP} sono riportati i risulati ottenuti con il metodo \emph{TCM} e fit polinomiale di grado 6 su dispositivi PMOS e NMOS pre e post irraggiamento.
+Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafici a figura \ref{fig:deltaVthTCM} vengono riportati i valori della $\Delta V_{th}$ in funzione della dose assorbita.
 
-\begin{table}[H]
+\begin{center}
+  \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2.1cm} m{0.8cm} m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
     \toprule
@@ -158,6 +159,9 @@ Nelle tabelle \ref{tab:deltaVthTCMN} e \ref{tab:deltaVthTCMP} e nei grafici a fi
   \label{tab:VthTCMP}
 \end{table}
 
+
+\end{center}
+
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
   \begin{tabular}{m{2.1cm}  m{1.1cm} m{1.3cm} m{1.5cm} m{1.5cm} m{1.5cm} m{1cm}}
@@ -176,7 +180,7 @@ Nelle tabelle \ref{tab:deltaVthTCMN} e \ref{tab:deltaVthTCMP} e nei grafici a fi
     \hline
     200 - 0.060                     & -3.9                                      & -17.2    & 13.3      & 11.5      & 10.1      & 8.8        \\
     \hline
-    200 -180                     & -2.9                                      & -14.6    & 18.2      & 17.4      & 20.1      & 20.6        \\
+    200 - 0.0180                     & -2.9                                      & -14.6    & 18.2      & 17.4      & 20.1      & 20.6        \\
     \hline
     600 - 0.060                     & -5.8                                      & -10.9    & 9.3       & 10.8      & 7.9       & 7.0        \\
     \hline
@@ -243,8 +247,8 @@ Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of t
   \caption{Esempio di \emph{SDLM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 900 mV$}
 \end{figure}
 
-Anche per questo metodo si ritovano le problematiche presenti per il \emph{TCM}: si deve fare il fit di una curva ottenuta come derivata seconda e inoltre la risoluzione della $V_gs$ è $5mV$.
-Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenuta con una polinomiale e considerare il minimo di quest'ultima. \\
+Anche per questo metodo si ritovano le problematiche presenti per il \emph{TCM}: si deve fare il fit di una curva ottenuta come derivata seconda e inoltre la risoluzione della $V_{GS}$ è $5mV$.
+Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenuta con una polinomiale e considerare il minimo di quest'ultima.
 
 % Tabella con i diversi gradi per SDLM
 \begin{table}[h]
@@ -289,7 +293,7 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
 
 Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), mentre le misure ottenute con queste ultime sono, in genere, molto simili tra loro. Ad esempio, osservando i grafici relativi alla SDLM del PMOS 200-0.030 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2 \ln I_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta pertanto necessario estrarre le tensioni di soglia utilizzando una funzione polinomiale di grado 6.
 
-Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i dispositivi NMOS: tabelle \ref{tab:VthSDLMN} e \ref{tab:deltaVthSDLMN}, e per i PMOS: tabelle \ref{tab:VthSDLMP} e \ref{tab:deltaVthSDLMP}. Mentre in figura \ref{fig:deltaVthSDLM} si riportano i grafici che mostrano l'andamento della variazione della tensione di soglia, in funzione della dose assorbita.   
+Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i dispositivi NMOS: tabelle \ref{tab:VthSDLMN} e \ref{tab:deltaVthSDLMN}, e per i PMOS: tabelle \ref{tab:VthSDLMP} e \ref{tab:deltaVthSDLMP}. Mentre in figura \ref{fig:deltaVthSDLM} si riportano i grafici che mostrano l'andamento della variazione della tensione di soglia ($\Delta V_{th}$), in funzione della dose assorbita.   
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -435,7 +439,7 @@ Operativamente, il tratto sul quale fare il fit lineare è ottenuto prendendo un
 \end{figure}
 
 Lo svantaggio principale di questo metodo è dato dal fatto che il punto di pendenza massima può essere incerto a causa di possibili effetti quali il degrado della mobilità dei portatori di carica e la possibile presenza di resistenze parassite serie al terminale di source e drain. 
-Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace, in quanto non siamo principalmente interessati al valore della tensione di soglia dei dispositivi, ma alla variazione della tensione di soglia a causa delle radiazioni ionizzanti alle quali i dispositivi vengono sottoposti. Dunque gli errori prodotti dalle resistenze parassite e dalla degradazione di mobilitàpossono essere considerate come un offset che viene eliminato nel momento in cui si calcola la differenza tra la $V_{th}$ pre e post irraggiamento.\\
+Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace, in quanto non siamo principalmente interessati al valore della tensione di soglia dei dispositivi, ma alla variazione della tensione di soglia a causa delle radiazioni ionizzanti alle quali i dispositivi vengono sottoposti. Dunque gli errori prodotti dalle resistenze parassite e dalla degradazione di mobilità possono essere considerate come un offset che viene eliminato nel momento in cui si calcola la differenza tra la $V_{th}$ pre e post irraggiamento.\\
 È infine doveroso fare una parentesi sulla regione di linearizzazione considerata per questo studio: infatti non è possibile stabilire con certezza una regione fissa in cui la funzione, ottenuta con misure sperimentali, può essere linearizzata. Il metodo da noi applicato è stato quello di analizzare tutti i possibili intervalli di linearizzazione ampi $100 mV$ i cui estremi ricadono nell'intervallo $[300 mV ; 750mV]$ e scegliere quello il cui il fit approssimava meglio la funzione. All'atto pratico abbiamo considerato l'intervallo il cui fit ha il coefficiente di determinazione $R^2$ piu alto, che è risultato essere sempre maggiore di $0.999$.
 
 \begin{table}[H]
@@ -571,8 +575,8 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
 \end{figure}
 
 \subsection{Ratio Method}
-Il \emph{Ratio Method, RM} è stato sviluppato per far fronte alle problematicità dell'\emph{ELR}: è stato infatti dimostrato che questo metodo non è influenzato dalla degradazione della mobilità dei portatori di carica né dalle resistenze parassite. Questo metodo si basa sull'assunzione che, a bassi valori di tensione di drain $V_{DS}$, il rapporto tra la corrente di drain $I_D$ e la radice quadrata della transcondutanza $g_m$ ($\frac{I_D}{g_m^{0.5}}$) in funzione della tensione di gate $V_{GS}$ si comporti come una funzione lineare. La tensione di soglia $V_{th}$ coincide con il valore della tensione $V_{GS}$ a cui il fit lineare della funzione interseca l'asse delle ascisse.\\
-Come detto, questo metodo supera alcuni limiti dei metodi descritti in precedenza, però presenta una problematicità non indifferente: tracciando il grafico di $\frac{I_D}{g_m^{0.5}}$ in funzione di $V_{GS}$, questo non verifica appieno l'assunzione di linearità. Dunque non esiste un intervallo in cui il grafico è chiaramente linearizzabile e quindi la misura di $V_{th}$ non rispecchia del tutto il valore reale della tensione di soglia, ma è comunque una buona approssimazione, soprattutto se si considera il $\Delta V_{th}$ al crecere dell'irraggiamento.
+Il \emph{Ratio Method, RM} è stato sviluppato per far fronte alle problematicità dell'\emph{ELR}: è stato infatti dimostrato che questo metodo non è influenzato dalla degradazione della mobilità dei portatori di carica né dalle resistenze parassite\cite{art2}. Questo metodo si basa sull'assunzione che, a bassi valori di tensione di drain $V_{DS}$, il rapporto tra la corrente di drain $I_D$ e la radice quadrata della transcondutanza $g_m$ ($\frac{I_D}{\sqrt{g_m}}$) in funzione della tensione di gate $V_{GS}$ si comporti come una funzione lineare. La tensione di soglia $V_{th}$ coincide con il valore della tensione $V_{GS}$ a cui il fit lineare della funzione interseca l'asse delle ascisse.\\
+Come detto, questo metodo supera alcuni limiti dei metodi descritti in precedenza, però presenta una problematicità non indifferente: tracciando il grafico di $\frac{I_D}{\sqrt{g_m}}$ in funzione di $V_{GS}$, questo non verifica appieno l'assunzione di linearità. Dunque non esiste un intervallo in cui il grafico è chiaramente linearizzabile e quindi la misura di $V_{th}$ non rispecchia del tutto il valore reale della tensione di soglia, ma è comunque una buona approssimazione, soprattutto se si considera il $\Delta V_{th}$ al crescere dell'irraggiamento.
 Anche il questo caso, per ottenere il fit lineare più accurato possibile è stato usato lo stesso metodo esposto per l'\emph{ELR}.
 
 \begin{table}[H]
