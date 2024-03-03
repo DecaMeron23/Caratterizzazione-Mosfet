@@ -24,10 +24,16 @@
 \usepackage{todonotes}
 
 \usepackage{import}
+\usepackage{frontespizio}
 
 \begin{document}
 
 %fontespizio
+\import{./frontespizio}{frontespizio.tex}
+
+\tableofcontents
+\listoffigures
+\mainmatter
 
 %Capitolo: Estrazione dei parametri statici
 \import{./capitoli}{capitolo_vth.tex}
