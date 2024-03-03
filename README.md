@@ -1,5 +1,4 @@
-# Studio della tolleranza alle radiazioni ionizzanti di MOSFET in tecnologia $28nm$
-
+# Studio della tolleranza alle radiazioni ionizzanti di MOSFET in tecnologia 28nm
 ![UniBg_Logo](./Tesi/Immagini/frontespizio/LogoUniBg.jpg)
 
 ## Tesi triennale d'Ingegneria Informatica
