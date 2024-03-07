@@ -8,6 +8,8 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
     %inizializziamo la legenda
     legenda = ["Pre" "5Mrad" "50Mrad" "100Mrad" "200Mrad" "600Mrad" "1Grad"];
     
+    figure
+
     main = axes;
     %% plot dentro plot
     % create a new pair of axes inside current figure
@@ -41,18 +43,23 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
         plot(main , vgs , id  ,LineWidth=1);
         hold(main ,"off")
         
-        indexOfInterest = (vgs >= 0.6) & (vgs <= 0.65);
+        indexOfInterest = (vgs >= 0.6) & (vgs <= 0.7);
         hold(zoom , "on")
         plot(zoom ,vgs(indexOfInterest) , id(indexOfInterest) , LineWidth=1) % plot on new axes
         hold(zoom , "on")
         cd ../..
     end
     %per allineare i dati e il plot
-
-    xlim(zoom , [0.6 , 0.65])
-    axis(zoom, 'tight');
-    xlim(main ,[0.3 , 1]);
     axis(main, 'tight');
+    axis(zoom, 'tight');
+    xlim(main ,[0.2 , 0.9]);
+    xlim(zoom , [0.6 , 0.7])
+
+    [minY , maxY] = getYZoomLimit(main , zoom);
+    
+    ylim(zoom , [minY maxY]);
+    
+    
     dispositivo = char(dispositivo);
     W = dispositivo(1:3);
     L = "0.0"+dispositivo(5:end);
@@ -129,4 +136,25 @@ function  cartelle_sort = sortCartelleIrraggiamento(cartelle)
         end
 
     end
+end
+
+
+% questa funzione serve per estrarre i limiti y del subplot
+function [minY , maxY] = getYZoomLimit(main_plot , zoom_plot)
+    
+    ym = get(main_plot , "YLim");
+    xm = get(main_plot , "XLim");
+    yz = get(zoom_plot , "YLim");
+    xz = get(zoom_plot , "XLim");
+
+    ym = ym(2) - ym(1); 
+    xm = xm(2) - xm(1);
+    xz = xz(2) - xz(1);
+
+    yz = xz * ym / xm;
+
+    minY = yz(1);
+    maxY = yz(1) + yz;
+
+
 end
