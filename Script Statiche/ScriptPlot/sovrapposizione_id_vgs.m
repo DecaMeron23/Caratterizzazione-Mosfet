@@ -8,6 +8,13 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
     %inizializziamo la legenda
     legenda = ["Pre" "5Mrad" "50Mrad" "100Mrad" "200Mrad" "600Mrad" "1Grad"];
     
+    main = axes;
+    %% plot dentro plot
+    % create a new pair of axes inside current figure
+    zoom = axes('position',[.65 .175 .25 .25]);
+    box on % put box around new pair of axes
+
+
     for i = 1 : length(cartelle)
     
         cartella_i = string(cartelle(i));
@@ -29,26 +36,31 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
     
         % prendiamo a max vgs per i P max vsg
         id = id(: , end)*1e6;
-    
+        hold(main, 'on')
         %semilogy(vgs , id , LineWidth=1);  
-        plot(vgs , id  ,LineWidth=1);
+        plot(main , vgs , id  ,LineWidth=1);
+        hold(main ,"off")
         
-
-        hold on
-
+        indexOfInterest = (vgs >= 0.6) & (vgs <= 0.65);
+        hold(zoom , "on")
+        plot(zoom ,vgs(indexOfInterest) , id(indexOfInterest) , LineWidth=1) % plot on new axes
+        hold(zoom , "on")
         cd ../..
     end
-    
-    xlim([0.3 , 1]);
+    %per allineare i dati e il plot
 
+    xlim(zoom , [0.6 , 0.65])
+    axis(zoom, 'tight');
+    xlim(main ,[0.3 , 1]);
+    axis(main, 'tight');
     dispositivo = char(dispositivo);
     W = dispositivo(1:3);
     L = "0.0"+dispositivo(5:end);
 
-    ylabel("$I_{d}[A]$" , Interpreter="latex" , FontSize=12);
-    xlabel("$v_{gs}[V]$" , Interpreter="latex" , FontSize= 12);
-    title("Dispositivo $"+ W + "/"+ L +"$" , Interpreter="latex" , FontSize= 12);
-    legend(legenda);
+    ylabel(main , "$I_{d}[A]$" , Interpreter="latex" , FontSize=12);
+    xlabel(main , "$V_{gs}[V]$" , Interpreter="latex" , FontSize= 12);
+    title(main , "Dispositivo $"+ W + "/"+ L +"$" , Interpreter="latex" , FontSize= 12);
+    legend(main , legenda , "Location","northwest");
     hold off
 
 end
