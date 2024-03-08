@@ -3,6 +3,32 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
     % posizionarsi nella cartella contenente le cartelle dei siversi
     % irragiamenti
     
+    %% Giallo -> Rosso
+    colors = [
+    1, 1, 0;       % Giallo chiaro
+    1, 0.8627, 0;  % Giallo
+    1, 0.7059, 0;  % Giallo-arancione
+    1, 0.5490, 0;  % Arancione
+    1, 0.3922, 0;  % Arancio-rosso
+    1, 0, 0;       % Rosso
+    0.7059, 0, 0   % Rosso scuro
+    ];
+
+    %% Verdi
+    % colors = [
+    % 0.267004, 0.004874, 0.329415;
+    % 0.283072, 0.130895, 0.449241;
+    % 0.262138, 0.242286, 0.520837;
+    % 0.220057, 0.357622, 0.552862;
+    % 0.177423, 0.477504, 0.558148;
+    % 0.141667, 0.586855, 0.534523;
+    % 0.123069, 0.685407, 0.478975;
+    % 0.150361, 0.7749,   0.406254;
+    % 0.305394, 0.843443, 0.330553;
+    % 0.585721, 0.894248, 0.20803;
+    % ];
+
+
     [cartelle, tipologia]= getCartelle();
     
     %inizializziamo la legenda
@@ -13,7 +39,7 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
     main = axes;
     %% plot dentro plot
     % create a new pair of axes inside current figure
-    zoom = axes('position',[.3 .65 .25 .25]);
+    zoom = axes('position',[.215 .5 .35 .35]);
     box on % put box around new pair of axes
 
 
@@ -40,12 +66,12 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
         id = id(: , end)*1e3;
         hold(main, 'on')
         %semilogy(vgs , id , LineWidth=1);  
-        plot(main , vgs , id  ,LineWidth=1);
+        plot(main , vgs , id  ,LineWidth=1 , Color=colors(i ,: ));
         hold(main ,"off")
         
         indexOfInterest = (vgs >= 0.6) & (vgs <= 0.65);
         hold(zoom , "on")
-        plot(zoom ,vgs(indexOfInterest) , id(indexOfInterest) , LineWidth=1) % plot on new axes
+        plot(zoom ,vgs(indexOfInterest) , id(indexOfInterest) , LineWidth=1 , Color=colors(i ,: )) % plot on new axes
         hold(zoom , "on")
         cd ../..
     end
@@ -57,8 +83,8 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
 
     [minY , maxY] = getYZoomLimit(main , zoom);
     
-    ylim(zoom , [minY maxY]);
-    
+    %ylim(zoom , [minY maxY]);
+    axis(zoom, 'tight');
     
     dispositivo = char(dispositivo);
     W = dispositivo(1:3);
@@ -72,6 +98,7 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
 
     ylabel(zoom , "$I_{d}[mA]$" , Interpreter="latex" , FontSize=12);
     xlabel(zoom , "$V_{GS}[V]$" , Interpreter="latex" ,FontSize=12);
+    grid(zoom , "on");
     grid(zoom , "minor");
 
     hold off
