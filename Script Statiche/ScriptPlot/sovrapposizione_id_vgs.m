@@ -13,7 +13,7 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
     main = axes;
     %% plot dentro plot
     % create a new pair of axes inside current figure
-    zoom = axes('position',[.65 .175 .25 .25]);
+    zoom = axes('position',[.3 .65 .25 .25]);
     box on % put box around new pair of axes
 
 
@@ -37,13 +37,13 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
         [vgs , id , ~] = EstrazioneDati.estrazione_dati_vgs(file , tipologia);
     
         % prendiamo a max vgs per i P max vsg
-        id = id(: , end)*1e6;
+        id = id(: , end)*1e3;
         hold(main, 'on')
         %semilogy(vgs , id , LineWidth=1);  
         plot(main , vgs , id  ,LineWidth=1);
         hold(main ,"off")
         
-        indexOfInterest = (vgs >= 0.6) & (vgs <= 0.7);
+        indexOfInterest = (vgs >= 0.6) & (vgs <= 0.65);
         hold(zoom , "on")
         plot(zoom ,vgs(indexOfInterest) , id(indexOfInterest) , LineWidth=1) % plot on new axes
         hold(zoom , "on")
@@ -53,7 +53,7 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
     axis(main, 'tight');
     axis(zoom, 'tight');
     xlim(main ,[0.2 , 0.9]);
-    xlim(zoom , [0.6 , 0.7])
+    xlim(zoom , [0.6 , 0.65])
 
     [minY , maxY] = getYZoomLimit(main , zoom);
     
@@ -64,10 +64,16 @@ function sovrapposizione_id_vgs(dispositivo) % il dispositivo in formato: "200-3
     W = dispositivo(1:3);
     L = "0.0"+dispositivo(5:end);
 
-    ylabel(main , "$I_{d}[A]$" , Interpreter="latex" , FontSize=12);
-    xlabel(main , "$V_{gs}[V]$" , Interpreter="latex" , FontSize= 12);
+    ylabel(main , "$I_{d}[mA]$" , Interpreter="latex" , FontSize=12);
+    xlabel(main , "$V_{GS}[V]$" , Interpreter="latex" , FontSize= 12);
     title(main , "Dispositivo $"+ W + "/"+ L +"$" , Interpreter="latex" , FontSize= 12);
-    legend(main , legenda , "Location","northwest");
+    legend(main , legenda , "Location","southeast");
+
+
+    ylabel(zoom , "$I_{d}[mA]$" , Interpreter="latex" , FontSize=12);
+    xlabel(zoom , "$V_{GS}[V]$" , Interpreter="latex" ,FontSize=12);
+    grid(zoom , "minor");
+
     hold off
 
 end
@@ -151,10 +157,10 @@ function [minY , maxY] = getYZoomLimit(main_plot , zoom_plot)
     xm = xm(2) - xm(1);
     xz = xz(2) - xz(1);
 
-    yz = xz * ym / xm;
+    yz_calcolato = xz * ym / xm;
 
     minY = yz(1);
-    maxY = yz(1) + yz;
+    maxY = yz(1) + yz_calcolato;
 
 
 end
