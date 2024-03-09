@@ -33,8 +33,16 @@ function  delta_gm_percentuale(dispositivo) %dispositivo = "200-30";
         end
 
         cd ../..
-    end
-
-    plot(grado , delta , "LineStyle","-.");
     
+    end
+    
+    dispositivo = char(dispositivo);
+
+    plot(grado , delta , Marker="diamond" , LineWidth=1);    
+    ytickformat('percentage');
+    title(tipologia+"MOS $" + dispositivo(1:3)+"-"+"0.0"+ dispositivo(5:end) + "$" , Interpreter="latex" , FontSize=12);
+    ylabel("$ \% \Delta g_m$" , Interpreter="latex" , FontSize=12);
+    xlabel("Dose Assorbita $[Mrad]$" , Interpreter="latex" , FontSize=12);
+    %yline(0 , "--");
+    grid on 
 end
