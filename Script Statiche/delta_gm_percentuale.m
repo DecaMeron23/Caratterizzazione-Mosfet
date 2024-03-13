@@ -53,8 +53,13 @@ function  delta_gm_percentuale() %dispositivo = "200-30" vds = 0.45
         end
         cd DeltaGm;
         %componiamo la matrice da salvare
-        matrice = ["Vds" , (grado + "Mrad"); valori_vds' , delta];
-        writematrix(matrice , "Delta_gm_" + dispositivo+ ".xls");
+        
+        matrice =  horzcat(valori_vds' , delta);
+        valori = ["Vds" , (grado + "Mrad")];        
+        matrice = array2table(matrice);
+        vecchi_nomi = 1:width(matrice);
+        matrice = renamevars(matrice,vecchi_nomi,valori);
+        writetable(matrice , "Delta_gm_" + dispositivo+ ".xls");
         cd ..
     end
 end
