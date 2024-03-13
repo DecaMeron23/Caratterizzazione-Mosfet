@@ -5,8 +5,7 @@ function plot_delta_gm(vds , tipologia , dispositivo) % vds = 0.45 , tipologia =
     valori_vds = [0.15 , 0.30 , 0.45 , 0.6 , 0.75 , 0.9];
     file = "Delta_gm_" + dispositivo + ".xls";
     delta = readmatrix(file);
-    delta = delta(2:end , 2:end);
-        
+    delta = delta(:, 2:end);
     indice_vds = (valori_vds == vds);
     delta = delta(indice_vds , :);
 
