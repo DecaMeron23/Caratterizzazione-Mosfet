@@ -1,4 +1,4 @@
-function  delta_gm_percentuale() %dispositivo = "200-30" vds = 0.45
+function  delta_gm_percentuale()
 
     [cartelle]= estrazioneCartelle.getCartelle();
 
@@ -29,15 +29,14 @@ function  delta_gm_percentuale() %dispositivo = "200-30" vds = 0.45
                 disp("              Vds = " + valori_vds(j) + "V");
                 indice_vds = (valori_vds - valori_vds(j)) == 0;
                 gm_i = gm(: , indice_vds);
-                % prendiamo la massima gm
                 gm_max = max(gm_i);
         
                 % se stiamo guardando i dati pre irraggiamento lo prendiamo come riferimento
                 if(i == 1)
-                    gm_pre = gm_max;
+                    gm_pre(j , 1) = gm_max;
                     delta( j , 1) = 0;
                 else
-                    delta(j , i) = (gm_max - gm_pre)*100/gm_pre;
+                    delta(j , i) = (gm_max - gm_pre(j,1))*100/gm_pre(j,1);
                 end
     
             end
