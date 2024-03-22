@@ -1,4 +1,5 @@
 %% posizionarsi nella cartella del chip con il relativo irraggimento (es: Chip1PMOS_5Mrad)
+%% delta I_on al variare di W o di L 
 
 % trovo la directory in cui ci troviamo
 directory = dir();
