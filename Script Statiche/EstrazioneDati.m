@@ -80,7 +80,7 @@ classdef EstrazioneDati
             end
         end
 
-        %% Estrazione dati ig
+        %% Estrazione dati jg
         function  [mod_jg , vgs] = estrazione_dati_jg_vgs(file , type , nomeCartela)
             
             if(exist("id-vgs.txt" , "file"))
