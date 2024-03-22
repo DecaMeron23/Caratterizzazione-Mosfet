@@ -18,8 +18,8 @@ for i = 1 : length(lista_dispositivi)
     if (strcmp(dispositivo(1), 'N') || strcmp(dispositivo(1), 'P')) && ~strcmp(dispositivo(end-1:end), 'nf')
         dispositivi_funzionanti = [dispositivi_funzionanti; string(dispositivo)];
         for j = 1:4
-            Vth_TCM(length(dispositivi_funzionanti),j) = TCM(dispositivo , j*2 , 0)*1000;
-            Vth_SDLM(length(dispositivi_funzionanti),j) = SDLM(dispositivo , j*2 , PLOT_ON)*1000;
+            Vth_TCM(length(dispositivi_funzionanti),j) = Vth.TCM(dispositivo , j*2 , 0)*1000;
+            Vth_SDLM(length(dispositivi_funzionanti),j) = Vth.SDLM(dispositivo , j*2 , PLOT_ON)*1000;
         end
      end
 end
