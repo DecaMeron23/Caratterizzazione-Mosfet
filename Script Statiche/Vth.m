@@ -17,7 +17,7 @@ classdef Vth
         % ciò avviare la funzione.
         % A fine esecuzione si crerà una cartella "tabelle" contenente il file
         % Vth.xls
-        function EstraiVth
+        function EstraiVth()
             directory = dir;
             file = {directory.name};
             
@@ -54,49 +54,6 @@ classdef Vth
             writetable(tabella , "Vth" , FileType="spreadsheet");
             cd ..
         end
-        
-        % funzione che ordina il cell array dei file Vth in base alla dimensione: prima
-        % 100-30 poi 100-60, 100-180 poi con i 200 e i 600 (l'ultimo è il 600-180)
-        function fileVth_sort = sortVthFile(fileVth)
-            
-            fileVth_sort = {};
-            
-            for i = fileVth
-                file = string(i);
-                file = char(file);
-                file_noEst = file(1:(end-4)); %togliamo l'estensione.
-                
-                [~ , W , L] = titoloPlot(file_noEst); % se file è cosi: Vth_P1-600-180 ci ritorna W = 600 e L = 0.18
-                
-                if (W == 100)
-                    if(L == 0.03)
-                        fileVth_sort{1} = file;
-                    elseif(L == 0.06)
-                        fileVth_sort{2} = file;
-                    elseif(L == 0.18)
-                        fileVth_sort{3} = file;
-                    end
-                elseif(W == 200)
-                    if(L == 0.03)
-                        fileVth_sort{4} = file;
-                    elseif(L == 0.06)
-                        fileVth_sort{5} = file;
-                    elseif(L == 0.18)
-                        fileVth_sort{6} = file;
-                    end
-                elseif(W == 600)
-                    if(L == 0.03)
-                        fileVth_sort{7} = file;
-                    elseif(L == 0.06)
-                        fileVth_sort{8} = file;
-                    elseif(L == 0.18)
-                        fileVth_sort{9} = file;
-                    end
-                end
-            end
-        end
-        
-        
         
         % Questa funzione calcola tutte le vth di un asic per ogni irraggiamento
         % Come Utilizzare: Posizionarsi nella cartella contenente tutti i diversi
@@ -732,6 +689,7 @@ classdef Vth
         end
         
     end
+
     methods (Access = private , Static)
         %Funzione per RM_Estremi_preIrraggiamento quale trova gli estremi
         %su cui fare il fit
@@ -795,5 +753,46 @@ classdef Vth
             rm_data = id./sqrt(gm);
         end
         
+        
+        % funzione che ordina il cell array dei file Vth in base alla dimensione: prima
+        % 100-30 poi 100-60, 100-180 poi con i 200 e i 600 (l'ultimo è il 600-180)
+        function fileVth_sort = sortVthFile(fileVth)
+            
+            fileVth_sort = {};
+            
+            for i = fileVth
+                file = string(i);
+                file = char(file);
+                file_noEst = file(1:(end-4)); %togliamo l'estensione.
+                
+                [~ , W , L] = titoloPlot(file_noEst); % se file è cosi: Vth_P1-600-180 ci ritorna W = 600 e L = 0.18
+                
+                if (W == 100)
+                    if(L == 0.03)
+                        fileVth_sort{1} = file;
+                    elseif(L == 0.06)
+                        fileVth_sort{2} = file;
+                    elseif(L == 0.18)
+                        fileVth_sort{3} = file;
+                    end
+                elseif(W == 200)
+                    if(L == 0.03)
+                        fileVth_sort{4} = file;
+                    elseif(L == 0.06)
+                        fileVth_sort{5} = file;
+                    elseif(L == 0.18)
+                        fileVth_sort{6} = file;
+                    end
+                elseif(W == 600)
+                    if(L == 0.03)
+                        fileVth_sort{7} = file;
+                    elseif(L == 0.06)
+                        fileVth_sort{8} = file;
+                    elseif(L == 0.18)
+                        fileVth_sort{9} = file;
+                    end
+                end
+            end
+        end
     end
 end
