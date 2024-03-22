@@ -1,8 +1,8 @@
-%% Posizionarsi nella cartella dell'ASIC, a un certo grado di irraggiamento, con all'interno tutte le cartelle dei dispositivi
-%% Impostare a 1 la variabile PLOT_ON se si vogliono vedere tutti i plot che elabora lo script
-%% Impostare a 1 se la variabile preIrreggiamento se il dispositivo non è ancora stato irraggiato
-%% per ogni cartella serve avere i fle .txt delle misurazioni
-%% inizializzazione
+% Posizionarsi nella cartella dell'ASIC, a un certo grado di irraggiamento, con all'interno tutte le cartelle dei dispositivi
+% Impostare a 1 la variabile PLOT_ON se si vogliono vedere tutti i plot che elabora lo script
+% Impostare a 1 se la variabile preIrreggiamento se il dispositivo non è ancora stato irraggiato
+% per ogni cartella serve avere i fle .txt delle misurazioni
+% inizializzazione
 
 function Calcolo_Vth()
     
