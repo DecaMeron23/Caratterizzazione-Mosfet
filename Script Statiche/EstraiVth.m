@@ -1,4 +1,4 @@
-%funzione che estrae per ogni metodo un file con tutte le vth dei i dispositivi
+%funzione che estrae per ogni metodo un file con tutte le vth dei dispositivi
 function EstraiVth
     directory = dir;
     file = {directory.name};
