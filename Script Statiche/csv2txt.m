@@ -17,7 +17,7 @@ function csv2txt(file)
     end   
     clear vg temp vg_i
     
-    %% Dividaimo le righe in colonne
+    %% Dividiamo le righe in colonne
     %numero di vds per vg
     num_vds = height(data) / num_vg;
     dati_finali = zeros(num_vds , num_vg + 1);
