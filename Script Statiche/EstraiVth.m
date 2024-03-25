@@ -1,4 +1,6 @@
-%funzione che estrae per ogni metodo un file con tutte le vth dei i dispositivi
+%Questa funzione serve per estrarre dai diversi file .txt, che si sono
+%creati in seguito al calcolo della Vth, con l'obbiettivo di raggrupparli
+%in un unico file
 function EstraiVth
     directory = dir;
     file = {directory.name};
