@@ -68,6 +68,10 @@ function I_on = calcola_I_on(vds, dispositivo)
         end
     else 
         indice_vds = 1+vds/0.15;
-        I_on = id_vgs(end, indice_vds); %corrente a Vgs = 0,9V e Vsd passata come parametro
+        if(strcmp(dispositivo, 'N4-600-60') && vds == 0.9)
+            I_on = id_vgs(202, indice_vds); %corrente a Vgs = 0,7V e Vsd passata come parametro
+        else
+            I_on = id_vgs(end, indice_vds); %corrente a Vgs = 0,9V e Vsd passata come parametro
+        end
     end
 end
