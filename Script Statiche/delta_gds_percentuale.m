@@ -3,7 +3,7 @@ function  delta_gds_percentuale() %dispositivo = "200-30" vds = 0.45
     [cartelle]= estrazioneCartelle.getCartelle();
 
 
-    grado = [0 5 50 100 200 600 1000];
+    grado = [0 5 50 100 200 600 1000 3000];
     valori_vgs = [0.15 , 0.30 , 0.45 , 0.6 , 0.75 , 0.9];
     nomi_dispositivi = ["100-30" , "100-60" , "100-180" , "200-30" , "200-60", "200-180" , "600-30" , "600-60" , "600-180"];
 
