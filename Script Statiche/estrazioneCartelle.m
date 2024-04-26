@@ -4,18 +4,18 @@ classdef estrazioneCartelle
     %% funzione che prende tutte le cartelle dei diversi irraggiamenti ordinate per grado
     function [cartelle, tipologia]= getCartelle()
     
-    [~, nomeDispositivo, ~] = fileparts(pwd);
-    
-    tipologia = upper(nomeDispositivo(1));
-    nomeDispositivo = "Chip" + nomeDispositivo(2) + upper(nomeDispositivo(1))+"MOS";
-    
-     % impostiamo che il tipo dispositivo è un array di caratteri
-    nomeDispositivo = char(nomeDispositivo);
-    
-    % cartelle del dispositivo che ci interessa
-    cartelle = estrazioneCartelle.getFileCartella(nomeDispositivo);
-    
-    cartelle = estrazioneCartelle.sortCartelleIrraggiamento(cartelle);
+        [~, nomeDispositivo, ~] = fileparts(pwd);
+        
+        tipologia = upper(nomeDispositivo(1));
+        nomeDispositivo = "Chip" + nomeDispositivo(2) + upper(nomeDispositivo(1))+"MOS";
+        
+         % impostiamo che il tipo dispositivo è un array di caratteri
+        nomeDispositivo = char(nomeDispositivo);
+        
+        % cartelle del dispositivo che ci interessa
+        cartelle = estrazioneCartelle.getFileCartella(nomeDispositivo);
+        
+        cartelle = estrazioneCartelle.sortCartelleIrraggiamento(cartelle);
     
     end
     
@@ -58,6 +58,8 @@ classdef estrazioneCartelle
             elseif(contains(folder , "600Mrad"))
                 cartelle_sort{6} = folder;
             elseif(contains(folder , "1Grad"))
+                cartelle_sort{7} = folder;
+            elseif(contains(folder , "3Grad"))
                 cartelle_sort{7} = folder;
             else
                 cartelle_sort{1} = folder;

@@ -14,7 +14,7 @@ function delta_vth(dispositivo)
     nomeDispositivo = "Chip"+ dispositivo(2) + upper(dispositivo(1)) + "MOS";
     
     % cartelle del dispositivo che ci interessa
-    cartelleDispostivo = getFileCartella(nomeDispositivo);
+    cartelleDispostivo = estrazioneCartelle.getFileCartella(nomeDispositivo);
 
     %se è vuota terminiamo
     if(isempty(cartelleDispostivo))
@@ -22,7 +22,7 @@ function delta_vth(dispositivo)
         return;
     end
 
-    cartelleDispostivo  = sortCartelleIrraggiamento(cartelleDispostivo);
+    cartelleDispostivo  = estrazioneCartelle.sortCartelleIrraggiamento(cartelleDispostivo);
     
 
     delta_FIT = {};
@@ -189,6 +189,8 @@ function  cartelle_sort = sortCartelleIrraggiamento(cartelle)
             cartelle_sort{6} = folder;
         elseif(contains(folder , "1Grad"))
             cartelle_sort{7} = folder;
+        elseif(contains(folder , "3Grad"))
+            cartelle_sort{8} = folder;
         else
             cartelle_sort{1} = folder;
         end
