@@ -29,9 +29,9 @@ function csv2txt_chip(path)
     clear j directory temp nameFolder folder_iesima
 
     %% per ogni cartella prendiamo il file .csv e lo trasfotmiamo in txt
-    file_vds = "id-vds.csv";
-    file_vgs = "id-vgs.csv";
-    file_vgs2 = "id-vgs-2.csv";
+    file_vds = "id_vds.csv";
+    file_vgs = "id_vgs.csv";
+    file_vgs2 = "id_vgs_2.csv";
 
     type = char(folders(1));
     type = type(1);
@@ -106,7 +106,7 @@ function csv2txt_chip(path)
         DatiVg{1} = vgs;
         DatiVg{2} = id;
         DatiVg{3} = vds;
-        
+
         plot_id_vds(fileVd , nomeCartella , DatiVd);
         plot_id_vgs(fileVg , nomeCartella , DatiVg);
         plot_id_vgs_semilog(fileVg , nomeCartella , DatiVg); 

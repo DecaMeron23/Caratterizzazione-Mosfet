@@ -1,3 +1,4 @@
+%% posisizionarsi nella cartella con tutti gli irraggiamenti
 function delta_I_on_irraggiamento()
     
     [cartelle]= estrazioneCartelle.getCartelle();
