@@ -19,7 +19,7 @@ classdef estrazioneCartelle
     
     end
     
-    % Funzione che prende tutti i file nella cartella, si può inserire un
+    % Funzione che prende tutti i file (e cartelle) nella cartella in cui si è, si può inserire un
     % parametro opzionale che sarà una striga che devono contenere i file
     % restituiti (so che non mi sono spiegato... però spero che scriverò il codice in modo da farlo capire)
     function fileInFolder = getFileCartella(varargin)
