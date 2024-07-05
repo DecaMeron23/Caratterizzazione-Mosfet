@@ -14,26 +14,20 @@ function csv2txt_chip(path)
     %disabilitiamo i warnign
     warning('off', 'all');
     %% estraiamo le cartelle dei dispositivi e le salviamo in folders
-    directory = dir();
-    folders = {};
-    for folder_iesima = 3 : length(directory(: , 1))
-        temp = directory(folder_iesima);
-        if temp.isdir == 1
-            nameFolder = temp.name;
-            % escludiamo la cartella plot
-            if(contains(nameFolder , "P1") || contains(nameFolder , "N4"))
-                folders{end+ 1} = nameFolder;
-            end        
-        end
-    end
-    clear j directory temp nameFolder folder_iesima
+    path = pwd;
+    pathParts = strsplit(path, filesep);
+    cartella = char(pathParts{end});
+    type = cartella(6) + ""+ cartella(5);
+    % estraiamo le cartelle necessarie
+    folders = estrazioneCartelle.getFileCartella(type); % le cartelle dovrebbero essere in ordine per W
+
 
     %% per ogni cartella prendiamo il file .csv e lo trasfotmiamo in txt
     file_vds = "id_vds.csv";
     file_vgs = "id_vgs.csv";
     file_vgs2 = "id_vgs_2.csv";
 
-    type = char(folders(1));
+    type = char(string(folders(1)));
     type = type(1);
 
 
@@ -41,7 +35,7 @@ function csv2txt_chip(path)
 
     for i = 1:length(folders)
         
-        cartella_attuale = char(folders(i));
+        cartella_attuale = char(string(folders(i)));
          
         disp("["+i +"/" + length(folders) +"]"+ "Inizio cartella: " + cartella_attuale);
         %entriamo nella cartella
