@@ -186,9 +186,28 @@ function  cartelle_odinate = ordinaCartelle(cartelle)
     for i = 1:length(cartelle)
         cartella = string(cartelle(i));
         parti = split(cartella, '-');
-        W = parti(2);
-        L = parti(3);
-        indice = (find(W_ordine == W)-1)*3 + (find(L_ordine == L)-1)+1;
-        cartelle_odinate(indice) = {cartella};
+        try
+            W = parti(2);
+            L = parti(3);
+
+            %Verifichiamo se sono numeri
+            isNumber(W);
+            isNumber(L);
+
+            indice = (find(W_ordine == W)-1)*3 + (find(L_ordine == L)-1)+1;
+            cartelle_odinate(indice) = {cartella};
+        catch ME
+            warning("Cartella/file scartato: " + cartella);
+        end
+        
+    end
+end
+
+% Funzione che verifica se la stringa è un numero. lancia un errore se non
+% lo è sennò ritorna il valore del numero
+function numero = isNumber(str)
+    numero = str2num(str);
+    if isnan(numero)
+        error(sprintf("la stringa: %s non è un numero" , str ))
     end
 end
