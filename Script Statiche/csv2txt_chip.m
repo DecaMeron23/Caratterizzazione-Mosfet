@@ -139,4 +139,5 @@ function csv2txt_chip(path)
     set(0,'DefaultFigureVisible','on');
     warning('on', 'all');
     disp("Tempo Trascorso: " + toc + "s");
+    close all
 end
