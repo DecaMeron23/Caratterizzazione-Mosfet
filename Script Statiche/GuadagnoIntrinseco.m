@@ -30,16 +30,16 @@ function GuadagnoIntrinseco()
     tipo = cartella(6); 
     % estraiamo le cartelle necessarie
     cartelle_dispositivi = estrazioneCartelle.getFileCartella(type); % le cartelle dovrebbero essere in ordine per W
-
+    %prendiamo solo le cartelle (e non i file)
+    cartelle_dispositivi = estrazioneCartelle.getSoloCartelle(cartelle_dispositivi);
     % ordiniamo le cartelle secondo L (30 60 180)
     cartelle_dispositivi = ordinaCartelle(cartelle_dispositivi);
 
     legenda = [];
     for i = 1:length(cartelle_dispositivi)
         cartella = string(cartelle_dispositivi(i));
-        
-        if ~contains(cartella , "nf") % se è un dispositivo funzionante
-            
+
+        if ~contains(cartella , "nf")% se è un dispositivo funzionante continuiamo    
             cd(cartella); % ci muoviamo nella cartella
             try
                 [g , ic0] = guadagnoIntrinseco_singolo();
@@ -185,6 +185,12 @@ function  cartelle_odinate = ordinaCartelle(cartelle)
     L_ordine = ["30" "60" "180"];
     for i = 1:length(cartelle)
         cartella = string(cartelle(i));
+        cartella_vera = cartella; % serve per evitare che rimanga _nf nel caso di dispositivio non funzionante
+        if contains(cartella , "nf")
+           cartella = char(cartella);
+           cartella = string(cartella(1:end-3));
+        end
+
         parti = split(cartella, '-');
         try
             W = parti(2);
@@ -195,11 +201,12 @@ function  cartelle_odinate = ordinaCartelle(cartelle)
             isNumber(L);
 
             indice = (find(W_ordine == W)-1)*3 + (find(L_ordine == L)-1)+1;
-            cartelle_odinate(indice) = {cartella};
+    
+            cartelle_odinate(indice) = {cartella_vera};
         catch ME
             warning("Cartella/file scartato: " + cartella);
         end
-        
+                
     end
 end
 

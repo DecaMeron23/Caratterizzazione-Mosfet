@@ -41,6 +41,12 @@ classdef estrazioneCartelle
                 end
     end
     
+    % funzione che dato un cell array di file misti (cartelle e file)
+    % restituisce un cellarray solo delle cartelle
+    function folderList = getSoloCartelle(file)
+        folderList = file(cellfun(@isfolder, file));
+    end
+
     % sortiamo le cartelle con l'ordine pre 10M 50M 100M 200M 600M 1G
     function  cartelle_sort = sortCartelleIrraggiamento(cartelle)
     

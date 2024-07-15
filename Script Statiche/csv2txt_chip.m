@@ -20,9 +20,11 @@ function csv2txt_chip(path)
     type = cartella(6) + ""+ cartella(5);
     % estraiamo le cartelle necessarie
     folders = estrazioneCartelle.getFileCartella(type); % le cartelle dovrebbero essere in ordine per W
+    
+    % prendiamo solo le cartelle
+    folders = estrazioneCartelle.getSoloCartelle(folders);
 
-
-    %% per ogni cartella prendiamo il file .csv e lo trasfotmiamo in txt
+    %% per ogni cartelle.getSoloCartella prendiamo il file .csv e lo trasfotmiamo in txt
     file_vds = "id_vds.csv";
     file_vgs = "id_vgs.csv";
     file_vgs2 = "id_vgs_2.csv";
@@ -56,71 +58,77 @@ function csv2txt_chip(path)
             csv2txt(file_vgs2);
         end
     
-        %% creaiamo le cartelle necessarie
+        if ~contains(cartella_attuale , "nf") %se il dispositivo è funzionante
+            %% creaiamo le cartelle necessarie
+            
+            cartella_plot = "plot";
+            if(~exist(cartella_plot , "file"))
+                mkdir(cartella_plot);
+            end
+    
+            cd plot\
+            
+            if(~exist("eps" , "file"))
+                mkdir eps;
+            end
+    
+            if(~exist("png" , "file"))
+                mkdir png;
+            end
+    
+            cd ..
+    
+            %% salviamo i plot
+            [~, nomeCartella, ~] = fileparts(pwd);
+    
+            fileVg = "id_vgs.txt";
+            if(exist("id-vgs.txt"))
+               fileVg = "id-vgs.txt"; 
+            end
+            fileVg2 = "id_vgs_2.txt";
+            if(exist("id-vgs-2.txt"))
+               fileVg2 = "id-vgs-2.txt"; 
+            end
+            fileVd = "id_vds.txt";
+            if(exist("id-vds.txt"))
+               fileVd = "id-vds.txt"; 
+            end
+    
+            [vds , id , vgs] = EstrazioneDati.estrazione_dati_vds(fileVd , type);
+            DatiVd{1} = vds;
+            DatiVd{2} = id;
+            DatiVd{3} = vgs;
+    
+            [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(fileVg , type);
+            DatiVg{1} = vgs;
+            DatiVg{2} = id;
+            DatiVg{3} = vds;
+    
+            plot_id_vds(fileVd , nomeCartella , DatiVd);
+            plot_id_vgs(fileVg , nomeCartella , DatiVg);
+            plot_id_vgs_semilog(fileVg , nomeCartella , DatiVg); 
+            plot_gm(fileVg , nomeCartella , DatiVg);
+            plot_gds(fileVd , nomeCartella , DatiVd);
+            plot_gm_id_w_l(fileVg , nomeCartella , DatiVg);
+
+            if exist(fileVg2 , "file")
+                plot_id_vgs(fileVg2 , nomeCartella);
+                plot_id_vgs_semilog(fileVg2 , nomeCartella); 
+                plot_gm(fileVg2 , nomeCartella);
+            end
+            if(~contains(cartella_attuale , "P1-100-180-nf"))
+                [mod_jg(: , i) , vgs_jg(: , i)] = EstrazioneDati.estrazione_dati_jg_vgs(fileVg , type , cartella_attuale);
+                legendaIg{end+1} = cartella_attuale;
+            end
+            
+            
+    
+            
         
-        cartella_plot = "plot";
-        if(~exist(cartella_plot , "file"))
-            mkdir(cartella_plot);
         end
-
-        cd plot\
-        
-        if(~exist("eps" , "file"))
-            mkdir eps;
-        end
-
-        if(~exist("png" , "file"))
-            mkdir png;
-        end
-
-        cd ..
-
-        %% salviamo i plot
-        [~, nomeCartella, ~] = fileparts(pwd);
-
-        fileVg = "id_vgs.txt";
-        if(exist("id-vgs.txt"))
-           fileVg = "id-vgs.txt"; 
-        end
-        fileVg2 = "id_vgs_2.txt";
-        if(exist("id-vgs-2.txt"))
-           fileVg2 = "id-vgs-2.txt"; 
-        end
-        fileVd = "id_vds.txt";
-        if(exist("id-vds.txt"))
-           fileVd = "id-vds.txt"; 
-        end
-
-        [vds , id , vgs] = EstrazioneDati.estrazione_dati_vds(fileVd , type);
-        DatiVd{1} = vds;
-        DatiVd{2} = id;
-        DatiVd{3} = vgs;
-
-        [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(fileVg , type);
-        DatiVg{1} = vgs;
-        DatiVg{2} = id;
-        DatiVg{3} = vds;
-
-        plot_id_vds(fileVd , nomeCartella , DatiVd);
-        plot_id_vgs(fileVg , nomeCartella , DatiVg);
-        plot_id_vgs_semilog(fileVg , nomeCartella , DatiVg); 
-        plot_gm(fileVg , nomeCartella , DatiVg);
-        plot_gds(fileVd , nomeCartella , DatiVd);
-        plot_gm_id_w_l(fileVg , nomeCartella , DatiVg);
-
-        if exist(fileVg2 , "file")
-            plot_id_vgs(fileVg2 , nomeCartella);
-            plot_id_vgs_semilog(fileVg2 , nomeCartella); 
-            plot_gm(fileVg2 , nomeCartella);
-        end
-        if(~contains(cartella_attuale , "P1-100-180-nf"))
-            [mod_jg(: , i) , vgs_jg(: , i)] = EstrazioneDati.estrazione_dati_jg_vgs(fileVg , type , cartella_attuale);
-            legendaIg{end+1} = cartella_attuale;
-        end
+        disp("["+i +"/" + length(folders) +"]"+ "Fine cartella: " + cartella_attuale);
         %usciamo dalla cartella
         cd ..
-
-        disp("["+i +"/" + length(folders) +"]"+ "Fine cartella: " + cartella_attuale);
     end
     %% Plot della Ig
 
