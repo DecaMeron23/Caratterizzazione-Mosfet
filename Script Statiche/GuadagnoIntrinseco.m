@@ -3,7 +3,7 @@
 % guadagno ottenibile da un MOS, è dato dal rapporto di gm/gds in questo
 % sript utilizziamo:
 % - la gm a Vds = 0.9V
-% - la gds si dovrà calcolare prendendo le I_d a Vds (o Vsd) pari a 0.9 e 
+% - la gds si dovrà calcolare prendendo le I_d a Vds (o Vsd) pari a 0.9 V e 
 % 0.75 V e poi fare il rapporto delta I_d / 0.15V
 %
 % In seguito si fa il rapporto delle colonne gm e gds. e per finire i plot
@@ -27,7 +27,7 @@ function GuadagnoIntrinseco()
     cartella = char(pathParts{end});
     type = cartella(6) + ""+ cartella(5);
     numero_asic = cartella(5);
-    tipo = cartella(6); 
+    tipo_canale = cartella(6); 
     % estraiamo le cartelle necessarie
     cartelle_dispositivi = estrazioneCartelle.getFileCartella(type); % le cartelle dovrebbero essere in ordine per W
     %prendiamo solo le cartelle (e non i file)
@@ -59,7 +59,7 @@ function GuadagnoIntrinseco()
         
         if mod(i , 3) == 0 % abbiamo fatto 3 dispositivi alla stessa W (o siamo al primo)
             [~ , W ] = titoloPlot(cartella);
-            testo = sprintf("Asic "  + numero_asic + "\n" + tipo + "MOS\nW=" + W + "\\mum");
+            testo = sprintf("Asic "  + numero_asic + "\n" + tipo_canale + "MOS\nW=" + W + "\\mum");
             annotation('textbox', [0.7, 0.25, 0.1, 0.1], 'String' , testo , 'EdgeColor' , 'none' , 'FitBoxToText', 'on', FontSize=14  )
             
             set(gca, 'XScale', 'log', 'YScale', 'log')
@@ -106,7 +106,6 @@ function [g , ic0] = guadagnoIntrinseco_singolo()
     end
     
     % Prelievo gm a 0.9V
-   
     nome_gm = "gm.txt";
     if ~exist(nome_gm , "file")
         if exist("gm-vgs.txt" , "file")
@@ -131,15 +130,14 @@ function [g , ic0] = guadagnoIntrinseco_singolo()
         end
     end
     
-    [~ , temp , ~] = EstrazioneDati.estrazione_dati_vgs(id_vgs , type);
-    
-    id_vds_750mV = temp( : , end-1);
-    id_vds_900mV = temp( : , end);
+    [~ , temp , vds_temp] = EstrazioneDati.estrazione_dati_vgs(id_vgs , type);
+   
+    id_vds_750mV = temp( : , vds_temp == 750);
+    id_vds_900mV = temp( : , vds_temp == 900);
     
     gds = (id_vds_900mV - id_vds_750mV) / delta_Vds;
     
     % Calcolo coefficente di inversione IC0
-    
     if type == "P"
         Iz = Iz_P;
     elseif type == "N"
@@ -187,8 +185,10 @@ function  cartelle_odinate = ordinaCartelle(cartelle)
         cartella = string(cartelle(i));
         cartella_vera = cartella; % serve per evitare che rimanga _nf nel caso di dispositivio non funzionante
         if contains(cartella , "nf")
-           cartella = char(cartella);
-           cartella = string(cartella(1:end-3));
+           cartella = split(cartella_vera , "nf");
+           cartella = char(cartella(1));
+           cartella = cartella(1:end-1);
+           cartella = string(cartella);
         end
 
         parti = split(cartella, '-');
