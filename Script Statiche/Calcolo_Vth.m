@@ -1,24 +1,27 @@
 %% Posizionarsi nella cartella dell'ASIC, a un certo grado di irraggiamento, con all'interno tutte le cartelle dei dispositivi
 %% Impostare a 1 la variabile PLOT_ON se si vogliono vedere tutti i plot che elabora lo script
-%% Impostare a 1 se la variabile preIrreggiamento se il dispositivo non è ancora stato irraggiato
+% Impostare a 1 se la variabile preIrreggiamento se il dispositivo non è ancora stato irraggiato
 %% per ogni cartella serve avere i fle .txt delle misurazioni
 %% inizializzazione
 
 function Calcolo_Vth()
     
     % abilitare i plot di verifica (si = 1, no = 0)  
-    PLOT_ON = 0;
+    PLOT_ON = 1;
     
-    % indichiamo se il dispositivo è pre irraggiamento
-    preIrraggiamento = 0;
-    
-    if preIrraggiamento == 1
-        SPAN = 20;
-        GRADO = 6;
-    elseif preIrraggiamento == 0
-        SPAN = 5;
-        GRADO = 6;
-    end
+    % % indichiamo se il dispositivo è pre irraggiamento
+    % preIrraggiamento = 0;
+    % 
+    % if preIrraggiamento == 1
+    %     SPAN = 20;
+    %     GRADO = 6;
+    % elseif preIrraggiamento == 0
+    %     SPAN = 5;
+    %     GRADO = 6;
+    % end
+
+    SPAN = 5;
+    GRADO = 6;
     
     % trovo la directory in cui ci troviamo
     fp = dir();

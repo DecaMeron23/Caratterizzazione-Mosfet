@@ -136,10 +136,12 @@ function grado = gradoIrraggiamento(nomeCartella)
         nomeCartella = extractAfter(nomeCartella ,"_");
         if ismissing(nomeCartella)
             nomeCartella = "Pre";
-        elseif(~contains(nomeCartella , "Grad"))
+        elseif(~contains(nomeCartella , "Grad")) % Caso 'MRad'
             nomeCartella = extractBefore(nomeCartella, "M");
             nomeCartella = nomeCartella + "Mrad";
-        else
+        elseif(contains(nomeCartella , "annealing" )) % Caso 'annealing'
+            nomeCartella = "annealing";
+        else % Caso Grad
             nomeCartella = extractBefore(nomeCartella, "G");
             nomeCartella = nomeCartella + "Grad";
         end

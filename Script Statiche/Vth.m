@@ -286,11 +286,11 @@ classdef Vth
             hold off
 
             %salvo il plot
-            if(~exist("fig\" , "dir"))
-                mkdir("fig\")
+            if(~exist("figure\" , "dir"))
+                mkdir("figure\")
             end
 
-            cd fig\
+            cd figure\
 
             saveas(gca , "FIT.fig");
 

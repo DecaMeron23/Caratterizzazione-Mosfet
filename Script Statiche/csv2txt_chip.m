@@ -25,9 +25,6 @@ function csv2txt_chip(path)
     folders = estrazioneCartelle.getSoloCartelle(folders);
 
     %% per ogni cartelle.getSoloCartella prendiamo il file .csv e lo trasfotmiamo in txt
-    file_vds = "id_vds.csv";
-    file_vgs = "id_vgs.csv";
-    file_vgs2 = "id_vgs_2.csv";
 
     type = char(string(folders(1)));
     type = type(1);
@@ -36,12 +33,34 @@ function csv2txt_chip(path)
     legendaIg = {};
 
     for i = 1:length(folders)
+
         
         cartella_attuale = char(string(folders(i)));
          
         disp("["+i +"/" + length(folders) +"]"+ "Inizio cartella: " + cartella_attuale);
         %entriamo nella cartella
         cd(cartella_attuale);
+
+
+        % Cerchiamo i file da convertire
+        file_vds = "id_vds.csv";
+
+        if(~exist(file_vds , "file"))
+            file_vds = "id-vds.csv";
+        end
+    
+        file_vgs = "id_vgs.csv";
+    
+        if(~exist(file_vgs , "file"))
+            file_vgs = "id-vgs.csv";
+        end
+    
+    
+        file_vgs2 = "id_vgs_2.csv";
+    
+        if(~exist(file_vgs2 , "file"))
+            file_vgs2 = "id-vgs_2.csv";
+        end
 
         
         %verifichaimo se esiste il file
@@ -62,23 +81,25 @@ function csv2txt_chip(path)
             %% creaiamo le cartelle necessarie
             
             cartella_plot = "plot";
-            if(~exist(cartella_plot , "file"))
+            if(~exist(cartella_plot , "dir"))
                 mkdir(cartella_plot);
             end
     
             cd plot\
             
-            if(~exist("eps" , "file"))
+            if(~exist("eps" , "dir"))
                 mkdir eps;
             end
     
-            if(~exist("png" , "file"))
+            if(~exist("png" , "dir"))
                 mkdir png;
             end
     
             cd ..
     
             %% salviamo i plot
+
+            disp("Salvataggio plot...")
             [~, nomeCartella, ~] = fileparts(pwd);
     
             fileVg = "id_vgs.txt";
