@@ -81,19 +81,16 @@ function csv2txt_chip(path)
             %% creaiamo le cartelle necessarie
             
             cartella_plot = "plot";
-            if(~exist(cartella_plot , "dir"))
-                mkdir(cartella_plot);
-            end
+            
+            mkdir(cartella_plot);
+            
     
             cd plot\
             
-            if(~exist("eps" , "dir"))
-                mkdir eps;
-            end
-    
-            if(~exist("png" , "dir"))
-                mkdir png;
-            end
+            mkdir eps;
+           
+            mkdir png;
+       
     
             cd ..
     
@@ -153,9 +150,7 @@ function csv2txt_chip(path)
     end
     %% Plot della Ig
 
-    if(~exist("plot" , "file"))
-        mkdir plot;
-    end
+    mkdir plot;
 
     legendaIg = string(legendaIg);
 

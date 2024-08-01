@@ -83,9 +83,8 @@ classdef Vth
             legend( "$I_D$", "Ratio Method", Interpreter = "latex" , Location = "northwest");
             hold off
 
-            if ~exist("fig\" , "dir")
-                mkdir("fig\")
-            end
+            mkdir("fig\")
+            
 
             cd fig\
 
@@ -163,9 +162,9 @@ classdef Vth
             legend( "$I_D$", "Ratio Method", Interpreter = "latex" , Location = "northwest");
             hold off
 
-            if ~exist("fig\" , "dir")
-                mkdir("fig\")
-            end
+            
+            mkdir("fig\")
+            
 
             cd fig\
 
@@ -286,11 +285,9 @@ classdef Vth
             hold off
 
             %salvo il plot
-            if(~exist("figure\" , "dir"))
-                mkdir("figure\")
-            end
+            mkdir("fig\")
 
-            cd figure\
+            cd fig\
 
             saveas(gca , "FIT.fig");
 

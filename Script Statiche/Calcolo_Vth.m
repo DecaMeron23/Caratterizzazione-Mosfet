@@ -7,7 +7,7 @@
 function Calcolo_Vth()
     
     % abilitare i plot di verifica (si = 1, no = 0)  
-    PLOT_ON = 1;
+    PLOT_ON = 0;
     
     % % indichiamo se il dispositivo è pre irraggiamento
     % preIrraggiamento = 0;
@@ -73,10 +73,8 @@ function Calcolo_Vth()
             
             Cartella = "Vth";
            
-            if ~exist(Cartella , "dir")
-                mkdir(Cartella);  
-            end
             
+            mkdir(Cartella);              
             cd(Cartella);
              
             
