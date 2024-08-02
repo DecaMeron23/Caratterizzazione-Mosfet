@@ -47,7 +47,8 @@ classdef estrazioneCartelle
         folderList = file(cellfun(@isfolder, file));
     end
 
-    % sortiamo le cartelle con l'ordine pre 10M 50M 100M 200M 600M 1G
+    % sortiamo le cartelle con l'ordine pre 10M 50M 100M 200M 600M 1G 3G
+    % annealing
     function  cartelle_sort = sortCartelleIrraggiamento(cartelle)
     
         cartelle_sort = {};
@@ -66,9 +67,9 @@ classdef estrazioneCartelle
             elseif(contains(folder , "1Grad"))
                 cartelle_sort{7} = folder;
             elseif(contains(folder , "3Grad"))
-                cartelle_sort{7} = folder;
-            elseif(contains(folder , "annealing"))
                 cartelle_sort{8} = folder;
+            elseif(contains(folder , "annealing"))
+                cartelle_sort{9} = folder;
             else
                 cartelle_sort{1} = folder;
             end

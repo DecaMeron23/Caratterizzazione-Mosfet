@@ -27,16 +27,49 @@
 \usepackage{frontespizio}
 
 \begin{document}
+% Inizio introduzione documento
+\frontmatter
 
 %fontespizio
 \import{./frontespizio}{frontespizio.tex}
 
+% Indice
 \tableofcontents
-\listoffigures
+% Lista delle figure
+% \listoffigures
+
+% Introduzione della tesi
+\chapter*{Introduzione}
+
+
+
+% Inizio Parte principale documento
 \mainmatter
 
 %Capitolo: Estrazione dei parametri statici
-\import{./capitoli}{capitolo_vth.tex}
+\chapter{Estrazione dei parametri statici}
+In questo capitolo si tratteranno i paramentri statici di transistori \emph{MOS} in tecnologia $28 nm$ per comprendere come variano le prestazioni statiche all'aumentare dell'irraggiamento subito. Si tratteranno:\todo{Aggiungere i parametri statici che studieremo}
+\begin{itemize}
+  \item Tensione di soglia
+  \item Transconduttanza
+  \item $G_{ds}$
+  \item $I_{on}$
+  \item $I_{off}$
+  \item Guadagno Intrinseco
+\end{itemize}
+\section{Tensione di soglia}
+\import{./capitoli/Misure_Statiche}{tensione_di_soglia.tex}
+
+\section[$G_{m}$]{Transconduttanza}
+
+\section[$G_{ds}$]{$G_{ds}$}
+
+\section[$I_{on}$]{$I_{on}$}
+\section[$I_{off}$]{$I_{off}$}
+\section[Guadagno Intrinseco]{Guadagno Intrinseco}
+
+% Inizio Parte finale
+\backmatter
 
 \bibliographystyle{IEEEtrans}
 \bibliography{./bibliografia/bibliography.bib}

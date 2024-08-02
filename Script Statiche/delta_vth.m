@@ -42,7 +42,7 @@ function delta_vth(dispositivo)
          if(exist(folder , "dir"))
             cd(folder);
                 grado{end+1} = gradoIrraggiamento(folder_main);
-                fileVth = getFileCartella("Vth");
+                fileVth = estrazioneCartelle.getFileCartella("Vth");
                 % estraiamo i dati
                 delta_FIT{end+1} = estraiVth(fileVth , "FIT");
                 delta_TCM{end+1} = estraiVth(fileVth , "TCM");
@@ -136,41 +136,18 @@ function grado = gradoIrraggiamento(nomeCartella)
         nomeCartella = extractAfter(nomeCartella ,"_");
         if ismissing(nomeCartella)
             nomeCartella = "Pre";
-        elseif(~contains(nomeCartella , "Grad")) % Caso 'MRad'
+        elseif(contains(nomeCartella , "Mrad")) % Caso 'MRad'
             nomeCartella = extractBefore(nomeCartella, "M");
             nomeCartella = nomeCartella + "Mrad";
-        elseif(contains(nomeCartella , "annealing" )) % Caso 'annealing'
-            nomeCartella = "annealing";
-        else % Caso Grad
+        elseif(contains(nomeCartella , "Grad")) % Caso Grad
             nomeCartella = extractBefore(nomeCartella, "G");
             nomeCartella = nomeCartella + "Grad";
+        elseif(contains(nomeCartella , "annealing" )) % Caso 'annealing'
+            nomeCartella = "annealing";
         end
-
         grado = nomeCartella;
         
         disp(grado);
-end
-
-% Funzione che prende tutti i file nella cartella, si può inserire un
-% parametro opzionale che sarà una striga che devono contenere i file
-% restituiti (so che non mi sono spiegato... però spero che scriverò il codice in modo da farlo capire)
-function fileInFolder = getFileCartella(varargin)
-
-            directory = dir();
-            fileInFolder = {directory.name};
-            fileInFolder(1:2) = []; % rimuovo . e ..
-
-            if(~isempty(varargin))
-                fileInFolder_controllati = {};
-                regola = string(varargin{1});
-                for file_i = fileInFolder
-                    file = string(file_i);
-                    if(contains(file , regola))
-                        fileInFolder_controllati{end+1} = file;
-                    end
-                end
-                fileInFolder = fileInFolder_controllati;
-            end
 end
 
 % funzione che prende un cell arry, di file .txt che conterranno le Vth per

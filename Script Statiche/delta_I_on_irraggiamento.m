@@ -3,7 +3,7 @@ function delta_I_on_irraggiamento()
     
     [cartelle]= estrazioneCartelle.getCartelle();
 
-    grado = [0 5 50 100 200 600 1000 3000];
+    grado = [0 5 50 100 200 600 1000 3000 "annealing"];
     valori_vds = [0.15 , 0.30 , 0.45 , 0.6 , 0.75 , 0.9];
     nomi_dispositivi = ["100-30" , "100-60" , "100-180" , "200-30" , "200-60", "200-180" , "600-30" , "600-60" , "600-180"];
 
@@ -15,22 +15,29 @@ function delta_I_on_irraggiamento()
             disp("      Grado = " + grado(i)+  "Mrad");
             cd(string(cartelle(i)));
             cartella_dispositivo = estrazioneCartelle.getFileCartella(dispositivo);
+            try
             cartella_dispositivo = string(cartella_dispositivo(1));
-    
-            cd(cartella_dispositivo);
-            for j = 1:length(valori_vds)
-                I_on = calcola_I_on(valori_vds(j), char(cartella_dispositivo));
-                
-                if(i == 1)
-                        I_on_pre(j , 1) = I_on;
-                        delta( j , 1) = 0;
-                    else
-                        delta(j , i) = (I_on - I_on_pre(j,1))*100/I_on_pre(j,1);
-                end
+            catch
             end
-         
-            cd ../..
-        
+            if(~exist(cartella_dispositivo , "dir"))
+                warning("Dispositivo non torvato: '" + dispositivo + "'");
+                delta(1:end , i) = zeros(length(valori_vds) , 1);
+            else
+                cd(cartella_dispositivo);
+                for j = 1:length(valori_vds)
+                    I_on = calcola_I_on(valori_vds(j), char(cartella_dispositivo));
+                    
+                    if(i == 1)
+                            I_on_pre(j , 1) = I_on;
+                            delta( j , 1) = 0;
+                        else
+                            delta(j , i) = (I_on - I_on_pre(j,1))*100/I_on_pre(j,1);
+                    end
+                end
+             
+                cd ..
+            end
+            cd ..
         end
         
         % creaimo la tabella
