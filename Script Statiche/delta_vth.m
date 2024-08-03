@@ -12,7 +12,9 @@ function delta_vth(dispositivo)
    
     % sarà per esempio "Chip1PMOS"
     nomeDispositivo = "Chip"+ dispositivo(2) + upper(dispositivo(1)) + "MOS";
-    
+   
+    type = upper(dispositivo(1));
+
     % cartelle del dispositivo che ci interessa
     cartelleDispostivo = estrazioneCartelle.getFileCartella(nomeDispositivo);
 
@@ -118,10 +120,10 @@ function delta_vth(dispositivo)
            end
         end
         
-        % Sovrapposizione_plot_deltaVth_W("Delta_FIT.txt");
-        % Sovrapposizione_plot_deltaVth_W("Delta_TCM.txt");
-        % Sovrapposizione_plot_deltaVth_W("Delta_SDLM.txt");
-        % Sovrapposizione_plot_deltaVth_W("Delta_RM.txt");
+        Sovrapposizione_plot_deltaVth_W("Delta_FIT.txt" , type);
+        Sovrapposizione_plot_deltaVth_W("Delta_TCM.txt", type);
+        Sovrapposizione_plot_deltaVth_W("Delta_SDLM.txt" , type);
+        Sovrapposizione_plot_deltaVth_W("Delta_RM.txt", type);
 
     cd ..
 

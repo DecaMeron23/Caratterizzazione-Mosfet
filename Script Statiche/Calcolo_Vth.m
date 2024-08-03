@@ -7,7 +7,7 @@
 function Calcolo_Vth()
     
     % abilitare i plot di verifica (si = 1, no = 0)  
-    PLOT_ON = 0;
+    PLOT_ON = 1;
     
     % % indichiamo se il dispositivo è pre irraggiamento
     % preIrraggiamento = 0;

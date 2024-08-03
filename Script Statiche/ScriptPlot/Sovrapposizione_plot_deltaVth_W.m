@@ -1,4 +1,4 @@
-function Sovrapposizione_plot_deltaVth_W(file)
+function Sovrapposizione_plot_deltaVth_W(file , type)
 %% Posizionarsi all'interno della cartella contenente i file delle delta Vth
 %plot_deltaVth questa funzione riceve come parametro una stringa che
 %identifica il file da prendere es: "Delta_RM.txt" con la quale crea un
@@ -12,7 +12,7 @@ function Sovrapposizione_plot_deltaVth_W(file)
     nome_metodo = nomeMetodo(metodo);
     
     dispositivi = ["100 / 0.030" "100 / 0.060" "100 / 0.180" "200 / 0.030" "200 / 0.060" "200 / 0.180" "600 / 0.030" "600 / 0.060" "600 / 0.180"];
-    irraggiamenti = [5 50 100 200 600 1000];
+    irraggiamenti = [5 50 100 200 600 1000 3000 3500]; %Il 4000 corrisponde all'annealing
     delta_Vth = readmatrix(file);
 
     % escludiamo la prima colonna che contiene solo il nome dei dispositivi
@@ -43,21 +43,28 @@ function Sovrapposizione_plot_deltaVth_W(file)
                 plot(irraggiamenti(1:width(delta_Vth)) , delta_Vth(j , :) , "-s");
             end
         end
-        yline(0 , "-.") 
+        yl = yline(0 , "-.");
         title("Delta Vth " + nome_metodo +" W = "+ W);
         xlabel("Irraggiamento $[Mrad]$" , Interpreter= "latex");
         ylabel("$\Delta V_{th}$ $[mV]$", Interpreter="latex");
+        yl.Annotation.LegendInformation.IconDisplayStyle = 'off';  % Escludi dalla leggenda
         legend(dispositivi(3*i+1:3*(i+1)), "Location","southeast")
+        
+        % Impostazione degli xtick
+        xticks(0:500:3500);
+
+        % Impostazione delle etichette degli xtick
+        xticklabels({"0" , "500", "1000" , "1500" , "2000" , "2500" , "3000" , "annealing"});
         hold off
         grid on
 
 
          cd eps
-        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-N" + W + ".eps");
+        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-" + type + W + ".eps");
         cd ..\png
-        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-N" + W +".png");
+        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-" + type + W +".png");
         cd ..\fig
-        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-N" + W +".fig");
+        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-" + type + W +".fig");
         cd ..
     end
     cd ..
