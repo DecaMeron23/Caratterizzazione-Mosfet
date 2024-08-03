@@ -1,0 +1,23 @@
+Il guadagno intrinseco ($A_{vi}$) è definito come il massimo guadagno ottenibile da un MOSFET, polarizzato da un generatore di corrente ideale; esso viene calcolato come:
+
+$$A_{vi} = g_{m} \cdot r_0 = \frac{g_{m}}{g_{ds}} $$
+
+Con $g_m$ la transconduttanza e $r_0$ la resistenza in uscita dal transistor (${1}/{g_{ds}}$). Spesso, il grafico di $A_{vi}$, viene mostrato in funzione del coefficente di inversione ($I_{C0}$), esso si può ricavare dalla $I_d$ ad alte $V_{ds}$:
+
+$$I_{C0} = I_{d} \cdot I_{z}^{*} \cdot \frac{L}{W}$$
+
+Dove la corrente caratteristica, $I_{z}^{*}$, è stata misurata pre-irraggiamento e i valori sono riportati alla tabella \ref{tab:corrente_caratteristica}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{c c}
+        \toprule
+        Tipologia Canale & $I_{z}^{*}$ \\
+        \midrule
+        N                & $470nA$    \\
+        P                & $370nA$    \\
+        \bottomrule
+    \end{tabular}
+    \caption{Valori della corrente caratteristica misurati prima dell'irraggiamento}
+    \label{tab:corrente_caratteristica}
+\end{table}
