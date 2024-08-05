@@ -21,13 +21,20 @@
 % plot tenendo le stesse W
 function GuadagnoIntrinseco()
     
+    figure
+  
     % estraiamo la tipologia del dispositivo
     path = pwd;
     pathParts = strsplit(path, filesep);
     cartella = char(pathParts{end});
     type = cartella(6) + ""+ cartella(5);
     numero_asic = cartella(5);
-    tipo_canale = cartella(6); 
+    tipo_canale = cartella(6);
+    radiazioni = extractAfter(cartella , "_");
+    if(isempty(radiazioni))
+        radiazioni = "Pre";
+    end
+
     % estraiamo le cartelle necessarie
     cartelle_dispositivi = estrazioneCartelle.getFileCartella(type); % le cartelle dovrebbero essere in ordine per W
     %prendiamo solo le cartelle (e non i file)
@@ -59,11 +66,15 @@ function GuadagnoIntrinseco()
         
         if mod(i , 3) == 0 % abbiamo fatto 3 dispositivi alla stessa W (o siamo al primo)
             [~ , W ] = titoloPlot(cartella);
-            testo = sprintf("Asic "  + numero_asic + "\n" + tipo_canale + "MOS\nW=" + W + "\\mum");
-            annotation('textbox', [0.7, 0.25, 0.1, 0.1], 'String' , testo , 'EdgeColor' , 'none' , 'FitBoxToText', 'on', FontSize=14  )
-            
+            % testo = "$" + radiazioni + "$";
+            % testo = sprintf("Asic "  + numero_asic + "\n" + tipo_canale + "MOS\nW=" + W + "\\mum");
+            testo = "$W=" + W + "\mu m $";
+            annotation('textbox', [0.7, 0.25, 0.1, 0.1], 'String' , testo , 'EdgeColor' , 'none' , 'FitBoxToText', 'on', FontSize=14 , Interpreter='latex' )
             set(gca, 'XScale', 'log', 'YScale', 'log')
             legend(legenda , Interpreter="latex", Location = "southwest")
+            
+            saveFigure(W);
+            
             if i ~= length(cartelle_dispositivi)
                 figure % facciamo una nuova figura
                 legenda = [];
@@ -217,4 +228,14 @@ function numero = isNumber(str)
     if isnan(numero)
         error(sprintf("la stringa: %s non è un numero" , str ))
     end
+end
+
+function saveFigure(W)
+    if(~exist("plot\" , "dir"))
+        mkdir plot\
+    end
+    cd plot\
+    nome_file = "Guadagno_Intrinseco_W-" + W + ".png";
+    saveas(gcf, nome_file);
+    cd ..
 end
