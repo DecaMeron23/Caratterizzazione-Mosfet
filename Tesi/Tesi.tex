@@ -42,19 +42,21 @@
 % \listoffigures
 
 % Introduzione della tesi
-\chapter*{Abstract}
-
+\chapter*{Introduzione}
 
 
 % Inizio Parte principale documento
 \mainmatter
 
-\chapter{Introduzione}
-\todo[inlinepar]{Cambiare il titolo del capitolo(?)}
-In questo capitolo si cercano di dare le informazioni principali sugli strumenti utilizzati e sulle cause degli effetti che analizzeremo nei capitoli successivi.
+\chapter{Il transistore MOSFET}
+\todo[inlinepar]{temporaneo(?)}
 \todo[inline]{Fare una introduzione al capitolo}
-\section{Effetti delle radiazioni sui MOSFET}
-\import{./capitoli/Introduzione}{effetti_radiazioni.tex}
+In questo capitolo si daranno le principali informazioni necessarie per i capitoli successivi.
+\section{Transistore MOSFET}
+\import{./capitoli/capitolo1}{transistore_MOSFET.tex}
+
+\section{Effetti delle radiazioni sui transistori MOSFET}
+\import{./capitoli/capitolo1}{effetti_radiazioni.tex}
 
 
 %Capitolo: Estrazione dei parametri statici
@@ -69,7 +71,7 @@ In questo capitolo si tratteranno i parametri statici di transistori \emph{MOS} 
   \item Guadagno Intrinseco
 \end{itemize}
 \section{Tensione di soglia}
-\import{./capitoli/Misure_Statiche}{tensione_di_soglia.tex}
+\import{./capitoli/capitolo2}{tensione_di_soglia.tex}
 
 \section[$G_{m}$]{Transconduttanza}
 
@@ -78,7 +80,7 @@ In questo capitolo si tratteranno i parametri statici di transistori \emph{MOS} 
 \section[$I_{on}$]{$I_{on}$}
 \section[$I_{off}$]{$I_{off}$}
 \section[Guadagno Intrinseco]{Guadagno Intrinseco}
-\import{./capitoli/Misure_Statiche}{guadagno_intrinseco.tex}
+\import{./capitoli/capitolo2}{guadagno_intrinseco.tex}
 
 % Inizio Parte finale
 \backmatter
