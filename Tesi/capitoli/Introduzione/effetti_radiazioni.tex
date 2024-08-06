@@ -20,18 +20,18 @@ L'effetto di ionizzazione è diverso nei semiconduttori e nei isolanti, una diff
 Negli isolanti, come l'ossido di gate nei MOS, è presente l'effetto cumulativo. Gli elettroni liberati da una particella ionizzante si possono muovere più facilmente soprattutto grazie a effetti di campo dovuti, ad esempio, a polarizzazioni.
 Al contrario i buchi(holes) sono molto meno mobili, la maggior parte di essi sopravvivono alla ricombinazione con gli elettroni. Creando perciò una carica positiva all'interno dell'ossido, con uno degli effetti di spostare la tensione di soglia nei MOSFET.
 \\
-I buchi si possono neutralizzare tramite la ricottura dell'ossido (oxide anneals) in tempi molto lunghi a temperatura ambiente
+
+La ricottura dell'ossido (\textit{oxide anneals}) è una procedura volta a ripristinare, almeno in parte, le caratteristiche del MOSFET a seguito di dose subita.
+Consiste nel neutralizzare i buchi scaldando il dispositivo, ad esempio, la procedura di annealing che abbiamo eseguito sui nostri dispositivi è stata di portarli ad una temperatura di $100\degree C$ e mantenerla per ventiquattro ore. La ricottura può avvenire anche a temperatura ambiente, ma probabilmente i tempi sarebbero molto lunghi, anche anni\cite{bib:Effetti_Radiazioni_NASA}. 
 
 
-\subsubsection*{Misurazione Dose subita}
-La carica accumulata intrappolate viene misurata dalla ionizzazione accumulata, che a sua volta viene misurata dalla somma dell'energia persa dalle particelle sul materiale attraverso le interazioni con gli elettroni (\textit{which in turn is measured by the sum(over particles) of the energy lost by the perticles to the material via interactions with the electrons}).
-
-Quindi una misura utile è l'energia totale per unità di massa di materiale trasferita dalle particelle ionizzanti al materiale attraverso ionizzazione, essa viene chiamata TID (total ionizing dose).
-La TDI normalmente è misurata in rad\footnote{radiation absorbed dose} quale è definito come 100 erg\footnote{Unità di lavoro corrispondente a $10^{-7}$ di energia depositata per grammo di materiale}.
+\subsection{Misurazione Dose subita}
+Per effettuare la misurazione della ionizzazione accumulata si utilizza somma dell'energia persa, da parte delle particelle ionizzanti, sul materiale. Quindi in buona approssimazione, l'energia totale creata dalle interazioni con gli elettroni degli atomi alla materia e le particelle, è una misura della dose subita\cite{bib:Effetti_Radiazioni_NASA}. Essa viene chiamata TID (\textit{total ionizing dose}) ed è espressa in Energia su unità di massa.
+La TDI normalmente è misurata in $rad$\footnote{radiation absorbed dose}, definito come 100 $erg$\footnote{Unità di lavoro corrispondente a $10^{-7} J$} per grammo di materiale, oppure, accolto dal sistema internazionale, il gray $Gy$ dove $Gy = 100rad = 1\frac{J}{Kg}$.
 
 
 \subsection{Danno da spostamento}
-\todo[inlinepar]{Forse non ha effetti sui MOSFET}
-Quando una particella (neutrone, protone o anche elettrone ad alta energia) possiede abbastanza energia tale da poter dislocare un atomo al di fuori dalla sua posizione normale all'interno reticolo, in un semiconduttore, avviene il danno da spostamento (\textit{Displacement damage}), in particolare dal movimento dell'atomo all'interno del semiconduttore, inoltre può anche verificarsi che l'atomo colpito ne colpisa altri a sua volta\cite{bib:Effetti_Radiazioni_1987}.
+\todo[inlinepar]{Non ha effetti sui MOSFET}
+Quando una particella (neutrone, protone o anche elettrone ad alta energia) possiede abbastanza energia tale da poter dislocare un atomo al di fuori dalla sua posizione normale all'interno reticolo, in un semiconduttore, avviene il danno da spostamento (\textit{Displacement damage}), in particolare dal movimento dell'atomo all'interno del semiconduttore. Può verificarsi che l'atomo colpito ne colpisa altri, a patto che abbia abbsatanza energia, a sua volta\cite{bib:Effetti_Radiazioni_1987}.
 
 Il danno da spostamento dipende dall'energia della particella, in particolare i protoni, avendo una massa maggiore, consentono di trasferire all'atomo colpito una energia maggiore rispetto ai elettroni\cite{bib:Effetti_Radiazioni_su_dispositivi_optoeltronici}.
