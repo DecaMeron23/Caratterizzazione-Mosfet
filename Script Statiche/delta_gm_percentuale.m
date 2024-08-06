@@ -2,7 +2,7 @@ function  delta_gm_percentuale()
 
     [cartelle]= estrazioneCartelle.getCartelle();
 
-    grado = [0 5 50 100 200 600 1000 3000];
+    grado = [0 5 50 100 200 600 1000 3000 "annealing"];
     valori_vds = [0.15 , 0.30 , 0.45 , 0.6 , 0.75 , 0.9];
     nomi_dispositivi = ["100-30" , "100-60" , "100-180" , "200-30" , "200-60", "200-180" , "600-30" , "600-60" , "600-180"];
 
@@ -11,12 +11,19 @@ function  delta_gm_percentuale()
         disp("Dispositivo = "+ dispositivo);
         delta = zeros(6 , 7);
         for i = 1: length(cartelle)
-            disp("      Grado = " + grado(i)+  "Mrad");
+            if grado(i) == "annealing"
+                print = grado(i);
+            else
+                print = grado(i) +  "Mrad";
+            end
+            disp("      Grado = " + print);
             cd(string(cartelle(i)));
             cartella_dispositivo = estrazioneCartelle.getFileCartella(dispositivo);
     
-            cd(string(cartella_dispositivo(1)));
-            
+            try
+                cd(string(cartella_dispositivo(1)));
+                
+
             file = "gm.txt";
     
             gm = readmatrix(file);
@@ -41,8 +48,15 @@ function  delta_gm_percentuale()
     
             end
             
-            cd ../..
+            cd ..
         
+            catch e
+                
+                %Se non esiste il dispositivo
+                warning("Dispositivo: '" + dispositivo + "' non trovato")
+                delta(: ,i) = zeros(length(valori_vds) , 1);
+            end
+            cd ..
         end
         
         % creaimo la tabella
@@ -54,7 +68,7 @@ function  delta_gm_percentuale()
         %componiamo la matrice da salvare
         
         matrice =  horzcat(valori_vds' , delta);
-        valori = ["Vds" , (grado + "Mrad")];        
+        valori = ["Vds" , (grado(1:end-1) + "Mrad") , grado(end)];        
         matrice = array2table(matrice);
         vecchi_nomi = 1:width(matrice);
         matrice = renamevars(matrice,vecchi_nomi,valori);

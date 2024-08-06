@@ -1,7 +1,8 @@
-function [titolo, W , L] = titoloPlot(nomeCartella)
+function [titolo, W , L , type] = titoloPlot(nomeCartella)
     %titolo: il titolo del plot (es NMOS 100/0.030)
     %W : la largezza del canale in um (es 100)
     %L : la lunghezza del canale in um (es 0.03)
+    %type: il tipo del dispositivo
 
     type = nomeCartella(1);
     % Dividi la stringa usando il carattere "-"
