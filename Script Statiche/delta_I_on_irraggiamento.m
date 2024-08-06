@@ -10,7 +10,7 @@ function delta_I_on_irraggiamento()
     for k = 1:length(nomi_dispositivi)
         dispositivo = nomi_dispositivi(k);
         disp("Dispositivo = "+ dispositivo);
-        delta = zeros(6 , 7);
+        delta = zeros(6 , 8);
         for i = 1: length(cartelle)
             disp("      Grado = " + grado(i)+  "Mrad");
             cd(string(cartelle(i)));

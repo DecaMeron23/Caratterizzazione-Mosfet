@@ -19,7 +19,7 @@ classdef estrazioneCartelle
     
     end
     
-    % Funzione che prende tutti i file (e cartelle) nella cartella in cui si è, si può inserire un
+    % Funzione che prende tutti i file nella cartella, si può inserire un
     % parametro opzionale che sarà una striga che devono contenere i file
     % restituiti (so che non mi sono spiegato... però spero che scriverò il codice in modo da farlo capire)
     function fileInFolder = getFileCartella(varargin)
@@ -41,14 +41,7 @@ classdef estrazioneCartelle
                 end
     end
     
-    % funzione che dato un cell array di file misti (cartelle e file)
-    % restituisce un cellarray solo delle cartelle
-    function folderList = getSoloCartelle(file)
-        folderList = file(cellfun(@isfolder, file));
-    end
-
-    % sortiamo le cartelle con l'ordine pre 10M 50M 100M 200M 600M 1G 3G
-    % annealing
+    % sortiamo le cartelle con l'ordine pre 10M 50M 100M 200M 600M 1G
     function  cartelle_sort = sortCartelleIrraggiamento(cartelle)
     
         cartelle_sort = {};
@@ -68,8 +61,6 @@ classdef estrazioneCartelle
                 cartelle_sort{7} = folder;
             elseif(contains(folder , "3Grad"))
                 cartelle_sort{8} = folder;
-            elseif(contains(folder , "annealing"))
-                cartelle_sort{9} = folder;
             else
                 cartelle_sort{1} = folder;
             end
