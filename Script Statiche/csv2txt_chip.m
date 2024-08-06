@@ -29,10 +29,6 @@ function csv2txt_chip(path)
     clear j directory temp nameFolder folder_iesima
 
     %% per ogni cartella prendiamo il file .csv e lo trasfotmiamo in txt
-    file_vds = "id_vds.csv";
-    file_vgs = "id_vgs.csv";
-    file_vgs2 = "id_vgs_2.csv";
-
     type = char(folders(1));
     type = type(1);
 
@@ -47,20 +43,39 @@ function csv2txt_chip(path)
         %entriamo nella cartella
         cd(cartella_attuale);
 
-        
-        %verifichaimo se esiste il file
-        if exist(file_vds , "file")
-            % convertiamo il file in txt
-            csv2txt(file_vds);
-        end
-        
-        if exist(file_vgs , "file")
-            csv2txt(file_vgs);
+        % cerchiamo i file da convertire
+        if(exist("id_vds.csv", "file"))
+            file_vds = "id_vds.csv";
+        elseif(exist("id-vds.csv", "file"))
+            file_vds = "id-vds.csv";
+        else 
+            error('Non è stato trovate nessun file nominato "id_vds.csv" o "id-vds.csv"');
         end
 
-        if exist(file_vgs2 , "file")
-            csv2txt(file_vgs2);
+        if(exist("id_vgs.csv", "file"))
+            file_vgs = "id_vgs.csv";
+        elseif(exist("id-vgs.csv", "file"))
+            file_vgs = "id-vgs.csv";
+        else 
+            error('Non è stato trovate nessun file nominato "id_vgs.csv" o "id-vgs.csv"');
         end
+        
+        if (exist("id_vgs_2.csv", "file"))
+            file_vgs2 = "id_vgs_2.csv";
+        elseif (exist("id-vgs_2.csv", "file")) 
+            file_vgs2 = "id-vgs_2.csv";
+        elseif (exist("id-vgs-2.csv", "file")) 
+           file_vgs2 = "id-vgs-2.csv";
+        elseif (exist("id_vgs-2.csv", "file")) 
+            file_vgs2 = "id_vgs-2.csv";
+        else 
+            error('Non è stato trovate nessun file nominato "id_vgs_2.csv" o "id-vgs_2.csv" o "id-vgs-2.csv" o "id_vgs-2.csv"');
+        end
+
+        % convertiamo il file in txt
+        csv2txt(file_vds);
+        csv2txt(file_vgs);
+        csv2txt(file_vgs2);
     
         %% creaiamo le cartelle necessarie
         
@@ -84,17 +99,32 @@ function csv2txt_chip(path)
         %% salviamo i plot
         [~, nomeCartella, ~] = fileparts(pwd);
 
-        fileVg = "id_vgs.txt";
-        if(exist("id-vgs.txt"))
-           fileVg = "id-vgs.txt"; 
+        if(exist("id_vds.txt", "file"))
+            fileVd = "id_vds.txt";
+        elseif(exist("id-vds.txt", "file"))
+            fileVd = "id-vds.txt";
+        else 
+            error('Non è stato trovate nessun file nominato "id_vds.txt" o "id-vds.txt"');
         end
-        fileVg2 = "id_vgs_2.txt";
-        if(exist("id-vgs-2.txt"))
-           fileVg2 = "id-vgs-2.txt"; 
+
+        if(exist("id_vgs.txt", "file"))
+            fileVg = "id_vgs.txt";
+        elseif(exist("id-vgs.txt", "file"))
+            fileVg = "id-vgs.txt";
+        else 
+            error('Non è stato trovate nessun file nominato "id_vgs.txt" o "id-vgs.txt"');
         end
-        fileVd = "id_vds.txt";
-        if(exist("id-vds.txt"))
-           fileVd = "id-vds.txt"; 
+        
+        if (exist("id_vgs_2.txt", "file"))
+            fileVg2 = "id_vgs_2.txt";
+        elseif (exist("id-vgs_2.txt", "file")) 
+            fileVg2 = "id-vgs_2.txt";
+        elseif (exist("id-vgs-2.txt", "file")) 
+           fileVg2 = "id-vgs-2.txt";
+        elseif (exist("id_vgs-2.txt", "file")) 
+            fileVg2 = "id_vgs-2.txt";
+        else 
+            error('Non è stato trovate nessun file nominato "id_vgs_2.txt" o "id-vgs_2.txt" o "id-vgs-2.txt" o "id_vgs-2.txt"');
         end
 
         [vds , id , vgs] = EstrazioneDati.estrazione_dati_vds(fileVd , type);

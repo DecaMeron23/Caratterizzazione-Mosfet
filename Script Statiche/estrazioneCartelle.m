@@ -60,7 +60,7 @@ classdef estrazioneCartelle
             elseif(contains(folder , "1Grad"))
                 cartelle_sort{7} = folder;
             elseif(contains(folder , "3Grad"))
-                cartelle_sort{7} = folder;
+                cartelle_sort{8} = folder;
             else
                 cartelle_sort{1} = folder;
             end
