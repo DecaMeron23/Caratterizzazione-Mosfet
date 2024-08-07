@@ -2,7 +2,7 @@ function plot_delta_gm(vds , tipologia , dispositivo , varargin) % vds = 0.45 , 
     % posizionarsi nella cartella contenente i file delta_gm
     % Plot variazioni 
     grado = [0 5 50 100 200 600 1000 3000 3500];
-    valori_vds = [0.15 , 0.30 , 0.45 , 0.6 , 0.75 , 0.9];
+    valori_vds = 0.15:0.15:0.9;
     file = "Delta_gm_" + dispositivo + ".xls";
     delta = readmatrix(file);
     delta = delta(:, 2:end);

@@ -1,5 +1,23 @@
-function plot_delta_gm_tutti(vds ,tipologia)
+function plot_delta_gm_tutti()
     
+    %estraiamo la tipologia del dispositivo
+    cartella_attuale = pwd;
+
+    % estraiamo la tipologia del dispositivo P o N
+    tipologia = char(extractAfter(cartella_attuale , "Misure statiche\"));
+    tipologia = tipologia(1);
+    
+    % creiamo tutte le vds
+    vds = 0.15:0.15:0.9;
+
+    for i = 1:length(vds)
+        disp("Esecuzione plot per la tensione "+ vds(i) +"V...");
+        plot_delta_gm_tutti_singola_tensione(vds(i) , tipologia)
+    end
+
+end
+
+function plot_delta_gm_tutti_singola_tensione(vds ,tipologia)
     if(tipologia == "N")
         dispositivi = [ "100-30" "100-60" "100-180" "200-30" "200-60" "200-180" "600-60" "600-180"];
         dispositiviLegenda = [ "100-0.030" "100-0.060" "100-0.0180" "200-0.030" "200-0.060" "200-0.0180" "600-0.060" "600-0.0180"];
@@ -38,7 +56,10 @@ function plot_delta_gm_tutti(vds ,tipologia)
         vds_str(pos) = '_';
     end
 
-    saveas(gca , "Delta_Gm_Plot_Vds_"+ vds_str +".png")
+    saveas(gca , "Delta_Gm_"+ tipologia + "MOS_Vds_"+ vds_str +".png")
 
     cd ..
+        
 end
+
+
