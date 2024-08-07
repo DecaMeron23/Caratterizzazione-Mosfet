@@ -215,7 +215,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
 \end{figure}
 
 \subsection[SDLM]{Second Difference of the Logarithm of the drain current Minimum method}
-Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ ripetto alla tensione di gate ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$\cite{art1}.
+Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ rispetto alla tensione di gate ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$\cite{art1}.
 
 
 \begin{figure}[H]
@@ -225,7 +225,7 @@ Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of t
   \caption{Esempio di \emph{SDLM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 900 mV$}
 \end{figure}
 
-Anche per questo metodo si ritovano le problematiche presenti per il \emph{TCM}: si deve fare il fit di una curva ottenuta come derivata seconda e inoltre la risoluzione della $V_{GS}$ è $5mV$.
+Anche per questo metodo si ritrovano le problematiche presenti per il \emph{TCM}: si deve fare il fit di una curva ottenuta come derivata seconda e inoltre la risoluzione della $V_{GS}$ è $5mV$.
 Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenuta con una polinomiale e considerare il minimo di quest'ultima.
 
 % Tabella con i diversi gradi per SDLM
@@ -415,7 +415,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
 \end{figure}
 
 \subsection[ELR]{Extrapolation in the Linear Region method}
-Il terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR}\cite{art2}. La tensione di soglia estratta con questo medoto è data dall'intercetta della estrapolazione lineare della caratteristica $I_D-V_{GS}$ nel suo punto di massima pendenza (cioè il punto di massima transconduttanza, $g_m$) con l'asse delle ascisse ($V_{GS}$). Alla tensione così ottenuta, per ottenere la tensione di soglia, si dovrà aggiungere $V_{DS}/2$, dove $V_{DS}$ è la tensione alla quale è stata misurata la caratteristica $I_D-V_{GS}$ interpolata linearmente.
+Il terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR}\cite{art2}. La tensione di soglia estratta con questo metodo è data dall'intercetta della estrapolazione lineare della caratteristica $I_D-V_{GS}$ nel suo punto di massima pendenza (cioè il punto di massima transconduttanza, $g_m$) con l'asse delle ascisse ($V_{GS}$). Alla tensione così ottenuta, per ottenere la tensione di soglia, si dovrà aggiungere $V_{DS}/2$, dove $V_{DS}$ è la tensione alla quale è stata misurata la caratteristica $I_D-V_{GS}$ interpolata linearmente.
 Operativamente, il tratto sul quale fare il fit lineare è ottenuto prendendo un determinato intervallo nell'intorno del punto di flesso della $I_D-V_{GS}$.
 
 \begin{figure}[h!]
@@ -575,7 +575,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
 \end{figure}
 
 \subsection[RM]{Ratio Method}
-Il \emph{Ratio Method, RM} è stato sviluppato per far fronte alle problematicità dell'\emph{ELR}: è stato infatti dimostrato che questo metodo non è influenzato dalla degradazione della mobilità dei portatori di carica né dalle resistenze parassite\cite{art2}. Questo metodo si basa sull'assunzione che, a bassi valori di tensione di drain $V_{DS}$, il rapporto tra la corrente di drain $I_D$ e la radice quadrata della transcondutanza $g_m$ ($\frac{I_D}{\sqrt{g_m}}$) in funzione della tensione di gate $V_{GS}$ si comporti come una funzione lineare. La tensione di soglia $V_{th}$ coincide con il valore della tensione $V_{GS}$ a cui il fit lineare della funzione interseca l'asse delle ascisse.\\
+Il \emph{Ratio Method, RM} è stato sviluppato per far fronte alle problematicità dell'\emph{ELR}: è stato infatti dimostrato che questo metodo non è influenzato dalla degradazione della mobilità dei portatori di carica né dalle resistenze parassite\cite{art2}. Questo metodo si basa sull'assunzione che, a bassi valori di tensione di drain $V_{DS}$, il rapporto tra la corrente di drain $I_D$ e la radice quadrata della transconduttanza $g_m$ ($\frac{I_D}{\sqrt{g_m}}$) in funzione della tensione di gate $V_{GS}$ si comporti come una funzione lineare. La tensione di soglia $V_{th}$ coincide con il valore della tensione $V_{GS}$ a cui il fit lineare della funzione interseca l'asse delle ascisse.\\
 Come detto, questo metodo supera alcuni limiti dei metodi descritti in precedenza, però presenta una problematicità non indifferente: tracciando il grafico di $\frac{I_D}{\sqrt{g_m}}$ in funzione di $V_{GS}$, questo non verifica appieno l'assunzione di linearità. Dunque non esiste un intervallo in cui il grafico è chiaramente linearizzabile e quindi la misura di $V_{th}$ non rispecchia del tutto il valore reale della tensione di soglia, ma è comunque una buona approssimazione, soprattutto se si considera il $\Delta V_{th}$ al crescere dell'irraggiamento.
 Anche il questo caso, per ottenere il fit lineare più accurato possibile è stato usato lo stesso metodo esposto per l'\emph{ELR}.
 
