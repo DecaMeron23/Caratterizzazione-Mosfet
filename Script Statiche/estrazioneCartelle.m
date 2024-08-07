@@ -167,9 +167,9 @@ classdef estrazioneCartelle
             cartella_attuale = string(cartelle(i));
 
             disp("[" + i +"/"+ n_max+"]"+cartella_attuale);
-            
+            cd(cartella_attuale);
             f();
-
+            cd ..
         end
 
     end
@@ -177,7 +177,7 @@ classdef estrazioneCartelle
     % una certa dose di irraggiamento, nella quale poi eseguirà la funzione
     % f
     function esegui_per_ogni_dispositivo(f , no_nf)
-
+        
          if nargin == 1
             no_nf = false;
         end
@@ -190,13 +190,13 @@ classdef estrazioneCartelle
             warning("Nessuna cartella trovata");
         end
         for i = 1:n_max
-
+            
             cartella_attuale = string(cartelle(i));
 
             disp("[" + i +"/"+ n_max+"]"+cartella_attuale);
-            
+            cd(cartella_attuale);
             f();
-
+            cd ..
         end
 
     end

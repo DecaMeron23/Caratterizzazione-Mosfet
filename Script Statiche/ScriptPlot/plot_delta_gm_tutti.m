@@ -12,6 +12,7 @@ function plot_delta_gm_tutti()
 
     for i = 1:length(vds)
         disp("Esecuzione plot per la tensione "+ vds(i) +"V...");
+        figure
         plot_delta_gm_tutti_singola_tensione(vds(i) , tipologia)
     end
 
@@ -32,15 +33,17 @@ function plot_delta_gm_tutti_singola_tensione(vds ,tipologia)
     end
     
     hold off
-    titolo = tipologia+"MOS";
+    titolo = tipologia+"MOS $V_{GS} = " + vds + "V$";
     ytickformat('percentage');
     title(titolo, Interpreter="latex" , FontSize=12);
     ylabel("$ \% \Delta g_m$" , Interpreter="latex" , FontSize=12);
     xlabel("Dose Assorbita $[Mrad]$" , Interpreter="latex" , FontSize=12);
-    yline(0 , "--");
+
+    y_line = yline(0 , "--");
+    y_line.Annotation.LegendInformation.IconDisplayStyle = 'off';
     grid on
     
-    legend(dispositiviLegenda , "Location", "southwest");
+    legend('Location', 'best' ,'NumColumns', 3, 'Interpreter', 'latex' ,'FontSize', 10 );
     
     if(~exist("Plot" , "dir"))
         mkdir plot

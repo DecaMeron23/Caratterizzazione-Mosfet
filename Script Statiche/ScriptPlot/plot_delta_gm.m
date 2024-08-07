@@ -10,9 +10,13 @@ function plot_delta_gm(vds , tipologia , dispositivo , varargin) % vds = 0.45 , 
     delta = delta(indice_vds , :);
 
     %figure;
-    dispositivo = char(dispositivo);
-    titolo = tipologia+"MOS $" + dispositivo(1:3)+"-"+"0.0"+ dispositivo(5:end) + "$" ;
-    plot(grado , delta , Marker="diamond" , LineWidth=1);    
+    elementi = split(dispositivo , "-");
+    W = elementi(1);   
+    L= str2double(elementi(2)) / 1000;
+    L = sprintf('%.3f', L);
+    dim_dispositivo = "$" + W +"-"+ L + "$";
+    titolo = tipologia+"MOS" + dim_dispositivo;
+    plot(grado , delta , Marker="diamond" , LineWidth=1 , DisplayName=dim_dispositivo);    
     ytickformat('percentage');
     title(titolo, Interpreter="latex" , FontSize=12);
     ylabel("$ \% \Delta g_m$" , Interpreter="latex" , FontSize=12);
