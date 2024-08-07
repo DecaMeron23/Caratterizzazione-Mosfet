@@ -22,6 +22,23 @@ function plot_delta_gm_tutti(vds ,tipologia)
     yline(0 , "--");
     grid on
     
-    legend(dispositiviLegenda);
+    legend(dispositiviLegenda , "Location", "southwest");
+    
+    if(~exist("Plot" , "dir"))
+        mkdir plot
+    end
 
+    cd plot
+    
+    vds_str = char(string(vds));
+    pos = strfind(vds_str, '.');
+
+    % Modifica del carattere alla posizione trovata (cambia 'W' in 'w')
+    if ~isempty(pos)
+        vds_str(pos) = '_';
+    end
+
+    saveas(gca , "Delta_Gm_Plot_Vds_"+ vds_str +".png")
+
+    cd ..
 end

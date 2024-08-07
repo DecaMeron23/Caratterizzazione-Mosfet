@@ -12,7 +12,7 @@ function Sovrapposizione_plot_deltaVth_W(file , type)
     nome_metodo = nomeMetodo(metodo);
     
     dispositivi = ["100 / 0.030" "100 / 0.060" "100 / 0.180" "200 / 0.030" "200 / 0.060" "200 / 0.180" "600 / 0.030" "600 / 0.060" "600 / 0.180"];
-    irraggiamenti = [5 50 100 200 600 1000 3000 3500]; %Il 4000 corrisponde all'annealing
+    irraggiamenti = [5 50 100 200 600 1000 3000 3500]; %Il 3500 corrisponde all'annealing
     delta_Vth = readmatrix(file);
 
     % escludiamo la prima colonna che contiene solo il nome dei dispositivi

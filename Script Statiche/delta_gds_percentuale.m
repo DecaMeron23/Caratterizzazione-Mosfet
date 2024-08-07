@@ -50,16 +50,13 @@ function  delta_gds_percentuale() %dispositivo = "200-30" vds = 0.45
                     end
         
                 end
-                
-            cd ..
-        
             catch e
                 
                 %Se non esiste il dispositivo
                 warning("Dispositivo: '" + dispositivo + "' non trovato")
                 delta(: ,i) = zeros(length(valori_vgs) , 1);
             end
-            cd ..
+            cd ..\..
         end
         
         % creaimo la tabella
@@ -70,14 +67,12 @@ function  delta_gds_percentuale() %dispositivo = "200-30" vds = 0.45
         cd DeltaGds;
         %componiamo la matrice da salvare
         
-        valori = [(grado(1:end-1) + "Mrad") , grado(end)];
-
         matrice =  horzcat(valori_vgs' , delta);
-        valori = ["Vgs" , valori];        
+        valori = cellstr(["Vgs" , (grado(1:end-1) + "Mrad") , grado(end)]); 
         matrice = array2table(matrice);
-        vecchi_nomi = 1:width(matrice);
-        matrice = renamevars(matrice,vecchi_nomi,valori);
+        matrice.Properties.VariableNames = valori;
         writetable(matrice , "Delta_ds_" + dispositivo+ ".xls");
+
         cd ..
     end
 end
