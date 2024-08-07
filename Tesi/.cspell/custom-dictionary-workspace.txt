@@ -11,6 +11,7 @@ graphics
 graphicx
 gray
 ionizing
+leakage
 Linear
 Logarithm
 oxide
