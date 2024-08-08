@@ -25,6 +25,7 @@
 
 \usepackage{siunitx}  % Per formattare le unità di misura
 \usepackage{gensymb} % Simboli come °
+\usepackage{xfrac} %per fare le frazioni inclinate
 
 \usepackage{import}
 \usepackage{frontespizio}
@@ -39,14 +40,16 @@
 % Indice
 \tableofcontents
 % Lista delle figure
-% \listoffigures
+\listoffigures
+
+% Inizio Parte principale documento
+\mainmatter
 
 % Introduzione della tesi
 \chapter*{Introduzione}
 \import{./capitoli/introduzione}{introduzione.tex}
 
-% Inizio Parte principale documento
-\mainmatter
+
 
 % ? Il transistore MOSFET
 \chapter{Il transistore MOSFET}
@@ -93,12 +96,14 @@ In questo capitolo si tratteranno i parametri statici di transistori \emph{MOS} 
 \section{Guadagno Intrinseco}
 \import{./capitoli/capitolo2}{guadagno_intrinseco.tex}
 
-% Inizio Parte finale
-\backmatter
 
 % ? Conclusioni
 \chapter*{Conclusioni}
 \import{./capitoli/conclusioni}{conclusioni.tex}
+
+% Inizio Parte finale
+\backmatter
+
 
 \bibliographystyle{IEEEtrans}
 \bibliography{./bibliografia/bibliography.bib}

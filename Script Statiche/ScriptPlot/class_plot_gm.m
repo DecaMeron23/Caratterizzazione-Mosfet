@@ -76,42 +76,72 @@ classdef class_plot_gm
 
         end
 
+        % funzione che crea una tabella unita per le delta gm per tutte le
+        % vds al variare della dose assorbita
+        function delta_gm_tabella()
+
+            array_vds = 150:150:900;
+
+            for vds = array_vds
+                class_plot_gm.delta_gm_tabella_vds(vds);  
+            end
+
+        end
+
         % So che non devo metterla qua ma lo faccio lo stesso, questa
         % funzione unisce tutti i dati delle delta gm per prepararle per
         % latex
         function delta_gm_tabella_vds(vds_mV)
 
-            
-                
             PREFISSO_FILE = "Delta_gm_";
             
-            nomi_tabella = ["5Mrad" , ]
+            nomi_tabella = ["Dispositivo" , "5Mrad" ,"50Mrad" , "100Mrad" , "200Mrad" , "600Mrad"  , "1Grad"  ,"3Grad" , "annealing"];
 
             % definisco le diverse W e L
             array_W = [100 , 200 , 600];
             array_L = [30 , 60 , 180];
             array_vds_mV = 150:150:900; 
+            
             indice_vds = find(array_vds_mV == vds_mV);
-            if ~isempty(indice_vds)
+            if isempty(indice_vds)
                 error("La Vds inidcata in mV non esiste, Vds=" + vds_mV)
             end
-
-            tabella_delta_gm = zeros(length(array_W) * length(array_L), length(nomi_tabella));
-
+            numero_dispositivi = length(array_W) * length(array_L);
+            array_dispositivi = cell(1 , numero_dispositivi);
+            tabella_delta_gm = zeros(numero_dispositivi, length(nomi_tabella)-1);
+            indice_dispositivo = 0;
             %scorriamo tutte le dimensioni
             for i = 1:length(array_W)
                 W = array_W(i);
                 for j = 1:length(array_W)
+                    indice_dispositivo = indice_dispositivo + 1;
                     L = array_L(j);
                     % costruisco il nome del file
-                    file = PREFISSO_FILE + W + "-" + L + ".xls";
+                    dispositivo = W + "-" + L;
+                    file = PREFISSO_FILE + dispositivo + ".xls";
                     temp = readmatrix(file);
                     % esclusiamo il pre irraggiamento
-                    tabella_delta_gm(i , :) = temp(indice_vds , 3:end);
+                    tabella_delta_gm(indice_dispositivo , 1:end) = temp(indice_vds , 3:end);
+                    array_dispositivi{1 , indice_dispositivo} =  dispositivo;
                 end
             end
 
-            cartella = 
+            array_dispositivi = (array_dispositivi)';
+            tabella_delta_gm = num2cell(tabella_delta_gm);
+            
+            tabella_delta_gm = [array_dispositivi , tabella_delta_gm];
+
+            tabella_delta_gm = cell2table(tabella_delta_gm ,"VariableNames", nomi_tabella);
+
+            cartella = "tabelle";
+            if ~exist(cartella , "dir")
+                mkdir(cartella);
+            end
+            cd(cartella)
+            
+                writetable(tabella_delta_gm , "Delta_gm_vds_" + vds_mV + "mV.xls")
+
+            cd ..
 
         end
     end

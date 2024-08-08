@@ -19,7 +19,7 @@ La transconduttanza è definita come la derivata prima della corrente $I_D$ risp
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/TCM/TCM-N4-100-30-NoFit}
   \includegraphics[width=0.49\textwidth]{./capitolo2/TCM/TCM-P1-100-30-NoFit}
-  \caption{Esempio di \emph{TCM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 150 mV$}
+  \caption[Applicazione TCM senza fit polinomiale]{Esempio di \emph{TCM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 150 mV$}
 \end{figure}
 
 Per calcolare il \emph{TCM} si deve trovare il massimo di una funzione, ovvero calcolarne la derivata prima. In questo caso si tratta in realtà di una derivata seconda, essendo già $g_m$ calcolato con una derivata. Il calcolo della derivata non è effettuato su una funzione continua ma su dati misurati con uno step di $5mV$ di $V_{GS}$. Questo fa si che la derivata prima e in modo maggiore la derivata seconda, siano affette da vere e proprie variazioni repentine dovute alla natura granulare dei dati e non da fenomeni fisici. È quindi necessario rendere la funzione studiata meno dipendente da questo effetto. Inoltre, come detto in precedenza, la risoluzione con la quale sono state fatte le misure della corrente di drain è $5mV$ (di $V_{GS}$). Pertanto, con questo metodo si estrarrebbe una soglia che avrebbe una risoluzione di $5mV$, del tutto inaccettabile in quanto sarebbe maggiore delle variazioni di soglia che potrebbero essere indotte dall'irraggiamento.
@@ -29,7 +29,7 @@ Per far fronte a questi due problemi, si è scelto di non tenere conto del massi
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/TCM/TCM-N4-100-30}
   \includegraphics[width=0.49\textwidth]{./capitolo2/TCM/TCM-P1-100-30}
-  \caption{Esempio di \emph{TCM} con fit polinomiale usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 150 mV$}
+  \caption[Applicazione TCM con fit polinomiale di sesto grado]{Esempio di \emph{TCM} con fit polinomiale usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 150 mV$}
 \end{figure}
 
 Lo studio del fit polinomiale risolve il problema della bassa risoluzione di misura, ma presenta una potenziale nuovo problema: il valore della $V_{th}$ calcolata potrebbe variare significativamente al variare del grado della funzione polinomiale interpolante. Per capire l'effetto del grado della funzione interpolante sul valore di tensione di soglia estratto, si sono effettuate le estrazioni considerando i gradi 2, 4, 6 e 8 e si sono studiati i risultati ottenuti. Lo studio si è effettuato su dispositivi PMOS. Una volta scelto il valore del grado della funzione, lo stesso grado sarà utilizzato anche per l'estrazione della tensione di soglia degli NMOS.
@@ -61,7 +61,7 @@ Lo studio del fit polinomiale risolve il problema della bassa risoluzione di mis
 
     \bottomrule
   \end{tabular}
-  \caption{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{TCM} con fit polinomiale di diversi gradi}
+  \caption[Confronto $V_{th}$ al variare del grado del fit polinomiale con il metodo TCM]{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{TCM} con fit polinomiale di diversi gradi}
   \label{tab:GradiTCM}
 \end{table}
 
@@ -97,7 +97,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
         \bottomrule
       \end{tabular}%
     }
-    \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
+    \caption[$V_{th}$ dei dispositivi NMOS estratte con TCM]{$V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
     \label{tab:VthTCMN}
   \end{table}
 
@@ -129,7 +129,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
         \bottomrule
       \end{tabular}%
     }
-    \caption{$V_{th}$ dei dispositivi PMOS estratte con \emph{TCM}}
+    \caption[$V_{th}$ dei dispositivi PMOS estratte con TCM]{$V_{th}$ dei dispositivi PMOS estratte con \emph{TCM}}
     \label{tab:VthTCMP}
   \end{table}
 
@@ -159,10 +159,11 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
       \hline
       600 - 0.060                  & -5.8                                      & -10.9    & 9.3       & 10.8      & 7.9       & 7.0     & 9.9     & 16.5      \\
       \hline
-      600 - 0.180                  & -1.7                                      & -18.9    & 9.2       & 8.8       & 9.3       & 8.8     & 19.6    & 28.9
+      600 - 0.180                  & -1.7                                      & -18.9    & 9.2       & 8.8       & 9.3       & 8.8     & 19.6    & 28.9      \\
+      \bottomrule
     \end{tabular}%
   }
-  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
+  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con TCM]{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
   \label{tab:deltaVthTCMN}
 \end{table}
 
@@ -193,7 +194,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
       \bottomrule
     \end{tabular}%
   }
-  \caption{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{TCM}}
+  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con TCM]{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{TCM}}
   \label{tab:deltaVthTCMP}
 \end{table}
 
@@ -210,7 +211,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
   \includegraphics[width=0.49\textwidth]{./capitolo2/TCM/sovrapposizione-deltaVth-TCM-N600}
   \includegraphics[width=0.49\textwidth]{./capitolo2/TCM/sovrapposizione-deltaVth-TCM-P600}
 
-  \caption{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) e PMOS (a destra) estratte con \emph{TCM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente. Raggruppate per dimensione dello spessore dei dispositivi}
+  \caption[Dati $\Delta V_{th}$ estratti con TCM]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) e PMOS (a destra) estratte con \emph{TCM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente. Raggruppate per dimensione dello spessore dei dispositivi}
   \label{fig:deltaVthTCM}
 \end{figure}
 
@@ -222,7 +223,7 @@ Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of t
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/SDLM/SDLM-N4-100-30-NoFit}
   \includegraphics[width=0.49\textwidth]{./capitolo2/SDLM/SDLM-P1-100-30-NoFit}
-  \caption{Esempio di \emph{SDLM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 900 mV$}
+  \caption[Applicazione SDLM senza fit polinomiale]{Esempio di \emph{SDLM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 900 mV$}
 \end{figure}
 
 Anche per questo metodo si ritrovano le problematiche presenti per il \emph{TCM}: si deve fare il fit di una curva ottenuta come derivata seconda e inoltre la risoluzione della $V_{GS}$ è $5mV$.
@@ -255,7 +256,7 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
     600 - 0.180                  & 454.7                                                                & 446.7 & 441.4 & 441.3 \\
     \hline
   \end{tabular}
-  \caption{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
+  \caption[Confronto $V_{th}$ al variare del grado del fit polinomiale con il metodo SDLM]{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
   \label{tab:GradiSDLM}
 \end{table}
 
@@ -265,7 +266,7 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
   \includegraphics[width=0.49\textwidth]{./capitolo2/SDLM/SDLM-P1-200-30-grado4}
   \includegraphics[width=0.49\textwidth]{./capitolo2/SDLM/SDLM-P1-200-30-grado6}
   \includegraphics[width=0.49\textwidth]{./capitolo2/SDLM/SDLM-P1-200-30-grado8}
-  \caption{Confronto fra differenti fit (al variare del grado della funzione) della curva $\frac{d^2 \ln(I_D)}{d {V_{GS}}^2}$ per un dispositivo PMOS 200-0.030.}
+  \caption[Confronto SDLM tra diversi fit polinomiali a diversi gradi]{Confronto fra differenti fit (al variare del grado della funzione) della curva $\frac{d^2 \ln(I_D)}{d {V_{GS}}^2}$ per un dispositivo PMOS 200-0.030.}
   \label{fig:GradiSDLM}
 \end{figure}
 
@@ -300,7 +301,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
       \bottomrule
     \end{tabular}%
   }
-  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
+  \caption[$V_{th}$ dei dispositivi NMOS estratte con SDLM]{$V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
   \label{tab:VthSDLMN}
 \end{table}
 
@@ -331,7 +332,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
       \bottomrule
     \end{tabular}%
   }
-  \caption{$V_{th}$ dei dispositivi PMOS estratte con \emph{SDLM}}
+  \caption[$V_{th}$ dei dispositivi PMOS estratte con SDLM]{$V_{th}$ dei dispositivi PMOS estratte con \emph{SDLM}}
   \label{tab:VthSDLMP}
 \end{table}
 
@@ -363,7 +364,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
       \bottomrule
     \end{tabular}%
   }
-  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
+  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con SDLM]{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
   \label{tab:deltaVthSDLMN}
 \end{table}
 
@@ -394,7 +395,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
       \bottomrule
     \end{tabular}%
   }
-  \caption{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{SDLM}}
+  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con SDLM]{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{SDLM}}
   \label{tab:deltaVthSDLMP}
 \end{table}
 
@@ -410,7 +411,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
   %W = 600
   \includegraphics[width=0.49\textwidth]{./capitolo2/SDLM/sovrapposizione-deltaVth-SDLM-N600}
   \includegraphics[width=0.49\textwidth]{./capitolo2/SDLM/sovrapposizione-deltaVth-SDLM-P600}
-  \caption{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{SDLM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente. Raggruppate per dimensione dello spessore dei dispositivi}
+  \caption[Dati $\Delta V_{th}$ estratti con SDLM]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{SDLM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente. Raggruppate per dimensione dello spessore dei dispositivi}
   \label{fig:deltaVthSDLM}
 \end{figure}
 
@@ -422,7 +423,7 @@ Operativamente, il tratto sul quale fare il fit lineare è ottenuto prendendo un
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/ELR/LinearFit-N4-100-30}
   \includegraphics[width=0.49\textwidth]{./capitolo2/ELR/LinearFit-P1-100-30}
-  \caption{Fit lineare della caratteristica  $I_D$-$V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030 }
+  \caption[Applicazione ELR]{Fit lineare della caratteristica  $I_D$-$V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030 }
 \end{figure}
 
 Lo svantaggio principale di questo metodo è dato dal fatto che il punto di pendenza massima può essere incerto a causa di possibili effetti quali il degrado della mobilità dei portatori di carica e la possibile presenza di resistenze parassite serie al terminale di source e drain.
@@ -457,7 +458,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
       \bottomrule
     \end{tabular}%
   }
-  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
+  \caption[$V_{th}$ dei dispositivi NMOS estratte con ELR]{$V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
   \label{tab:VthELRN}
 \end{table}
 
@@ -488,7 +489,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
       \bottomrule
     \end{tabular}%
   }
-  \caption{$V_{th}$ dei dispositivi PMOS estratte con \emph{ELR}}
+  \caption[$V_{th}$ dei dispositivi PMOS estratte con ELR]{$V_{th}$ dei dispositivi PMOS estratte con \emph{ELR}}
   \label{tab:VthELRP}
 \end{table}
 
@@ -521,7 +522,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
       \bottomrule
     \end{tabular}%
   }
-  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
+  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con ELR]{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
   \label{tab:deltaVthELRN}
 \end{table}
 
@@ -554,7 +555,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
       \bottomrule
     \end{tabular}%
   }
-  \caption{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{ELR}}
+  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con ELR]{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{ELR}}
   \label{tab:deltaVthELRP}
 \end{table}
 
@@ -571,7 +572,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   % W = 600
   \includegraphics[width=0.49\textwidth]{./capitolo2/ELR/sovrapposizione-deltaVth-FIT-N600}
   \includegraphics[width=0.49\textwidth]{./capitolo2/ELR/sovrapposizione-deltaVth-FIT-P600}
-  \caption{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{ELR} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
+  \caption[Dati $\Delta V_{th}$ estratti con ELR]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{ELR} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
 \end{figure}
 
 \subsection[RM]{Ratio Method}
@@ -584,7 +585,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/RM/RM-N4-100-30}
   \includegraphics[width=0.49\textwidth]{./capitolo2/RM/RM-P1-100-30}
-  \caption{Fit lineare della caratteristica $\frac{I_D}{\sqrt{g_m}}-V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030}
+  \caption[Applicazione RM]{Fit lineare della caratteristica $\frac{I_D}{\sqrt{g_m}}-V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030}
 \end{figure}
 
 
@@ -616,7 +617,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
       \bottomrule
     \end{tabular}%
   }
-  \caption{$V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
+  \caption[$V_{th}$ dei dispositivi NMOS estratte con RM]{$V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
   \label{tab:VthRMN}
 \end{table}
 
@@ -648,7 +649,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
       \bottomrule
     \end{tabular}%
   }
-  \caption{$V_{th}$ dei dispositivi PMOS estratte con \emph{RM}}
+  \caption[$V_{th}$ dei dispositivi PMOS estratte con RM]{$V_{th}$ dei dispositivi PMOS estratte con \emph{RM}}
   \label{tab:VthRMP}
 \end{table}
 
@@ -680,7 +681,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
       \bottomrule
     \end{tabular}%
   }
-  \caption{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
+  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con RM]{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
   \label{tab:deltaVthRMN}
 \end{table}
 
@@ -712,7 +713,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
       \bottomrule
     \end{tabular}%
   }
-  \caption{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{RM}}
+  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con RM]{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{RM}}
   \label{tab:deltaVthRMP}
 \end{table}
 
@@ -727,6 +728,6 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   % W = 600
   \includegraphics[width=0.49\textwidth]{./capitolo2/RM/sovrapposizione-deltaVth-RM-N600}
   \includegraphics[width=0.49\textwidth]{./capitolo2/RM/sovrapposizione-deltaVth-RM-P600}
-  \caption{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{RM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
+  \caption[Dati $\Delta V_{th}$ estratti con RM]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{RM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
 
 \end{figure}

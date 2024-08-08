@@ -11,6 +11,7 @@ graphics
 graphicx
 gray
 ionizing
+isolation
 leakage
 Linear
 Logarithm
@@ -18,4 +19,5 @@ oxide
 Plot
 Radiation
 Second
+shallow
 Transconductance

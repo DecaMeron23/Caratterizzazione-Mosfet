@@ -1,29 +1,34 @@
 
-Gli effetti principali delle radiazioni sui dispositivi elettronici possono essere di due categorie\cite{bib:Effetti_Radiazioni_1987}:
+Gli effetti principali delle radiazioni su dispositivi elettronici possono essere di due categorie\cite{bib:Effetti_Radiazioni_1987}:
 \begin{itemize}
 	\item Ionizzazione, generazione di coppie elettroni-lacune($e-h$)
 	\item Danni da spostamento, dislocazione degli atomi dai loro siti reticolari.
 \end{itemize}
 Mentre il danno da spostamento (DD) non è molto rilevante sui MOSFET, la ionizzazione può comportare variazioni dei parametri elettrici, come: guadagno e tensione di soglia, per questo motivo ci concentreremo solo su gli effetti della ionizzazione.
-\\
+
+\vspace{0.5cm}
 
 Il passaggio di una particella ionizzante, all'interno della materia, comporta una perdita di energia. Questa dissipazione può essere formalizzata come:
-
 $$ \Delta E = \Delta E_{\text{elettronica}} + \Delta E_{nucleare} $$
-
 Perdita di energia elettronica e di energia nucleare, la prima è dovuta dalle iterazioni con gli elettroni negli atomi, mentre la seconda è causata dalle iterazioni con i nuclei degli atomi.
 Gran parte dell'energia persa è elettronica, occasionalmente avvengono \textit{collisioni forti} tali da creare frammenti nucleari, pertanto la perdita di energia totale è una buona approssimazione della perdita dell'energia elettronica\cite{bib:Effetti_Radiazioni_NASA}.
-\\
+
+\vspace{0.5cm}
 
 \subsection{Ionizzazione}
 La perdita di energia elettronica nei semiconduttori provoca la ionizzazione, creazione di coppie elettrone-lacuna ($e-h$). Esiste una proporzionalità diretta tra il numero di coppie $e-h$ e l'energia elettronica persa da parte della particella, per esempio, nel silicio si ha una constante di $\frac{1}{3,6}eV$ mentre per $SiO2$ è di $\frac{1}{18}eV$ \cite{bib:Effetti_Radiazioni_NASA}.
-\\
+
+\vspace{0.5cm}
 
 L'effetto di ionizzazione è diverso nei semiconduttori e nei isolanti, una differenza è che l'effetto si accumuli o si dissipi rapidamente.
-Negli isolanti, come l'ossido di gate dei transistori MOSFET, è presente l'effetto cumulativo. Gli elettroni liberati da una particella ionizzante si possono muovere più facilmente soprattutto grazie a effetti di campo dovuti, ad esempio, a polarizzazioni.
-Al contrario le lacune sono molto meno mobili, la maggior parte di esse sopravvive alla ricombinazione con gli elettroni. Creando perciò una carica positiva all'interno dell'ossido, con uno degli effetti di spostare la tensione di soglia nei MOSFET.
-\\
-\todo[inline]{Parlare delle trappole generate dalle lacune, così da poter introdurre nella Gm la degradazione della mobilità dei portatori}
+Negli isolanti, come l'ossido di gate dei transistori MOSFET, è presente l'effetto cumulativo. Gli elettroni liberati da una particella ionizzante si possono muovere più facilmente, soprattutto grazie a effetti di campo dovuti, ad esempio, a polarizzazioni.
+Al contrario le lacune sono molto meno mobili, dai 5 ai 12 ordini di grandezza inferiori rispetto agli elettroni. La maggior parte delle lacune riesce a sopravvive alla ricombinazione con gli elettroni, creando perciò una carica positiva vicino alla giunzione $Si/SiO_2$, con uno degli effetti di abbassare la tensione di soglia del MOSFET, sia a canale N che a canale P.
+Un'altro effetto presente solo negli NMOS è quello della formazione di un transistor parassita\cite{effetti_radiazioni:CMOS_IC_radiation_hardening_by_design}, questo effetto è dovuto all'aumento delle cariche positive nella \textit{shallow trench isolation} (STI) comportando un aumento degli elettroni nel substrato, che a loro volta, creano un canale conduttivo tra source e drain, aggirando quello principale; questo collegamento fa si che possa esserci un flusso di corrente, anche quando il dispositivo è polarizzato con una $V_{GS} \approx 0$.
+
+\vspace{0.5cm}
+
+% \todo[inline]{Parlare delle trappole generate dalle lacune, così da poter introdurre nella Gm la degradazione della mobilità dei portatori}
+
 La ricottura dell'ossido (\textit{oxide anneals}) è una procedura volta a ripristinare, almeno in parte, le caratteristiche del MOSFET a seguito di dose subita.
 Consiste nel neutralizzare le lacune scaldando il dispositivo, ad esempio, la procedura di annealing che abbiamo eseguito sui nostri dispositivi è stata di portarli ad una temperatura di $100\degree C$ e mantenerla per ventiquattro ore. La ricottura può avvenire anche a temperatura ambiente, ma probabilmente i tempi sarebbero molto lunghi, anche anni\cite{bib:Effetti_Radiazioni_NASA}. 
 
