@@ -76,10 +76,43 @@ classdef class_plot_gm
 
         end
 
-        function outputArg = method1(obj,inputArg)
-            %METHOD1 Summary of this method goes here
-            %   Detailed explanation goes here
-            outputArg = obj.Property1 + inputArg;
+        % So che non devo metterla qua ma lo faccio lo stesso, questa
+        % funzione unisce tutti i dati delle delta gm per prepararle per
+        % latex
+        function delta_gm_tabella_vds(vds_mV)
+
+            
+                
+            PREFISSO_FILE = "Delta_gm_";
+            
+            nomi_tabella = ["5Mrad" , ]
+
+            % definisco le diverse W e L
+            array_W = [100 , 200 , 600];
+            array_L = [30 , 60 , 180];
+            array_vds_mV = 150:150:900; 
+            indice_vds = find(array_vds_mV == vds_mV);
+            if ~isempty(indice_vds)
+                error("La Vds inidcata in mV non esiste, Vds=" + vds_mV)
+            end
+
+            tabella_delta_gm = zeros(length(array_W) * length(array_L), length(nomi_tabella));
+
+            %scorriamo tutte le dimensioni
+            for i = 1:length(array_W)
+                W = array_W(i);
+                for j = 1:length(array_W)
+                    L = array_L(j);
+                    % costruisco il nome del file
+                    file = PREFISSO_FILE + W + "-" + L + ".xls";
+                    temp = readmatrix(file);
+                    % esclusiamo il pre irraggiamento
+                    tabella_delta_gm(i , :) = temp(indice_vds , 3:end);
+                end
+            end
+
+            cartella = 
+
         end
     end
 end
