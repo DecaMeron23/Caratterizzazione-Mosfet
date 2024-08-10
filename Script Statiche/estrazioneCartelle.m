@@ -178,7 +178,7 @@ classdef estrazioneCartelle
     % f
     function esegui_per_ogni_dispositivo(f , no_nf)
         
-         if nargin == 1
+        if nargin == 1
             no_nf = false;
         end
         
@@ -197,6 +197,23 @@ classdef estrazioneCartelle
             cd(cartella_attuale);
             f();
             cd ..
+        end
+
+    end
+
+    function esegui_per_ogni_irraggiamento_e_dispositivo(f , no_nf)
+        
+        if nargin == 1
+            no_nf = false;
+        end
+
+        f_dispositivo = @f_disp;
+
+        estrazioneCartelle.esegui_per_ogni_irraggiamento(f_dispositivo);
+
+
+        function f_disp()
+            estrazioneCartelle.esegui_per_ogni_dispositivo(f , no_nf)
         end
 
     end

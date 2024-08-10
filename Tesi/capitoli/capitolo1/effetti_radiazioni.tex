@@ -21,21 +21,22 @@ La perdita di energia elettronica nei semiconduttori provoca la ionizzazione, cr
 \vspace{0.5cm}
 
 L'effetto di ionizzazione è diverso nei semiconduttori e nei isolanti, una differenza è che l'effetto si accumuli o si dissipi rapidamente.
-Negli isolanti, come l'ossido di gate dei transistori MOSFET, è presente l'effetto cumulativo. Gli elettroni liberati da una particella ionizzante si possono muovere più facilmente, soprattutto grazie a effetti di campo dovuti, ad esempio, a polarizzazioni.
-Al contrario le lacune sono molto meno mobili, dai 5 ai 12 ordini di grandezza inferiori rispetto agli elettroni. La maggior parte delle lacune riesce a sopravvive alla ricombinazione con gli elettroni, creando perciò una carica positiva vicino alla giunzione $Si/SiO_2$, con uno degli effetti di abbassare la tensione di soglia del MOSFET, sia a canale N che a canale P.
+Negli isolanti, come l'ossido di gate dei transistori MOSFET, è presente l'effetto cumulativo. Gli elettroni, liberati da una particella ionizzante, si possono muovere più facilmente soprattutto grazie a effetti di campo dovuti, ad esempio, a polarizzazioni.
+Al contrario le lacune sono molto meno mobili, dai 5 ai 12 ordini di grandezza inferiori rispetto agli elettroni. La maggior parte delle lacune riesce a sopravvive alla ricombinazione con gli elettroni, creando perciò una carica positiva vicino alla giunzione $Si/SiO_2$, con uno degli effetti di diminuire la tensione di soglia del MOSFET a canale P. Mentre negli NMOS dopo aver subito bassi dosaggi, inferiori a $10Mrad$, si può notare un abbassamento della tensione di soglia e un innalzamento per dosi superiori.
+\todo[inlinepar]{Sipiegare perché fa così}    
+
+
 Un'altro effetto presente solo negli NMOS è quello della formazione di un transistor parassita\cite{effetti_radiazioni:CMOS_IC_radiation_hardening_by_design}, questo effetto è dovuto all'aumento delle cariche positive nella \textit{shallow trench isolation} (STI) comportando un aumento degli elettroni nel substrato, che a loro volta, creano un canale conduttivo tra source e drain, aggirando quello principale; questo collegamento fa si che possa esserci un flusso di corrente, anche quando il dispositivo è polarizzato con una $V_{GS} \approx 0$.
 
 \vspace{0.5cm}
 
-% \todo[inline]{Parlare delle trappole generate dalle lacune, così da poter introdurre nella Gm la degradazione della mobilità dei portatori}
-
-La ricottura dell'ossido (\textit{oxide anneals}) è una procedura volta a ripristinare, almeno in parte, le caratteristiche del MOSFET a seguito di dose subita.
-Consiste nel neutralizzare le lacune scaldando il dispositivo, ad esempio, la procedura di annealing che abbiamo eseguito sui nostri dispositivi è stata di portarli ad una temperatura di $100\degree C$ e mantenerla per ventiquattro ore. La ricottura può avvenire anche a temperatura ambiente, ma probabilmente i tempi sarebbero molto lunghi, anche anni\cite{bib:Effetti_Radiazioni_NASA}. 
+La ricottura dell'ossido (\textit{oxide anneals}) è una procedura volta a ripristinare, almeno in parte, le caratteristiche del MOSFET a seguito di dose assorbita.
+Consiste nel neutralizzare le lacune scaldando il dispositivo facendo si che gli elettroni presenti acquisiscano abbastanza energia per potersi ricombinare con le lacune. La procedura di annealing che abbiamo eseguito sui nostri dispositivi è stata di portarli ad una temperatura di $100\degree C$ e mantenerla per ventiquattro ore. La ricottura può avvenire anche a temperatura ambiente, ma probabilmente i tempi sarebbero molto lunghi, anche anni\cite{bib:Effetti_Radiazioni_NASA}. 
 
 \subsection{Misurazione della dose}
 La quantità di radiazioni ionizzanti assorbite da un materiale viene chiamata TID (\textit{total ionizing dose}) ed è espressa in energia su unità di massa.
 La TDI normalmente è misurata in $rad$\footnote{Radiation absorbed dose}, definito come 100 $erg$\footnote{Unità di lavoro corrispondente a $10^{-7} J$} per grammo di materiale, oppure, accolto dal sistema internazionale, in gray($Gy$) dove $1 Gy = 100rad = 1\frac{J}{Kg}$.
-Essendoci una dipendenza tra quantità di energia persa e il materiale su cui essa si sta depositando, spesso insieme all'unità di misura, si indica anche il materiale. 
+Essendoci una dipendenza tra quantità di energia persa e il materiale su cui essa si sta depositando, spesso insieme all'unità di misura, si indica anche il materiale, ad esempio, nel caso del diossido di silicio si indicherà come $rad(SiO_{2})$. 
 
 
 
