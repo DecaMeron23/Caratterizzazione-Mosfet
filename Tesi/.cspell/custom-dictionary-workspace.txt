@@ -20,4 +20,7 @@ Plot
 Radiation
 Second
 shallow
+shiftata
+smooth
 Transconductance
+transconduttanze

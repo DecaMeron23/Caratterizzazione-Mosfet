@@ -8,21 +8,25 @@ $$g_m = \frac{W}{L} \cdot \mu \cdot C_{ox} \cdot (V_{GS} - V_{th})$$
 
 
 \subsection{Calcolo della transconduttanza}
-Derivare dei dati discontinui porta sempre, o quasi sempre, ad avere delle curve spezzate, per le quali è difficile trovare dei valori affidabili per fare \todo[inlinepar]{parola che non mi viene, tipo "ragionamento" o qualche cosa simile. forse: "trarre informazioni utili"}.
-Questo è stato il caso per la transconduttanza; la figura \ref{fig:gm_smooth} (la curva di sinistra) \todo[inlinepar]{da mettere figura con sotto figure} rappresenta la $g_m$ di un transistor  MOSFET a canale N, con $ W = 100\mu m$ e $L = 30 nm$ senza eseguire nessun tipo di smooth, in particolare per alte $V_{GS}$, si nota particolarmente questo difetto.
+Derivare dei dati discontinui porta sempre, o quasi sempre, ad avere delle curve spezzate, per le quali è difficile trarre informazioni utili.
+Questo è stato il caso per la transconduttanza; la figura \ref{fig:gm_smooth:no_smooth} (curva di sinistra) rappresenta la $g_m$ di un transistor  MOSFET a canale N, con $ W = 100\mu m$ e $L = 30 nm$ senza eseguire nessun tipo di smooth; in particolare, per alte $V_{GS}$, questo difetto è molto marcato. Per ridurre questo effetto, oltre ad applicare alla fine uno smooth di ampiezza $5$, due valori prima e due valori dopo; abbiamo calcolato due transconduttanze, la prima ${g_m}^{\prime}$ normalmente, mentre, la seconda ${g_m}^{\prime \prime}$ abbiamo eseguito il rapporto incrementale tra $I_D$ e ${V_{GS}}^*$, tensione gate-source shiftata di una posizione, duplicando il primo valore ed eliminando l'ultimo. In seguito abbiamo trovato la transconduttanza come la media dei singoli valori: 
+$${g_m}_i = \frac{{g_m}_i^{\prime} + {g_m}_i^{\prime \prime}}{2} \text{ } i \in [1 , 2 , 3 . . .]$$
+
+Trovando, per il dispositivo in questione, la curva a figura \ref{fig:gm_smooth:smooth}(curva a destra).
 
 \begin{figure}[t]
     \centering
     % W = 100 
-    \includegraphics[width=0.49\textwidth]{./capitolo2/transconduttanza/estrazione_dati/gm_no_smooth.png}
-    \includegraphics[width=0.49\textwidth]{./capitolo2/transconduttanza/estrazione_dati/gm_smooth.png}
+    \subfloat[$g_m$ senza utilizzo dello smooth]{\includegraphics[width=0.49\textwidth]{./capitolo2/transconduttanza/estrazione_dati/gm_no_smooth.png}\label{fig:gm_smooth:no_smooth}}
+    \subfloat[$g_m$ con utilizzo di smooth]{\includegraphics[width=0.49\textwidth]{./capitolo2/transconduttanza/estrazione_dati/gm_smooth.png}\label{fig:gm_smooth:smooth}}
 
-    \caption[Confronto $g_m$ con utilizzo di smooth e senza]{Confronto $g_m$ con utilizzo di smooth e senza}
+    \caption[Confronto $g_m$ senza utilizzo di smooth e con utilizzo di smooth]{Confronto delle transconduttanze calcolate senza applicare smooth e con l'utilizzo di smooth.}
     \label{fig:gm_smooth}
 \end{figure}
 
 
-\todo[inline]{Da aggiungere cose ho scritto troppo poco}
+% \todo[inline]{Da aggiungere cose ho scritto troppo poco}
+\vspace{0.5cm}
 
 A figura \ref{fig:gm_w} vengono mostrati i grafici relativi alla transconduttanza per i diversi transistori MOSFET, sia a canale N che P.
 

@@ -33,10 +33,10 @@ classdef class_plot_gm
                 type = char(upper(elementi(1)));
                 type = type(1);
                 %estraiamo i dati
-                gm = readmatrix("gm.txt");
+                temp = readmatrix("gm.txt");
                 
-                vgs = gm(: , 1);
-                gm = gm(: , indice_vds);
+                vgs = temp(: , 1);
+                gm = temp(: , (indice_vds+1));
                 
                 figura = find(possibili_w == W);
                 
