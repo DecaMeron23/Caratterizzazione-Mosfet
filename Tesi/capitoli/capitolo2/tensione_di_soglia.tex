@@ -65,8 +65,8 @@ Lo studio del fit polinomiale risolve il problema della bassa risoluzione di mis
   \label{tab:GradiTCM}
 \end{table}
 
-Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei fit fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con fit di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere molto diverso da quelli calcolati con fit di grado maggiore. Dunque, al fine di fittare al meglio la curva, si è scelto un fit polinomiale di grado 6. In Tabella \ref{tab:VthTCMN} e \ref{tab:VthTCMP} sono riportati i risultati ottenuti con il metodo \emph{TCM} e fit polinomiale di grado 6 su dispositivi PMOS e NMOS pre e post irraggiamento.
-Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafici a figura \ref{fig:deltaVthTCM} vengono riportati i valori della $\Delta V_{th}$ in funzione della dose assorbita.
+Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei fit fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con fit di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere molto diverso da quelli calcolati con fit di grado maggiore. Dunque, al fine di fittare al meglio la curva, si è scelto un fit polinomiale di grado 6. In Tabella \ref{tab:VthTCMN} e \ref{tab:VthTCMP} sono riportati i risultati ottenuti con il metodo \emph{TCM} e fit polinomiale di grado 6 su dispositivi PMOS\footnote{Per i PMOS viene indicata la $|V_{th}|$ } e NMOS pre e post irraggiamento.
+Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafici a figura \ref{fig:deltaVthTCM} vengono riportati i valori della $\Delta V_{th}$ in funzione della dose assorbita\footnote{La $\Delta V_{th} $ riportata per i PMOS è da intendersi come: $\Delta V_{th} = |V_{th_{post}}| - |V_{th_{pre}}|$}.
 
 
 \begin{center}
@@ -107,7 +107,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
     \resizebox{\textwidth}{!}{%
       \begin{tabular}{c c c c c c c c c c }
         \toprule
-        \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
+        \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
         \cmidrule{2-10}
                                      & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
         \midrule
@@ -129,7 +129,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
         \bottomrule
       \end{tabular}%
     }
-    \caption[$V_{th}$ dei dispositivi PMOS estratte con TCM]{$V_{th}$ dei dispositivi PMOS estratte con \emph{TCM}}
+    \caption[$|V_{th}|$ dei dispositivi PMOS estratte con TCM]{$|V_{th}|$ dei dispositivi PMOS estratte con \emph{TCM}}
     \label{tab:VthTCMP}
   \end{table}
 
@@ -235,7 +235,7 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
   \centering
   \begin{tabular}{m{2.1cm} m{2cm} m{2cm} m{2cm} m{2cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{4}{c}{$V_{th} [mV] \text{ con interpolante di grado:}$}                         \\
+    \multirow{2}{*}{Dispositivo} & \multicolumn{4}{c}{$|V_{th}| [mV] \text{ con interpolante di grado:}$}                         \\
     \cmidrule{2-5}
                                  & 2                                                                    & 4     & 6     & 8     \\
     \midrule
@@ -256,7 +256,7 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
     600 - 0.180                  & 454.7                                                                & 446.7 & 441.4 & 441.3 \\
     \hline
   \end{tabular}
-  \caption[Confronto $V_{th}$ al variare del grado del fit polinomiale con il metodo SDLM]{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
+  \caption[Confronto $|V_{th}|$ al variare del grado del fit polinomiale con il metodo SDLM]{Confronto dei valori di $|V_{th}|$ dei dispositivi PMOS ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
   \label{tab:GradiSDLM}
 \end{table}
 
@@ -272,7 +272,7 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
 
 Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), mentre le misure ottenute con queste ultime sono, in genere, molto simili tra loro. Ad esempio, osservando i grafici relativi alla SDLM del PMOS 200-0.030 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2 \ln I_D}{dV_{GS}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta pertanto necessario estrarre le tensioni di soglia utilizzando una funzione polinomiale di grado 6.
 
-Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i dispositivi NMOS: tabelle \ref{tab:VthSDLMN} e \ref{tab:deltaVthSDLMN}, e per i PMOS: tabelle \ref{tab:VthSDLMP} e \ref{tab:deltaVthSDLMP}. Mentre in figura \ref{fig:deltaVthSDLM} si riportano i grafici che mostrano l'andamento della variazione della tensione di soglia ($\Delta V_{th}$), in funzione della dose assorbita.
+Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i dispositivi NMOS: tabelle \ref{tab:VthSDLMN} e \ref{tab:deltaVthSDLMN}, e per i PMOS\footnote{Per i PMOS viene indicato il modulo della $V_{th}$ e per il calcolo della variazione si utilizza: $\Delta V_{th} = |V_{th_{post}}| - |V_{th_{pre}}|$.}: tabelle \ref{tab:VthSDLMP} e \ref{tab:deltaVthSDLMP}. Mentre in figura \ref{fig:deltaVthSDLM} si riportano i grafici che mostrano l'andamento della variazione della tensione di soglia ($\Delta V_{th}$), in funzione della dose assorbita.
 
 \begin{table}[H]
   \renewcommand{\arraystretch}{1.3}
@@ -310,7 +310,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c c }
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
+      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
       \cmidrule{2-10}
                                    & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -332,7 +332,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
       \bottomrule
     \end{tabular}%
   }
-  \caption[$V_{th}$ dei dispositivi PMOS estratte con SDLM]{$V_{th}$ dei dispositivi PMOS estratte con \emph{SDLM}}
+  \caption[$|V_{th}|$ dei dispositivi PMOS estratte con SDLM]{$|V_{th}|$ dei dispositivi PMOS estratte con \emph{SDLM}}
   \label{tab:VthSDLMP}
 \end{table}
 
@@ -467,7 +467,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c c }
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
+      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
       \cmidrule{2-10}
                                    & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -489,7 +489,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
       \bottomrule
     \end{tabular}%
   }
-  \caption[$V_{th}$ dei dispositivi PMOS estratte con ELR]{$V_{th}$ dei dispositivi PMOS estratte con \emph{ELR}}
+  \caption[$|V_{th}|$ dei dispositivi PMOS estratte con ELR]{$|V_{th}|$ dei dispositivi PMOS estratte con \emph{ELR}}
   \label{tab:VthELRP}
 \end{table}
 
@@ -627,7 +627,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c c }
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
+      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
       \cmidrule{2-10}
                                    & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -649,7 +649,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
       \bottomrule
     \end{tabular}%
   }
-  \caption[$V_{th}$ dei dispositivi PMOS estratte con RM]{$V_{th}$ dei dispositivi PMOS estratte con \emph{RM}}
+  \caption[$|V_{th}|$ dei dispositivi PMOS estratte con RM]{$|V_{th}|$ dei dispositivi PMOS estratte con \emph{RM}}
   \label{tab:VthRMP}
 \end{table}
 

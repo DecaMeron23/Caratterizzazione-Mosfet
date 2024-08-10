@@ -5,7 +5,7 @@ function plot_gm(file ,nomeCartella , dati)
     titolo = titoloPlot(nomeCartella);
     
     if nargin == 3
-        % Se la funzione è chiamata con 3 argomenti prendiamo i dati dal
+        % Se la funzioneop è chiamata con 3 argomenti prendiamo i dati dal
         % terzo
         vgs = dati{1};
         id = dati{2};

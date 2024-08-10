@@ -89,12 +89,9 @@ classdef GuadagnoIntrinseco
         % esegue i plot della variazione del guadagno intrinseco plottanto
         % il pre irraggiamento e il postirraggiamento 3Grad
         function calcolaVariazioneDose()
-            %Definisco i colori per il plot
-            palet_matlab = get(gca , "colororder");
-            
             close all
 
-            COLORI = [palet_matlab(1 , :) ;  palet_matlab(2 , :) ; palet_matlab(3,:)];
+            COLORI = lines(3);
             limiti_X = [1e-2 1e2];
             limiti_Y = [1e-1 1e3];
             array_W = [100 200 600];
@@ -205,9 +202,6 @@ classdef GuadagnoIntrinseco
         %specifiche Vds e Vgs al variare dell'irraggiamento sia per P che N
         %iniseme... Da lanciare nella cartella Misure Statiche.
         function plot_guadagno_intrinseco_irraggiamento()
-            %Definisco i colori per il plot
-            palet_matlab = get(gca , "colororder");
-            
             close all
 
             
@@ -227,7 +221,10 @@ classdef GuadagnoIntrinseco
             NOME_X_TICK = {0 500 1000 1500 2000 2500 3000 "annealing"};
             X_TICK = [0 500 1000 1500 2000 2500 3000 3500];
             X = [0 5 50 100 200 600 1000 3000 3500];
-            COLORI = [palet_matlab(1 , :) ; palet_matlab(2 , :)];
+            COLORI = lines(2);
+            LIMITI_X = [0 3500];
+
+            NOME_CARTELLA_TABELLE = NOME_CARTELLA + "\dati";
 
 
             ARRAY_W = [100 200 600];
@@ -242,21 +239,33 @@ classdef GuadagnoIntrinseco
             cd P1\
             dati = NaN(9 , 9);
             dati_pre = NaN(9 , 1);
+            dati_gm = NaN(9 ,9 );
+            dati_gds = NaN(9 , 9);
+            dati_guadagno = NaN(9 , 9);
 
             estrazioneCartelle.esegui_per_ogni_irraggiamento_e_dispositivo(fun , true);
                 
             dati_P = dati;
-
+            dati_P_gm = dati_gm;
+            dati_P_gds = dati_gds;
+            dati_P_guadagno = dati_guadagno;
+            
             %mi muovo dentro gli N
             cd ..\N4\
 
             dati = NaN(9 ,9);
             dati_pre = NaN(9 , 1);
+            dati_gm = NaN(9 ,9 );
+            dati_gds = NaN(9 , 9);
+            dati_guadagno = NaN(9 , 9);
             
             estrazioneCartelle.esegui_per_ogni_irraggiamento_e_dispositivo(fun , true);
 
             dati_N = dati;
-
+            dati_N_gm = dati_gm;
+            dati_N_gds = dati_gds;
+            dati_N_guadagno = dati_guadagno;
+            
             cd ..
 
             % facciamo i plot
@@ -270,42 +279,110 @@ classdef GuadagnoIntrinseco
 
                 figure
                 setUpPlot();
-               
+
                 indice_L = mod((indice_dispositivo-1) , 3)+1;
                 indice_W = floor((indice_dispositivo-1)/3)+1;
 
                 dispositivo = string(ARRAY_W(indice_W)) + "-" + string(ARRAY_L(indice_L));
 
-               
+
                 plot(X , dati_P(indice_dispositivo , :) , "DisplayName", "PMOS" , "Color", COLORI(1 ,: ) , "LineStyle","-" , "Marker","o");
                 hold on
-             
 
-                
-                
+
+
+
                 plot(X , dati_N(indice_dispositivo , : ) , "DisplayName", "NMOS" , "Color", COLORI(2 , : ), "LineStyle","-" , "Marker","square");
-             
+
 
                 ylabel(NOME_YLABEL , "Interpreter","latex");
                 xlabel(NOME_XLABEL , "Interpreter","latex");
-                
+
                 xticks(X_TICK);
 
                 xticklabels(NOME_X_TICK);
 
+                xlim(LIMITI_X)
+
                 title(dispositivo);
 
                 legend("Location", "southeast" , "FontSize", 10 , "Interpreter","latex");
-                
+
                 nomeFile = PREFISSO_NOME_FILE + dispositivo + ".png";
                 grid on
 
-                
+
                 saveas(gcf , nomeFile);
-                
+
             end
 
             cd ..
+
+            % Salviamo le tabelle
+            if ~exist(NOME_CARTELLA_TABELLE , "dir")
+                mkdir(NOME_CARTELLA_TABELLE)
+            end
+            
+            cd(NOME_CARTELLA_TABELLE)
+
+            %creaiamo i nomi delle righe
+            NOMI_DISPOSITIVI = cell(9 , 1);
+            i = 0;
+            for W = ARRAY_W
+                 for L = ARRAY_L
+                     i = i+1;
+                     NOMI_DISPOSITIVI{i} = W + "-" + L;
+                 end
+            end
+
+            NOME_X_TICK = ["Dispositivo" , string(X)];
+
+            dati_P = num2cell(dati_P);
+            dati_P = [NOMI_DISPOSITIVI , dati_P];
+            dati_P = array2table(dati_P , "VariableNames", NOME_X_TICK);
+            
+            dati_P_gm = num2cell(dati_P_gm);
+            dati_P_gm = [NOMI_DISPOSITIVI , dati_P_gm];
+            dati_P_gm = array2table(dati_P_gm , "VariableNames", NOME_X_TICK);
+            
+            dati_P_gds = num2cell(dati_P_gds);
+            dati_P_gds = [NOMI_DISPOSITIVI , dati_P_gds];
+            dati_P_gds = array2table(dati_P_gds , "VariableNames", NOME_X_TICK);
+           
+            dati_P_guadagno = num2cell(dati_P_guadagno);
+            dati_P_guadagno = [NOMI_DISPOSITIVI , dati_P_guadagno];
+            dati_P_guadagno = array2table(dati_P_guadagno , "VariableNames", NOME_X_TICK);
+           
+            dati_N = num2cell(dati_N);
+            dati_N = [NOMI_DISPOSITIVI , dati_N];
+            dati_N = array2table(dati_N , "VariableNames", NOME_X_TICK);
+            
+            dati_N_gm = num2cell(dati_N_gm);
+            dati_N_gm = [NOMI_DISPOSITIVI , dati_N_gm];
+            dati_N_gm = array2table(dati_N_gm , "VariableNames", NOME_X_TICK);
+            
+            dati_N_gds = num2cell(dati_N_gds);
+            dati_N_gds = [NOMI_DISPOSITIVI , dati_N_gds];
+            dati_N_gds = array2table(dati_N_gds , "VariableNames", NOME_X_TICK);
+            
+            
+            dati_N_guadagno = num2cell(dati_N_guadagno);
+            dati_N_guadagno = [NOMI_DISPOSITIVI , dati_N_guadagno];
+            dati_N_guadagno = array2table(dati_N_guadagno , "VariableNames", NOME_X_TICK);
+       
+
+            writetable(dati_P , "Dati_P.xls");
+            writetable(dati_P_gm , "Dati_P_gm.xls");
+            writetable(dati_P_gds , "Dati_P_gds.xls");
+            writetable(dati_P_guadagno , "Dati_P_guadagno_intrinseco.xls");
+            
+            writetable(dati_N , "Dati_N.xls");
+            writetable(dati_N_gm , "Dati_N_gm.xls");
+            writetable(dati_N_gds , "Dati_N_gds.xls");
+            writetable(dati_N_guadagno , "Dati_N_guadagno_intrinseco.xls");
+            
+            cd ..\..
+
             
             function f()
                 temp = split(pwd , "\");
@@ -314,7 +391,7 @@ classdef GuadagnoIntrinseco
                 
 
                 temp = split(cartella_dispositivo , "-");
-                tipo_asic = temp(1);
+                tipo_asic = char(temp(1));
                 W = str2double(temp(2));
                 L = str2double(temp(3));
 
@@ -328,12 +405,18 @@ classdef GuadagnoIntrinseco
                              
                 temp = readmatrix(FILE_GM);
                 gm = temp(: , 2:end);
+                
                 vgs = temp(: , 1);
 
+                % se è P non faccio nulla
+                if tipo_asic(1) == "P"
+                    vgs;
+                end
+                
                 indice_colonna_gm = ARRAY_VDS == Vds_mV;
                 [~ , indice_riga_gm] = min(abs(vgs - Vgs_mV/1000));
 
-                gm = gm(241 , 4);
+                gm = gm(indice_riga_gm , indice_colonna_gm);
 
                 % ora la gds
 
@@ -341,10 +424,15 @@ classdef GuadagnoIntrinseco
                 gds = temp(: , 2:end);
                 vds = temp(: , 1);
 
-                % indice_colonna_gds = ARRAY_VGS == Vgs_mV;
-                % [~ , indice_riga_gds] = min(abs(vds - Vds_mV/1000));
+                % Se è un P impostiamo la vds come vsd
+                if tipo_asic(1) == "P"
+                    vds = 0.9 - vds;
+                end
+
+                indice_colonna_gds = ARRAY_VGS == Vgs_mV;
+                [~ , indice_riga_gds] = min(abs(vds - Vds_mV/1000));
                 
-                gds = gds(121 , 6);
+                gds = gds(indice_riga_gds , indice_colonna_gds);
 
 
                 % bene salviamo i dati...
@@ -353,6 +441,9 @@ classdef GuadagnoIntrinseco
                 indice_W = find(ARRAY_W == W);
                 indice_L = find(ARRAY_L == L);
                 
+                if W == 600 && L == 30
+                    disp("600-30")
+                end
 
                 indice_riga_dati = (indice_W-1)*3 + indice_L;
                 
@@ -384,13 +475,17 @@ classdef GuadagnoIntrinseco
                
                 guadagno_intrinseco = gm/gds;
 
+                dati_gm(indice_riga_dati , indice_colonna_dati) = gm;
+                dati_gds(indice_riga_dati , indice_colonna_dati) = gds;
+                dati_guadagno(indice_riga_dati , indice_colonna_dati) = guadagno_intrinseco;
+
                 if(indice_colonna_dati == 1)
                     dati_pre(indice_riga_dati) = guadagno_intrinseco;
+                    dati(indice_riga_dati) = 1;
+                else
+                    % divido il dato con il pre irraggiamento
+                    dati(indice_riga_dati , indice_colonna_dati) = guadagno_intrinseco / dati_pre(indice_riga_dati);
                 end
-
-                % divido il dato con il pre irraggiamento
-                dati(indice_riga_dati , indice_colonna_dati) = guadagno_intrinseco / dati_pre(indice_riga_dati);
-                
                 % fine?
             end
         end
