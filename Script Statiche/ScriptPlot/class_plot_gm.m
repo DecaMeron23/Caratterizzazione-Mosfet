@@ -43,9 +43,16 @@ classdef class_plot_gm
                 % apriamo la figura corrispondente
                 figure(figura);
                 
+                XLABEL = "$V_{GS}[V]$";
+
+                if type == "P"
+                    XLABEL = "$|V_{GS}|[V]$";
+                end
+
+                
                 % Eseguiamo il plot
                 plot(vgs , gm , DisplayName="L = $"+L+"nm$");
-                xlabel("$V_{GS}[V]$" , Interpreter="latex");
+                xlabel( XLABEL, Interpreter="latex");
                 xticks(vgs(1):0.2:vgs(end));
                 ylabel("$g_m[\frac{A}{V}]$" , Interpreter="latex");
                 title( type + "MOS $W="+ W + "\mu m$" , Interpreter="latex")
