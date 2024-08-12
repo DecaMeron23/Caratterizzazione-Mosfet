@@ -33,7 +33,7 @@ classdef EstrazioneDati
             
             id = id(: , 2:end); % escludiamo lo zero
             
-            %per i dispositivi P si intende |Vds|
+            %per i dispositivi P si intende Vsd
             if(length(COLONNE_ID) == 7) % file
                 vds = 150 : 150 : 900;
             elseif(length(COLONNE_ID) == 11) % file _2.txt

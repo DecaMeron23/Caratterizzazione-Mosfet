@@ -9,7 +9,7 @@ $$g_m = \frac{W}{L} \cdot \mu \cdot C_{ox} \cdot (V_{GS} - V_{th})$$
 
 \subsection{Calcolo della transconduttanza}
 Derivare dei dati discontinui porta sempre, o quasi sempre, ad avere delle curve spezzate, per le quali è difficile trarre informazioni utili.
-Questo è stato il caso per la transconduttanza; la figura \ref{fig:gm_smooth:no_smooth} (curva di sinistra) rappresenta la $g_m$ di un transistor  MOSFET a canale N, con $ W = 100\mu m$ e $L = 30 nm$ senza eseguire nessun tipo di smooth; in particolare, per alte $V_{GS}$, questo difetto è molto marcato. Per ridurre questo effetto, oltre ad applicare alla fine uno smooth di ampiezza $5$, due valori prima e due valori dopo; abbiamo calcolato due transconduttanze, la prima ${g_m}^{\prime}$ normalmente, mentre, la seconda ${g_m}^{\prime \prime}$ abbiamo eseguito il rapporto incrementale tra $I_D$ e ${V_{GS}}^*$, tensione gate-source shiftata di una posizione, duplicando il primo valore ed eliminando l'ultimo. In seguito abbiamo trovato la transconduttanza come la media dei singoli valori: 
+Questo è stato il caso per la transconduttanza; la figura \ref{fig:gm_smooth:no_smooth} (curva di sinistra) rappresenta la $g_m$ di un transistor  MOSFET a canale N, con $ W = 100\mu m$ e $L = 30 nm$ senza eseguire nessun tipo di smooth; in particolare, per alte $V_{GS}$, il difetto è molto marcato. Per ridurre questo effetto, oltre ad applicare alla fine uno smooth di ampiezza $5$, due valori prima e due valori dopo; abbiamo calcolato due transconduttanze, la prima ${g_m}^{\prime}$ normalmente, mentre, la seconda ${g_m}^{\prime \prime}$ abbiamo eseguito il rapporto incrementale tra $I_D$ e ${V_{GS}}^*$, tensione gate-source shiftata di una posizione, duplicando il primo valore ed eliminando l'ultimo. In seguito abbiamo trovato la transconduttanza come la media dei singoli valori: 
 $${g_m}_i = \frac{{g_m}_i^{\prime} + {g_m}_i^{\prime \prime}}{2} \text{ } i \in [1 , 2 , 3 . . .]$$
 
 Trovando, per il dispositivo in questione, la curva a figura \ref{fig:gm_smooth:smooth}(curva a destra).
@@ -54,7 +54,11 @@ A figura \ref{fig:gm_w} vengono mostrati i grafici relativi alla transconduttanz
 
 \vspace{0.5cm}
 
-Uno dei effetti delle radiazioni ionizzanti è quella di ridurre la mobilità dei portatori di carica $\mu$ all'interno del canale. Osservando  l'espressione della $g_m$ si nota la proporzionalità diretta con la mobilità dei portatori comportando una riduzione della transconduttanza, all'aumentare della dose assorbita. Effetto confermato dai dati sperimentali (vedi tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}) ottenuti dai transistori sotto osservazione in questo lavoro di tesi.
+Uno dei effetti delle radiazioni ionizzanti è quella di ridurre la mobilità dei portatori di carica $\mu$ all'interno del canale. Osservando  l'espressione della $g_m$ si nota la proporzionalità diretta con la mobilità dei portatori comportando una riduzione della transconduttanza, all'aumentare della dose assorbita. Per confermare questo effetto, si è calcolata la variazione della transconduttanza, in percentuale, all'aumentare della dose assorbita:
+
+$$\Delta {g_m}_{post} {\%} = \frac{{g_m}_{post} - {g_m}_{pre}}{{g_m}_{pre}}\cdot 100$$
+
+Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza per un certo dosaggio, e similmente per ${g_m}_{pre}$, il massimo valore pre-irraggiamento. L'effetto è stato confermato dai dati sperimentali (vedi tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}) ottenuti dai transistori\footnote{La Vds da cui è stata estratta la transconduttanza è di $0.9V$, nel caso di NMOS, mentre per PMOS $-0.9V$.} sotto osservazione in questo lavoro di tesi.
 
 \begin{table}[t]
     \renewcommand{\arraystretch}{1.3}
@@ -82,7 +86,7 @@ Uno dei effetti delle radiazioni ionizzanti è quella di ridurre la mobilità de
             600-0.180                      & 0.8105                                               & 1.0132   & -4.2553   & -4.5086   & -4.8632   & -5.6738 & -8.0041 & -8.7133   \\
             \bottomrule
         \end{tabular}%
-    }
+        }
     \caption[Dati $\Delta g_m \%$ al variare della dose assorbita, NMOS]{Variazioni della transconduttanza al variare della dose assorbita in un MOSFET a canale N.}
     \label{tab:deltaGm_N}
 \end{table}
