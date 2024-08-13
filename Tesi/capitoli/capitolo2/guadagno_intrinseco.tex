@@ -1,21 +1,23 @@
-Il guadagno intrinseco ($A_{vi}$) è definito come il massimo guadagno ottenibile da un MOSFET, polarizzato da un generatore di corrente ideale. Fornisce una misura di quanto un MOSFET può amplificare senza essere influenzato da elementi esterni. Esso viene calcolato come:
+Il guadagno intrinseco ($A_{vi}$) è definito come il massimo guadagno ottenibile da un MOSFET, polarizzato da un generatore di corrente ideale.
+Fornisce una misura di quanto un MOSFET possa amplificare senza essere influenzato da elementi esterni.
+Esso viene calcolato come:
 
 $$A_{vi} = g_{m} \cdot r_0 = \frac{g_{m}}{g_{ds}} $$
 
-Con $g_m$ la transconduttanza e $r_0$ la resistenza in uscita dal transistor (${1}/{g_{ds}}$). Spesso, il grafico di $A_{vi}$, viene mostrato in funzione del coefficiente di inversione ($I_{C0}$), parametro utile per descrivere il grado di inversione del canale (debole: per valori inferiori a $0.1$, moderata: tra $0.1$ e $10$, forte: superiori a $10$) il quale si può ricavare dalla $I_d$ ad alte $V_{ds}$:
+Con $g_m$ la transconduttanza e $r_0$ la resistenza in uscita dal transistor (${1}/{g_{ds}}$). Spesso, il grafico di $A_{vi}$, viene mostrato in funzione del coefficiente di inversione ($I_{C0}$), parametro utile per descrivere il grado di inversione del canale (debole: per valori inferiori a $0.1$, moderata: tra $0.1$ e $10$, forte: superiori a $10$) il quale si può ricavare dalla $I_D$ ad alte $V_{DS}$:
 
-$$I_{C0} = \frac{I_{d}}{I_{z}^{*}} \cdot \frac{L}{W}$$
+$$I_{C0} = \frac{I_{D}}{I_{Z}^{*}} \cdot \frac{L}{W}$$
 
-La corrente caratteristica ($I_{z}^{*}$) è stata misurata pre-irraggiamento. I valori sono riportati nella tabella \ref{tab:corrente_caratteristica}.
+La corrente caratteristica ($I_{Z}^{*}$) è stata misurata pre-irraggiamento. I valori sono riportati nella tabella \ref{tab:corrente_caratteristica}.
 
 \begin{table}[ht]
     \centering
     \begin{tabular}{c c}
         \toprule
-        Tipologia Canale & $I_{z}^{*}$ \\
+        Tipologia Canale & $I_{Z}^{*}[nA]$ \\
         \midrule
-        N                & $470nA$     \\
-        P                & $370nA$     \\
+        N                & $470$     \\
+        P                & $370$     \\
         \bottomrule
     \end{tabular}
     \caption[Valori estratti $I_z^*$]{Valori della corrente caratteristica misurati prima dell'irraggiamento}
@@ -24,11 +26,8 @@ La corrente caratteristica ($I_{z}^{*}$) è stata misurata pre-irraggiamento. I 
 
 
 Alla figura \ref{fig:variazione_guadagnoIntrinseco} vengono mostrati i grafici $A_{vi}$ - $I_{C0}$, raggruppati per larghezza di canale, prima e dopo l'irraggiamento a $3Grad$, per transistori MOSFET a canale N e P.
-
-\vspace{0.5cm}
-
 Mentre nei NMOS si nota un innalzamento significativo della curva $A_{vi}$ - $I_{C0}$, soprattutto per lunghezze di canale più grandi. Questo non sembra verificarsi per i PMOS, infatti, l'offset della curva è leggermente negativo rispetto ai rispettivi grafici pre-irraggiamento. Effetto più visibile per le lunghezze di canale più grandi.
-\todo[inline]{Dare una spiegazione a questo effetto(?), e magari riscriverla meglio}  
+\todo[inlinepar]{Dare una spiegazione a questo effetto(?), e magari riscriverla meglio}  
 
 
 \begin{figure}[ht]
