@@ -29,7 +29,7 @@ classdef class_delta_I_OFF
                         cd(cartella_dispositivo);
                         for j = 1:length(valori_vds)
 
-                            if ~exist("id-vgs.txt","file") && ~exist("id_vgs.txt","file")
+                            if contains(cartella_dispositivo , "nf")
                                 delta(j , i) = NaN;
                             else
                                 I_off = class_delta_I_OFF.calcola_I_off(valori_vds(j), char(cartella_dispositivo));
@@ -194,7 +194,7 @@ classdef class_delta_I_OFF
                 NOME_FIGURA = sprintf("Delta_I_off_W_%d_VDS_%d_mV.png" , W , VDS_mV);
 
                 if TIPO_DISPOSITIVO == "P"
-                    LOCATION = "best";
+                    LOCATION = "northeast";
                 elseif TIPO_DISPOSITIVO == "N"
                     LOCATION = "northwest";
                 end
