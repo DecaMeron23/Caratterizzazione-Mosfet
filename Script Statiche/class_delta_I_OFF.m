@@ -1,5 +1,7 @@
 classdef class_delta_I_OFF
+    
     methods(Static)
+
         function delta_I_off()
             
             [cartelle]= estrazioneCartelle.getCartelle();
@@ -36,7 +38,7 @@ classdef class_delta_I_OFF
                                         I_off_pre(j , 1) = I_off;
                                         delta( j , 1) = 0;
                                     else
-                                        delta(j , i) = abs((I_off - I_off_pre(j,1))); 
+                                        delta(j , i) = abs(I_off) - abs(I_off_pre(j,1)); 
                                 end
                             end
                         end
@@ -158,7 +160,7 @@ classdef class_delta_I_OFF
             figure
 
             X_LABEL = "\textit{TID} $[Mrad]$";
-            Y_LABEL = "$\Delta I_{off} [A]$";
+            Y_LABEL = "$\Delta I_{off} [nA]$";
 
             cd tabelle\
             
@@ -191,7 +193,12 @@ classdef class_delta_I_OFF
                 
                 NOME_FIGURA = sprintf("Delta_I_off_W_%d_VDS_%d_mV.png" , W , VDS_mV);
 
-                legend(Interpreter="latex" , FontSize=12 , Location="best");
+                if TIPO_DISPOSITIVO == "P"
+                    LOCATION = "best";
+                elseif TIPO_DISPOSITIVO == "N"
+                    LOCATION = "northwest";
+                end
+                legend(Interpreter="latex" , FontSize=12 , Location= LOCATION);
                 ylabel(Y_LABEL);
                 xlabel(X_LABEL);
                 xlim([0 3500]);
@@ -206,6 +213,7 @@ classdef class_delta_I_OFF
                 % Imposta le etichette degli x-ticks
                 ax.XTickLabel = X_TICKS_LABEL;
                 
+                % ax.YScale = "log";
                 saveas(gcf , NOME_FIGURA);
 
                 cd ..\..
@@ -218,7 +226,7 @@ classdef class_delta_I_OFF
 
         end
 
-        % Funzione che estrae la I_off
+        % Funzione che estrae la I_off in nA
         function I_off = calcola_I_off(vds, dispositivo)
 
             if exist("id-vgs.txt","file")
@@ -229,18 +237,19 @@ classdef class_delta_I_OFF
 
             id_vgs = id_vgs(1,[2,7,12,17,22,27,32]);
 
-            L_dispositivo = str2double(string(dispositivo(8:end)))*1e-9;
-            N_finger = str2double(string(dispositivo(4:6))) / 2.5;
+            % L_dispositivo = str2double(string(dispositivo(8:end)))*1e-9;
+            % N_finger = str2double(string(dispositivo(4:6))) / 2.5;
 
             if(dispositivo(1) == 'P')
                 indice_vds = 7-vds/0.15;
             else 
                 indice_vds = 1+vds/0.15;
             end
-            I_off = id_vgs(indice_vds)*L_dispositivo/N_finger;
+            % I_off = id_vgs(indice_vds)*L_dispositivo/N_finger;
+            I_off = id_vgs(indice_vds) * 1e9;
         end
 
-         % funzione che crea i plot per fare i confronti tra P e N MOS
+        % funzione che crea i plot per fare i confronti tra P e N MOS
         function plot_confronto_P_N(Vds_mV)  
             close all
 
@@ -314,5 +323,111 @@ classdef class_delta_I_OFF
             end
         end
 
+        function I_OFF(Vds_mV)
+            
+            close all
+
+            irraggiamenti = string({"pre" "5Mrad" "50Mrad" "100Mrad" "200Mrad" "600Mrad" "1Grad" "3Grad" "annealing"});
+            ARRAY_W = [100 200 600];
+            ARRAY_L = [30 60 180];
+
+            i_off = NaN(9 , length(irraggiamenti));
+    
+            COLORI = lines(3);
+            DISPOSITIVI = {};
+            X = [0 5 50 100 200 600 1000 3000 3500];
+            X_Tick = 0:500:3500;
+            X_Tick_Label = {0 500 1000 1500 2000 2500 3000 "annealing"};
+            
+            figure
+            figure
+            figure
+
+            f = @funzione_interna;
+
+            estrazioneCartelle.esegui_per_ogni_irraggiamento_e_dispositivo(f , true)
+            
+            Cartella = "Variazione_I_OFF";
+
+            if ~exist( Cartella, "dir")
+                mkdir(Cartella)
+            end
+
+            function funzione_interna()
+                temp = split(pwd , "\");
+                cartella_attuale = char(temp(end));
+                cartella_irraggiamento = char(temp(end-1));
+                
+                temp = split(cartella_attuale , "-");
+                W = str2double(temp(2));
+                L = str2double(temp(3));
+                % IS_NF = contains(cartella_attuale , "nf");
+                % temp = char(temp(1));
+                % tipo_dispositivo = temp(1);
+
+                temp = extractAfter(cartella_irraggiamento , "_");
+                if isempty(temp)
+                    grado = "pre";
+                else
+                    grado = temp;
+                end
+                   
+                indice_dispositivo = (find(ARRAY_W == W)-1)*3 + find(ARRAY_L == L);
+                indice_grado = (irraggiamenti == grado);
+
+                i_off(indice_dispositivo , indice_grado) = abs(class_delta_I_OFF.calcola_I_off(Vds_mV/1e3 , cartella_attuale)*1e-9);
+            end
+
+            indice_dispositivo = 0;
+            indice_figura = 0;
+            for W = ARRAY_W
+                indice_figura = indice_figura + 1;
+                figure(indice_figura);
+                for L = ARRAY_L
+                    indice_dispositivo = indice_dispositivo + 1;
+                    
+                    colore = ARRAY_L == L;
+
+                    DISPOSITIVI{end+1} = sprintf("%d - %d" , W , L);
+
+                    plot(X , i_off(indice_dispositivo , :) , DisplayName= sprintf("$L = %d nm$" , L) , Color=COLORI(colore , :) ,LineStyle="-", Marker="^")
+                    hold on
+
+                end
+                
+                title(sprintf("$W = %d\\mu m$" , W), Interpreter="latex");
+                legend(Interpreter="latex" , FontSize=12);
+                xlabel("\textit{TID}$[Mrad]$" , Interpreter="latex");
+                ylabel("$I_{OFF} [A]$" , Interpreter="latex");
+                xlim([0 3500])
+                
+                ax = gca;
+                ax.XTick = X_Tick;
+                ax.XTickLabel = X_Tick_Label;
+                
+                ax.YScale = "log";
+
+                grid on
+                
+                Cartella_PLOT = sprintf("%s\\plot\\Vds_mv_%d" , Cartella , Vds_mV);
+
+                if ~exist( Cartella_PLOT, "dir")
+                    mkdir(Cartella_PLOT)
+                end
+
+                saveas(gcf , sprintf("%s\\W_%d.png" , Cartella_PLOT , W));
+
+            end            
+
+            i_off = num2cell(i_off);
+            i_off = [DISPOSITIVI' , i_off];
+
+            i_off = cell2table(i_off , "VariableNames", ["dispositivi" , irraggiamenti]);
+
+            writetable(i_off , sprintf("%s\\I_OFF_VDS_mV_%d.xls" , Cartella , Vds_mV));
+            
+
+
+        end
     end
 end
