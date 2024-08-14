@@ -1,34 +1,62 @@
 Idealmente per tensioni \textit{gate-source} inferiori alla $V_{th}$ il transistore MOSFET non lascia passare nessuna corrente di \textit{drain}, $I_D = 0$. Nella realtà questo non è vero, infatti sono presenti le cosiddette \textit{leakage current}, correnti di perdita, quali possono variare a seconda della tipologia del dispositivo, NMOS o PMOS, o anche per la dimensione.
-Queste perdite possono essere rilevanti o trascurabili a seconda dell'intensità; A figura \ref{fig:i_off_confronto}, confronti tra NMOS e PMOS delle correnti di perdita, si possono scovare tre differenze principali:
+Queste perdite possono essere rilevanti o trascurabili a seconda dell'intensità; A figura \ref{fig:i_off_confronto}, confronti tra NMOS e PMOS delle correnti di perdita estratti per valori di $V_{GS} = -0.3V$ e $V_{DS} = 0.45V$\footnote{Per i PMOS si intendono $V_{SG} = -0.3V$ e $V_{SD} = 0.45V$}, si possono scovare tre differenze principali:
 \begin{enumerate}
     \item \textbf{Distacco della curva $I_{off}$ tra NMOS e PMOS}: Nella figura \ref{fig:i_off_confronto} la differenza tra i dispositivi a canale N e a canale P è molto evidente superate le dosi superiori ai $600Mrad$, soprattutto per il dispositivo $600-0.060$ \ref{sub@fig:i_off_confronto_600_60_e_180}, raggiungendo differenze all'ordine dei $\mu A$. infatti, come già anticipato nella sezione \ref{cap1:ionizzazione}, i MOSFET a canale N sono soggetti alla creazione di transistor parassiti nella \textit{STI} con l'effetto di aumentare la $I_{off}$.
     
     \item \textbf{Differenze d'intensità in dispositivi a dimensioni diverse}: La corrente di \textit{drain} presenta una proporzionalità con le dimensioni del dispositivo, in particolare $I_{D} \propto \frac{W}{L}$. Osservando, ad esempio, la figura \ref{fig:i_off_confronto_100_30_e_60} si nota come la l'aumento della lunghezza, da $30 \text{ a } 60nm$ provoca un abbassamento della $I_{off}$, mentre a parità di $L$ e all'aumentare di $W$ si ha un aumento della corrente di perdita.
     
-    \item \textbf{Effetto della $ \Delta V_{th}$ a bassi dosaggi sui NMOS}: Come già parlato nella sezione \ref{cap1:ionizzazione}, e confermato dai dati nella sezione \ref{cap2:vth}, la variazione della tensione di soglia, nei dispositivi NMOS, inizialmente è negativa a bassi dosaggi(circa $10Mrad$) diminuendo la $V_{th}$ e quindi aumentando la corrente \textit{drain-source} di perdita, a figura \ref{fig:i_off_confronto_bassi_dosaggi} vengono mostrati gli andamenti della $I_{off}$ per i dispositivi $100-0.030$, $100-0.180$, $600-0.030$ e $600-0.180$, con un focus particolare sui bassi dosaggi di radiazioni ionizzanti.
+    \item \textbf{Effetto della $ \Delta V_{th}$ a bassi dosaggi sui NMOS}: Come già parlato nella sezione \ref{cap1:ionizzazione}, e confermato dai dati nella sezione \ref{cap2:vth}, la variazione della tensione di soglia, nei dispositivi NMOS, inizialmente è negativa a bassi dosaggi (circa $10Mrad$) diminuendo la $V_{th}$ e quindi aumentando la corrente \textit{drain-source} di perdita, a figura \ref{fig:i_off_confronto_bassi_dosaggi} vengono mostrati gli andamenti della $I_{off}$ per i dispositivi $100-0.030$, $100-0.180$, $600-0.030$ e $600-0.180$, con un focus particolare sui bassi dosaggi di radiazioni ionizzanti.
 \end{enumerate}
 
-
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
-    
-    \subfloat[Linea continua: $100 - 0.030 \mu m$\\Linea tratteggiata: $100 - 0.060 \mu m$]{
-        \includegraphics[width = 0.49\textwidth]{capitolo2/I_off/confornto/I_off_confronto_NP_100-30_e_60.png}\label{fig:i_off_confronto_100_30_e_60}
-        }
+    \subfloat[
+        \centering{Linea continua: $100-0.030$\\
+        Linea tratteggiata: $100-0.060$}
+    ]{
+        \includegraphics[width = 0.49 \linewidth]{capitolo2/I_off/confornto/I_off_confronto_NP_100-30_e_60.png}
+        \label{fig:i_off_confronto_100_30_e_60}
+    }
+    \subfloat[
+        \centering{Linea continua: $600-0.060$\\
+        Linea tratteggiata: $600-0.180$}
+    ]{
+        \includegraphics[width = 0.49 \linewidth]{capitolo2/I_off/confornto/I_off_confronto_NP_600-60_e_180.png}
+        \label{fig:i_off_confronto_600_60_e_180}
+    }
 
-    \subfloat[Linea continua: $600 - 0.060 \mu m$\\Linea tratteggiata: $600 - 0.180 \mu m$]{
-        \includegraphics[width = 0.49\textwidth]{capitolo2/I_off/confornto/I_off_confronto_NP_600-60_e_180.png}\label{fig:i_off_confronto_600_60_e_180}
-        }
-
-    \caption[Confronto \textit{leakage current} tra dispositivi NMOS e PMOS]{Confronto \textit{leakage current} tra dispositivi NMOS e PMOS; a sinistra, figura \ref{sub@fig:i_off_confronto_100_30_e_60}, il dispositivo $100-0.030$ mentre a figura \ref{sub@fig:i_off_confronto_600_60_e_180} il dispositivo $600-0.060$}
+    \caption[Confronto \textit{leakage current} tra dispositivi NMOS e PMOS]{Confronto \textit{leakage current} tra dispositivi NMOS e PMOS; a sinistra, figura \ref{sub@fig:i_off_confronto_100_30_e_60}, le larghezze $100\mu m$ mentre a figura \ref{sub@fig:i_off_confronto_600_60_e_180} le larghezze $600\mu m$.}
     \label{fig:i_off_confronto}
+    
 \end{figure}
-\todo[inlinepar]{Fare in modo che le immagini a figura \ref{fig:i_off_confronto} siano orizzontali}
 
-\begin{figure}[ht]
+
+\begin{figure}[h]
     \centering
 
     \includegraphics[width = 0.7 \linewidth ]{capitolo2/I_off/confornto_bassi_dosaggi/i_off_bassi_dosaggi.png}
     \caption[Confronto della $I_{off}$ di diversi dispositivi NMOS]{Confronto della $I_{off}$ di diversi dispositivi NMOS}
     \label{fig:i_off_confronto_bassi_dosaggi}
+
+\end{figure}
+
+Per concludere riportiamo a figura \ref{fig:delta_i_off} i grafici delle variazioni della \textit{leakage current}, $\Delta I_{off}$, al variare della dose assorbita.
+
+\begin{figure}[ht]
+    
+    \includegraphics[width = 0.49\linewidth]{capitolo2/I_off/NMOS/Delta_I_off_W_100_VDS_450_mV.png}
+    \includegraphics[width = 0.49\linewidth]{capitolo2/I_off/PMOS/Delta_I_off_W_100_VDS_450_mV.png}
+    
+    \vspace{0.5cm}
+
+    \includegraphics[width = 0.49\linewidth]{capitolo2/I_off/NMOS/Delta_I_off_W_200_VDS_450_mV.png}
+    \includegraphics[width = 0.49\linewidth]{capitolo2/I_off/PMOS/Delta_I_off_W_200_VDS_450_mV.png}
+    
+    \vspace{0.5cm}
+
+    \includegraphics[width = 0.49\linewidth]{capitolo2/I_off/NMOS/Delta_I_off_W_600_VDS_450_mV.png}
+    \includegraphics[width = 0.49\linewidth]{capitolo2/I_off/PMOS/Delta_I_off_W_600_VDS_450_mV.png}
+    
+    \caption[$\Delta I_{off}$ al variare della dose assorbita, NMOS e PMOS]{Confronti della $\Delta I_{off}$ al variare della dose assorbita, a sinistra i NMOS e a destra i PMOS, i dispositivi sono raggruppati per larghezza di canale.}
+    \label{fig:delta_i_off}
 \end{figure}
