@@ -4,7 +4,7 @@ Gli effetti principali delle radiazioni su dispositivi elettronici possono esser
 	\item Ionizzazione, generazione di coppie elettroni-lacune($e-h$)
 	\item Danni da spostamento, dislocazione degli atomi dai loro siti reticolari.
 \end{itemize}
-Mentre il danno da spostamento (DD) non è molto rilevante sui MOSFET, la ionizzazione può comportare variazioni dei parametri elettrici, come: guadagno e tensione di soglia, per questo motivo ci concentreremo solo su gli effetti della ionizzazione.
+Mentre il danno da spostamento (DD) non è molto rilevante sui MOSFET, la ionizzazione può comportare variazioni dei parametri elettrici, come: guadagno e tensione di soglia; per questo motivo ci concentreremo solo su gli effetti della ionizzazione.
 
 \vspace{0.5cm}
 
@@ -30,7 +30,7 @@ Mentre la prima provoca l'abbassamento della tensione di soglia, aumentando la c
 
 \vspace{0.5cm}
 
-Un'altro effetto presente solo negli NMOS è quello della formazione di un transistor parassita\cite{effetti_radiazioni:CMOS_IC_radiation_hardening_by_design}, questo effetto è dovuto all'aumento delle cariche positive nella \textit{shallow trench isolation} (\textit{STI}) comportando un aumento degli elettroni nel substrato (figura \ref{fig:accumulo_lacune_STI}), che a loro volta, creano un canale conduttivo tra source e drain, aggirando quello principale; questo collegamento fa si che possa esserci un flusso di corrente, anche quando il dispositivo è polarizzato con una $V_{GS} \simeq 0$.
+Un'altro effetto presente solo negli NMOS è quello della formazione di transistor parassiti\cite{effetti_radiazioni:CMOS_IC_radiation_hardening_by_design}, questo effetto è dovuto all'aumento delle cariche positive nella \textit{shallow trench isolation} (\textit{STI}) comportando un aumento degli elettroni nel substrato (figura \ref{fig:accumulo_lacune_STI}), che a loro volta, creano un canale conduttivo tra source e drain, aggirando quello principale; questo collegamento fa si che possa esserci un flusso di corrente, anche quando il dispositivo è polarizzato con una $V_{GS} \simeq 0$.
 
 \begin{figure}[ht]
 	\centering
@@ -46,11 +46,11 @@ Un'altro effetto presente solo negli NMOS è quello della formazione di un trans
 \vspace{0.5cm}
 
 La ricottura dell'ossido (\textit{oxide anneals}) è una procedura volta a ripristinare, almeno in parte, le caratteristiche del MOSFET a seguito di dose assorbita.
-Consiste nel neutralizzare le lacune scaldando il dispositivo facendo si che gli elettroni presenti acquisiscano abbastanza energia per potersi ricombinare con le lacune. La procedura di annealing che abbiamo eseguito sui nostri dispositivi è stata di portarli ad una temperatura di $100\degree C$ e mantenerla per ventiquattro ore. La ricottura può avvenire anche a temperatura ambiente, ma probabilmente i tempi sarebbero molto lunghi, anche anni\cite{bib:Effetti_Radiazioni_NASA}. 
+Consiste nel neutralizzare le lacune scaldando il dispositivo facendo si che gli elettroni presenti acquisiscano abbastanza energia per potersi ricombinare con le lacune. La procedura di annealing eseguita sui dispositivi analizzati in questo lavoro di tesi è stata di portarli ad una temperatura di $100\degree C$ e mantenerla per ventiquattro ore. La ricottura può avvenire anche a temperatura ambiente, ma probabilmente i tempi sarebbero molto lunghi, anche anni\cite{bib:Effetti_Radiazioni_NASA}. 
 
 \subsection{Misurazione della dose}
 La quantità di radiazioni ionizzanti assorbite da un materiale viene chiamata \textit{TID} (\textit{total ionizing dose}) ed è espressa in energia su unità di massa.
-La \textit{TID} normalmente è misurata in $rad$ (\textit{radiation absorbed dose}), definito come 100 $erg$\footnote{Unità di lavoro corrispondente a $10^{-7} J$} per grammo di materiale, oppure, accolto dal sistema internazionale, in gray($Gy$) dove $1 Gy = 100rad = 1\frac{J}{Kg}$.
+La \textit{TID} normalmente è misurata in $rad$ (\textit{radiation absorbed dose}), definito come 100 $erg$\footnote{Unità di lavoro corrispondente a $10^{-7} J$} per grammo di materiale, oppure, accolto dal sistema internazionale, in \textit{gray} ($Gy$) dove $1 Gy = 100rad = 1\frac{J}{Kg}$.
 Essendoci una dipendenza tra quantità di energia persa e il materiale su cui essa si sta depositando, spesso insieme all'unità di misura, si indica anche il materiale; ad esempio, nel caso del diossido di silicio si indicherà come $rad(SiO_{2})$. 
 
 
