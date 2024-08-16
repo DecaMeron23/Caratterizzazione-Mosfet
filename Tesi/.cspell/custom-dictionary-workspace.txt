@@ -2,11 +2,14 @@ absorbed
 annealing
 anneals
 configuring
+cutoff
 damage
 Difference
 Displacement
 drain
+Effect
 Extrapolation
+Flicker
 graphics
 graphicx
 gray
@@ -15,10 +18,12 @@ isolation
 leakage
 Linear
 Logarithm
+Noise
 oxide
 Plot
 Radiation
 Second
+Semiconductor
 setup
 shallow
 shiftata
