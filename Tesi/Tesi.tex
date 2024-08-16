@@ -23,6 +23,8 @@
 \usepackage{float}
 \usepackage{hyperref}
 
+\usepackage{bm} 
+
 \usepackage{amsmath} % Per migliorare l'aspetto delle formule
 
 \usepackage{todonotes} % mettere le note dentro il documento
@@ -50,7 +52,9 @@
 \tableofcontents
 % Lista delle figure
 \listoffigures
+% lista delle tabelle
 
+\listoftables 
 % Inizio Parte principale documento
 \mainmatter
 
@@ -101,7 +105,7 @@ In questo capitolo si tratteranno i parametri statici di transistori \emph{MOS} 
 \import{./capitoli/capitolo2}{i_off.tex}
 
 % ! I_on
-\section{Variazione della corrente $I_{on}$}
+\section[Variazione della corrente $I_{on}$]{Variazione della corrente $\bm{I_{on}}$}
 \import{./capitoli/capitolo2}{i_on.tex}
 
 % ! Guadagno intrinseco
