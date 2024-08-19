@@ -4,7 +4,7 @@ Gli effetti principali delle radiazioni su dispositivi elettronici possono esser
 	\item Ionizzazione, generazione di coppie elettroni-lacune($e-h$)
 	\item Danni da spostamento, dislocazione degli atomi dai loro siti reticolari.
 \end{itemize}
-Mentre il danno da spostamento (DD) non è molto rilevante sui MOSFET, la ionizzazione può comportare variazioni dei parametri elettrici, come: guadagno e tensione di soglia; per questo motivo ci concentreremo solo su gli effetti della ionizzazione.
+Mentre il danno da spostamento (\textit{DD}) non è molto rilevante sui MOSFET, la ionizzazione può comportare variazioni dei parametri elettrici come: guadagno e tensione di soglia; per questo motivo ci concentreremo solo su gli effetti della ionizzazione.
 
 \vspace{0.5cm}
 
@@ -21,7 +21,7 @@ La perdita di energia elettronica nei semiconduttori provoca la ionizzazione, cr
 \vspace{0.5cm}
 
 Negli isolanti, come l'ossido di gate dei transistori MOSFET, l'effetto della ionizzazione è cumulativo. Gli elettroni, liberati da una particella ionizzante, si possono muovere facilmente soprattutto grazie a effetti di campo dovuti, ad esempio, a polarizzazioni.
-Al contrario le lacune sono molto meno mobili, dai 5 ai 12 ordini di grandezza inferiori rispetto agli elettroni. La maggior parte delle lacune riesce a sopravvive alla ricombinazione con gli elettroni, creando perciò una carica positiva vicino alla giunzione $Si/SiO_2$, con uno degli effetti di diminuire la tensione di soglia del MOSFET a canale P. Invece negli NMOS, dopo aver subito bassi dosaggi (inferiori a $10Mrad$), si può notare un abbassamento della tensione di soglia mentre, per dosi superiori, un innalzamento. Questo andamento è dato da due fattori:
+Al contrario le lacune sono molto meno mobili, dai 5 ai 12 ordini di grandezza inferiori, rispetto agli elettroni. La maggior parte delle lacune riesce a sopravvive alla ricombinazione con gli elettroni, creando perciò una carica positiva vicino alla giunzione $Si/SiO_2$. Un aumento della carica positiva ha come effetto di diminuire la tensione di soglia del MOSFET a canale P; invece negli NMOS, dopo aver subito bassi dosaggi (inferiori a $10Mrad$), si può notare un abbassamento della tensione di soglia mentre, per dosi superiori, un innalzamento. Questo andamento è dato da due fattori:
 \begin{enumerate}
 	\item Cariche positive intrappolate nell'ossido
 	\item Cariche negative presenti nelle trappole all'interfaccia\footnote{Le trappole all'interfaccia sono imperfezioni o difetti presenti alla giunzione $Si/SiO_2$, quali possono intrappolare delle cariche. Queste trappole aumentano all'aumentare della dose assorbita}
@@ -42,7 +42,7 @@ Un'altro effetto presente solo negli NMOS è quello della formazione di transist
 
 \end{figure}
 
-Gli effetti precedentemente elencati, in particolare sui MOSFET a canale N, avevano portato ad una preferenza di utilizzo per i PMOS avendo una tolleranza maggiore alle radiazioni ionizzanti. Ma con l'evoluzione di tecnologie MOSFET sempre più piccole (figura \ref{fig:scaling_mosfet}), ha comportato ad un aumento della resistenza alle radiazioni ionizzanti, riducendo correnti di perdita, $I_{off}$ e variazioni della tensione di soglia.  
+Gli effetti precedentemente elencati, in particolare sui MOSFET a canale N, avevano portato ad una preferenza di utilizzo per i PMOS essendo più tolleranti alle radiazioni ionizzanti. Ma l'evoluzione di tecnologie MOSFET sempre più piccole (figura \ref{fig:scaling_mosfet}), ha comportato ad un aumento della resistenza alle radiazioni ionizzanti, riducendo correnti di perdita, $I_{off}$ e variazioni della tensione di soglia.  
 
 \begin{figure}[ht]
 	\centering
@@ -60,7 +60,7 @@ Consiste nel neutralizzare le lacune scaldando il dispositivo facendo si che gli
 
 \subsection{Misurazione della dose}
 La quantità di radiazioni ionizzanti assorbite da un materiale viene chiamata \textit{TID} (\textit{total ionizing dose}) ed è espressa in energia su unità di massa.
-La \textit{TID} normalmente è misurata in $rad$ (\textit{radiation absorbed dose}), definito come 100 $erg$\footnote{Unità di lavoro corrispondente a $10^{-7} J$} per grammo di materiale, oppure, accolto dal sistema internazionale, in \textit{gray} ($Gy$) dove $1 Gy = 100rad = 1\frac{J}{Kg}$.
+La \textit{TID} normalmente è misurata in $rad$ (\textit{radiation absorbed dose}), definito come $100 erg  = 100 \cdot 10^{-7} J$ per grammo di materiale, oppure, accolto dal sistema internazionale, in \textit{gray} ($Gy$) dove $1 Gy = 100rad = 1\frac{J}{Kg}$.
 Essendoci una dipendenza tra quantità di energia persa e il materiale su cui essa si sta depositando, spesso insieme all'unità di misura, si indica anche il materiale; ad esempio, nel caso del diossido di silicio si indicherà come $rad(SiO_{2})$. 
 
 
