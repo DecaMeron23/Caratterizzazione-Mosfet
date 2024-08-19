@@ -27,11 +27,11 @@ In un MOSFET a canale N, in linea generale, può scorrere una corrente $I_D$ che
 
 La dipendenza di $I_D$ da tali tensioni è messa in evidenza dalla caratteristica corrente-tensione (figura \ref{fig:caratteristica-I-V}).
 
-Quando $V_{GS} = 0$, indipendentemente dal valore di $V_{DS}$, la corrente $I_D$ è nulla, poiché le due giunzioni P-N, sono in regione inversa. \\
-Aumentando il valore di $V_{GS}$, lacune si allontanano dalla regione direttamente al di sotto dell'ossido, creando una
+Quando $V_{GS} = 0$, indipendentemente dal valore di $V_{DS}$, la corrente $I_D$ è nulla, poiché la giunzione P-N composta da substrato e Drain e quella formata da substrato e Sourse sono in regione inversa. \\
+Aumentando il valore di $V_{GS}$, le lacune presenti nel substrato si allontanano dalla regione direttamente al di sotto dell'ossido, creando una
 zona svuotata di portatori di carica liberi. Gli elettroni presenti nel semiconduttore
 vengono attirati creando una regione di canale di tipo N che unisce il
-source e il drain. Questo canale permette il passaggio di corrente, ma per crearlo è necessario che $V_{GS}$ abbia un valore almeno pari alla cosiddetta tensione di soglia ($V_{th}$). Finché $V_{GS} < V_{th}$, il MOSFET si trova in regione di \emph{cutoff} e $I_D \simeq 0$.
+Source e il Drain. Questo canale permette il passaggio di corrente, ma per crearlo è necessario che $V_{GS}$ abbia un valore almeno pari alla cosiddetta tensione di soglia ($V_{th}$). Finché $V_{GS} < V_{th}$, il MOSFET si trova in regione di \emph{cutoff} e $I_D \simeq 0$.
 
 Nel momento in cui $V_{GS}$ eguaglia e supera $V_{th}$, il canale di conduzione è completo e inizia a scorrere corrente, seguendo leggi matematiche differenti in funzione del valore di $V_{DS}$.\\
 
@@ -56,9 +56,9 @@ Tutto quanto detto finora sui MOSFET a canale N vale in maniera analoga per i MO
 Altri parametri verranno descritti nel prossimo capitolo.
 
 \subsection{Modello per piccolo segnale e sorgenti di rumore}
-Il modello per piccolo segnale rappresenta il funzionamento del MOSFET nel momento in cui si fissa il punto di lavoro in continua e si fornisce in ingresso al dispositivo un segnale con un ampiezza sufficientemente piccola da non alterarne il funzionamento. \\
+Il modello per piccolo segnale rappresenta il funzionamento del MOSFET nel momento in cui si fissa il punto di lavoro in continua e si fornisce in ingresso al dispositivo un segnale con un'ampiezza sufficientemente piccola da non alterarne il funzionamento. \\
 
-In prima approssimazione, il MOSFET si comporta come un generatore di corrente controllato in tensione che emette una corrente proporzionale al valore di $V_{GS}$. la costante di proporzionalità è la transconduttanza di canale $g_m$, che dipende dal punto di lavoro ed è descritta meglio al paragrafo \ref{sec:transconduttanza}. Un modello più accurato prevede che, quando il MOSFET è in saturazione, la corrente di Drain dipenda anche da $V_{DS}$ in modo lineare. Nel circuito equivalete per piccolo segnale, perciò, in parallelo al generatore di corrente, è presente una resistenza $r_0 = \frac{1}{\lambda I_{D,sat}}$ che viene attraversata da una corrente prodotta dalla differenza di tensione tra Drain e Source e che va a sommarsi a quella generata dal generatore ideale, figura \ref{fig:piccolo_segnale}.
+In prima approssimazione, il MOSFET si comporta come un generatore di corrente controllato in tensione che emette una corrente proporzionale al valore di $V_{GS}$. La costante di proporzionalità è la transconduttanza di canale $g_m$, che dipende dal punto di lavoro ed è descritta meglio al paragrafo \ref{sec:transconduttanza}. Un modello più accurato prevede che, quando il MOSFET è in saturazione, la corrente di Drain dipenda anche da $V_{DS}$ in modo lineare. Nel circuito equivalete per piccolo segnale, perciò, in parallelo al generatore di corrente, è presente una resistenza $r_0 = \frac{1}{\lambda I_{D,sat}}$ che viene attraversata da una corrente prodotta dalla differenza di tensione tra Drain e Source e che va a sommarsi a quella generata dal generatore ideale, figura \ref{fig:piccolo_segnale}.
 
 \begin{figure}[t]
   
@@ -71,7 +71,7 @@ In prima approssimazione, il MOSFET si comporta come un generatore di corrente c
 
 \vspace*{0.5cm}
 
-Per comprendere al meglio l'effettivo comportamento dei MOSFET, però, bisogna considerare che il segnale in uscita al MOSFET subisce delle interferenza dovute al rumore generato all'interno del dispositivo stesso. Esistono diverse sorgenti di rumore: qui di seguito si descrivono le principali.
+Per comprendere al meglio l'effettivo comportamento dei MOSFET, però, bisogna considerare che il segnale in uscita al MOSFET subisce delle interferenze dovute al rumore generato all'interno del dispositivo stesso. Esistono diverse sorgenti di rumore; qui di seguito si descrivono le principali.
 
 \paragraph*{Rumore termico di canale}
 Il canale di un dispositivo è composto da materiale resistivo e quindi è sorgente di rumore termico. Tale sorgente può essere rappresentata come un generatore di segnale con densità spettrale che dipende principalmente da:
@@ -85,8 +85,8 @@ Il canale di un dispositivo è composto da materiale resistivo e quindi è sorge
 \paragraph*{Flicker Noise}
 Generalmente, a basse frequenze, prevale una componente di rumore del tipo $1/f$, la cui densità spettrale è inversamente proporzionale alla frequenza del segnale. Le cause più probabili di questo comportamento sono: 
 \begin{itemize}
-  \item fluttuazione casuale del numero dei portatori di carica dovuta a fenomeni di generazione e ricombinazione, prevalente nei dispositivi a canale N
-  \item fluttuazione della mobilità dei portatori di carica a causa di fenomeni di scattering con le impurità presenti nel cristallo, prevalente nei dispositivi a canale P
+  \item fluttuazione casuale del numero dei portatori di carica dovuta a fenomeni di generazione e ricombinazione, prevalente nei dispositivi a canale N,
+  \item fluttuazione della mobilità dei portatori di carica a causa di fenomeni di scattering con le impurità presenti nel cristallo, prevalente nei dispositivi a canale P.
 \end{itemize}
 
 A parità di tecnologia, polarizzazione e dimensioni, il flicker noise è minore nei MOSFET a canale P, rispetto a quelli a canale N. Inoltre, la diminuzione delle dimensioni dovute all'avanzamento tecnologico comporta una riduzione sostanziale di questa tipologia di rumore.
@@ -98,4 +98,4 @@ Il rumore Lorentziano, o \emph{Random Telegraph Signal} (\emph{RTS}), è causato
 Fino ad ora si è considerata solo la corrente $I_D$ che va da dal Drain al Source (o viceversa, in base al tipo di canale). In realtà esiste anche una corrente $I_G$ che attraversa il Gate, che in generale, appunto, è trascurabile, se confrontata con  $I_D$. Infatti l'ossido presente tra la metallizzazione del Gate e il substrato fa da barriera di potenziale all'iniezione dei portatori di carica. Questa barriera può essere comunque attraversata dai portatori con temperatura (e quindi energia cinetica) maggiore. Con la riduzione dello spessore del gate, l'energia necessaria per iniettare il portatori attraverso il Gate diminuisce e quindi $I_G$ diventa meno trascurabile.
 
 \paragraph*{Altre sorgenti di rumore}
-Ci sono infine sorgenti di rumore legate alle resistenze presenti nel Gate e nel substrato e alle resistenze parassite di Drain e Source.
+Ci sono infine sorgenti di rumore legate alle resistenze presenti nel Gate e nel substrato e alle resistenze parassite di Drain e Source. \todo{Dobbiamo specificare meglio?}
