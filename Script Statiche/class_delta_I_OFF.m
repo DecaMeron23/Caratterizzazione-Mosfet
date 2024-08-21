@@ -149,7 +149,7 @@ classdef class_delta_I_OFF
 
             % per il plot
             COLORI = lines(3);
-            X_TICKS = 0:500:3500;
+            X_TICKS = [0 10 100 1000 3500];
             X_TICKS_LABEL = num2cell(X_TICKS);
             X_TICKS_LABEL{end} = "annealing";
             X = [0 5 50 100 200 600 1000 3000 3500];
@@ -212,9 +212,13 @@ classdef class_delta_I_OFF
                 ax.XTick = X_TICKS; 
                 % Imposta le etichette degli x-ticks
                 ax.XTickLabel = X_TICKS_LABEL;
+
+                ax.XScale = "log";
+                ax.YScale = "log";
                 
-                % ax.YScale = "log";
+                ylim([1 5e3])
                 saveas(gcf , NOME_FIGURA);
+
 
                 cd ..\..
                 cd tabelle\ 
