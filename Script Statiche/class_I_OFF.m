@@ -1,4 +1,4 @@
-classdef class_delta_I_OFF
+classdef class_I_OFF
     
     methods(Static)
 
@@ -32,7 +32,7 @@ classdef class_delta_I_OFF
                             if contains(cartella_dispositivo , "nf")
                                 delta(j , i) = NaN;
                             else
-                                I_off = class_delta_I_OFF.calcola_I_off(valori_vds(j), char(cartella_dispositivo));
+                                I_off = class_I_OFF.calcola_I_off(valori_vds(j), char(cartella_dispositivo));
                                 
                                 if(i == 1)
                                         I_off_pre(j , 1) = I_off;
@@ -69,7 +69,7 @@ classdef class_delta_I_OFF
             cd DeltaIoff
 
             % aggiungiamo le tabelle raggruppate
-            class_delta_I_OFF.tabelleRaggruppateDispositivo()
+            class_I_OFF.tabelleRaggruppateDispositivo()
             
             cd ..
         end
@@ -78,8 +78,8 @@ classdef class_delta_I_OFF
             ARRAY_VDS_mV = 150:150:900;
             
             for VDS_mV = ARRAY_VDS_mV
-                class_delta_I_OFF.tabellaRaggruppataDispositivo_Vds(VDS_mV)
-                class_delta_I_OFF.plotDeltaIoff_Vds(VDS_mV);
+                class_I_OFF.tabellaRaggruppataDispositivo_Vds(VDS_mV)
+                class_I_OFF.plotDeltaIoff_Vds(VDS_mV);
             end
 
 
@@ -254,6 +254,8 @@ classdef class_delta_I_OFF
         end
 
         % funzione che crea i plot per fare i confronti tra P e N MOS
+        % posizionarsi nella cartella contenente le cartelle N4 e P1 alla
+        % chiamata della funzione indicare il valore di Vds in mV: [150 300 450 600 750 900]
         function plot_confronto_P_N(Vds_mV)  
             close all
 
@@ -326,7 +328,10 @@ classdef class_delta_I_OFF
 
             end
         end
+        
 
+        % Funzione che crea le tabelle e i plot (plot raggruppati per W)
+        % per le I_off al variare della dose subita
         function I_OFF(Vds_mV)
             
             close all
@@ -339,9 +344,11 @@ classdef class_delta_I_OFF
     
             COLORI = lines(3);
             DISPOSITIVI = {};
-            X = [0 5 50 100 200 600 1000 3000 3500];
-            X_Tick = 0:500:3500;
-            X_Tick_Label = {0 500 1000 1500 2000 2500 3000 "annealing"};
+            X = [0.5 5 50 100 200 600 1000 3000 4000];
+            X_Tick = [0.5 1 10 100 1000 4000];
+            X_Tick_Label = num2cell(X_Tick);
+            X_Tick_Label{1} = "Pre";
+            X_Tick_Label{end} = "annealing";
             
             figure
             figure
@@ -379,7 +386,7 @@ classdef class_delta_I_OFF
                 indice_dispositivo = (find(ARRAY_W == W)-1)*3 + find(ARRAY_L == L);
                 indice_grado = (irraggiamenti == grado);
 
-                i_off(indice_dispositivo , indice_grado) = abs(class_delta_I_OFF.calcola_I_off(Vds_mV/1e3 , cartella_attuale)*1e-9);
+                i_off(indice_dispositivo , indice_grado) = abs(class_I_OFF.calcola_I_off(Vds_mV/1e3 , cartella_attuale)*1e-9);
             end
 
             indice_dispositivo = 0;
@@ -393,23 +400,25 @@ classdef class_delta_I_OFF
                     colore = ARRAY_L == L;
 
                     DISPOSITIVI{end+1} = sprintf("%d - %d" , W , L);
-
-                    plot(X , i_off(indice_dispositivo , :) , DisplayName= sprintf("$L = %d nm$" , L) , Color=COLORI(colore , :) ,LineStyle="-", Marker="^")
+                    temp = i_off(indice_dispositivo , :);
+                    plot(X , temp , DisplayName= sprintf("$L = %d nm$" , L) , Color=COLORI(colore , :) ,LineStyle="-", Marker="^")
                     hold on
 
                 end
                 
                 title(sprintf("$W = %d\\mu m$" , W), Interpreter="latex");
-                legend(Interpreter="latex" , FontSize=12);
+                legend(Interpreter="latex" , FontSize=12 , Location="northwest");
                 xlabel("\textit{TID}$[Mrad]$" , Interpreter="latex");
                 ylabel("$I_{OFF} [A]$" , Interpreter="latex");
-                xlim([0 3500])
-                
+                xlim([0.5 4000])
+                ylim([5e-10 5e-6])
+
                 ax = gca;
                 ax.XTick = X_Tick;
                 ax.XTickLabel = X_Tick_Label;
                 
                 ax.YScale = "log";
+                ax.XScale = "log";
 
                 grid on
                 
