@@ -1,0 +1,64 @@
+
+% Questa funzione esegue i plot di "id / Vgs - Vth" per un dispositivo
+% specifico (es: dispositivo = 200-30) e un metodo di estrazione di Vth, valori accettati: ["ELR" "RM" "SDLM" "TCM"] 
+function plot_id_tensione_override(dispositivo , metodo)
+
+    ARRAY_METODI = ["ELR" "TCM" "SDLM" "RM"];
+    colonnaMetodo = find(ARRAY_METODI==metodo, 1);
+
+   
+    if isempty(colonnaMetodo)
+        error("Metodo non trovato: %s"  , metodo)
+    end
+
+    temp = split(pwd , "\");
+    chip = char(temp(end)); 
+
+    FILE_VTH = sprintf("Vth\\Vth_%s-%s.txt" , chip , dispositivo);
+    FILE_ID = sprintf("%s-%s\\id-vgs.txt" , chip , dispositivo);
+    
+    COLORI_PLOT = [
+        68/255, 1/255, 84/255;      % Blu scuro
+        59/255, 82/255, 139/255;    % Blu violaceo
+        33/255, 145/255, 140/255;   % Blu-verde scuro
+        94/255, 201/255, 97/255;    % Verde scuro
+        170/255, 220/255, 50/255;   % Verde chiaro
+        253/255, 231/255, 37/255;   % Giallo-verde chiaro
+        254/255, 201/255, 64/255;   % Giallo dorato
+        252/255, 141/255, 89/255;   % Arancione
+        240/255, 59/255, 32/255;    % Rosso aranciato
+    ];
+
+    VDS_MASSIMA = 900;
+
+    figure
+    
+    i = 0;
+
+    f = @funzione;
+    function funzione()
+        
+        %indice irraggiamento
+        i = i+1;
+
+        %estraiamo la vth secondo il metodo scelto
+        temp = readmatrix(FILE_VTH);
+        VTH = temp(1 , colonnaMetodo);
+        
+        % estraiamo i valori di Vgs e Id 
+        [VGS , ID , VDS] = EstrazioneDati.estrazione_dati_vgs(FILE_ID , chip(1));
+
+        V_OVERRIDE = VGS - VTH;
+        ID = ID( : , VDS == VDS_MASSIMA);
+        
+        plot(V_OVERRIDE , ID , "Color", COLORI_PLOT(i , :));
+        hold on
+
+
+    end
+
+    estrazioneCartelle.esegui_per_ogni_irraggiamento(f)
+    
+    
+
+end
