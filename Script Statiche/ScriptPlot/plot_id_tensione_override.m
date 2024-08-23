@@ -2,7 +2,9 @@
 % Questa funzione esegue i plot di "id / Vgs - Vth" per un dispositivo
 % specifico (es: dispositivo = 200-30) e un metodo di estrazione di Vth, valori accettati: ["ELR" "RM" "SDLM" "TCM"] 
 function plot_id_tensione_override(dispositivo , metodo)
+    
 
+    close all
     ARRAY_METODI = ["ELR" "TCM" "SDLM" "RM"];
     colonnaMetodo = find(ARRAY_METODI==metodo, 1);
 
@@ -28,9 +30,11 @@ function plot_id_tensione_override(dispositivo , metodo)
         252/255, 141/255, 89/255;   % Arancione
         240/255, 59/255, 32/255;    % Rosso aranciato
     ];
-
+    temp = [ 5 50 100 200 600 1000 3000];
+    DISPLAY_NAME = ["Pre" , temp + "Mrad" , "Annealing"];
     VDS_MASSIMA = 900;
 
+    figure
     figure
     
     i = 0;
@@ -43,22 +47,54 @@ function plot_id_tensione_override(dispositivo , metodo)
 
         %estraiamo la vth secondo il metodo scelto
         temp = readmatrix(FILE_VTH);
-        VTH = temp(1 , colonnaMetodo);
+         
+        VTH = temp(1 , colonnaMetodo)*1e-3; %la mettiamo in V
         
         % estraiamo i valori di Vgs e Id 
         [VGS , ID , VDS] = EstrazioneDati.estrazione_dati_vgs(FILE_ID , chip(1));
 
         V_OVERRIDE = VGS - VTH;
         ID = ID( : , VDS == VDS_MASSIMA);
-        
-        plot(V_OVERRIDE , ID , "Color", COLORI_PLOT(i , :));
+
+        figure(1)
+        plot(V_OVERRIDE , ID , "Color", COLORI_PLOT(i , :) , "DisplayName", DISPLAY_NAME(i));
         hold on
 
+        figure(2)
+        semilogy(V_OVERRIDE , ID , "Color" ,  COLORI_PLOT(i , :) , "DisplayName", DISPLAY_NAME(i));
+        hold on
 
     end
-
     estrazioneCartelle.esegui_per_ogni_irraggiamento(f)
+
+    for i = [1 , 2]
+        figure(i)
+        if i == 1
+            legend(Location="northwest" , FontSize=10);
+        else
+            legend(Location="southeast" , FontSize=10);
+        end
+        
+        [~ ,  W , L  , ~] = titoloPlot(sprintf("%s-%s" , chip , dispositivo)); 
+
+        
+
+        title(sprintf("%sMOS $%.0f-%.3f [\\mu m]$" , chip(1) , W , L) , Interpreter="latex");
+        if chip(1) == 'P'
+            YLABEL = "$|I_D|$";
+            XLABEL = sprintf("$|V_{GS}| - |V_{th , %s}|$" , metodo);
+        elseif chip(1) == 'N' 
+            YLABEL = "$I_D$";
+            XLABEL = sprintf("$V_{GS} - V_{th , %s}$" , metodo);
+        end
+
+        ylabel(sprintf("%s $[A]$" , YLABEL) , "Interpreter" , "latex");
+        xlabel(sprintf("%s $[V]$" , XLABEL) , "Interpreter" , "latex");
+
+        grid on
+    end
     
+
     
 
 end
