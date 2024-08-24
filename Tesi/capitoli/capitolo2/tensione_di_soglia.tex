@@ -734,5 +734,34 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
 
 
 \subsection{Riepilogo}
-Per concludere questa sezione si vuole fare un confronto tra i diversi metodi per trovare quello (o quelli) più aderente alla teoria sugli effetti delle radiazioni ionizzanti sui dispositivi MOSFET descritta nella sezione \ref{cap1:ionizzazione}.
-Si è scelto di fare i confronti, con dispositivo a larghezza $100\mu m$ e lunghezza $30nm$ sia per i transistori MOSFET a canale N che a canale P  
+Per concludere questa sezione si vogliono osservare gli andamenti delle curve della tensione di soglia $V_{th}$ al variare della dose, con l'obbiettivo di far incontrare la teoria, trattata alla sezione \ref{cap1:ionizzazione}, e dati sperimentali.
+In particolare si è scelto di fare questa analisi sul dispositivo a larghezza $W = 100 \mu m$ e a lunghezza $L = 30 nm$ sia per il transistore MOSFET a canale N che a canale P. 
+
+Mettendo a confronto tutti i metodi utilizzati nelle sezioni precedenti si trovano offset sugli andamenti anche superiori a $200mV$, figura \ref{fig:confronto_metodi_VTH}. Ma con l'obbiettivo di osservare come varia la tensione di soglia queste differenze vengono meno, a figura \ref{fig:confronto_metodi_Delta_VTH} vengono mostrare le curve $\Delta V_{th}$, in particolare si può osservare come la maggior parte dei metodi segue lo stesso andamento sia per i transistori MOSFET a canale N e P.
+
+\paragraph*{MOSFET a canale N} Osservando il grafico \ref{fig:confronto_metodi_Delta_VTH_NMOS} si ha che per dosi superiori a $50 Mrad$ \textit{ERL, SDLM} e \textit{TCM} sono molto simili (differenze poco superiori ai $5mV$) mentre per dosi inferiori \textit{SDLM} si distingue dalle altre due. Prendendo come riferimento queste curve, inizialmente si ha un decremento della $V_{th}$, dovuto all'accumulo di cariche positive nell'ossido; al raddoppiare della dose $100Mrad$ si ha un aumento significativo (circa $20mV$) della tensione di soglia, questo può essere spiegato dall'intrappolamento di cariche negative da parte delle trappole all'interfaccia. Infine per dosi superiori si osserva un decremento della $V_{th}$ a cui non si è riusciti a trovare una spiegazione. 
+
+\paragraph*{MOSFET a canale P} Per quanto riguarda i PMOS, grafico \ref{fig:confronto_metodi_Delta_VTH_PMOS}, si osserva che \textit{ERL, SDLM} e \textit{TCM} sono molto concordanti sugli andamenti, nello specifico si ottiene sempre un aumento del modulo della tensione di soglia\footnote{Il calcolo della variazione della tensione di soglia nei PMOS è $\Delta V_{th} = |V_{th,post}| - |V_{th,pre}|$}, giustificato dall'aumento di cariche positive alla giunzione $Si/SiO_2$. A seguito della procedura di annealing si può osservare un recupero non poco importante di circa $20mV$, l'obbiettivo della ricottura è quello di cedere abbastanza energia agli elettroni tanto da farli ricombinare con le lacune presenti.
+
+\begin{figure}[ht]
+
+  \centering
+  \includegraphics[width = 0.49 \linewidth]{capitolo2/VTH/Conclusioni/NMOS_variazioni_Vth_100-30.png}
+  \includegraphics[width = 0.49 \linewidth]{capitolo2/VTH/Conclusioni/PMOS_variazioni_Vth_100-30.png}
+
+  \caption[Confronto curve della $V_{th}$ dei diversi metodi utilizzati al variare della dose]{Confronto curve della $V_{th}$ dei diversi metodi utilizzati al variare della dose, per i dispositivi NMOS, a sinistra, e PMOS, a destra, con dimensione $ W=100\mu m$ e $L = 30nm$.}
+  \label{fig:confronto_metodi_VTH}
+  
+\end{figure}
+
+\begin{figure}[ht]
+
+  \centering
+  \subfloat[MOSFET a canale N]{\includegraphics[width = 0.49 \linewidth]{capitolo2/VTH/Conclusioni/NMOS_variazioni_Detla_Vth_100-30.png}\label{fig:confronto_metodi_Delta_VTH_NMOS}}
+  %
+  \subfloat[MOSFET a canale P]{\includegraphics[width = 0.49 \linewidth]{capitolo2/VTH/Conclusioni/PMOS_variazioni_Delta_Vth_100-30.png}\label{fig:confronto_metodi_Delta_VTH_PMOS}}
+
+  \caption[$\Delta V_{th}$ al variare della dose per diversi metodi di estrazione]{$\Delta V_{th}$ al variare della dose per diversi metodi di estrazione, per dispositivi con dimensione $ W=100\mu m$ e $L = 30nm$.}
+  \label{fig:confronto_metodi_Delta_VTH}
+  
+\end{figure}
