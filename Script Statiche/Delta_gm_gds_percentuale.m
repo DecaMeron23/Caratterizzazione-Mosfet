@@ -190,10 +190,10 @@ classdef Delta_gm_gds_percentuale
         CARTELLA_PLOT = "plot\Vgs" + Vgs_mV + "mV";
         
         COLORI = lines(3);
-        X = [0 5 50 100 200 600 1000 3000 3500];
-        X_TICK = [0 500 1000 1500 2000 2500 3000 3500];
-        X_TICK_LABEL = {0 500 1000 1500 2000 2500 3000 "annealing"};
-        X_LIMITE = [0 3500];
+        X = [0.5 5 50 100 200 600 1000 3000 4000];
+        X_TICK = [0.5 1 10 1e2 1e3 4000];
+        X_TICK_LABEL = {"pre" 1 10 1e2 1e3 "annealing"};
+        X_LIMITE = [0 4000];
 
         Y_LABEL = "$\Delta g_{ds} \% [A/V]$";
         X_LABEL = "$\textit{TID} [Mrad]$";
@@ -241,8 +241,10 @@ classdef Delta_gm_gds_percentuale
         xlim(X_LIMITE);
         ytickformat('percentage');
         
+        set(gca , "XScale" , "log");
         set(gca , "XTick" , X_TICK);
         set(gca , "XTickLabel" , X_TICK_LABEL);
+        
 
         yline(0 , "LineStyle", "--" , 'HandleVisibility', 'off')
 

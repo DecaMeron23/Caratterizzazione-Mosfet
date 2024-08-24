@@ -1,5 +1,8 @@
 function plot_delta_gm_tutti()
     close all
+    
+    setUpPlot()
+
     %estraiamo la tipologia del dispositivo
     cartella_attuale = pwd;
 
@@ -57,18 +60,19 @@ end
 
 function salvaPlot(tipologia, vds , W)
     
+
     titolo = tipologia+"MOS $V_{GS} = " + vds + "V$";
     ytickformat('percentage');
     title(titolo, Interpreter="latex" , FontSize=12);
     ylabel("$ \% \Delta g_m$" , Interpreter="latex" , FontSize=12);
     xlabel("Dose Assorbita $[Mrad]$" , Interpreter="latex" , FontSize=12);
     testo = "$W=" + W + "\mu m $";
-    annotation('textbox', [0.15, 0.15 0.1, 0.1], 'String' , testo , 'EdgeColor' , 'none' , 'FitBoxToText', 'on', FontSize=14 , Interpreter='latex' )
+    annotation('textbox', [0.15, 0.20 0.1, 0.1], 'String' , testo , 'EdgeColor' , 'none' , 'FitBoxToText', 'on', FontSize=14 , Interpreter='latex' )
     y_line = yline(0 , "--");
     y_line.Annotation.LegendInformation.IconDisplayStyle = 'off';
     grid on
     
-    legend('Location', 'northeast' ,'NumColumns', 1, 'Interpreter', 'latex' ,  FontSize=12);
+    legend('Location', 'south' ,'NumColumns', 1, 'Interpreter', 'latex' ,  FontSize=12);
     
     vds_str = char(string(vds));
     pos = strfind(vds_str, '.');
@@ -85,8 +89,8 @@ function salvaPlot(tipologia, vds , W)
     end
     
     cd(cartella)
-    
-    saveas(gca , "Delta_Gm_"+ tipologia + "MOS_Vds_"+ vds_str +"_W_"+W+".png")
+    setUpPlot()
+    saveas(gcf , "Delta_Gm_"+ tipologia + "MOS_Vds_"+ vds_str +"_W_"+W+".png")
 
     cd ..\..
 end

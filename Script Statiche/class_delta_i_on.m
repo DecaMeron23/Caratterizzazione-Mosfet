@@ -154,10 +154,10 @@ classdef class_delta_i_on
                 mkdir(CARTELLA);
             end
 
-            X = [0 5 50 100 200 600 1000 3000 3500];
-            
-            XTICK = 0:500:3500;
-            XTICK_LABEL = [num2cell(XTICK(1:end-1)) , "annealing"];
+            X = [0.5 5 50 100 200 600 1000 3000 4000];
+
+            XTICK = [0.5 1 10 1e2 1e3 4e3];
+            XTICK_LABEL = ["pre" , num2cell(XTICK(2:end-1)) , "annealing"];
 
             ARRAY_W = [100 200 600];
             ARRAY_L = [30 60 180];
@@ -195,15 +195,15 @@ classdef class_delta_i_on
                 end
 
                 title(sprintf("%sMOS - $W = %d\\mu m$", TIPO, W) , Interpreter="latex" , FontSize=11);
-                xlim([0 3500]);
+                xlim([X(1) , X(end)]);
                 ylabel("$\Delta I_{ON}\%$", Interpreter="latex");
                 xlabel("\textit{TID} $[Mrad]$" , Interpreter="latex");
-                legend(Interpreter= "latex" , Location="northeast" , FontSize=10);
+                legend(Interpreter= "latex" , Location="southwest" , FontSize=10);
 
                 xticks(XTICK);
                 xticklabels(XTICK_LABEL);
-               ytickformat('percentage');
-
+                ytickformat('percentage');
+                set(gca , "XScale" , "log");
                 grid on
                 
                 nomefile = CARTELLA + sprintf(NOME_FILE , W);

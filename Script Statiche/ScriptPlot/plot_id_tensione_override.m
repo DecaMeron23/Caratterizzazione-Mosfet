@@ -16,6 +16,10 @@ function plot_id_tensione_override(dispositivo , metodo)
     temp = split(pwd , "\");
     chip = char(temp(end)); 
 
+    CARTELLA_SALVATAGGIO = sprintf("Id-Vov_variazione_dose\\Dispositivo_%s\\%s\\" , dispositivo , metodo);
+    NOME_FILE_DATI = sprintf("Id_V_ov_%sMOS_%s_%s.xls" , chip(1) , dispositivo , metodo);
+    PREFISSO_NOME_PLOT = "Id_V_ov_%sMOS_%s_%s_%s.png";
+
     FILE_VTH = sprintf("Vth\\Vth_%s-%s.txt" , chip , dispositivo);
     FILE_ID = sprintf("%s-%s\\id-vgs.txt" , chip , dispositivo);
     
@@ -72,6 +76,8 @@ function plot_id_tensione_override(dispositivo , metodo)
     end
     estrazioneCartelle.esegui_per_ogni_irraggiamento(f)
 
+    mkdir(CARTELLA_SALVATAGGIO);
+
     for i = [1 , 2]
         figure(i)
         if i == 1
@@ -82,7 +88,6 @@ function plot_id_tensione_override(dispositivo , metodo)
         
         [~ ,  W , L  , ~] = titoloPlot(sprintf("%s-%s" , chip , dispositivo)); 
 
-        
 
         title(sprintf("%sMOS $%.0f-%.3f [\\mu m]$" , chip(1) , W , L) , Interpreter="latex");
         if chip(1) == 'P'
@@ -95,8 +100,16 @@ function plot_id_tensione_override(dispositivo , metodo)
 
         ylabel(sprintf("%s $[A]$" , YLABEL) , "Interpreter" , "latex");
         xlabel(sprintf("%s $[V]$" , XLABEL) , "Interpreter" , "latex");
-
+        
         grid on
+
+        if i == 1
+            tipo_plot = "lin";
+        else
+            tipo_plot = "log";
+        end
+    
+        saveas(gcf, CARTELLA_SALVATAGGIO + sprintf(PREFISSO_NOME_PLOT , chip(1) , dispositivo , metodo , tipo_plot))
 
     end
     
@@ -119,6 +132,6 @@ function plot_id_tensione_override(dispositivo , metodo)
 
     DATI = array2table(DATI , "VariableNames", string(NOMI));
 
-    writetable(DATI , "Id_VOV_.xls")    
+    writetable(DATI , CARTELLA_SALVATAGGIO + NOME_FILE_DATI)    
 
 end

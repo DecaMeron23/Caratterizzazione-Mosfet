@@ -1,7 +1,7 @@
 function plot_delta_gm(vds , tipologia , dispositivo , varargin) % vds = 0.45 , tipologia = "P" , dispositivo = "200-30"
     % posizionarsi nella cartella contenente i file delta_gm
     % Plot variazioni 
-    grado = [0 5 50 100 200 600 1000 3000 3500];
+    grado = [0.5 5 50 100 200 600 1000 3000 4000];
     valori_vds = 0.15:0.15:0.9;
     file = "Delta_gm_" + dispositivo + ".xls";
     delta = readmatrix(file);
@@ -22,9 +22,11 @@ function plot_delta_gm(vds , tipologia , dispositivo , varargin) % vds = 0.45 , 
     ylabel("$ \% \Delta g_m$" , Interpreter="latex" , FontSize=12);
     xlabel("Dose Assorbita $[Mrad]$" , Interpreter="latex" , FontSize=12);
     % Impostazione degli xtick
-    xticks(0:500:3500);
+    xticks([0.5 1 10 1e2 1e3 4000]);
     % Impostazione delle etichette degli xtick
-    xticklabels({"0" , "500", "1000" , "1500" , "2000" , "2500" , "3000" , "annealing"});
+    xticklabels({"pre" 1 10 1e2 1e3 "annealing"});
+    xlim([0.5 4000])
+    set(gca , "XScale" , "log")
     
     if  nargin > 3
         if varargin{1}
