@@ -3,7 +3,7 @@
 % specifico (es: dispositivo = 200-30) e un metodo di estrazione di Vth, valori accettati: ["ELR" "RM" "SDLM" "TCM"] 
 function plot_id_tensione_override(dispositivo , metodo)
     
-
+    setUpPlot();
     close all
     ARRAY_METODI = ["ELR" "TCM" "SDLM" "RM"];
     colonnaMetodo = find(ARRAY_METODI==metodo, 1);
@@ -34,6 +34,8 @@ function plot_id_tensione_override(dispositivo , metodo)
     DISPLAY_NAME = ["Pre" , temp + "Mrad" , "Annealing"];
     VDS_MASSIMA = 900;
 
+    DATI = nan(241 , 2*9);
+
     figure
     figure
     
@@ -55,6 +57,9 @@ function plot_id_tensione_override(dispositivo , metodo)
 
         V_OVERRIDE = VGS - VTH;
         ID = ID( : , VDS == VDS_MASSIMA);
+
+        indici = [(i*2)-1 , i*2];
+        DATI(: , indici) = [V_OVERRIDE , ID];
 
         figure(1)
         plot(V_OVERRIDE , ID , "Color", COLORI_PLOT(i , :) , "DisplayName", DISPLAY_NAME(i));
@@ -92,9 +97,28 @@ function plot_id_tensione_override(dispositivo , metodo)
         xlabel(sprintf("%s $[V]$" , XLABEL) , "Interpreter" , "latex");
 
         grid on
+
     end
     
-
+    tipi_dati = ["V_OV_" , "ID_"];
+    irraggiamenti = [0 5 50 100 200 600 1000 3000 3500];
+    irraggiamenti = irraggiamenti + "Mrad";
+    irraggiamenti(1) = "pre";
+    irraggiamenti(end) = "annealing";
     
+    VOV = tipi_dati(1) + irraggiamenti; 
+    ID = tipi_dati(2) + irraggiamenti;
+
+    NOMI = {}; 
+
+    for i = 2:2:length(irraggiamenti)*2
+        NOMI{i-1} = VOV(i/2);
+        NOMI{i} = ID(i/2);
+    end
+
+
+    DATI = array2table(DATI , "VariableNames", string(NOMI));
+
+    writetable(DATI , "Id_VOV_.xls")    
 
 end
