@@ -13,6 +13,8 @@ Flicker
 graphics
 graphicx
 gray
+High
+HKMG
 ionizing
 isolation
 leakage
@@ -30,3 +32,4 @@ shiftata
 smooth
 Transconductance
 transconduttanze
+transistors
