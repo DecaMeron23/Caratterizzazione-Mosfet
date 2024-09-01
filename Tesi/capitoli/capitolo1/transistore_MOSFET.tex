@@ -73,16 +73,23 @@ In prima approssimazione, il MOSFET si comporta come un generatore di corrente c
 
 Per comprendere al meglio l'effettivo comportamento dei MOSFET, però, bisogna considerare che il segnale in uscita al MOSFET subisce delle interferenze dovute al rumore generato all'interno del dispositivo stesso. Esistono diverse sorgenti di rumore; qui di seguito si descrivono le principali.
 
-\paragraph*{Rumore termico di canale}
-Il canale di un dispositivo è composto da materiale resistivo e quindi è sorgente di rumore termico. Tale sorgente può essere rappresentata come un generatore di segnale con densità spettrale:
+\paragraph*{Rumore termico di canale o rumore bianco}
+Il canale di un dispositivo è composto da materiale resistivo e quindi è sorgente di rumore termico. Tale sorgente può essere rappresentata come un generatore di segnale la cui densità spettrale segue la seguente legge: 
+$$ S_{I_d} = \frac{4 K_B T}{L^2 I_D} \int_{0}^{V_{DS}} g^2\left(V'\right) \, dV' $$
+dove $K_B$ è la costante di Boltzmann, $T$ è la temperatura assoluta e $g\left(V'\right)$ è la conduttanza di canale misurata nel punto in cui la tensione rispetto al sourse vale $V'$. Questa equazione può essere semplificata in maniera differente in funzione della lunghezza del canale.  Infatti, se tale dimensione è nell'ordine delle frazioni di micron, subentrano i cosiddetti effetti di canale corto, che comportano l'aumento del rumore e che non possono essere ignorati.
+Poiché tutti i dispositivi presi in considerazione ricadono in questa categoria, la trattazione del rumore termico di canale si concentra sulla descrizione della legge matematica legata ai dispositivi a canale corto, ovvero \footnote{ $ S_w = S_{I_d}$ riferita al Gate del MOSFET}:
+$$ S_w = 4 K_B T \frac{\alpha_w n_{sub} \gamma}{g_m}$$
+$\alpha_w$ è il fattore di rumore in eccesso che tiene conto degli effetti di canale corto. Generalmente ha valore maggiore di 1, ma analisi approfondite sui dispositivi studiati hanno messo in luce che i MOSFET utilizzati con lunghezza di canale $L = 30 nm$ hanno un fattore $\alpha_w$ anomalo\todo{ <1?}. $n_{sub}$ è un coeffciente proporzionale al reciproco della pendenza della caratteristica $I_D-V_{GS}$ nella regione di sottosoglia. $\gamma$ è il coefficiente di rumore termico di canale che, per i dispositivi nanometrici, può essere espresso come:
+$$ \gamma = \frac{1}{1 +  \frac {I_D L}{I_Z^* W}}\left(\frac{1}{2} + \frac{ 2 I_D L}{3 I_Z^* W}\right)$$
+dove $I_Z^*$ è la corrente di Drain caratteristica normalizzata, ovvero la corrente che separa la regione di triodo da quella di saturazione.
 
-$$ S_w = 4 K_B T \frac{\alpha_w n_{sub} \gamma}{g_m} $$
+Il rumore termico di canale può essere anche espresso sotto forma di resistenza equivalente $R_{eq}$, tramite l'equazione:
+$$ R_{eq} = \frac{S_w}{4 K_B T} = \alpha_w \frac{n_{sub} \gamma}{g_m} $$
 
-\begin{itemize}
-  \item la temperatura $T$. La densità spettrale è direttamente proporzionale alla temperatura assoluta,
-  \item la transconduttanza di canale $g_m$, all'aumentare della quale la densità spettrale diminuisce,
-  \item la lunghezza minima del canale. Infatti, al diminuire della lunghezza minima del canale, la densità spettrale può aumentare significativamente per effetto della riduzione dei portatori di carica e dell'aumento della loro temperatura.
-\end{itemize}
+
+
+
+
 
 \paragraph*{Flicker Noise}
 Generalmente, a basse frequenze, prevale una componente di rumore del tipo $1/f$, la cui densità spettrale è inversamente proporzionale alla frequenza del segnale:
@@ -97,7 +104,7 @@ Le cause più probabili di questo comportamento sono:
   \item fluttuazione della mobilità dei portatori di carica a causa di fenomeni di scattering con le impurità presenti nel cristallo, prevalente nei dispositivi a canale P.
 \end{itemize}
 
-A parità di tecnologia, polarizzazione e dimensioni, il flicker noise è minore nei MOSFET a canale P, rispetto a quelli a canale N. Infine, il processo di \emph{scaling} dei dispositivi influenza la quantità di questo tipo di rumore: analizzando l'equazione della densità spettrale, si nota come la riduzione delle dimensioni del canale comportano un aumento di rumore. Al contrario, la diminuzione dello spessore del Gate porta all'aumento della sua capacità e quindi ad una riduzione del rumore. Allo stesso tempo, però, un Gate più fine è soggetto ad un maggiore degrado, quindi il fattore $K_f$ potrebbe non diminuire come aspettato. 
+A parità di tecnologia, polarizzazione e dimensioni, il flicker noise è minore nei MOSFET a canale P, rispetto a quelli a canale N. Infine, il processo di \emph{scaling} dei dispositivi influenza la quantità di questo tipo di rumore: analizzando l'equazione della densità spettrale, si nota come la riduzione delle dimensioni del canale comportano un aumento di rumore. Al contrario, la diminuzione dello spessore del Gate porta all'aumento della sua capacità e quindi ad una riduzione del rumore. Allo stesso tempo, però, un Gate più fine è soggetto a maggiore degrado, quindi il fattore $K_f$ potrebbe non diminuire come aspettato. 
 
 \paragraph*{Rumore Lorentziano}
 Il rumore Lorentziano, o \emph{Random Telegraph Signal} (\emph{RTS}), è causato dall'intrappolamento e rilascio dei portatori di carica da parte di trappole presenti nella regione di svuotamento tra il canale di conduzione e l'ossido. Questo tipo di rumore è maggiormente presente nei dispositivi soggetti a grandi dosi di radiazioni e fluenze neutroniche, che producono nel reticolo cristallino dei difetti che fungono da centri di intrappolamento. La riduzione di spessore del Gate comporta un aumento del numero delle trappole, poiché soggetto a maggior degrado.
