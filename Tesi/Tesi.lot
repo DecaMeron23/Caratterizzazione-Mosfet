@@ -2,28 +2,28 @@
 \babel@toc {italian}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Dimensioni dei dispositivi presenti in ciascun chip usato per lo studio}}{12}{table.caption.15}%
-\contentsline {table}{\numberline {2.2}{\ignorespaces Valori delle tensioni per la misura della caratteristica $I_D-V_{DS}$}}{12}{table.caption.16}%
-\contentsline {table}{\numberline {2.3}{\ignorespaces Valori delle tensioni per la misura della caratteristica $I_D-V_{GS}$}}{13}{table.caption.17}%
-\contentsline {table}{\numberline {2.4}{\ignorespaces Confronto $V_{th}$ al variare del grado del fit polinomiale con il metodo TCM}}{15}{table.caption.20}%
-\contentsline {table}{\numberline {2.5}{\ignorespaces $V_{th}$ dei dispositivi NMOS estratte con TCM}}{16}{table.caption.21}%
-\contentsline {table}{\numberline {2.6}{\ignorespaces $|V_{th}|$ dei dispositivi PMOS estratte con TCM}}{16}{table.caption.22}%
-\contentsline {table}{\numberline {2.7}{\ignorespaces $\Delta V_{th}$ dei dispositivi NMOS estratte con TCM}}{17}{table.caption.23}%
-\contentsline {table}{\numberline {2.8}{\ignorespaces $\Delta V_{th}$ dei dispositivi PMOS estratte con TCM}}{17}{table.caption.24}%
-\contentsline {table}{\numberline {2.9}{\ignorespaces Confronto $|V_{th}|$ al variare del grado del fit polinomiale con il metodo SDLM}}{20}{table.caption.27}%
-\contentsline {table}{\numberline {2.10}{\ignorespaces $V_{th}$ dei dispositivi NMOS estratte con SDLM}}{20}{table.caption.29}%
-\contentsline {table}{\numberline {2.11}{\ignorespaces $|V_{th}|$ dei dispositivi PMOS estratte con SDLM}}{21}{table.caption.30}%
-\contentsline {table}{\numberline {2.12}{\ignorespaces $\Delta V_{th}$ dei dispositivi NMOS estratte con SDLM}}{22}{table.caption.31}%
-\contentsline {table}{\numberline {2.13}{\ignorespaces $\Delta V_{th}$ dei dispositivi PMOS estratte con SDLM}}{22}{table.caption.32}%
-\contentsline {table}{\numberline {2.14}{\ignorespaces $V_{th}$ dei dispositivi NMOS estratte con ELR}}{25}{table.caption.35}%
-\contentsline {table}{\numberline {2.15}{\ignorespaces $|V_{th}|$ dei dispositivi PMOS estratte con ELR}}{25}{table.caption.36}%
-\contentsline {table}{\numberline {2.16}{\ignorespaces $\Delta V_{th}$ dei dispositivi NMOS estratte con ELR}}{26}{table.caption.37}%
-\contentsline {table}{\numberline {2.17}{\ignorespaces $\Delta V_{th}$ dei dispositivi PMOS estratte con ELR}}{26}{table.caption.38}%
-\contentsline {table}{\numberline {2.18}{\ignorespaces $V_{th}$ dei dispositivi NMOS estratte con RM}}{28}{table.caption.41}%
-\contentsline {table}{\numberline {2.19}{\ignorespaces $|V_{th}|$ dei dispositivi PMOS estratte con RM}}{29}{table.caption.42}%
-\contentsline {table}{\numberline {2.20}{\ignorespaces $\Delta V_{th}$ dei dispositivi NMOS estratte con RM}}{29}{table.caption.43}%
-\contentsline {table}{\numberline {2.21}{\ignorespaces $\Delta V_{th}$ dei dispositivi PMOS estratte con RM}}{30}{table.caption.44}%
-\contentsline {table}{\numberline {2.22}{\ignorespaces Dati $\Delta g_m \%$ al variare della dose assorbita, NMOS}}{35}{table.caption.52}%
-\contentsline {table}{\numberline {2.23}{\ignorespaces Dati $\Delta g_m \%$ al variare della dose assorbita, PMOS}}{36}{table.caption.53}%
-\contentsline {table}{\numberline {2.24}{\ignorespaces Valori estratti $I_z^*$}}{38}{table.caption.63}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Dimensioni dei dispositivi presenti in ciascun chip usato per lo studio}}{12}{table.caption.16}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Valori delle tensioni per la misura della caratteristica $I_D-V_{DS}$}}{12}{table.caption.17}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Valori delle tensioni per la misura della caratteristica $I_D-V_{GS}$}}{13}{table.caption.18}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Confronto $V_{th}$ al variare del grado del fit polinomiale con il metodo TCM}}{15}{table.caption.21}%
+\contentsline {table}{\numberline {2.5}{\ignorespaces $V_{th}$ dei dispositivi NMOS estratte con TCM}}{16}{table.caption.22}%
+\contentsline {table}{\numberline {2.6}{\ignorespaces $|V_{th}|$ dei dispositivi PMOS estratte con TCM}}{16}{table.caption.23}%
+\contentsline {table}{\numberline {2.7}{\ignorespaces $\Delta V_{th}$ dei dispositivi NMOS estratte con TCM}}{17}{table.caption.24}%
+\contentsline {table}{\numberline {2.8}{\ignorespaces $\Delta V_{th}$ dei dispositivi PMOS estratte con TCM}}{17}{table.caption.25}%
+\contentsline {table}{\numberline {2.9}{\ignorespaces Confronto $|V_{th}|$ al variare del grado del fit polinomiale con il metodo SDLM}}{20}{table.caption.28}%
+\contentsline {table}{\numberline {2.10}{\ignorespaces $V_{th}$ dei dispositivi NMOS estratte con SDLM}}{20}{table.caption.30}%
+\contentsline {table}{\numberline {2.11}{\ignorespaces $|V_{th}|$ dei dispositivi PMOS estratte con SDLM}}{21}{table.caption.31}%
+\contentsline {table}{\numberline {2.12}{\ignorespaces $\Delta V_{th}$ dei dispositivi NMOS estratte con SDLM}}{22}{table.caption.32}%
+\contentsline {table}{\numberline {2.13}{\ignorespaces $\Delta V_{th}$ dei dispositivi PMOS estratte con SDLM}}{22}{table.caption.33}%
+\contentsline {table}{\numberline {2.14}{\ignorespaces $V_{th}$ dei dispositivi NMOS estratte con ELR}}{25}{table.caption.36}%
+\contentsline {table}{\numberline {2.15}{\ignorespaces $|V_{th}|$ dei dispositivi PMOS estratte con ELR}}{25}{table.caption.37}%
+\contentsline {table}{\numberline {2.16}{\ignorespaces $\Delta V_{th}$ dei dispositivi NMOS estratte con ELR}}{26}{table.caption.38}%
+\contentsline {table}{\numberline {2.17}{\ignorespaces $\Delta V_{th}$ dei dispositivi PMOS estratte con ELR}}{26}{table.caption.39}%
+\contentsline {table}{\numberline {2.18}{\ignorespaces $V_{th}$ dei dispositivi NMOS estratte con RM}}{28}{table.caption.42}%
+\contentsline {table}{\numberline {2.19}{\ignorespaces $|V_{th}|$ dei dispositivi PMOS estratte con RM}}{29}{table.caption.43}%
+\contentsline {table}{\numberline {2.20}{\ignorespaces $\Delta V_{th}$ dei dispositivi NMOS estratte con RM}}{29}{table.caption.44}%
+\contentsline {table}{\numberline {2.21}{\ignorespaces $\Delta V_{th}$ dei dispositivi PMOS estratte con RM}}{30}{table.caption.45}%
+\contentsline {table}{\numberline {2.22}{\ignorespaces Dati $\Delta g_m \%$ al variare della dose assorbita, NMOS}}{35}{table.caption.53}%
+\contentsline {table}{\numberline {2.23}{\ignorespaces Dati $\Delta g_m \%$ al variare della dose assorbita, PMOS}}{36}{table.caption.54}%
+\contentsline {table}{\numberline {2.24}{\ignorespaces Valori estratti $I_z^*$}}{38}{table.caption.64}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 
