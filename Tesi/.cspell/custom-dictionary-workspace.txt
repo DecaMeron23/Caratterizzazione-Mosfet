@@ -23,6 +23,7 @@ Logarithm
 Noise
 oxide
 Plot
+preamplificatori
 Radiation
 Second
 Semiconductor

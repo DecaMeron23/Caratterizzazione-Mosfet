@@ -6,7 +6,7 @@ Gli effetti principali delle radiazioni su dispositivi elettronici possono esser
 \end{itemize}
 
 \subsection{Danno da spostamento}
-Quando una particella (neutrone) possiede abbastanza energia tale da poter dislocare un atomo al di fuori dalla sua posizione normale all'interno reticolo, avviene il danno da spostamento (\textit{Displacement damage}); ne risulta che le caratteristiche elettroniche del materiale vengano alterate.
+Quando una particella (tipicamente un neutrone, ma non solo) possiede abbastanza energia tale da poter dislocare un atomo al di fuori dalla sua posizione normale all'interno reticolo, avviene il danno da spostamento (\textit{Displacement damage}); ne risulta che le caratteristiche elettroniche del materiale vengano alterate.
 Inoltre, può verificarsi che l'atomo colpito generi a sua volta altri \textit{DD}, a patto che abbia abbastanza energia. L'energia minima da trasferire ad un atomo per far si che si generi un danno da spostamento nel silicio è di $20 eV$.
 % Preso da Slide di Valerio Re
 
@@ -14,7 +14,7 @@ Inoltre, può verificarsi che l'atomo colpito generi a sua volta altri \textit{D
 
 \vspace*{0.5cm}
 
-Mentre il danno da spostamento non è molto rilevante sui MOSFET, la ionizzazione può comportare variazioni dei parametri elettrici come guadagno e tensione di soglia; per questi motivi ci concentreremo solo sugli effetti della ionizzazione.
+Mentre il danno da spostamento non è molto rilevante sui MOSFET (in quanto sono dispositivi nei quali la conduzione delle cariche avviene a livello superficiale e non nel substrato), la ionizzazione può comportare variazioni dei parametri elettrici come guadagno e tensione di soglia; per questi motivi in questo lavoro ci concentreremo solo sugli effetti della ionizzazione.
 
 % \vspace{0.5cm}
  
@@ -38,16 +38,18 @@ La creazione di coppie $e-h$ all'interno del dispositivo MOSFET è provocata dal
 \vspace{0.5cm}
 
 Negli isolanti, come l'ossido di gate dei transistori MOSFET, l'effetto della ionizzazione è cumulativo. Gli elettroni liberati da una particella ionizzante si possono muovere facilmente soprattutto grazie a effetti di campo dovuti, ad esempio, a polarizzazioni.
-Al contrario, le lacune sono molto meno mobili, dai 5 ai 12 ordini di grandezza inferiori, rispetto agli elettroni. La maggior parte delle lacune riesce a sopravvive alla ricombinazione con gli elettroni, creando perciò una carica positiva vicino alla giunzione $Si/SiO_2$. Un aumento della carica positiva ha come effetto la diminuzione della tensione di soglia dei MOSFET a canale P; invece negli NMOS, dopo aver subito bassi dosaggi (inferiori a $10Mrad$), si può notare un abbassamento della tensione di soglia, mentre per dosi superiori un innalzamento. Questo andamento è dato da due fattori:
+Al contrario, le lacune sono molto meno mobili, dai 5 ai 12 ordini di grandezza inferiori, rispetto agli elettroni. La maggior parte delle lacune riesce a sopravvive alla ricombinazione con gli elettroni, creando perciò una carica positiva vicino alla giunzione $Si/SiO_2$.
+La carica intrappolata nell'ossido ha come effetto un aumento (in valore assoluto) della tensione di soglia dei MOSFET a canale P; mentre negli NMOS l'effetto è un po' più complesso e dipende dai seguenti fattori:
 \begin{enumerate}
 	\item Cariche positive intrappolate nell'ossido
-	\item Cariche negative presenti nelle trappole all'interfaccia\footnote{Le trappole all'interfaccia sono imperfezioni o difetti presenti alla giunzione $Si/SiO_2$ che possono intrappolare delle cariche. Queste trappole aumentano all'aumentare della dose assorbita}
+	\item Cariche negative presenti nelle trappole all'interfaccia\footnote{Le trappole all'interfaccia sono dovute a imperfezioni o difetti presenti alla giunzione $Si/SiO_2$ che possono intrappolare delle cariche. Queste trappole aumentano all'aumentare della dose assorbita}
 \end{enumerate}
-Mentre la prima provoca l'abbassamento della tensione di soglia, la seconda, all'aumentare della dose assorbita, aumenta d'intensità, sovrastando il primo effetto e incrementando la presenza di elettroni all'interfaccia con conseguente aumento della $V_{th}$.  
+Mentre la prima provoca una riduzione della tensione di soglia, la seconda, comporta un aumento della tensione di soglia in quanto la carica intrappolata all'interfaccia è negativa (negli NMOS si ha moto di elettroni nel canale). 
+È inoltre opportuno sottolineare che anche nei PMOS vi sono portatori intrappolati all'interfaccia $Si/SiO_2$. Ma questi portatori, al contrario di quanto accade per gli NMOS, hanno carica positiva e pertanto le cariche intrappolate hanno un effetto che si somma a quello dovuto alle cariche positive intrappolate nell'ossido di gate.  
 
 \vspace{0.5cm}
 
-Un'altro effetto presente solo negli NMOS è quello della formazione di transistor parassiti \cite{effetti_radiazioni:CMOS_IC_radiation_hardening_by_design}. Questo effetto è dovuto all'aumento delle cariche positive nella \textit{shallow trench isolation} (\textit{STI}), comportando un aumento degli elettroni nel substrato (figura \ref{fig:accumulo_lacune_STI}) che, a loro volta, creano un canale conduttivo tra source e drain, aggirando quello principale. Questo collegamento fa sì che possa esserci un flusso di corrente anche quando il dispositivo è polarizzato con una $V_{GS} \simeq 0$.
+Un'altro effetto presente solo negli NMOS è quello della formazione di transistor parassiti \cite{effetti_radiazioni:CMOS_IC_radiation_hardening_by_design}. Questo effetto è dovuto all'accumulo delle cariche positive nella \textit{shallow trench isolation} (\textit{STI}) che, creano un canale conduttivo tra source e drain, aggirando quello principale (figura \ref{fig:accumulo_lacune_STI}). Questo collegamento fa sì che possa esserci un flusso di corrente anche quando il dispositivo è polarizzato con una $V_{GS} \simeq 0$.
 
 \begin{figure}[ht]
 	\centering
@@ -59,7 +61,9 @@ Un'altro effetto presente solo negli NMOS è quello della formazione di transist
 
 \end{figure}
 
-Poiché gli effetti delle radiazioni sui MOSFET precedentemente elencati sono maggiori sui dispositivi a canale N, in passato si è consolidata la preferenza ad utilizzare i PMOS essendo più tolleranti alla ionizzazione. L'evoluzione di tecnologie MOSFET sempre più piccole, però, ha comportato un aumento della resistenza alle radiazioni ionizzanti, riducendo correnti di perdita, $I_{off}$ e variazioni della tensione di soglia (figura \ref{fig:scaling_mosfet}).  
+\vspace*{0.5cm}
+
+Poiché gli effetti delle radiazioni sui MOSFET precedentemente elencati sono maggiori sui dispositivi a canale N, in passato si è consolidata la preferenza ad utilizzare i PMOS come transistori d'ingresso in preamplificatori di carica a basso rumore, essendo più tolleranti alla ionizzazione. L'evoluzione di tecnologie MOSFET, che ha portato alla fabbricazioni di transistori con dimensioni minime di canale sempre più piccole, ha comportato grazie alla riduzione dello spesso dell'ossido di gate, un aumento della resistenza alle radiazioni ionizzanti (figura \ref{fig:scaling_mosfet}).  
 
 \begin{figure}[ht]
 	\centering
@@ -72,8 +76,7 @@ Poiché gli effetti delle radiazioni sui MOSFET precedentemente elencati sono ma
 
 \vspace{0.5cm}
 
-La ricottura dell'ossido (\textit{oxide anneals}) è una procedura volta a ripristinare, almeno in parte, le caratteristiche del MOSFET a seguito dell'assorbimento di radiazioni.
-Questo processo consiste nel neutralizzare le lacune scaldando il dispositivo e facendo si che gli elettroni presenti acquisiscano abbastanza energia per potersi ricombinare con le lacune. Per questo lavoro di tesi, sono stati portati ad una temperatura di $100\degree C$ per ventiquattro ore. La ricottura può avvenire anche a temperatura ambiente, ma i tempi per osservare effetti significativi sarebbero molto lunghi, anche di anni \cite{bib:Effetti_Radiazioni_NASA}. 
+Gli effetti del danno da ionizzazione si riducono con il tempo (settimane, mesi, anni) e questo effetto è denominato annealing. Per simulare il ripristino delle prestazioni elettroniche dei dispositivi in un tempo ragionevolmente breve, si effettua  un annealing ad alta temperatura, tipicamente $100^{\circ} C$ per 24 ore, per accelerarne i meccanismi. In questo lavoro di tesi, dopo l'ultimo step di irraggiamento, si è effettuato uno step di annealing a $100^{\circ} C$ per $24$ ore.
 
 \subsection{Misura della dose}
 La quantità di radiazioni ionizzanti assorbite da un materiale viene chiamata \textit{TID} (\textit{total ionizing dose}) ed è espressa in energia su unità di massa.
