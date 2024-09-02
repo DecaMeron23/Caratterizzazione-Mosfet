@@ -3,12 +3,25 @@ classdef PLOT_ID_VGS_VDS
 
     methods (Static)
 
+        % Funzione che svolge sia i plot per id-vgs e id-vds
+        function ID_VGS__e__ID_VDS(VDS_mV , VGS_mV)
+            
+            PLOT_ID_VGS_VDS.ID_VGS_Raggruppata_W(VDS_mV);
+
+            PLOT_ID_VGS_VDS.ID_VDS_Raggruppata_W(VGS_mV);
+
+            
+        end
+
+
         % Funzione che esegue i plot di "ID-Vgs", per utilizzarla
         % posizionarsi nella cartella relativa all'irraggiamento da cui si
         % vuole fare i plot, chiamare la funzione con eventualmente un
         % parametro che indica a quale VDS in mV si vuole fare il plot, di
         % default è 900mV
         function ID_VGS_Raggruppata_W(VDS_mV)
+
+            setUpPlot();
 
             if nargin == 0
                 VDS_mV = 900;
@@ -106,10 +119,12 @@ classdef PLOT_ID_VGS_VDS
         % vuole fare i plot, chiamare la funzione con eventualmente un
         % parametro che indica a quale VGS in mV si vuole fare il plot, di
         % default è 900mV
-        function ID_VDS_Raggruppata_W(VDS_mV)
+        function ID_VDS_Raggruppata_W(VGS_mV)
+                
+            setUpPlot();
 
             if nargin == 0
-                VDS_mV = 900;
+                VGS_mV = 900;
             end
 
             temp = split(pwd , "\");
@@ -160,7 +175,7 @@ classdef PLOT_ID_VGS_VDS
                 
                 indice_figura = find(ARRAY_W == W);
                 indice_colore_plot = ARRAY_L == L;
-                indice_vds = ARRAY_VGS_mV == VDS_mV;
+                indice_vds = ARRAY_VGS_mV == VGS_mV;
 
                 LEGENDA = sprintf("$L = %d n m$" , L);
 
@@ -175,7 +190,7 @@ classdef PLOT_ID_VGS_VDS
 
             x_label = sprintf("$V_{%s} [V]$" , VDS_LABEL(TIPOLOGIA == tipologia_canale));
             y_label = sprintf("$%sI_{D}%s [A]$" , ID_LABEL(TIPOLOGIA == tipologia_canale) , ID_LABEL(TIPOLOGIA == tipologia_canale));
-            posizione_legenda = "southeast";
+            posizione_legenda = "northwest";
             
             if ~exist(NOME_CARTELLA_SALVATAGGIO , "dir")
                 mkdir(NOME_CARTELLA_SALVATAGGIO);
@@ -189,7 +204,7 @@ classdef PLOT_ID_VGS_VDS
                 grid on
                 xlim([min(vds) , max(vds)]);
 
-                nome_plot_salvataggio = NOME_CARTELLA_SALVATAGGIO + sprintf(PREFISSO_nomePlot , VDS_mV , ARRAY_W(i));
+                nome_plot_salvataggio = NOME_CARTELLA_SALVATAGGIO + sprintf(PREFISSO_nomePlot , VGS_mV , ARRAY_W(i));
 
                 saveas(gcf , nome_plot_salvataggio);
 
