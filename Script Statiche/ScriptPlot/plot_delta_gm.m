@@ -12,8 +12,7 @@ function plot_delta_gm(vds , tipologia , dispositivo , varargin) % vds = 0.45 , 
     %figure;
     elementi = split(dispositivo , "-");
     W = elementi(1);   
-    L= str2double(elementi(2)) / 1000;
-    L = sprintf('%.3f', L);
+    L= str2double(elementi(2));
     dim_dispositivo = "$ L="+ L + "nm$";
     titolo = tipologia+"MOS" + dim_dispositivo;
     plot(grado , delta , Marker="diamond" , LineWidth=1 , DisplayName=dim_dispositivo);    
