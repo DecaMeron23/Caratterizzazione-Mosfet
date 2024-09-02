@@ -1,16 +1,23 @@
 Un parametro utile ad indicare quanto un dispositivo MOSFET possa regolare la corrente di drain $I_D$, attraverso la tensione $V_{GS}$, è la transconduttanza $g_m$. Essa è definita dal rapporto incrementale:
 
-$$g_m = \frac{\partial I_D}{\partial V_{GS}}$$
+\begin{equation}
+    g_m = \frac{\partial I_D}{\partial V_{GS}}
+\end{equation}
 
 Nel caso in cui il MOSFET si trovi nella regione di saturazione si ottiene la seguente espressione:
 
-$$g_m = \frac{W}{L} \cdot \mu \cdot C_{ox} \cdot (V_{GS} - V_{th})$$
+\begin{equation}
+    g_m = \frac{W}{L} \cdot \mu \cdot C_{ox} \cdot (V_{GS} - V_{th})
+\end{equation}
 
 
 \subsection{Calcolo della transconduttanza}
 Derivare dei dati discontinui porta sempre, o quasi sempre, ad avere delle curve spezzate, per le quali è difficile trarre informazioni utili.
 Questo è stato il caso per la transconduttanza; la figura \ref{fig:gm_smooth:no_smooth} (curva di sinistra) rappresenta la $g_m$ di un transistor  MOSFET a canale N, con $ W = 100\mu m$ e $L = 30 nm$ senza eseguire nessun tipo di smooth; in particolare, per alte $V_{GS}$, il difetto è molto marcato. Per ridurre questo effetto, oltre ad applicare alla fine uno smooth di ampiezza $5$, due valori prima e due valori dopo; sono state calcolate due transconduttanze, la prima ${g_m}^{\prime}$ normalmente, mentre, per la seconda ${g_m}^{\prime \prime}$ si è eseguito il rapporto incrementale tra $I_D$ e ${V_{GS}}^*$, tensione gate-source shiftata di una posizione, duplicando il primo valore ed eliminando l'ultimo. In seguito la transconduttanza è stata ricavata eseguendo la media tra i singoli valori di ${g_m}^\prime \text{ e } {g_m}^{\prime \prime}$:
-$${g_m}_i = \frac{{g_m}_i^{\prime} + {g_m}_i^{\prime \prime}}{2} \text{ } i \in [1 , 2 , 3 . . .]$$
+
+\begin{equation}
+    {g_m}_i = \frac{{g_m}_i^{\prime} + {g_m}_i^{\prime \prime}}{2} \text{ } i \in [1 , 2 , 3 . . .]
+\end{equation}
 
 Trovando, per il dispositivo in questione, la curva a figura \ref{fig:gm_smooth:smooth}(curva a destra).
 
@@ -56,7 +63,9 @@ A figura \ref{fig:gm_w} vengono mostrati i grafici relativi alla transconduttanz
 
 Uno degli effetti delle radiazioni ionizzanti è quella di ridurre la mobilità dei portatori di carica $\mu$ all'interno del canale. Osservando  l'espressione della $g_m$ si nota la proporzionalità diretta con la mobilità dei portatori comportando una riduzione della transconduttanza, all'aumentare della dose assorbita. Per confermare questo effetto, si è calcolata la variazione della transconduttanza, in percentuale, all'aumentare della dose assorbita:
 
-$$\Delta {g_m}_{post} {\%} = \frac{{g_m}_{post} - {g_m}_{pre}}{{g_m}_{pre}}\cdot 100$$
+\begin{equation}
+    \Delta {g_m}_{post} {\%} = \frac{{g_m}_{post} - {g_m}_{pre}}{{g_m}_{pre}}\cdot 100
+\end{equation}
 
 Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza per un certo dosaggio, e similmente per ${g_m}_{pre}$, il massimo valore pre-irraggiamento. L'effetto è stato confermato dai dati sperimentali (tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}) ottenuti dai transistori\footnote{La $V_{DS}$ da cui è stata estratta la transconduttanza è di $0.9V$, nel caso di NMOS, mentre per PMOS $-0.9V$.} sotto osservazione in questo lavoro di tesi.
 

@@ -2,11 +2,15 @@ Il guadagno intrinseco ($A_{vi}$) è definito come il massimo guadagno ottenibil
 Fornisce una misura di quanto un MOSFET possa amplificare senza essere influenzato da elementi esterni.
 Esso viene calcolato come:
 
-$$A_{vi} = g_{m} \cdot r_0 = \frac{g_{m}}{g_{ds}} $$
+\begin{equation}
+    A_{vi} = g_{m} \cdot r_0 = \frac{g_{m}}{g_{ds}}
+\end{equation}
 
 Con $g_m$ la transconduttanza e $r_0$ la resistenza in uscita dal transistor (${1}/{g_{ds}}$). Spesso, il grafico di $A_{vi}$, viene mostrato in funzione del coefficiente di inversione ($I_{C0}$), parametro utile per descrivere il grado di inversione del canale (debole: per valori inferiori a $0.1$, moderata: tra $0.1$ e $10$, forte: superiori a $10$) il quale si può ricavare dalla $I_D$ ad alte $V_{DS}$:
 
-$$I_{C0} = \frac{I_{D}}{I_{Z}^{*}} \cdot \frac{L}{W}$$
+\begin{equation}
+    I_{C0} = \frac{I_{D}}{I_{Z}^{*}} \cdot \frac{L}{W}
+\end{equation}
 
 La corrente caratteristica ($I_{Z}^{*}$) è stata misurata pre-irraggiamento. I valori sono riportati nella tabella \ref{tab:corrente_caratteristica}.
 
