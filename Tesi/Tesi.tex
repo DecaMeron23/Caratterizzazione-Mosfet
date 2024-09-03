@@ -39,6 +39,10 @@
 \usepackage{import}
 \usepackage{frontespizio}
 
+\usepackage{placeins} %per non far andare le immagini al di fuori delle sezioni utilizzare il comando: \FloatBarrier non far superare le immagini quel punto
+
+\usepackage{adjustbox} % per dimensionare le immagini in modo automatico
+
 
 \begin{document}
 % Inizio introduzione documento
@@ -96,6 +100,11 @@ In questo capitolo si tratteranno i parametri statici di transistori \emph{MOS} 
 
 \section{MOSFET misurati e setup per le misure statiche}
 \import{./capitoli/capitolo2}{MOSFET_e_setup.tex}
+\FloatBarrier
+
+\section{Caratteristiche: tensione-corrente}
+\import{./capitoli/capitolo2}{ID.tex}
+\FloatBarrier
 
 % ! Tensione di soglia
 \section{Variazione della tensione di soglia}
