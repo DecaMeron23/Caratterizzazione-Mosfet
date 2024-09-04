@@ -124,7 +124,8 @@ function delta_vth(dispositivo)
         Sovrapposizione_plot_deltaVth_W("Delta_TCM.txt", type);
         Sovrapposizione_plot_deltaVth_W("Delta_SDLM.txt" , type);
         Sovrapposizione_plot_deltaVth_W("Delta_RM.txt", type);
-
+        
+        close all
     cd ..
 
     

@@ -4,6 +4,8 @@ function Sovrapposizione_plot_deltaVth_W(file , type)
 %identifica il file da prendere es: "Delta_RM.txt" con la quale crea un
 %plot e lo salva come eps, jpg e fig in una cartella all'interno dell
 %folder dove è presente il file delle delta
+    close all
+    setUpPlot();
 
     file = char(file);
     % prendiamo il nome del metodo della vth
@@ -11,9 +13,16 @@ function Sovrapposizione_plot_deltaVth_W(file , type)
     %estraiamo il nome del metodo per il plot
     nome_metodo = nomeMetodo(metodo);
     
-    dispositivi = ["100 / 0.030" "100 / 0.060" "100 / 0.180" "200 / 0.030" "200 / 0.060" "200 / 0.180" "600 / 0.030" "600 / 0.060" "600 / 0.180"];
-    irraggiamenti = [5 50 100 200 600 1000 3000 3500]; %Il 3500 corrisponde all'annealing
+    fprintf("Esecuzione plot per il metodo '%s'\n" , nome_metodo);
+
+    irraggiamenti = [5 50 100 200 600 1000 3000 4000]; %Il 4000 corrisponde all'annealing
     delta_Vth = readmatrix(file);
+
+    
+    ARRAY_W = [100 200 600];
+    ARRAY_L = [30 60 180];
+    ARRAY_COLORI = lines(3);
+
 
     % escludiamo la prima colonna che contiene solo il nome dei dispositivi
     delta_Vth = delta_Vth(: , 2:end);
@@ -29,46 +38,58 @@ function Sovrapposizione_plot_deltaVth_W(file , type)
     
     cd(cartella);
 
+    indice_dispositivo = 0;
+    
     % per ogni dimensione di W
-    for i=0:2
-        W = (i+1)*100;
-        if W == 300
-            W = 600;
-        end
+    for W = ARRAY_W 
+
         %eseguiamo il plot per il singolo dispositivo
         figure
         hold on
-        for j = 3*i+1 : 3*(i+1)
-            if sum(delta_Vth(j , :))~=0
-                plot(irraggiamenti(1:width(delta_Vth)) , delta_Vth(j , :) , "-s");
+
+        indice_colore = 0;
+        for L = ARRAY_L
+
+            indice_dispositivo = indice_dispositivo + 1;
+            indice_colore = indice_colore + 1;
+            
+            % se la somma delle delta VTH è zero non la plottiamo
+            if sum(delta_Vth(indice_dispositivo , :)) ~=0
+                plot(irraggiamenti(1:width(delta_Vth)) , delta_Vth(indice_dispositivo , :) , ...
+                    "Color" , ARRAY_COLORI(indice_colore , :) , "Marker" ,"square" , ...
+                    "DisplayName" , sprintf("$L = %d nm$" , L));
             end
         end
         yl = yline(0 , "-.");
-        title("Delta Vth " + nome_metodo +" W = "+ W);
-        xlabel("Irraggiamento $[Mrad]$" , Interpreter= "latex");
-        ylabel("$\Delta V_{th}$ $[mV]$", Interpreter="latex");
         yl.Annotation.LegendInformation.IconDisplayStyle = 'off';  % Escludi dalla leggenda
-        legend(dispositivi(3*i+1:3*(i+1)), "Location","southeast")
+        
+        title(sprintf("$W = %d \\mu m$" , W) , Interpreter="latex");
+        xlabel("\textit{TID} $[Mrad]$" , Interpreter= "latex");
+        ylabel("$\Delta V_{th}$ $[mV]$", Interpreter="latex");
+        
+        legend("Location","northwest" , Interpreter="latex")
         
         % Impostazione degli xtick
-        xticks(0:500:3500);
+        xticks([1 5 10 100 1000 4000]);
+        xlim([irraggiamenti(1) , irraggiamenti(end)]);
 
         % Impostazione delle etichette degli xtick
-        xticklabels({"0" , "500", "1000" , "1500" , "2000" , "2500" , "3000" , "annealing"});
+        xticklabels({"1" , "5" , "10", "100" , "1000" , "annealing"});
+
+        set(gca , "XScale" , "log")
+        
         hold off
         grid on
+        
+        ARRAY_TIPOLOGIA_FILE = ["eps" "png" "fig"];
 
-
-         cd eps
-        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-" + type + W + ".eps");
-        cd ..\png
-        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-" + type + W +".png");
-        cd ..\fig
-        saveas(gcf , "sovrapposizione-deltaVth-"+metodo+ "-" + type + W +".fig");
-        cd ..
+        NOME_FILE = sprintf("%ssovrapposizione-deltaVth-%s-%s%d.%s" , "%s" , metodo , type , W , "%s");
+    
+        for file = ARRAY_TIPOLOGIA_FILE
+            saveas(gcf , sprintf(NOME_FILE , file+"\" , file));
+        end    
     end
     cd ..
-    close all
 end
 
 %% Funzione che estrae dal nome del file il nome del metodo
