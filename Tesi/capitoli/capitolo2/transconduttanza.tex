@@ -12,8 +12,8 @@ Nel caso in cui il MOSFET si trovi nella regione di saturazione si ottiene la se
 
 
 \subsection{Calcolo della transconduttanza}
-Derivare dei dati discontinui porta sempre, o quasi sempre, ad avere delle curve spezzate, per le quali è difficile trarre informazioni utili.
-Questo è stato il caso per la transconduttanza; la figura \ref{fig:gm_smooth:no_smooth} (curva di sinistra) rappresenta la $g_m$ di un transistor  MOSFET a canale N, con $ W = 100\mu m$ e $L = 30 nm$ senza eseguire nessun tipo di smooth; in particolare, per alte $V_{GS}$, il difetto è molto marcato. Per ridurre questo effetto, oltre ad applicare alla fine uno smooth di ampiezza $5$, due valori prima e due valori dopo; sono state calcolate due transconduttanze, la prima ${g_m}^{\prime}$ normalmente, mentre, per la seconda ${g_m}^{\prime \prime}$ si è eseguito il rapporto incrementale tra $I_D$ e ${V_{GS}}^*$, tensione gate-source shiftata di una posizione, duplicando il primo valore ed eliminando l'ultimo. In seguito la transconduttanza è stata ricavata eseguendo la media tra i singoli valori di ${g_m}^\prime \text{ e } {g_m}^{\prime \prime}$:
+Derivare dei dati discontinui porta sempre, o quasi sempre, ad avere delle curve spezzate, delle quali è difficile trarre informazioni utili.
+Questo è stato il caso per la transconduttanza; la figura \ref{fig:gm_smooth:no_smooth} (curva di sinistra) rappresenta la $g_m$ di un transistor  MOSFET a canale N, con $ W = 100\mu m$ e $L = 30 nm$ senza eseguire nessun tipo di smooth; in particolare, per alte $V_{GS}$, il difetto è molto marcato. Per ridurre questo effetto, oltre ad applicare alla fine uno smooth di ampiezza $5$; sono state calcolate due transconduttanze, la prima ${g_m}^{\prime}$ normalmente, mentre, per la seconda ${g_m}^{\prime \prime}$ si è eseguito il rapporto incrementale tra $I_D$ e ${V_{GS}}^*$, tensione gate-source traslata di una posizione, duplicando il primo valore ed eliminando l'ultimo. In seguito la transconduttanza è stata ricavata eseguendo la media tra i singoli valori di ${g_m}^\prime \text{ e } {g_m}^{\prime \prime}$:
 
 \begin{equation}
     {g_m}_i = \frac{{g_m}_i^{\prime} + {g_m}_i^{\prime \prime}}{2} \text{ } i \in [1 , 2 , 3 . . .]
@@ -51,7 +51,7 @@ A figura \ref{fig:gm_w} vengono mostrati i grafici relativi alla transconduttanz
     \includegraphics[width=0.49\textwidth]{./capitolo2/transconduttanza/gm/NMOS/gm_w_600_vds_900_mV.png}
     \includegraphics[width=0.49\textwidth]{./capitolo2/transconduttanza/gm/PMOS/gm_w_600_vds_900_mV.png}
 
-    \caption[Dati $g_m$ estratti pre-irraggiamento]{Transconduttanza calcolata nei dispositivi MOSFET prima di subire la dose di irraggiamento. canale N, a sinistra, e canale P, a destra, i grafici sono raggruppati per larghezza di canale.}
+    \caption[Dati $g_m$ estratti pre-irraggiamento]{Transconduttanza dei dispositivi MOSFET. canale N, a sinistra, e canale P, a destra, pre irraggiamento. I grafici sono raggruppati per larghezza di canale.}
     \label{fig:gm_w}
 
 \end{figure}
@@ -62,10 +62,10 @@ A figura \ref{fig:gm_w} vengono mostrati i grafici relativi alla transconduttanz
 Uno degli effetti delle radiazioni ionizzanti è quella di ridurre la mobilità dei portatori di carica $\mu$ all'interno del canale. Osservando  l'espressione della $g_m$ si nota la proporzionalità diretta con la mobilità dei portatori comportando una riduzione della transconduttanza, all'aumentare della dose assorbita. Per confermare questo effetto, si è calcolata la variazione della transconduttanza, in percentuale, all'aumentare della dose assorbita:
 
 \begin{equation}
-    \Delta {g_m}_{post} {\%} = \frac{{g_m}_{post} - {g_m}_{pre}}{{g_m}_{pre}}\cdot 100
+    {\%} \Delta {g_m}  = \frac{{g_m}_{post} - {g_m}_{pre}}{{g_m}_{pre}}\cdot 100
 \end{equation}
 
-Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza per un certo dosaggio, e similmente per ${g_m}_{pre}$, il massimo valore pre-irraggiamento. L'effetto è stato confermato dai dati sperimentali (tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}) ottenuti dai transistori\footnote{La $V_{DS}$ da cui è stata estratta la transconduttanza è di $0.9V$, nel caso di NMOS, mentre per PMOS $-0.9V$.} sotto osservazione in questo lavoro di tesi.
+Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza ottenuta ad un determinato step di irraggiamento, mentre ${g_m}_{pre}$ è il valore massimo della transconduttanza calcolata pre irraggiamento. L'effetto è stato confermato dai dati sperimentali (tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}) ottenuti dai transistori\footnote{La $V_{DS}$ da cui è stata estratta la transconduttanza è di $0.9V$, nel caso di NMOS, mentre per PMOS $-0.9V$.} sotto osservazione in questo lavoro di tesi.
 
 \begin{table}[h]
     \renewcommand{\arraystretch}{1.3}
@@ -94,7 +94,7 @@ Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza per un ce
             \bottomrule
         \end{tabular}%
         }
-    \caption[Dati $\Delta g_m \%$ al variare della dose assorbita, NMOS]{Variazioni della transconduttanza al variare della dose assorbita in un MOSFET a canale N.}
+    \caption[Dati $ \% \Delta g_m $ al variare della dose assorbita, NMOS]{Variazioni percentuali della transconduttanza al variare della dose assorbita in un MOSFET a canale N.}
     \label{tab:deltaGm_N}
 \end{table}
 
@@ -125,7 +125,7 @@ Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza per un ce
             \bottomrule
         \end{tabular}%
     }
-    \caption[Dati $\Delta g_m \%$ al variare della dose assorbita, PMOS]{Variazioni della transconduttanza al variare della dose assorbita in un MOSFET a canale P.}
+    \caption[Dati $\% \Delta g_m $ al variare della dose assorbita, PMOS]{Variazioni percentuali della transconduttanza al variare della dose assorbita in un MOSFET a canale P.}
     \label{tab:deltaGm_P}
 \end{table}
 
@@ -147,3 +147,5 @@ Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza per un ce
 
 
 \end{figure}
+
+\FloatBarrier

@@ -27,7 +27,7 @@ In un MOSFET a canale N, in linea generale, può scorrere una corrente $I_D$ che
 
 La dipendenza di $I_D$ da tali tensioni è messa in evidenza dalla caratteristica corrente-tensione (figura \ref{fig:caratteristica-I-V}).
 
-Quando $V_{GS} = 0$, indipendentemente dal valore di $V_{DS}$, la corrente $I_D$ è nulla, poiché la giunzione P-N composta da substrato e Drain e quella formata da substrato e Sourse sono in regione inversa. \\
+Quando $V_{GS} = 0$, indipendentemente dal valore di $V_{DS}$, la corrente $I_D$ è nulla, poiché la giunzione P-N composta da substrato e Drain e quella formata da substrato e source sono in regione inversa. \\
 Aumentando il valore di $V_{GS}$, le lacune presenti nel substrato si allontanano dalla regione direttamente al di sotto dell'ossido, creando una
 zona svuotata di portatori di carica liberi. Gli elettroni presenti nel semiconduttore
 vengono attirati creando una regione di canale di tipo N che unisce il
@@ -83,14 +83,14 @@ Il canale di un dispositivo è composto da materiale resistivo e quindi è sorge
 \begin{equation}
   S_{I_d} = \frac{4 K_B T}{L^2 I_D} \int_{0}^{V_{DS}} g^2\left(V'\right) \, dV' 
 \end{equation}
-dove $K_B$ è la costante di Boltzmann, $T$ è la temperatura assoluta e $g\left(V'\right)$ è la conduttanza di canale misurata nel punto in cui la tensione rispetto al sourse vale $V'$. Questa equazione può essere semplificata in maniera differente in funzione della lunghezza del canale.  Infatti, se tale dimensione è nell'ordine delle frazioni di micron, subentrano i cosiddetti effetti di canale corto, che comportano l'aumento del rumore e che non possono essere ignorati.
+dove $K_B$ è la costante di Boltzmann, $T$ è la temperatura assoluta e $g\left(V'\right)$ è la conduttanza di canale misurata nel punto in cui la tensione rispetto al source vale $V'$. Questa equazione può essere semplificata in maniera differente in funzione della lunghezza del canale.  Infatti, se tale dimensione è nell'ordine delle frazioni di micron, subentrano i cosiddetti effetti di canale corto, che comportano l'aumento del rumore e che non possono essere ignorati.
 Poiché tutti i dispositivi presi in considerazione ricadono in questa categoria, la trattazione del rumore termico di canale si concentra sulla descrizione della legge matematica legata ai dispositivi a canale corto, ovvero \footnote{ $ S_w = S_{I_d}$ riferita al Gate del MOSFET}:
 
 \begin{equation}
   S_w = 4 K_B T \frac{\alpha_w n_{sub} \gamma}{g_m}
 \end{equation}
 
-$\alpha_w$ è il fattore di rumore in eccesso che tiene conto degli effetti di canale corto. Generalmente ha valore maggiore di 1, ma analisi approfondite sui dispositivi studiati hanno messo in luce che i MOSFET utilizzati con lunghezza di canale $L = 30 nm$ hanno un fattore $\alpha_w$ anomalo\todo{ <1?}. $n_{sub}$ è un coeffciente proporzionale al reciproco della pendenza della caratteristica $I_D-V_{GS}$ nella regione di sottosoglia. $\gamma$ è il coefficiente di rumore termico di canale che, per i dispositivi nanometrici, può essere espresso come:
+$\alpha_w$ è il fattore di rumore in eccesso che tiene conto degli effetti di canale corto. Generalmente ha valore maggiore di 1, ma analisi approfondite sui dispositivi studiati hanno messo in luce che i MOSFET utilizzati con lunghezza di canale $L = 30 nm$ hanno un fattore $\alpha_w$ anomalo\todo{ <1?}. $n_{sub}$ è un coefficiente proporzionale al reciproco della pendenza della caratteristica $I_D-V_{GS}$ nella regione di sotto-soglia. $\gamma$ è il coefficiente di rumore termico di canale che, per i dispositivi nanometrici, può essere espresso come:
 
 \begin{equation}
   \gamma = \frac{1}{1 +  \frac {I_D L}{I_Z^* W}}\left(\frac{1}{2} + \frac{ 2 I_D L}{3 I_Z^* W}\right)
@@ -111,7 +111,7 @@ Generalmente, a basse frequenze, prevale una componente di rumore del tipo $1/f$
   S_{\frac{1}{f}} \left(f\right) = \frac{K_f}{C_{ox}^2 W L} \frac{1}{f^{\alpha_f}}
 \end{equation}
 
-dove $K_f$ è un parametro che dipende dalla teconologia e $\alpha_f$ tiene conto della dipendenza dalla frequanza frequenza.
+dove $K_f$ è un parametro che dipende dalla tecnologia e $\alpha_f$ tiene conto della dipendenza dalla frequenza frequenza.
 
 Le cause più probabili di questo comportamento sono: 
 \begin{itemize}
