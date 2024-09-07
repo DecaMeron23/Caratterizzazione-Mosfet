@@ -1,6 +1,7 @@
 absorbed
 annealing
 anneals
+Bipolar
 Complementary
 configuring
 cutoff
@@ -18,6 +19,8 @@ High
 HKMG
 ionizing
 isolation
+JFET
+Junction
 leakage
 Linear
 Logarithm
