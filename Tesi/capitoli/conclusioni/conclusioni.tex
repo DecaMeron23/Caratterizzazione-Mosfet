@@ -1,16 +1,12 @@
-Questo lavoro di tesi ha avuto come obbiettivo la caratterizzazione di una tecnologia CMOS da $28nm$, nello specifico sullo studio della variazione dei parametri statici, all'aumentare delle dosi assorbite.
-L'attività condotta nell'ultimo anno, oltre ad effettuare le misurazioni sui diversi MOSFET ad ogni step di irraggiamento (fino a $3Grad$) compreso lo step di \textit{annealing}, è stato quello di implementare diverse funzioni MATLab (Piattaforma di programmazione e calcolo numerico) volte ad estrarre i parametri statici presentati.
+Questo lavoro di tesi ha avuto come obiettivo la caratterizzazione di una tecnologia CMOS da $28nm$, nello specifico sullo studio della variazione dei parametri statici all'aumentare della dose assorbita.
+L'attività condotta nell'ultimo anno, oltre ad effettuare le misurazioni sui diversi MOSFET ad ogni step di irraggiamento (fino a $3Grad$) e dopo l'\textit{annealing}, è consistita nell'implementazione di diverse funzioni MATLab (una piattaforma di programmazione e calcolo numerico) volte ad estrarre i parametri statici presentati.
 
 \vspace{0.5cm}
 
-Gran parte degli sforzi sono stati dedicati all'estrapolazione della tensione di soglia $V_{th}$. Non essendoci un metodo unico per estrarre questo valore si sono utilizzati quattro metodo diversi: \textit{TCM}, \textit{SDLM}, \textit{ERL} e \textit{RM}. I quali, seppur discordanti sul valore della tensione, collimano sull'andamento delle curve, ovvero sulla $\Delta V_{th}$, al variare della \textit{TID}. In particolare nei dispositivi a canale P si ha un incremento continuo del modulo della $V_{th}$, in linea con la teoria. Mentre negli NMOS, per alte dosi, non si sono trovate spiegazioni per gli andamenti delle curve.
+Gran parte degli sforzi sono stati dedicati all'estrapolazione della tensione di soglia $V_{th}$. Non essendoci un metodo unico per estrarre questo valore si sono utilizzati quattro metodo diversi: \textit{TCM}, \textit{SDLM}, \textit{ERL} e \textit{RM}. Seppur discordanti sul valore della tensione, tali metodi concordano sul comportamento delle curve in funzione dell'irraggimanento subito, ovvero sulla $\Delta V_{th}$ al variare della \textit{TID}. In particolare, nei dispositivi a canale P si ha un incremento continuo del modulo della $V_{th}$, in linea con la teoria. Negli NMOS si è osservato che ad alte dosi il valore della $V_{th}$ diminuisce, ma non si sono trovate spiegazioni per tale comportamento.
 
-L'incremento delle correnti di perdita è stato molto significativo nei NMOS, in particolare per i dispositivi con  alti rapporti $\sfrac{W}{L}$. I PMOS, non soffrendo della creazione di transistor parassiti, non hanno subito cambiamenti significativi, nello specifico 2 ordini di grandezza inferiori rispetto al canale N. Questo parametro è importante in termini di dissipazione di potenza, infatti esse sono le correnti del MOSFET quando è spento ($I_{OFF}$).   
+L'incremento delle correnti di perdita è molto significativo negli NMOS, in particolare per i dispositivi con alti rapporti $\sfrac{W}{L}$. I PMOS, non soffrendo della creazione di transistor parassiti, non hanno subito cambiamenti significativi, che sono di 2 ordini di grandezza inferiori rispetto ai dispositivi a canale N. Questo parametro è importante in termini di dissipazione di potenza, poiché la corrente di perdita è l'unica presente presente nel MOSFET quando è spento ($I_{OFF}$) e quindi rappresenta l'unica fonte di dissipazione di potenza in tale condizione.   
 
-In entrambi in canali si è ottenuta una riduzione della transconduttanza $g_m$. Nello specifico allo step da $3Grad$ si è arrivati fino ad una riduzione del $10\%$ (nei NMOS), mentre nei PMOS fino al $17\%$. Diversamente è stata la reazione all'\textit{annealing}. Infatti, nei dispositivi a canale P, il trend si è invertito denotando un recupero parziale della transconduttanza, mentre nei canali N non si sono verificati cambiamenti importanti della $g_m$.    
+Sia nei dispositivi a canale N sia in quelli a canale P si è ottenuta una riduzione della transconduttanza $g_m$. Nello specifico, allo step da $3Grad$ si è arrivati ad una riduzione del $10\%$ negli NMOS e ad una del $17\%$ nei PMOS. Al contrario, la reazione all'\textit{annealing} dei due tipi di MOSFET è stata di diversa natura: nei dispositivi a canale P, il trend si è invertito, denotando un recupero parziale della transconduttanza; nei dispositivi a canale N non sono stati osservati cambiamenti rilevanti della $g_m$.    
 
-
-
-
-
-%   - Commenti generali sulle variazioni dei parametri     
+   
