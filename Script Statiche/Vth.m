@@ -83,14 +83,11 @@ classdef Vth
             legend( "$I_D$", "Ratio Method", Interpreter = "latex" , Location = "northwest");
             hold off
 
-            mkdir("fig\")
-            
+            mkdir("FIT_VTH\")
 
-            cd fig\
+            saveas(gca , "FIT_VTH\RM.png")
 
-            saveas(gca , "RM.fig")
-
-            cd ..\..
+            cd ..
 
             if ~PLOT_ON
                 close all
