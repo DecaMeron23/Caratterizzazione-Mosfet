@@ -8,6 +8,7 @@ Nel caso in cui il MOSFET si trovi nella regione di saturazione si ottiene la se
 
 \begin{equation}
     g_m = \frac{W}{L} \cdot \mu \cdot C_{ox} \cdot (V_{GS} - V_{th})
+    \label{eq:gm}
 \end{equation}
 
 
@@ -21,7 +22,7 @@ Questo è stato il caso per la transconduttanza; la figura \ref{fig:gm_smooth:no
 
 Trovando, per il dispositivo in questione, la curva a figura \ref{fig:gm_smooth:smooth}(curva a destra).
 
-\begin{figure}[ht]
+\begin{figure}[h]
     \centering
     % W = 100 
     \subfloat[$g_m$ senza utilizzo dello smooth]{\includegraphics[width=0.49\textwidth]{./capitolo2/transconduttanza/estrazione_dati/gm_no_smooth.png}\label{fig:gm_smooth:no_smooth}}
@@ -32,7 +33,6 @@ Trovando, per il dispositivo in questione, la curva a figura \ref{fig:gm_smooth:
 \end{figure}
 
 
-% \todo[inline]{Da aggiungere cose ho scritto troppo poco}
 \vspace{0.5cm}
 
 A figura \ref{fig:gm_w} vengono mostrati i grafici relativi alla transconduttanza per i diversi transistori MOSFET, sia a canale N che P. Avendo imposto, sul dispositivo che effettua le misure statiche, il limite di correte di drain a $100mA$ (positiva e negativa); per i dispositivi con larghezza $600\mu m$ e con lunghezze inferiori a $60nm$, questo limite viene raggiunto spiegando così il motivo del crollo della $g_m$ per alte $V_{GS}$.
@@ -59,13 +59,15 @@ A figura \ref{fig:gm_w} vengono mostrati i grafici relativi alla transconduttanz
 
 \vspace{0.5cm}
 
-Uno degli effetti delle radiazioni ionizzanti è quella di ridurre la mobilità dei portatori di carica $\mu$ all'interno del canale. Osservando  l'espressione della $g_m$ si nota la proporzionalità diretta con la mobilità dei portatori comportando una riduzione della transconduttanza, all'aumentare della dose assorbita. Per confermare questo effetto, si è calcolata la variazione della transconduttanza, in percentuale, all'aumentare della dose assorbita:
+
+Un parametro utile per lo studio dell'influenza delle radiazioni ionizzanti sulla transconduttanza, è sicuramente la variazione della $g_m$ in questo caso si è scelto di calcolare la $ \% \Delta g_m$ (equazione \ref{eq:delta_gm}). Dall'espressione della transconduttanza (equazione \ref{eq:gm}) si nota la proporzionalità diretta con la mobilità dei portatori $\mu$ e della tensione di soglia $V_{th}$, entrambi influenzati dalle radiazioni ionizzanti. Nello specifico l'aumento della \textit{TID} riduce la mobilità dei portatori di carica all'interno del canale.
 
 \begin{equation}
     {\%} \Delta {g_m}  = \frac{{g_m}_{post} - {g_m}_{pre}}{{g_m}_{pre}}\cdot 100
+    \label{eq:delta_gm}
 \end{equation}
 
-Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza ottenuta ad un determinato step di irraggiamento, mentre ${g_m}_{pre}$ è il valore massimo della transconduttanza calcolata pre irraggiamento. L'effetto è stato confermato dai dati sperimentali (tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}) ottenuti dai transistori\footnote{La $V_{DS}$ da cui è stata estratta la transconduttanza è di $0.9V$, nel caso di NMOS, mentre per PMOS $-0.9V$.} sotto osservazione in questo lavoro di tesi.
+Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza ottenuta ad un determinato step di irraggiamento, mentre ${g_m}_{pre}$ è il valore massimo della transconduttanza calcolata pre irraggiamento. I dati estratti\footnote{La $V_{DS}$ da cui è stata estratta la transconduttanza è di $0.9V$, nel caso di NMOS, mentre per PMOS $-0.9V$.} sono riportati a tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}.
 
 \clearpage
 
