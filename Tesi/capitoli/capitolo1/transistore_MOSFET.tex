@@ -8,7 +8,7 @@ Il transistore MOSFET (\emph{Metal-Oxide Semiconductor Field-Effect Transistor})
 \end{figure}
 
 Come mostrato nella figura \ref{fig:StrutturaMosfet}, i MOSFET sono caratterizzati da quattro terminali: Source (S), Drain (D), Gate (G) e Bulk (B).
-Il MOSFET a canale N viene realizzato su un substrato di tipo P in cui sono innestate due regioni fortemente drogate di tipo N. Queste due regioni presentano delle metallizzazioni che formano i terminali di Source e di Drain. Sul substrato, tra le due regioni fortemente drogate, è presente un sottile strato di ossido che fa da isolante (storicamente $SiO_2$, attualmente si usano anche altri ossidi) sopra il quale si trova una metallizzazione che forma il contatto di Gate. Il Bulk (o Substrato) è il terminale che si collega solitamente con il Source.\\
+Il MOSFET a canale N viene realizzato su un substrato di tipo P in cui sono innestate due regioni fortemente drogate di tipo N. Queste due regioni presentano delle metallizzazioni che formano i terminali di Source e di Drain. Sul substrato, tra le due regioni fortemente drogate, è presente un sottile strato di ossido che fa da isolante (storicamente $SiO_2$, attualmente si usano anche altri ossidi) sopra il quale si trova una metallizzazione che forma il contatto di Gate. Il Bulk (o Substrato), solitamente cortocircuitato ocn in Source, deve essere connesso al potenzioale più basso (massa) negli NMOS e al potenziale più alto presente nel circuito (alimentazione positiva) nei PMOS. \\
 
 \subsection{Regioni di funzionamento e caratteristica $I-V$}
 
@@ -51,11 +51,11 @@ dove
    L &= \text{lunghezza del canale}
 \end{align*}
 
-Se, invece, $V_{DS} > V_{GS} -  V_{th}$ il MOSFET si trova in regione di saturazione e la corrente di Drain ha un andamento lineare che segue la legge:\\
+Se, invece, $V_{DS} > V_{GS} -  V_{th}$ il MOSFET si trova in regione di saturazione e la corrente di Drain ha un andamento che segue la legge:\\
 \begin{equation}
   I_D = k_n\left(V_{GS}-V_{th}\right)^2 (1+\lambda V_{DS})
 \end{equation}
-dove $\lambda$ è un fattore matematico ricavato dalla caratteristica I-V ottenuta sperimentalmente.\\
+dove $\lambda$ è un parametro che tiene conto della modulazione della lunghezza di canale introdotta dalla tensione $V_{DS}$.\\
 
 Tutto quanto detto finora sui MOSFET a canale N vale in maniera analoga per i MOSFET a canale P.
 Altri parametri verranno descritti nel prossimo capitolo.
@@ -79,24 +79,19 @@ In prima approssimazione, il MOSFET si comporta come un generatore di corrente c
 Per comprendere al meglio l'effettivo comportamento dei MOSFET, però, bisogna considerare che il segnale in uscita al MOSFET subisce delle interferenze dovute al rumore generato all'interno del dispositivo stesso. Esistono diverse sorgenti di rumore; qui di seguito si descrivono le principali.
 
 \paragraph*{Rumore termico di canale o rumore bianco}
-Il canale di un dispositivo è composto da materiale resistivo e quindi è sorgente di rumore termico. Tale sorgente può essere rappresentata come un generatore di segnale la cui densità spettrale segue la seguente legge:
-\begin{equation}
-  S_{I_d} = \frac{4 K_B T}{L^2 I_D} \int_{0}^{V_{DS}} g^2\left(V'\right) \, dV' 
-\end{equation}
-dove $K_B$ è la costante di Boltzmann, $T$ è la temperatura assoluta e $g\left(V'\right)$ è la conduttanza di canale misurata nel punto in cui la tensione rispetto al source vale $V'$. Questa equazione può essere semplificata in maniera differente in funzione della lunghezza del canale.  Infatti, se tale dimensione è nell'ordine delle frazioni di micron, subentrano i cosiddetti effetti di canale corto, che comportano l'aumento del rumore e che non possono essere ignorati.
-Poiché tutti i dispositivi presi in considerazione ricadono in questa categoria, la trattazione del rumore termico di canale si concentra sulla descrizione della legge matematica legata ai dispositivi a canale corto, ovvero \footnote{ $ S_w = S_{I_d}$ riferita al Gate del MOSFET}:
+Il canale di un dispositivo è composto da materiale resistivo e quindi è sorgente di rumore termico. Tale sorgente può essere rappresentata come un generatore di tensione la cui densità spettrale di potenza segue leggi differenti in base alla lunghezza del canale $L$.  Infatti, se tale dimensione è nell'ordine delle frazioni di micron, subentrano i cosiddetti effetti di canale corto, che comportano l'aumento del rumore e che non possono essere ignorati.
+Poiché tutti i dispositivi presi in considerazione ricadono in questa categoria, la trattazione del rumore termico di canale si concentra sulla descrizione della legge matematica legata ai dispositivi a canale corto, ovvero:
 
 \begin{equation}
   S_w = 4 K_B T \frac{\alpha_w n_{sub} \gamma}{g_m}
 \end{equation}
-
-$\alpha_w$ è il fattore di rumore in eccesso che tiene conto degli effetti di canale corto. Generalmente ha valore maggiore di 1, ma analisi approfondite sui dispositivi studiati hanno messo in luce che i MOSFET utilizzati con lunghezza di canale $L = 30 nm$ hanno un fattore $\alpha_w$ anomalo\todo{ <1?}. $n_{sub}$ è un coefficiente proporzionale al reciproco della pendenza della caratteristica $I_D-V_{GS}$ nella regione di sotto-soglia. $\gamma$ è il coefficiente di rumore termico di canale che, per i dispositivi nanometrici, può essere espresso come:
+Dove $K_B$ è la costante di Boltzmann e T è la temperaura assoluta. $\alpha_w$ è il fattore di rumore in eccesso che tiene conto degli effetti di canale corto. Analisi approfondite (non mostrate in questa tesi) mostrano che per i dispositivi analizzati questo fattore ha valore 1, tranne per gli NMOS con lunghezza di canale $L = 30mn$, per i quali $\alpha_w > 1$. $n_{sub}$ è un coefficiente proporzionale al reciproco della pendenza della caratteristica $I_D-V_{GS}$ nella regione di sotto-soglia. $\gamma$ è il coefficiente di rumore termico di canale che, per i dispositivi nanometrici, può essere espresso come:
 
 \begin{equation}
   \gamma = \frac{1}{1 +  \frac {I_D L}{I_Z^* W}}\left(\frac{1}{2} + \frac{ 2 I_D L}{3 I_Z^* W}\right)
 \end{equation}
 
-dove $I_Z^*$ è la corrente di Drain caratteristica normalizzata, ovvero la corrente che separa la regione di triodo da quella di saturazione.
+dove $I_Z^*$ è la corrente di Drain caratteristica normalizzata, che si può estrarre dalle misure statiche.
 
 Il rumore termico di canale può essere anche espresso sotto forma di resistenza equivalente $R_{eq}$, tramite l'equazione:
 
@@ -105,27 +100,18 @@ Il rumore termico di canale può essere anche espresso sotto forma di resistenza
 \end{equation}
 
 \paragraph*{Flicker Noise}
-Generalmente, a basse frequenze, prevale una componente di rumore del tipo $1/f$, la cui densità spettrale è inversamente proporzionale alla frequenza del segnale:
+A basse frequenze, prevale una componente di rumore del tipo $1/f$, la cui densità spettrale è inversamente proporzionale alla frequenza del segnale:
 
 \begin{equation}
   S_{\frac{1}{f}} \left(f\right) = \frac{K_f}{C_{ox}^2 W L} \frac{1}{f^{\alpha_f}}
 \end{equation}
+dove $K_f$ è un parametro che dipende dalla tecnologia e $\alpha_f$ tiene conto della dipendenza dalla frequenza.
+Il rumore $\sfrac{1}{f}$ è causato da una variazione della densità di portatori dovuto a fluttuazioni del potenziale superficiale; i portatori, all'interfaccia tra ossido e canale, vengono intrappolati e successivamente rilascaiti e questo ha un effetto più evidente alle frequenze più basse
 
-dove $K_f$ è un parametro che dipende dalla tecnologia e $\alpha_f$ tiene conto della dipendenza dalla frequenza frequenza.
-
-Le cause più probabili di questo comportamento sono: 
-\begin{itemize}
-  \item fluttuazione casuale del numero dei portatori di carica dovuta a fenomeni di generazione e ricombinazione, prevalente nei dispositivi a canale N,
-  \item fluttuazione della mobilità dei portatori di carica a causa di fenomeni di scattering con le impurità presenti nel cristallo, prevalente nei dispositivi a canale P.
-\end{itemize}
-
-A parità di tecnologia, polarizzazione e dimensioni, il flicker noise è minore nei MOSFET a canale P, rispetto a quelli a canale N. Infine, il processo di \emph{scaling} dei dispositivi influenza la quantità di questo tipo di rumore: analizzando l'equazione della densità spettrale, si nota come la riduzione delle dimensioni del canale comportano un aumento di rumore. Al contrario, la diminuzione dello spessore del Gate porta all'aumento della sua capacità e quindi ad una riduzione del rumore. Allo stesso tempo, però, un Gate più fine è soggetto a maggiore degrado, quindi il fattore $K_f$ potrebbe non diminuire come aspettato. 
-
-\paragraph*{Rumore Lorentziano}
-Il rumore Lorentziano, o \emph{Random Telegraph Signal} (\emph{RTS}), è causato dall'intrappolamento e rilascio dei portatori di carica da parte di trappole presenti nella regione di svuotamento tra il canale di conduzione e l'ossido. Questo tipo di rumore è maggiormente presente nei dispositivi soggetti a grandi dosi di radiazioni e fluenze neutroniche, che producono nel reticolo cristallino dei difetti che fungono da centri di intrappolamento. La riduzione di spessore del Gate comporta un aumento del numero delle trappole, poiché soggetto a maggior degrado.
+In passato, a parità di tecnologia, polarizzazione e dimensioni, il flicker noise è minore nei MOSFET a canale P, rispetto a quelli a canale N. Infine, il processo di \emph{scaling} dei dispositivi influenza la quantità di questo tipo di rumore: analizzando l'equazione della densità spettrale, si nota come la riduzione delle dimensioni del canale comportano un aumento di rumore. Al contrario, la diminuzione dello spessore del Gate porta all'aumento della sua capacità e quindi ad una riduzione del rumore. Allo stesso tempo, però, un Gate più sottile potrebbe presentare altre problematiche, quindi il fattore $K_f$ potrebbe non diminuire come aspettato e necessita per tanto un costante monitoraggio. 
 
 \paragraph*{Rumore associato alla corrente di Gate}
-Fino ad ora si è considerata solo la corrente $I_D$ che va da dal Drain al Source (o viceversa, in base al tipo di canale). In realtà esiste anche una corrente $I_G$ che attraversa il Gate, che in generale, appunto, è trascurabile, se confrontata con  $I_D$. Infatti l'ossido presente tra la metallizzazione del Gate e il substrato fa da barriera di potenziale all'iniezione dei portatori di carica. Questa barriera può essere comunque attraversata dai portatori con temperatura (e quindi energia cinetica) maggiore. Con la riduzione dello spessore del gate, l'energia necessaria per iniettare i portatori attraverso il Gate diminuisce e quindi $I_G$ diventa meno trascurabile.
+Fino ad ora si è considerata solo la corrente $I_D$ che va da dal Drain al Source (o viceversa, in base al tipo di canale). In realtà esiste anche una corrente $I_G$ che attraversa il Gate, che in generale, appunto, è trascurabile, se confrontata con  $I_D$. Infatti l'ossido presente tra il contatto di Gate e il substrato fa da barriera di potenziale all'iniezione dei portatori di carica. Questa barriera può essere comunque attraversata dai portatori con temperatura (e quindi energia cinetica) maggiore. Con la riduzione dello spessore del gate, l'energia necessaria per iniettare i portatori attraverso il Gate diminuisce e quindi $I_G$ diventa meno trascurabile.
 
 \paragraph*{Altre sorgenti di rumore}
-Ci sono infine sorgenti di rumore legate alle resistenze presenti nel Gate e nel substrato e alle resistenze parassite di Drain e Source.
+Ci sono infine sorgenti di rumore legate alla presenza di resistenze parassite nel Gate, nel Substrato e tra Drain e Source.
