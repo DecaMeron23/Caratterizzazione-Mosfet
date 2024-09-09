@@ -612,17 +612,17 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
 \FloatBarrier
 
 \subsection[RM]{Ratio Method}
-Il \emph{Ratio Method, RM} è stato sviluppato per far fronte alle problematicità dell'\emph{ELR}: è stato infatti dimostrato che questo metodo non è influenzato dalla degradazione della mobilità dei portatori di carica né dalle resistenze parassite \cite{art2}. Questo metodo si basa sull'assunzione che, a bassi valori di tensione di drain $V_{DS}$, il rapporto tra la corrente di drain $I_D$ e la radice quadrata della transconduttanza $g_m$ ($\frac{I_D}{\sqrt{g_m}}$) in funzione della tensione di gate $V_{GS}$ si comporti come una funzione lineare. La tensione di soglia $V_{th}$ coincide con il valore della tensione $V_{GS}$ a cui il fit lineare della funzione interseca l'asse delle ascisse.\\
-Come detto, questo metodo supera alcuni limiti dei metodi descritti in precedenza, però presenta una problematicità non indifferente: tracciando il grafico di $\frac{I_D}{\sqrt{g_m}}$ in funzione di $V_{GS}$, questo non verifica appieno l'assunzione di linearità. Dunque non esiste un intervallo in cui il grafico è chiaramente linearizzabile e quindi la misura di $V_{th}$ non rispecchia del tutto il valore reale della tensione di soglia, ma è comunque una buona approssimazione, soprattutto se si considera il $\Delta V_{th}$ al crescere dell'irraggiamento.
-Anche il questo caso, per ottenere il fit lineare più accurato possibile è stato usato lo stesso metodo esposto per l'\emph{ELR}.
+Il \emph{Ratio Method, RM} è stato sviluppato per far fronte alle problematicità dell'\emph{ELR}: è stato infatti dimostrato che questo metodo non è influenzato dalla degradazione della mobilità dei portatori di carica né dalle resistenze parassite \cite{art2}. Questo metodo si basa sull'assunzione che, a bassi valori di tensione di drain $V_{DS}$, il rapporto tra la corrente di drain $I_D$ e la radice quadrata della transconduttanza $g_m$ ($\frac{I_D}{\sqrt{g_m}}$) in funzione della tensione di gate $V_{GS}$ si comporti come una funzione lineare. La tensione di soglia $V_{th}$ coincide con il valore della tensione $V_{GS}$ a cui il fit lineare della funzione interseca l'asse delle ascisse (figura \ref{fig:FIT_RM} ).\\
+Anche in questo caso, per ottenere il fit lineare più accurato possibile è stato usato lo stesso metodo esposto per l'\emph{ELR}.
 
-\vfill
+\vspace{1.5cm}
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/RM/RM-N4-100-30}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/RM/RM-P1-100-30}
   \caption[Applicazione RM]{Fit lineare della caratteristica $\frac{I_D}{\sqrt{g_m}}-V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030}
+  \label{fig:FIT_RM}
 \end{figure}
 
 \vfill
@@ -776,7 +776,7 @@ Anche il questo caso, per ottenere il fit lineare più accurato possibile è sta
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/RM/sovrapposizione-deltaVth-RM-N600}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/RM/sovrapposizione-deltaVth-RM-P600}
   \caption[Dati $\Delta V_{th}$ estratti con RM]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{RM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
-
+  \label{fig:DeltaVthRM}
 \end{figure}
 
 \FloatBarrier
