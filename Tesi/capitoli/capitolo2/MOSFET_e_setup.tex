@@ -1,6 +1,6 @@
-Per questo studio sono stati utilizzati transistori CMOS appartenenti a una tecnologia commerciale con lunghezza minima di canale pari a $28nm$. La tecnologia è una \textit{High K Metal Gate} (\textit{HKMG}) caratterizzata da un ossido di Gate realizzato con materiali ad alta costante dielettrica (maggiore di quella del biossido di silicio) e un contatto di Gate realizzato in metallo.\\
+Per questo studio sono stati utilizzati transistori CMOS appartenenti a una tecnologia commerciale con lunghezza minima di canale pari a $28nm$. La tecnologia è una \textit{High K Metal Gate} (\textit{HKMG}) caratterizzata da un ossido di \emph{gate} realizzato con materiali ad alta costante dielettrica (maggiore di quella del biossido di silicio) e un contatto di \emph{gate} realizzato in metallo.\\
 
-I dispositivi sono contenuti in due \emph{\emph{chip}}, uno con i MOSFET a canale N, l'altro con quelli a canale P. I dispositivi di ciascun \emph{\emph{chip}} hanno dimensioni differenti. In entrambi i \emph{\emph{chip}}, dunque, è contenuto un dispositivo di ogni dimensione presente nella tabella \ref{tab:dimensioniMOSFET}.
+I dispositivi sono contenuti in due \emph{chip}, uno con i MOSFET a canale N, l'altro con quelli a canale P. I dispositivi di ciascun \emph{chip} hanno dimensioni differenti. In entrambi i \emph{chip}, dunque, è contenuto un dispositivo di ogni dimensione presente nella tabella \ref{tab:dimensioniMOSFET}.
 
 \begin{table}[ht]
   \renewcommand{\arraystretch}{1.3}
@@ -35,13 +35,13 @@ I dispositivi sono contenuti in due \emph{\emph{chip}}, uno con i MOSFET a canal
 
 Durante la fase di misura l'NMOS di dimensioni $600-0.030$ e il PMOS di dimensioni $100-0.180$ sono stati rotti, dunque i dati mostrati e le analisi discusse non li prenderanno in considerazione.\\
 
-Ogni \emph{chip} è stato irraggiato a differenti \emph}step} presso l'università di Padova, portando il livello di \emph{TID} a valori sempre più alti. Ad ogni \emph{step} di irraggiamento sono state compiute le misure per estrarre i dati utili per l'analisi dei parametri statici. I valori di \emph{TID} a cui queste sono state effettuate sono: $0 rad$ (ovvero pre-irraggiamento), $5 Mrad$, $50 Mrad$, $100 Mrad$, $200 Mrad$, $600 Mrad$, $1 Grad$, $3 Grad$. Infine, i dispositivi hanno subito un processo di \emph{annealing} a $100\degree C$ per $24$ ore.
+Ogni \emph{chip} è stato irraggiato a differenti \emph{step} presso l'università di Padova, portando il livello di \emph{TID} a valori sempre più alti. Ad ogni \emph{step} di irraggiamento sono state compiute le misure per estrarre i dati utili per l'analisi dei parametri statici. I valori di \emph{TID} a cui queste sono state effettuate sono: $0 rad$ (ovvero pre-irraggiamento), $5 Mrad$, $50 Mrad$, $100 Mrad$, $200 Mrad$, $600 Mrad$, $1 Grad$, $3 Grad$. Infine, i dispositivi hanno subito un processo di \emph{annealing} a $100\degree C$ per $24$ ore.
 
 Per poter analizzare i parametri statici dei MOSFET, ad ogni livello di irraggiamento e dopo il processo di \emph{annealing} sono state misurate le seguenti caratteristiche:
 
 \begin{itemize}
 
-\item{Caratteristica $I_D-V_{DS}$} per diversi valori di $V_{GS}$, ottenuta misurando la corrente di Drain facendo variare i valori delle tensioni come mostrato nella tabella \ref{tab:tensioniIdVds}:
+\item{Caratteristica $I_D-V_{DS}$} per diversi valori di $V_{GS}$, ottenuta misurando la corrente di \emph{drain} facendo variare i valori delle tensioni come mostrato nella tabella \ref{tab:tensioniIdVds}:
 
 \begin{table}[ht]
   \renewcommand{\arraystretch}{1.3}
@@ -59,7 +59,7 @@ Per poter analizzare i parametri statici dei MOSFET, ad ogni livello di irraggia
   \label{tab:tensioniIdVds}
 \end{table}
 
-\item{Caratterstica $I_D-V_{GS}$} per diversi valori di $V_{DS}$, ottenuta misurando la corrente di Drain facendo variare i valori delle tensioni con due modalità, mostrate nella tabella \ref{tab:tensioniIdVgs}. 
+\item{Caratterstica $I_D-V_{GS}$} per diversi valori di $V_{DS}$, ottenuta misurando la corrente di \emph{drain} facendo variare i valori delle tensioni con due modalità, mostrate nella tabella \ref{tab:tensioniIdVgs}. 
 
 \begin{table}[ht]
   \renewcommand{\arraystretch}{1.3}
@@ -84,4 +84,4 @@ Per poter analizzare i parametri statici dei MOSFET, ad ogni livello di irraggia
 \end{itemize}
 
 
-Le misure ottenute sono state analizzate con dei programmi scritti in MatLab. Di seguito si discutono vari parametri estratti.
+Le misure ottenute sono state analizzate con dei programmi scritti in MATLab. Di seguito si discutono vari parametri estratti.

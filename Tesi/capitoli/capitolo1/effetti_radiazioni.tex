@@ -37,7 +37,7 @@ La creazione di coppie $e-h$ (\textit{electron-hole}) all'interno del dispositiv
 
 \vspace{0.5cm}
 
-Negli isolanti, come l'ossido di Gate dei transistori MOSFET, l'effetto della ionizzazione è cumulativo. Gli elettroni liberati da una particella ionizzante si possono muovere facilmente, soprattutto grazie a effetti di campo dovuti, ad esempio, a polarizzazioni.
+Negli isolanti, come l'ossido di \emph{gate} dei transistori MOSFET, l'effetto della ionizzazione è cumulativo. Gli elettroni liberati da una particella ionizzante si possono muovere facilmente, soprattutto grazie a effetti di campo dovuti, ad esempio, a polarizzazioni.
 Al contrario, le lacune sono molto meno mobili, dai 5 ai 12 ordini di grandezza inferiori rispetto agli elettroni. La maggior parte delle lacune riesce a sopravvivere alla ricombinazione con gli elettroni, creando perciò una carica positiva vicino alla giunzione $Si/SiO_2$.
 La carica intrappolata nell'ossido ha come effetto un aumento (in valore assoluto) della tensione di soglia dei MOSFET a canale P; mentre negli NMOS l'effetto è un po' più complesso e dipende dai seguenti fattori:
 \begin{enumerate}
@@ -49,7 +49,7 @@ Mentre la prima comporta una riduzione della tensione di soglia, la seconda ne p
 
 \vspace{0.5cm}
 
-Un altro effetto presente solo negli NMOS è quello della formazione di transistor parassiti \cite{effetti_radiazioni:CMOS_IC_radiation_hardening_by_design}. Questo effetto è dovuto all'accumulo delle cariche positive nella \textit{Shallow Trench Isolation} (\textit{STI}), il quale crea un canale conduttivo tra Source e Drain che aggira quello principale (figura \ref{fig:accumulo_lacune_STI}). Questo collegamento fa sì che possa esserci un flusso di corrente anche quando il dispositivo è polarizzato con una $V_{GS} \simeq 0$.
+Un altro effetto presente solo negli NMOS è quello della formazione di transistor parassiti \cite{effetti_radiazioni:CMOS_IC_radiation_hardening_by_design}. Questo effetto è dovuto all'accumulo delle cariche positive nella \textit{Shallow Trench Isolation} (\textit{STI}), il quale crea un canale conduttivo tra \emph{source} e \emph{drain} che aggira quello principale (figura \ref{fig:accumulo_lacune_STI}). Questo collegamento fa sì che possa esserci un flusso di corrente anche quando il dispositivo è polarizzato con una $V_{GS} \simeq 0$.
 
 \begin{figure}[ht]
 	\centering
@@ -76,7 +76,7 @@ Poiché gli effetti delle radiazioni sui MOSFET precedentemente elencati sono ma
 
 \vspace{0.5cm}
 
-Gli effetti del danno da ionizzazione si riducono con il tempo (settimane, mesi, anni) e questo effetto è denominato \emph{annealing}. Per simulare il ripristino delle prestazioni elettroniche dei dispositivi in un tempo ragionevolmente breve, si effettua  un \enmpH{annealing} ad alta temperatura, tipicamente $100\degree C$ per 24 ore, per accelerarne i meccanismi.
+Gli effetti del danno da ionizzazione si riducono con il tempo (settimane, mesi, anni) e questo effetto è denominato \emph{annealing}. Per simulare il ripristino delle prestazioni elettroniche dei dispositivi in un tempo ragionevolmente breve, si effettua un \emph{annealing} ad alta temperatura, tipicamente $100\degree C$ per 24 ore, per accelerarne i meccanismi.
 
 \subsection{Misura della dose}
 La quantità di radiazioni ionizzanti assorbite da un materiale viene chiamata \textit{TID} (\textit{Total Ionizing Dose}) ed è espressa in energia su unità di massa.

@@ -1,4 +1,4 @@
-Un parametro utile ad indicare quanto un dispositivo MOSFET possa regolare la corrente di drain $I_D$ attraverso la tensione $V_{GS}$ è la transconduttanza $g_m$. Essa è definita dal rapporto incrementale:
+Un parametro utile ad indicare quanto un dispositivo MOSFET possa regolare la corrente di \emph{drain} $I_D$ attraverso la tensione $V_{GS}$ è la transconduttanza $g_m$. Essa è definita dal rapporto incrementale:
 
 \begin{equation}
     g_m = \frac{\partial I_D}{\partial V_{GS}}
@@ -35,7 +35,7 @@ Trovando, per il dispositivo in questione, la curva a figura \ref{fig:gm_smooth:
 
 \vspace{0.5cm}
 
-A figura \ref{fig:gm_w} vengono mostrati i grafici relativi alla transconduttanza per i diversi transistori MOSFET, sia a canale N che P. Avendo imposto sul dispositivo che effettua le misure statiche il limite di correte di drain a $100mA$ (positiva e negativa); per i dispositivi con larghezza $600\mu m$ e con lunghezze inferiori a $60nm$, questo limite viene raggiunto spiegando così il motivo del crollo della $g_m$ per alte $V_{GS}$.
+A figura \ref{fig:gm_w} vengono mostrati i grafici relativi alla transconduttanza per i diversi transistori MOSFET, sia a canale N che P. Avendo imposto sul dispositivo che effettua le misure statiche il limite di correte di \emph{drain} a $100mA$ (positiva e negativa); per i dispositivi con larghezza $600\mu m$ e con lunghezze inferiori a $60nm$, questo limite viene raggiunto spiegando così il motivo del crollo della $g_m$ per alte $V_{GS}$.
 
 \begin{figure}[t]
     \centering
@@ -67,7 +67,7 @@ Un parametro utile per lo studio dell'influenza delle radiazioni ionizzanti sull
     \label{eq:delta_gm}
 \end{equation}
 
-Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza ottenuta ad un determinato step di irraggiamento, mentre ${g_m}_{pre}$ è il valore massimo della transconduttanza calcolata pre irraggiamento. I dati estratti\footnote{La $V_{DS}$ da cui è stata estratta la transconduttanza è di $0.9V$, nel caso di NMOS, mentre per PMOS $-0.9V$.} sono riportati a tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}.
+Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza ottenuta ad un determinato \emph{step} di irraggiamento, mentre ${g_m}_{pre}$ è il valore massimo della transconduttanza calcolata pre irraggiamento. I dati estratti\footnote{La $V_{DS}$ da cui è stata estratta la transconduttanza è di $0.9V$, nel caso di NMOS, mentre per PMOS $-0.9V$.} sono riportati a tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}.
 
 Analizzando i dati, risulta evidente che le radiazioni hanno un effetto negativo sulla transconduttanza, causandone una notevole riduzione. Osservando l'espressione della transconduttanza (equazione \ref{eq:gm}) si possono determinare due possibili cause per questo fenomeno. Infatti, la $g_m$ è dipendente sia dalla mobilità dei portatori $\mu$ sia dalla tensione di soglia $V_{th}$, entrambe influenzate dalle radiazioni ionizzanti. Dunque, la riduzione della $g_m$ può essere causata dalla variazione di entrambi i fattori nel seguente modo. Da una parte all'aumentare della \textit{TID}, infatti, si riduce la mobilità dei portatori e, di conseguenza, anche la transconduttanza. Dall'altra parte, invece, come messo in luce nella sezione \ref{cap2:vth}, la tensione di soglia dei dispositivi aumenta al crescere della \textit{TID} e, perciò, il fattore $V_{GS}-V_{th}$ della formula \ref{eq:gm} diminuisce, determinando una riduzione della $g_m$.
 
