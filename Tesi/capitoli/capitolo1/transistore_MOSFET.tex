@@ -1,4 +1,4 @@
-Il transistore MOSFET (\emph{Metal-Oxide Semiconductor Field-Effect Transistor}) è un dispositivo elettronico utilizzato sia in circuiti digitali, principalmente come interruttore controllato in tensione, sia in circuiti analogici, come amplificatori di segnale o come resistenze controllate in tensione.\\
+Il transistore MOSFET (\emph{Metal-Oxide Semiconductor Field-Effect Transistor}) è un dispositivo elettronico utilizzato sia in circuiti digitali, in cui è impiegato principalmente come interruttore controllato in tensione, sia in circuiti analogici, in cui è impiegato come amplificatore di segnale o come resistenza controllata in tensione.\\
 
 \begin{figure}[H]
   \centering
@@ -31,7 +31,7 @@ La dipendenza di $I_D$ da tali tensioni è messa in evidenza dalla caratteristic
 Quando $V_{GS} = 0$, indipendentemente dal valore di $V_{DS}$, la corrente $I_D$ è nulla, poiché la giunzione P-N composta da substrato e Drain e quella formata da substrato e source sono in regione inversa. \\
 Aumentando il valore di $V_{GS}$, le lacune presenti nel substrato si allontanano dalla regione direttamente al di sotto dell'ossido, creando una
 zona svuotata di portatori di carica liberi. Gli elettroni presenti nel semiconduttore
-vengono attirati creando una regione di canale di tipo N che unisce il
+vengono attirati, creando una regione di canale di tipo N che unisce il
 Source e il Drain. Questo canale permette il passaggio di corrente, ma per crearlo è necessario che $V_{GS}$ abbia un valore almeno pari alla cosiddetta tensione di soglia ($V_{th}$). Finché $V_{GS} < V_{th}$, il MOSFET si trova in regione di \emph{cutoff} e $I_D \simeq 0$.
 
 Nel momento in cui $V_{GS}$ eguaglia e supera $V_{th}$, il canale di conduzione è completo e inizia a scorrere corrente, seguendo leggi matematiche differenti in funzione del valore di $V_{DS}$.
@@ -66,7 +66,7 @@ Altri parametri verranno descritti nel prossimo capitolo.
 \subsection{Modello per piccolo segnale e sorgenti di rumore}
 Il modello per piccolo segnale rappresenta il funzionamento del MOSFET nel momento in cui si fissa il punto di lavoro in continua e si fornisce in ingresso al dispositivo un segnale con un'ampiezza sufficientemente piccola da non alterarne il funzionamento. \\
 
-In prima approssimazione, il MOSFET si comporta come un generatore di corrente controllato in tensione che emette una corrente proporzionale al valore di $V_{GS}$. La costante di proporzionalità è la transconduttanza di canale $g_m$, che dipende dal punto di lavoro ed è descritta meglio al paragrafo \ref{sec:transconduttanza}. Un modello più accurato prevede che, quando il MOSFET è in saturazione, la corrente di Drain dipenda anche da $V_{DS}$ in modo lineare. Nel circuito equivalete per piccolo segnale, perciò, in parallelo al generatore di corrente, è presente una resistenza $r_0 = \frac{1}{\lambda I_{D,sat}}$ che viene attraversata da una corrente prodotta dalla differenza di tensione tra Drain e Source e che va a sommarsi a quella generata dal generatore ideale, figura \ref{fig:piccolo_segnale}.
+In prima approssimazione, il MOSFET si comporta come un generatore di corrente controllato in tensione che emette una corrente proporzionale al valore di $V_{GS}$. La costante di proporzionalità è la transconduttanza di canale $g_m$, che dipende dal punto di lavoro ed è descritta meglio al paragrafo \ref{sec:transconduttanza}. Un modello più accurato prevede che, quando il MOSFET è in saturazione, la corrente di Drain dipenda anche da $V_{DS}$ in modo lineare. Nel circuito equivalente per piccolo segnale, perciò, in parallelo al generatore di corrente, è presente una resistenza $r_0 = \frac{1}{\lambda I_{D,sat}}$ che viene attraversata da una corrente prodotta dalla differenza di tensione tra Drain e Source e che va a sommarsi a quella generata dal generatore ideale, figura \ref{fig:piccolo_segnale}.
 
 \begin{figure}[t]
   
