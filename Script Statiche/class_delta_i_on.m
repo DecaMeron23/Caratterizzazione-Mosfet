@@ -196,7 +196,7 @@ classdef class_delta_i_on
 
                 title(sprintf("%sMOS - $W = %d\\mu m$", TIPO, W) , Interpreter="latex" , FontSize=11);
                 xlim([X(1) , X(end)]);
-                ylabel("$\Delta I_{ON}\%$", Interpreter="latex");
+                ylabel("$\% \Delta I_{on}$", Interpreter="latex");
                 xlabel("\textit{TID} $[Mrad]$" , Interpreter="latex");
                 legend(Interpreter= "latex" , Location="southwest" , FontSize=10);
 
