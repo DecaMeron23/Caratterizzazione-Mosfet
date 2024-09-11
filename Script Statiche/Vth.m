@@ -4,7 +4,9 @@ classdef Vth
 
         % Funzione vht RM
         function [vth , estremi_fit]= RM(dispositivo , PLOT_ON , DISP_ON)
-            
+                
+            COLORI = lines(10);
+
             if(nargin == 2)
                 DISP_ON = 1;
             end
@@ -60,8 +62,8 @@ classdef Vth
             set(gca , "FontSize" , 12)
             titolo = titoloPlot(dispositivo);
             hold on
-            plot(vgs , rm_data)
-            plot(x_new , y_fit)
+            plot(vgs , rm_data , Color=COLORI(1 ,:))
+            plot(x_new , y_fit , Color=COLORI(2 ,:))
             xlim([0 , 0.9])
             %ylim([-0.15, 0.15])
             title("RM - " + titolo , FontSize=10);
@@ -69,7 +71,7 @@ classdef Vth
             yline(0, "-.");
             xline(intervallo(1) , '--');
             xline(intervallo(2) , '--');
-            plot(vth,  0 , "*" ,color = "r" , MarkerSize=20);
+            plot(vth,  0 , "o" , Color="red" , MarkerSize=8);
 
             if tipo == 'P'
                 xlabelb_txt = "$V_{SG} [V]$";
@@ -79,7 +81,7 @@ classdef Vth
 
 
             xlabel( xlabelb_txt, "Interpreter","latex" , FontSize=15);
-            ylabel("$\frac{I_D}{g_m^(\frac{1}{2})} [\sqrt{\frac{A^3}{V}}]$" , Interpreter="latex" , FontSize=15);
+            ylabel("$\frac{I_D}{\sqrt{g_m}} \left[ \sqrt{\frac{A^3}{V}} \right]$" , Interpreter="latex" , FontSize=15);
             legend( "$I_D$", "Ratio Method", Interpreter = "latex" , Location = "northwest");
             hold off
 

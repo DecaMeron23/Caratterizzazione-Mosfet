@@ -42,10 +42,10 @@ Al contrario, le lacune sono molto meno mobili, dai 5 ai 12 ordini di grandezza 
 La carica intrappolata nell'ossido ha come effetto un aumento (in valore assoluto) della tensione di soglia dei MOSFET a canale P; mentre negli NMOS l'effetto è un po' più complesso e dipende dai seguenti fattori:
 \begin{enumerate}
 	\item Cariche positive intrappolate nell'ossido
-	\item Cariche negative presenti nelle trappole all'interfaccia\footnote{Le trappole all'interfaccia sono dovute a imperfezioni o difetti presenti alla giunzione $Si/SiO_2$ che possono intrappolare delle cariche. Queste trappole aumentano all'aumentare della dose assorbita}
+	\item Cariche negative presenti nelle trappole all'interfaccia\footnote{Le trappole all'interfaccia sono dovute a imperfezioni o difetti presenti alla giunzione $Si/SiO_2$ che possono intrappolare delle cariche. Queste trappole aumentano all'aumentare della dose assorbita.}
 \end{enumerate}
 Mentre la prima comporta una riduzione della tensione di soglia, la seconda ne provoca un aumento, in quanto la carica intrappolata all'interfaccia è negativa (negli NMOS si ha moto di elettroni nel canale). 
-È inoltre opportuno sottolineare che anche nei PMOS vi sono portatori intrappolati all'interfaccia $Si/SiO_2$. Ma questi portatori, al contrario di quanto accade per gli NMOS, hanno carica positiva e pertanto le cariche intrappolate hanno un effetto che si somma a quello dovuto alle cariche positive intrappolate nell'ossido di Gate.  
+È inoltre opportuno sottolineare che anche nei PMOS vi sono portatori intrappolati all'interfaccia $Si/SiO_2$. Ma questi portatori, al contrario di quanto accade per gli NMOS, hanno carica positiva e pertanto le cariche intrappolate hanno un effetto che si somma a quello dovuto alle cariche positive intrappolate nell'ossido di \textit{gate}.  
 
 \vspace{0.5cm}
 
@@ -63,13 +63,13 @@ Un altro effetto presente solo negli NMOS è quello della formazione di transist
 
 \vspace*{0.5cm}
 
-Poiché gli effetti delle radiazioni sui MOSFET precedentemente elencati sono maggiori sui dispositivi a canale N, in passato si è consolidata la preferenza a utilizzare i PMOS come transistori d'ingresso in preamplificatori di carica a basso rumore, essendo più tolleranti alla ionizzazione. L'evoluzione di tecnologie MOSFET, che ha portato alla fabbricazione di transistori con dimensioni minime di canale sempre più piccole, ha comportato, grazie alla riduzione dello spessore dell'ossido di Gate, un aumento della resistenza alle radiazioni ionizzanti (figura \ref{fig:scaling_mosfet}).  
+Poiché gli effetti delle radiazioni sui MOSFET precedentemente elencati sono maggiori sui dispositivi a canale N, in passato si è consolidata la preferenza a utilizzare i PMOS come transistori d'ingresso in preamplificatori di carica a basso rumore, essendo più tolleranti alla ionizzazione. L'evoluzione di tecnologie MOSFET, che ha portato alla fabbricazione di transistori con dimensioni minime di canale sempre più piccole (figura \ref{fig:scaling_mosfet}), ha comportato, grazie alla riduzione dello spessore dell'ossido di \textit{gate}, un aumento della resistenza alle radiazioni ionizzanti.  
 
 \begin{figure}[ht]
 	\centering
 
 	\includegraphics[width = 0.60\linewidth]{capitolo1/effettiRadiazioniIonizzanti/scaling_mosfet.png}
-	\caption[Scaling dei dispositivi elettroni]{Evoluzione delle dimensioni nei dispositivi elettronici \cite{effetti_radiazioni_scaling:Nanoelectronics_and_nanolithography}}
+	\caption[Scaling dei dispositivi elettronici]{Evoluzione delle dimensioni nei dispositivi elettronici \cite{effetti_radiazioni_scaling:Nanoelectronics_and_nanolithography}}
 	\label{fig:scaling_mosfet}
 \end{figure}
 
