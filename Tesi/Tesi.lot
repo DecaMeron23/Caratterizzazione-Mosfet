@@ -2,7 +2,7 @@
 \babel@toc {italian}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Dimensioni dei dispositivi presenti in ciascun chip usato per lo studio}}{12}{table.caption.14}%
+\contentsline {table}{\numberline {2.1}{\ignorespaces Dimensioni dei dispositivi presenti in ciascun \emph {chip} usato per lo studio}}{12}{table.caption.14}%
 \contentsline {table}{\numberline {2.2}{\ignorespaces Valori delle tensioni per la misura della caratteristica $I_D-V_{DS}$}}{12}{table.caption.15}%
 \contentsline {table}{\numberline {2.3}{\ignorespaces Valori delle tensioni per la misura della caratteristica $I_D-V_{GS}$}}{13}{table.caption.16}%
 \contentsline {table}{\numberline {2.4}{\ignorespaces Confronto $V_{th}$ al variare del grado del fit polinomiale con il metodo TCM}}{18}{table.caption.21}%
