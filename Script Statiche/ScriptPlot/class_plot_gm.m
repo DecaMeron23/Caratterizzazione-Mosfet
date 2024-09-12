@@ -55,8 +55,10 @@ classdef class_plot_gm
                 xlabel( XLABEL, Interpreter="latex");
                 xticks(vgs(1):0.2:vgs(end));
                 ylabel("$g_m[\frac{A}{V}]$" , Interpreter="latex");
-                title( type + "MOS $W="+ W + "\mu m$" , Interpreter="latex")
-                legend([] , "Interpreter" , "latex" , "location" , "northwest");
+                title( type + "MOS $W="+ W + "\mu m$" , Interpreter="latex");
+                legend("Interpreter" , "latex" , "location" , "northwest");
+                ylim([0 inf]);
+                xlim([min(vgs) , max(vgs)]);
                 grid on
                 hold on
                 

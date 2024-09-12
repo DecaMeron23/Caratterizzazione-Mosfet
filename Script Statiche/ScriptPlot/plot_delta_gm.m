@@ -19,7 +19,7 @@ function plot_delta_gm(vds , tipologia , dispositivo , varargin) % vds = 0.45 , 
     ytickformat('percentage');
     title(titolo, Interpreter="latex" , FontSize=12);
     ylabel("$ \% \Delta g_m$" , Interpreter="latex" , FontSize=12);
-    xlabel("Dose Assorbita $[Mrad]$" , Interpreter="latex" , FontSize=12);
+    xlabel("\textit{TID} $[Mrad]$" , Interpreter="latex" , FontSize=12);
     % Impostazione degli xtick
     xticks([0.5 1 10 1e2 1e3 4000]);
     % Impostazione delle etichette degli xtick

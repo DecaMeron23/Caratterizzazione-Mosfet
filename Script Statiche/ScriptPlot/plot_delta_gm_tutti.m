@@ -65,7 +65,7 @@ function salvaPlot(tipologia, vds , W)
     ytickformat('percentage');
     title(titolo, Interpreter="latex" , FontSize=12);
     ylabel("$ \% \Delta g_m$" , Interpreter="latex" , FontSize=12);
-    xlabel("Dose Assorbita $[Mrad]$" , Interpreter="latex" , FontSize=12);
+    xlabel("\textit{TID} $[Mrad]$" , Interpreter="latex" , FontSize=12);
     testo = "$W=" + W + "\mu m $";
     annotation('textbox', [0.15, 0.20 0.1, 0.1], 'String' , testo , 'EdgeColor' , 'none' , 'FitBoxToText', 'on', FontSize=14 , Interpreter='latex' )
     y_line = yline(0 , "--");
