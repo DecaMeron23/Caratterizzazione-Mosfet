@@ -22,7 +22,7 @@ La transconduttanza è definita come la derivata prima della corrente $I_D$ risp
   \caption[Applicazione TCM senza fit polinomiale]{Esempio di \emph{TCM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 150 mV$}
 \end{figure}
 
-Per calcolare il \emph{TCM} si deve trovare il massimo di una funzione, ovvero calcolarne la derivata prima. In questo caso si tratta in realtà di una derivata seconda, essendo già $g_m$ calcolato con una derivata. Il calcolo della derivata non è effettuato su una funzione continua ma su dati misurati con uno \emph{step} di $5mV$ di $V_{GS}$. Questo fa sì che la derivata prima e in modo maggiore la derivata seconda, siano affette da vere e proprie variazioni repentine dovute alla natura granulare dei dati e non da fenomeni fisici. È quindi necessario rendere la funzione studiata meno dipendente da questo effetto. Inoltre, come detto in precedenza, la risoluzione con la quale sono state fatte le misure della corrente di \emph{drain} è $5mV$ (di $V_{GS}$). Pertanto, con questo metodo si estrarrebbe una soglia che avrebbe una risoluzione di $5mV$, del tutto inaccettabile in quanto sarebbe maggiore delle variazioni di soglia che potrebbero essere indotte in alcuni \emph{step} di irraggiamento.
+Per calcolare \emph{TCM} si deve trovare il massimo di una funzione, ovvero calcolarne la derivata prima. In questo caso si tratta in realtà di una derivata seconda, essendo già $g_m$ calcolato con una derivata. Il calcolo della derivata non è effettuato su una funzione continua ma su dati misurati con uno \emph{step} di $5mV$ di $V_{GS}$. Questo fa sì che la derivata prima e in modo maggiore la derivata seconda, siano affette da vere e proprie variazioni repentine dovute alla natura granulare dei dati e non da fenomeni fisici. È quindi necessario rendere la funzione studiata meno dipendente da questo effetto. Inoltre, come detto in precedenza, la risoluzione con la quale sono state fatte le misure della corrente di \emph{drain} è $5mV$ (di $V_{GS}$). Pertanto, con questo metodo si estrarrebbe una soglia che avrebbe una risoluzione di $5mV$, del tutto inaccettabile in quanto sarebbe maggiore delle variazioni di soglia che potrebbero essere indotte in alcuni \emph{step} di irraggiamento.
 Per far fronte a questi due problemi, si è scelto di non effettuare i calcoli direttamente sui valori delle misure, ma d'interpolare prima i punti del grafico con una funzione polinomiale e, di ricavare il valore di soglia da questa funzione.
 
 \begin{figure}[ht]
@@ -37,9 +37,9 @@ Lo studio del fit polinomiale risolve il problema della bassa risoluzione di mis
 \begin{table}[t]
   \renewcommand{\arraystretch}{1.3}
   \centering
-  \begin{tabular}{m{2.1cm} m{2cm} m{2cm} m{2cm} m{2cm}}
+  \begin{tabular}{c >{\centering\arraybackslash}m{2cm} >{\centering\arraybackslash}m{2cm} >{\centering\arraybackslash}m{2cm} >{\centering\arraybackslash}m{2cm}}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{4}{c}{$V_{th} [mV] \text{ con interpolante di grado:}$}                         \\
+    \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{4}{c}{$V_{th} [mV] \text{ con interpolante di grado:}$}                         \\
     \cmidrule{2-5}
                                  & 2                                                                    & 4     & 6     & 8     \\
     \midrule
@@ -65,7 +65,7 @@ Lo studio del fit polinomiale risolve il problema della bassa risoluzione di mis
   \label{tab:GradiTCM}
 \end{table}
 
-Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei fit fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con fit di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere molto diverso da quelli calcolati con fit di grado maggiore. Dunque, al fine di fittare al meglio la curva, si è scelto un fit polinomiale di grado 6. In Tabella \ref{tab:VthTCMN} e \ref{tab:VthTCMP} sono riportati i risultati ottenuti con il metodo \emph{TCM} e fit polinomiale di grado 6 su dispositivi PMOS\footnote{Per i PMOS viene indicata la $|V_{th}|$ } e NMOS pre e post irraggiamento.
+Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei fit fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con fit di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere molto diverso da quelli calcolati con fit di grado maggiore. Dunque, al fine di fittare al meglio la curva, si è scelto un fit polinomiale di grado 6. In Tabella \ref{tab:VthTCMN} e \ref{tab:VthTCMP} sono riportati i risultati ottenuti con il metodo \emph{TCM} e fit polinomiale di grado 6 su dispositivi NMOS e PMOS\footnote{Per i PMOS viene indicata la $|V_{th}|$ } pre e post irraggiamento.
 Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafici a figura \ref{fig:deltaVthTCM} vengono riportati i valori della $\Delta V_{th}$ in funzione della dose assorbita\footnote{La $\Delta V_{th} $ riportata per i PMOS è da intendersi come: $\Delta V_{th} = |V_{th_{post}}| - |V_{th_{pre}}|$}.
 
 \clearpage
@@ -76,7 +76,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c c }
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
       \cmidrule{2-10}
                                     & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -109,7 +109,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
 \resizebox{\textwidth}{!}{%
   \begin{tabular}{c c c c c c c c c}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
+    \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
     \cmidrule{2-9}
     & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
     \midrule
@@ -144,7 +144,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
   \resizebox{\textwidth}{!}{%
   \begin{tabular}{c c c c c c c c c c }
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
+    \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
     \cmidrule{2-10}
     & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
     \midrule
@@ -177,7 +177,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
   \resizebox{\textwidth}{!}{%
   \begin{tabular}{c c c c c c c c c}
     \toprule
-    \multirow{2}{*}{Dispositivo} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
+    \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
     \cmidrule{2-9}
     & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
     \midrule
@@ -228,7 +228,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
 \FloatBarrier
 
 \subsection[SDLM]{Second Difference of the Logarithm of the \emph{drain} current Minimum method}
-Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ rispetto alla tensione di \emph{gate} ($\frac{d^2lnI_D}{dV_{GS}^2}$) e vale solo per alti valori di $V_{DS}$ \cite{art1}.
+Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ rispetto alla tensione di \emph{gate} ($\frac{d^2\ln(I_D)}{d{V_{GS}}^2}$) e vale solo per alti valori di $V_{DS}$ \cite{art1}.
 
 
 \begin{figure}[ht]
@@ -252,13 +252,14 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
     \label{fig:GradiSDLM}
   \end{figure}
 
+  
   % Tabella con i diversi gradi per SDLM
   \begin{table}[h]
     \renewcommand{\arraystretch}{1.3}
     \centering
-    \begin{tabular}{m{2.1cm} m{2cm} m{2cm} m{2cm} m{2cm}}
+    \begin{tabular}{c >{\centering\arraybackslash}m{2cm} >{\centering\arraybackslash}m{2cm} >{\centering\arraybackslash}m{2cm} >{\centering\arraybackslash}m{2cm}}
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{4}{c}{$|V_{th}| [mV] \text{ con interpolante di grado:}$}                         \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{4}{c}{$|V_{th}| [mV] \text{ con interpolante di grado:}$}                         \\
       \cmidrule{2-5}
                                   & 2                                                                    & 4     & 6     & 8     \\
       \midrule
@@ -281,10 +282,10 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
     \end{tabular}
     \caption[Confronto $|V_{th}|$ al variare del grado del fit polinomiale con il metodo SDLM]{Confronto dei valori di $|V_{th}|$ dei dispositivi PMOS ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
     \label{tab:GradiSDLM}
-  \end{table}%
+  \end{table}
 
 
-Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), mentre le misure ottenute con queste ultime sono, in genere, molto simili tra loro. Ad esempio, osservando i grafici relativi alla \emph{SDLM} del PMOS 200-0.030 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2 \ln I_D}{d{V_{GS}}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta pertanto necessario estrarre le tensioni di soglia utilizzando una funzione polinomiale di grado 6.
+Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), mentre le misure ottenute con queste ultime sono, in genere, molto simili tra loro. Ad esempio, osservando i grafici relativi alla \emph{SDLM} del PMOS 200-0.030 (figura \ref{fig:GradiSDLM}), si può nota che il plot della funzione $\frac{d^2 \ln (I_D)}{d{V_{GS}}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta pertanto necessario estrarre le tensioni di soglia utilizzando una funzione polinomiale di grado 6.
 
 Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i dispositivi NMOS: tabelle \ref{tab:VthSDLMN} e \ref{tab:deltaVthSDLMN}, e per i PMOS\footnote{Per i PMOS viene indicato il modulo della $V_{th}$ e per il calcolo della variazione si utilizza: $\Delta V_{th} = |V_{th_{post}}| - |V_{th_{pre}}|$.}: tabelle \ref{tab:VthSDLMP} e \ref{tab:deltaVthSDLMP}. Mentre in figura \ref{fig:deltaVthSDLM} si riportano i grafici che mostrano l'andamento della variazione della tensione di soglia ($\Delta V_{th}$), in funzione della dose assorbita.
 
@@ -295,7 +296,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c c }
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
       \cmidrule{2-10}
                                    & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -328,7 +329,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c}
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
       \cmidrule{2-9}
                                    & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -361,7 +362,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c c }
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
       \cmidrule{2-10}
                                    & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -394,7 +395,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c}
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
       \cmidrule{2-9}
                                    & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -455,7 +456,7 @@ Operativamente, il tratto sul quale fare il fit lineare è ottenuto prendendo un
 
 Lo svantaggio principale di questo metodo è dato dal fatto che il punto di pendenza massima può essere incerto a causa di possibili effetti quali il degrado della mobilità dei portatori di carica e la possibile presenza di resistenze parassite serie al terminale di \emph{source} e \emph{drain}.
 Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace, in quanto non siamo principalmente interessati al valore della tensione di soglia dei dispositivi, ma alla variazione della tensione di soglia a causa delle radiazioni ionizzanti alle quali i dispositivi vengono sottoposti. Dunque gli errori prodotti dalle resistenze parassite e dalla degradazione di mobilità possono essere considerate come un \textit{offset} che viene eliminato nel momento in cui si calcola la differenza tra la $V_{th}$ pre e post irraggiamento.\\
-È infine doveroso fare una parentesi sulla regione di linearizzazione considerata per questo studio: infatti non è possibile stabilire con certezza una regione fissa in cui la funzione, ottenuta con misure sperimentali, può essere linearizzata. Il metodo da noi applicato è stato quello di analizzare tutti i possibili intervalli di linearizzazione ampi $100 mV$ i cui estremi ricadono nell'intervallo $[300 mV ; 750mV]$ e scegliere quello il cui il fit approssimava meglio la funzione. All'atto pratico abbiamo considerato l'intervallo il cui fit ha il coefficiente di determinazione $R^2$ piu alto, che è risultato essere sempre maggiore di $0.999$.
+È infine doveroso fare una parentesi sulla regione di linearizzazione considerata per questo studio: infatti non è possibile stabilire con certezza una regione fissa in cui la funzione, ottenuta con misure sperimentali, può essere linearizzata. Il metodo da noi applicato è stato quello di analizzare tutti i possibili intervalli di linearizzazione ampi $100 mV$ i cui estremi ricadono nell'intervallo $[300 mV ; 750mV]$ e scegliere quello il cui il fit approssimava meglio la funzione. All'atto pratico abbiamo considerato l'intervallo il cui fit ha il coefficiente di determinazione $R^2$ più alto, che è risultato essere sempre maggiore di $0.999$.
 
 \clearpage
 
@@ -464,7 +465,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c c }
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
       \cmidrule{2-10}
                                    & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -497,7 +498,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c}
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
       \cmidrule{2-9}
                                    & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -530,7 +531,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c c }
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
       \cmidrule{2-10}
                                    & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -563,7 +564,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c}
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
       \cmidrule{2-9}
                                    & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -621,7 +622,7 @@ Anche in questo caso, per ottenere il fit lineare più accurato possibile è sta
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/RM/RM-N4-100-30}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/RM/RM-P1-100-30}
-  \caption[Applicazione RM]{Fit lineare della caratteristica $\frac{I_D}{\sqrt{g_m}}-V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030}
+  \caption[Applicazione RM]{Fit lineare della caratteristica $\frac{I_D}{\sqrt{g_m}}-V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030.}
   \label{fig:FIT_RM}
 \end{figure}
 
@@ -634,7 +635,7 @@ Anche in questo caso, per ottenere il fit lineare più accurato possibile è sta
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c c }
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{9}{c}{$V_{th} [mV] $}                                                                                          \\
       \cmidrule{2-10}
                                    & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -667,7 +668,7 @@ Anche in questo caso, per ottenere il fit lineare più accurato possibile è sta
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c}
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
       \cmidrule{2-9}
                                    & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -701,7 +702,7 @@ Anche in questo caso, per ottenere il fit lineare più accurato possibile è sta
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c c }
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{9}{c}{$|V_{th}| [mV] $}                                                                                          \\
       \cmidrule{2-10}
                                    & pre                                & $5Mrad$ & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
@@ -734,7 +735,7 @@ Anche in questo caso, per ottenere il fit lineare più accurato possibile è sta
   \resizebox{\textwidth}{!}{%
     \begin{tabular}{c c c c c c c c c}
       \toprule
-      \multirow{2}{*}{Dispositivo} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
+      \multirow{2}{*}{Dispositivo $[\mu m]$} & \multicolumn{8}{c}{$\Delta V_{th} [mV] $}                                                                                \\
       \cmidrule{2-9}
                                    & $5Mrad$                                   & $50Mrad$ & $100Mrad$ & $200Mrad$ & $600Mrad$ & $1Grad$ & $3Grad$ & annealing \\
       \midrule
