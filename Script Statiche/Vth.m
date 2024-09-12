@@ -81,7 +81,7 @@ classdef Vth
 
 
             xlabel( xlabelb_txt, "Interpreter","latex" , FontSize=15);
-            ylabel("$\frac{I_D}{\sqrt{g_m}} \left[ \sqrt{\frac{A^3}{V}} \right]$" , Interpreter="latex" , FontSize=15);
+            ylabel("$\frac{I_D}{\sqrt{g_m}} [ \sqrt{A \cdot V}]$" , Interpreter="latex" , FontSize=15);
             legend( "$I_D$", "Ratio Method", Interpreter = "latex" , Location = "northwest");
             hold off
 
@@ -389,23 +389,23 @@ classdef Vth
 
                 if tipo == 'P'
                     xlabeltxt = "$V_{SG}[V]$";
-                    ylabeltxt = "$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{SG}^2}[\frac{A}{V^2}]$";
+                    ylabeltxt = "$\frac{\mathrm {d}^2 \ln(I_d)}{\mathrm {d} {V_{SG}}^2} \left[\frac{\ln(A)}{V^2}\right]$";
                 elseif tipo == 'N'
                     xlabeltxt = "$V_{GS}[V]$";
-                    ylabeltxt = "$\frac{\mathrm {d}^2 \log{I_d}}{\mathrm {d} V_{GS}^2}[\frac{A}{V^2}]$";
+                    ylabeltxt = "$\frac{\mathrm {d}^2 \ln(I_d)}{\mathrm {d} {V_{GS}}^2}  \left[\frac{\ln(A)}{V^2}\right]$";
                 end
 
                 xlabel(xlabeltxt , "Interpreter","latex", "FontSize",15);
                 ylabel(ylabeltxt , "Interpreter", "latex", "FontSize", 15);
                 %Plot dei dati calcolati
-                plot(vgs(indici_intervallo),derivata_2_SDLM(indici_intervallo))
+                plot(vgs(indici_intervallo),derivata_2_SDLM(indici_intervallo) , DisplayName= "SDLM")
                 %plot della vth dei dati calcolati
-                xline(vth_SDLM_noFit,"--","Color","r");
+                xline(vth_SDLM_noFit,"--","Color","r" , DisplayName= "Minimo di SDLM");
                 %plot della polinomiale
-                plot(intervallo_alta_ris, grafico);
+                plot(intervallo_alta_ris, grafico , DisplayName="Fit di grado "+ GRADO);
                 %plot vth della polinomiale
-                plot(vth , min_grafico , "*", color="r", MarkerSize=20)
-                legend( "SDLM", "Minimo di SDLM", "Fit di grado "+ GRADO, "Minimo del fit");
+                plot(vth , min_grafico , "*", color="r", MarkerSize=20 , DisplayName="Minimo del fit")
+                legend();
                 hold off
             end
 
