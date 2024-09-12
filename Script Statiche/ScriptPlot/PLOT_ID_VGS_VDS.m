@@ -103,6 +103,7 @@ classdef PLOT_ID_VGS_VDS
                 PLOT_ID_VGS_VDS.grafica_plot(titolo , x_label , y_label , posizione_legenda);
                 grid on
                 xlim([min(vgs) , max(vgs)]);
+                ylim([0 inf]);
 
                 nome_plot_salvataggio = NOME_CARTELLA_SALVATAGGIO + sprintf(PREFISSO_nomePlot , VDS_mV , ARRAY_W(i));
 
@@ -203,6 +204,7 @@ classdef PLOT_ID_VGS_VDS
                 PLOT_ID_VGS_VDS.grafica_plot(titolo , x_label , y_label , posizione_legenda);
                 grid on
                 xlim([min(vds) , max(vds)]);
+                ylim([0 inf]);
 
                 nome_plot_salvataggio = NOME_CARTELLA_SALVATAGGIO + sprintf(PREFISSO_nomePlot , VGS_mV , ARRAY_W(i));
 
