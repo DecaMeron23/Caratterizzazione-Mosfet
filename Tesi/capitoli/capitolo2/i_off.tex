@@ -1,11 +1,11 @@
-Idealmente per tensioni \textit{gate-source} inferiori alla tensione di soglia il transistore MOSFET non lascia passare nessuna corrente di \textit{drain}, $I_D = 0$. Nella realtà questo non è vero, infatti sono presenti le cosiddette \textit{leakage current}, correnti di perdita, che possono variare a seconda della tipologia del dispositivo, NMOS o PMOS, o anche per la dimensione.
-Queste correnti possono essere rilevanti o trascurabili a seconda dell'intensità; In figura \ref{fig:i_off_confronto}, confronti tra NMOS e PMOS delle correnti di perdita estratti per valori\footnote{Per i PMOS si intendono $V_{SG} = -0.3V$ e $V_{SD} = 0.45V$} di $V_{GS} = -0.3V$ e $V_{DS} = 0.45V$.
+Idealmente, per tensioni \textit{gate-source} inferiori alla tensione di soglia il transistore MOSFET non lascia passare nessuna corrente di \textit{drain} ($I_D = 0$). Nella realtà questo non è vero, infatti sono presenti le cosiddette \textit{leakage current}, correnti di perdita, che possono variare a seconda della tipologia del dispositivo, NMOS o PMOS, o anche per la dimensione.
+Queste correnti possono essere rilevanti o trascurabili a seconda dell'intensità. In figura \ref{fig:i_off_confronto}, si confontano le correnti di perdita tra NMOS e PMOS estratte per valori\footnote{Per i PMOS si intendono $V_{SG} = -0.3V$ e $V_{SD} = 0.45V$} di $V_{GS} = -0.3V$ e $V_{DS} = 0.45V$.
 
-\paragraph*{Differenze di $\bm{I_{off}}$ tra NMOS e PMOS} Nella figura \ref{fig:i_off_confronto} la differenza tra i dispositivi a canale N e a canale P è molto evidente superati i $600Mrad$, soprattutto per il dispositivo $600-0.060$ \ref{sub@fig:i_off_confronto_600_60_e_180}, raggiungendo differenze all'ordine dei $\mu A$. Infatti, come già anticipato nella sezione \ref{cap1:ionizzazione}, i MOSFET a canale N sono soggetti alla creazione di transistor parassiti nella \textit{STI} che comportano un aumento della $I_{off}$.
+\paragraph*{Differenze di $\bm{I_{off}}$ tra NMOS e PMOS} Nella figura \ref{fig:i_off_confronto} la differenza tra i dispositivi a canale N e a canale P è molto evidente superati i $600Mrad$, soprattutto per il dispositivo $600-0.060$ \ref{sub@fig:i_off_confronto_600_60_e_180}, per il quale si raggiungono differenze all'ordine dei $\mu A$. Infatti, come già anticipato nella sezione \ref{cap1:ionizzazione}, i MOSFET a canale N sono soggetti alla creazione di transistor parassiti nella \textit{STI} che comportano un aumento della $I_{off}$.
 
 \paragraph*{Differenze di $\bm{I_{off}}$ in dispositivi a dimensioni diverse} La corrente di \textit{drain} presenta una proporzionalità con le dimensioni del dispositivo, in particolare $I_{D} \propto \frac{W}{L}$. Osservando, ad esempio, la figura \ref{fig:i_off_confronto_600_60_e_180} si nota come la l'aumento della lunghezza, da $60 \text{ a } 180nm$ provoca un abbassamento della $I_{off}$, mentre a parità di $L$ e all'aumentare di $W$ si ha un aumento della corrente di perdita.
 
-\paragraph*{Effetto della $\bm{\Delta V_{th}}$ a basse dosi sui NMOS} Come già riportato nella sezione \ref{cap1:ionizzazione}, e confermato dai dati nella sezione \ref{cap2:vth}, la variazione della tensione di soglia, nei dispositivi NMOS, inizialmente è negativa a basse dosi (circa $10Mrad$) e la riduzione della $V_{th}$ comporta un aumento della corrente \textit{drain-source} di perdita, in figura \ref{fig:i_off_confronto_bassi_dosaggi} vengono mostrati gli andamenti della $I_{off}$ per i dispositivi a larghezza $100\mu m$ con lunghezza $60 nm \text{ e } 180nm$ e per i dispositivi $W = 600\mu m$ e $L = 60 nm \text{ e } 180nm$, con un focus particolare sui bassi dosaggi di radiazioni ionizzanti.
+\paragraph*{Effetto della $\bm{\Delta V_{th}}$ a basse dosi sui NMOS} Come già riportato nella sezione \ref{cap1:ionizzazione}, e confermato dai dati nella sezione \ref{cap2:vth}, la variazione della tensione di soglia nei dispositivi NMOS è negativa a basse dosi (circa $10Mrad$) e la riduzione della $V_{th}$ comporta un aumento della corrente \textit{drain-source} di perdita. In figura \ref{fig:i_off_confronto_bassi_dosaggi} vengono mostrati gli andamenti della $I_{off}$ per i dispositivi di larghezza $W = 100\mu m$ e di lunghezza $L = 60 nm \text{ e } L = 180nm$ e per i dispositivi di larghezza $W = 600\mu m$ e di lunghezza $L = 60 nm \text{ e } 180nm$, con un focus particolare sui bassi dosaggi di radiazioni ionizzanti.
 
 \begin{figure}[h]
 
@@ -40,7 +40,7 @@ Queste correnti possono essere rilevanti o trascurabili a seconda dell'intensit�
 \end{figure}
 
 \vspace{0.5cm}
-Per concludere si riportano a figura \ref{fig:delta_i_off} i grafici delle variazioni della \textit{leakage current}, $\Delta I_{off}$, al variare della dose assorbita.
+Per concludere si riportano a figura \ref{fig:delta_i_off} i grafici delle variazioni della \textit{leakage current} $\Delta I_{off}$ al variare della dose assorbita.
 
 \clearpage
 

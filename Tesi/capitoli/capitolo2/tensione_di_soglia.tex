@@ -1,17 +1,17 @@
 La tensione di soglia $V_{th}$ di un transistore MOS è definita come quella tensione tra \emph{gate} e \emph{bulk} per la quale la popolazione di minoritari all'interfaccia è uguale alla popolazione di maggioritari nel \emph{bulk}. Per ricavare la tensione di soglia dei dispositivi non si può usare direttamente la definizione, ma si devono utilizzare le caratteristiche corrente-tensione dei dispositivi. \\
-Per l'estrazione del parametro $V_{th}$ esistono numerosi metodi \cite{art2}, la scelta è solitamente dettata da un compromesso che si deve trovare fra complessità della procedura di estrazione della soglia e risultato ottenuto per la specifica applicazione. Per questo studio sono stati presi in considerazione:
+Per l'estrazione del parametro $V_{th}$ esistono numerosi metodi \cite{art2} e la scelta è solitamente dettata da un compromesso che si deve trovare fra complessità della procedura di estrazione della soglia e risultato ottenuto per la specifica applicazione. Per questo studio sono stati presi in considerazione:
 
 \begin{itemize}
-  \item \emph{Transconductance Change Method (TCM)};
-  \item \emph{Second Difference of the Logarithm of the \emph{drain} current Minimum method (SDLM)};
-  \item \emph{Extrapolation in the Linear Region method (ELR)};
-  \item \emph{Ratio Method (RM)}.
+  \item \emph{Transconductance Change Method} (TCM);
+  \item \emph{Second Difference of the Logarithm of the drain current Minimum method} (SDLM);
+  \item \emph{Extrapolation in the Linear Region method} (ELR);
+  \item \emph{Ratio Method} (RM).
 \end{itemize}
 
-Per il nostro studio, però, non si è solo interessati al valore in sé della tensione di soglia dei dispositivi, ma anche a come questa varia all'aumentare dell'irraggiamento. Dunque, per ogni metodo non ci si ferma all'estrazione della $V_{th}$ dei dispositivi non irraggiati, ma la si estrae anche dopo ogni \emph{step} d'irraggiamento e, per ciascuno di questi, si calcola la $\Delta V_{th} = V_{th,pos}-V_{th,pre}$. Tutti i metodi sopra elencati sono stati usati per estrarre la soglia dopo ogni \emph{step} di irraggiamento. Uno degli scopi di questo lavoro di tesi e capire se c'è un metodo migliore di altri da utilizzare in futuro.
+Per questo studio, però, non si è interessati al valore in sé della tensione di soglia dei dispositivi, ma a come questa varia all'aumentare dell'irraggiamento. Dunque, per ogni metodo elencato non ci si è limitati ad estrarre la $V_{th}$ dei dispositivi prima di essere stati irraggiati: l'operzione è stata ripetuta dopo ogni \emph{step} d'irraggiamento e, per ciascuno di questi, è stata calcolata la $\Delta V_{th} = V_{th,pos}-V_{th,pre}$. Uno degli scopi di questo lavoro di tesi e capire se c'è un metodo migliore di altri da utilizzare in futuro.
 
-\subsection[TCM]{Transconductance Change Method}
-Il \emph{Transconductance Change Method, TCM,} definisce la tensione di soglia come la tensione di \emph{gate-source} $V_{GS}$ corrispondente al picco massimo della derivata della transconduttanza $g_m$ rispetto alla tensione di \emph{gate} ($\frac{dg_m}{dV_ {GS}}$) ed è valido per bassi valori della tensione $V_{DS}$.\\
+\subsection[TCM]{\emph{Transconductance Change Method}}
+Il \emph{Transconductance Change Method} (TCM) definisce la tensione di soglia come la tensione di \emph{gate-source} $V_{GS}$ corrispondente al picco massimo della derivata della transconduttanza $g_m$ rispetto alla tensione di \emph{gate} ($\frac{dg_m}{dV_ {GS}}$) ed è valido per bassi valori della tensione $V_{DS}$.\\
 Questa definizione si basa sul fatto che, quando il dispositivo passa dalla regione di debole inversione alla regione di forte inversione, la dipendenza della corrente di \emph{drain} rispetto a $V_{GS}$ passa dall'essere esponenziale all'essere lineare.
 La transconduttanza è definita come la derivata prima della corrente $I_D$ rispetto alla tensione $V_{GS}$, dunque la derivata della $g_m$ corrisponde alla derivata seconda di $I_D$. Per questo motivo, il massimo di $\frac{dg_m}{dV_{GS}}$ coincide con la tensione alla quale il grafico della corrente passa dalla forma esponenziale a quella lineare. Se $V_{DS}$ è piccola, la tensione per la quale la $g_m$ è massima è molto simile a $V_{th}$.
 
@@ -19,22 +19,22 @@ La transconduttanza è definita come la derivata prima della corrente $I_D$ risp
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/TCM/TCM-N4-100-30-NoFit}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/TCM/TCM-P1-100-30-NoFit}
-  \caption[Applicazione TCM senza fit polinomiale]{Esempio di \emph{TCM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 150 mV$}
+  \caption[Applicazione TCM senza fit polinomiale]{Esempio di TCM usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 150 mV$}
   \label{fig:TCM_NO_FIT}
 \end{figure}
 
-Per calcolare \emph{TCM} si deve trovare il massimo di una funzione, ovvero calcolarne la derivata prima. In questo caso si tratta in realtà di una derivata seconda, essendo già $g_m$ calcolato con una derivata. Il calcolo della derivata non è effettuato su una funzione continua ma su dati misurati con uno \emph{step} di $5mV$ di $V_{GS}$. Questo fa sì che la derivata prima e in modo maggiore la derivata seconda, siano affette da vere e proprie variazioni repentine dovute alla natura granulare dei dati e non da fenomeni fisici (figura \ref{fig:TCM_NO_FIT}). È quindi necessario rendere la funzione studiata meno dipendente da questo effetto. Inoltre, come detto in precedenza, la risoluzione con la quale sono state fatte le misure della corrente di \emph{drain} è $5mV$ (di $V_{GS}$). Pertanto, con questo metodo si estrarrebbe una soglia che avrebbe una risoluzione di $5mV$, del tutto inaccettabile in quanto sarebbe maggiore delle variazioni di soglia che potrebbero essere indotte in alcuni \emph{step} di irraggiamento.
-Per far fronte a questi due problemi, si è scelto di non effettuare i calcoli direttamente sui valori delle misure, ma d'interpolare prima i punti del grafico con una funzione polinomiale e, di ricavare il valore di soglia da questa funzione.
+Questo metodo prevede quindi di trovare il massimo di una funzione e dunque di calcolarne la derivata prima. In questo caso si tratta in realtà di una derivata seconda, essendo già $g_m$ calcolato con una derivata. Il calcolo della derivata non è effettuato su una funzione continua ma su dati misurati con uno \emph{step} di $5mV$ di $V_{GS}$. Questo fa sì che la derivata prima e, in modo maggiore, la derivata seconda siano affette da variazioni repentine dovute alla natura granulare dei dati (figura \ref{fig:TCM_NO_FIT}). È quindi necessario rendere la funzione studiata meno affetta da questo comportamento. Inoltre, come detto in precedenza, la risoluzione con la quale sono state fatte le misure della corrente di \emph{drain} è $5mV$ (di $V_{GS}$). Pertanto, con questo metodo si estrarrebbe una soglia che avrebbe una risoluzione di $5mV$, del tutto inaccettabile in quanto sarebbe maggiore della variaziona di tensione di soglia che potrebbe essere causata da alcuni \emph{step} di irraggiamento.
+Per far fronte a questi due problemi si è scelto di non effettuare i calcoli direttamente sui valori delle misure, ma d'interpolare prima i punti del grafico con una funzione polinomiale e di ricavare il valore di soglia da questa funzione.
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/TCM/TCM-N4-100-30}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/TCM/TCM-P1-100-30}
-  \caption[Applicazione TCM con fit polinomiale di sesto grado]{Esempio di \emph{TCM} con fit polinomiale usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 150 mV$}
+  \caption[Applicazione TCM con fit polinomiale di sesto grado]{Esempio di TCM con fit polinomiale usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 150 mV$}
   \label{fig:TCM_FIT_6}
 \end{figure}
 
-Lo studio del fit polinomiale risolve il problema della bassa risoluzione di misura, ma presenta un potenziale nuovo problema: il valore della $V_{th}$ calcolata potrebbe variare significativamente al variare del grado della funzione polinomiale interpolante. Per capire l'effetto del grado della funzione interpolante sul valore di tensione di soglia estratto, si sono effettuate le estrazioni considerando i gradi 2, 4, 6 e 8 e si sono studiati i risultati ottenuti. Lo studio si è effettuato su dispositivi PMOS. Una volta scelto il valore del grado della funzione, lo stesso grado sarà utilizzato anche per l'estrazione della tensione di soglia degli NMOS.
+Lo studio del fit polinomiale risolve il problema della bassa risoluzione di misura, ma presenta un potenziale nuovo problema: il valore della $V_{th}$ calcolata potrebbe variare significativamente al variare del grado della funzione polinomiale interpolante. Per capire l'effetto del grado della funzione interpolante sul valore di tensione di soglia estratto, si sono effettuate le estrazioni considerando i gradi 2, 4, 6 e 8 e si sono studiati i risultati ottenuti. Lo studio si è effettuato sui dispositivi PMOS. Una volta scelto il valore del grado della funzione, lo stesso grado è stato utilizzato anche per l'estrazione della tensione di soglia degli NMOS.
 
 \begin{table}[t]
   \renewcommand{\arraystretch}{1.3}
@@ -63,11 +63,11 @@ Lo studio del fit polinomiale risolve il problema della bassa risoluzione di mis
 
     \bottomrule
   \end{tabular}
-  \caption[Confronto $V_{th}$ al variare del grado del fit polinomiale con il metodo TCM]{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con \emph{TCM} con fit polinomiale di diversi gradi}
+  \caption[Confronto $V_{th}$ al variare del grado del fit polinomiale con il metodo TCM]{Confronto dei valori di $V_{th}$ dei dispositivi PMOS ottenuti con TCM con fit polinomiale di diversi gradi}
   \label{tab:GradiTCM}
 \end{table}
 
-Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei fit fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con fit di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere molto diverso da quelli calcolati con fit di grado maggiore. Dunque, al fine di fittare al meglio la curva, si è scelto un fit polinomiale di grado 6 (esempio in figura \ref{fig:TCM_FIT_6}). In Tabella \ref{tab:VthTCMN} e \ref{tab:VthTCMP} sono riportati i risultati ottenuti con il metodo \emph{TCM} e fit polinomiale di grado 6 su dispositivi NMOS e PMOS\footnote{Per i PMOS viene indicata la $|V_{th}|$ } pre e post irraggiamento.
+Osservando i valori nella tabella \ref{tab:GradiTCM}, si può notare che la tensione di soglia ottenuta non varia molto nel caso dei \emph{fit} fatti con polinomiali di grado 4, 6 e 8: è raro che la differenza tra questi valori superi $1 mV$. Non si può dire la stessa cosa per le $V_{th}$ calcolate con \emph{fit} di grado 2: in questo caso la funzione interpolante ha un grado troppo basso per seguire in modo coerente la curva $\frac{dg_m}{dV_{GS}}$ e quindi il massimo risulta essere molto diverso da quelli calcolati con \emph{fit} di grado maggiore. Dunque, al fine di trovare una funzione che interpoli al meglio la curva, si è scelto di tenere in considerazione il \emph{fit} polinomiale di grado 6 (esempio in figura \ref{fig:TCM_FIT_6}). In Tabella \ref{tab:VthTCMN} e \ref{tab:VthTCMP} sono riportati i risultati ottenuti con TCM e \emph{fit} polinomiale di grado 6 su dispositivi NMOS e PMOS\footnote{Per i PMOS viene indicata la $|V_{th}|$ } pre e post irraggiamento.
 Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafici a figura \ref{fig:deltaVthTCM} vengono riportati i valori della $\Delta V_{th}$ in funzione della dose assorbita\footnote{La $\Delta V_{th} $ riportata per i PMOS è da intendersi come: $\Delta V_{th} = |V_{th_{post}}| - |V_{th_{pre}}|$}.
 
 \clearpage
@@ -100,7 +100,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
       \bottomrule
     \end{tabular}%
   }
-  \caption[$V_{th}$ dei dispositivi NMOS estratte con TCM]{$V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
+  \caption[$V_{th}$ dei dispositivi NMOS estratte con TCM]{$V_{th}$ dei dispositivi NMOS estratte con TCM}
   \label{tab:VthTCMN}
 \end{table}
 
@@ -133,7 +133,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
     \bottomrule
   \end{tabular}%
   }
-  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con TCM]{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{TCM}}
+  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con TCM]{$\Delta V_{th}$ dei dispositivi NMOS estratte con TCM}
   \label{tab:deltaVthTCMN}
 \end{table}
 
@@ -168,7 +168,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
       \bottomrule
     \end{tabular}%
     }
-    \caption[$|V_{th}|$ dei dispositivi PMOS estratte con TCM]{$|V_{th}|$ dei dispositivi PMOS estratte con \emph{TCM}}
+    \caption[$|V_{th}|$ dei dispositivi PMOS estratte con TCM]{$|V_{th}|$ dei dispositivi PMOS estratte con TCM}
     \label{tab:VthTCMP}
 \end{table}
 
@@ -201,7 +201,7 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
     \bottomrule
   \end{tabular}%
   }
-  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con TCM]{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{TCM}}
+  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con TCM]{$\Delta V_{th}$ dei dispositivi PMOS estratte con TCM}
   \label{tab:deltaVthTCMP}
 \end{table}
 
@@ -223,26 +223,26 @@ Mentre nelle tabelle \ref{tab:deltaVthTCMN}, \ref{tab:deltaVthTCMP} e nei grafic
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/TCM/sovrapposizione-deltaVth-TCM-N600}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/TCM/sovrapposizione-deltaVth-TCM-P600}
 
-  \caption[Dati $\Delta V_{th}$ estratti con TCM]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) e PMOS (a destra) estratte con \emph{TCM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
+  \caption[Dati $\Delta V_{th}$ estratti con TCM]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) e PMOS (a destra) estratte con TCM in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
   \label{fig:deltaVthTCM}
 \end{figure}
 
 \FloatBarrier
 
-\subsection[SDLM]{Second Difference of the Logarithm of the \emph{drain} current Minimum method}
-Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method, SDLM}. Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ rispetto alla tensione di \emph{gate} ($\frac{d^2\ln(I_D)}{d{V_{GS}}^2}$) e vale solo per alti valori di $V_{DS}$ \cite{art1}.
+\subsection[SDLM]{\emph{Second Difference of the Logarithm of the drain current Minimum method}}
+Il secondo metodo analizzato è il \emph{Second Difference of the Logarithm of the drain current Minimum method} (SDLM). Questo metodo definisce la $V_{th}$ come la tensione $V_{GS}$ per la quale si ha il picco minimo della derivata seconda del logaritmo naturale di $I_D$ rispetto alla tensione di \emph{gate} ($\frac{d^2\ln(I_D)}{d{V_{GS}}^2}$) e vale solo per alti valori di $V_{DS}$ \cite{art1}.
 
 
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/SDLM/SDLM-N4-100-30-NoFit}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/SDLM/SDLM-P1-100-30-NoFit}
-  \caption[Applicazione SDLM senza fit polinomiale]{Esempio di \emph{SDLM} usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 900 mV$}
+  \caption[Applicazione SDLM senza fit polinomiale]{Esempio di SDLM usato su un dispositivo NMOS e un dispositivo PMOS di dimensioni 100-0.030 a $V_{DS} = 900 mV$}
   \label{fig:SDLM_NO_FIT}
 \end{figure}
 
-Anche per questo metodo si ritrovano le problematiche presenti per il \emph{TCM}: si deve fare il \textit{fit} di una curva ottenuta come derivata seconda e inoltre la risoluzione della $V_{GS}$ è $5mV$ (figura \ref{fig:SDLM_NO_FIT}).
-Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenuta con una polinomiale e considerare il minimo di quest'ultima.
+Anche per questo metodo si ritrovano le problematiche presenti per il TCM: si deve fare il \textit{fit} di una curva ottenuta come derivata seconda e inoltre la risoluzione della $V_{GS}$ è $5mV$ (figura \ref{fig:SDLM_NO_FIT}).
+Quindi, anche per questo metodo, la funzione ottenuta è stata interpolata con una funzione polinomiale e si è considerato il minimo di quest'ultima.
 
   \begin{figure}[ht]
     \centering
@@ -283,14 +283,14 @@ Quindi, anche per questo metodo, abbiamo deciso d'interpolare la funzione ottenu
       600 - 0.180                  & 454.7                                                                & 446.7 & 441.4 & 441.3 \\
       \hline
     \end{tabular}
-    \caption[Confronto $|V_{th}|$ al variare del grado del fit polinomiale con il metodo SDLM]{Confronto dei valori di $|V_{th}|$ dei dispositivi PMOS ottenuti con \emph{SDLM} con fit polinomiale di diversi gradi}
+    \caption[Confronto $|V_{th}|$ al variare del grado del fit polinomiale con il metodo SDLM]{Confronto dei valori di $|V_{th}|$ dei dispositivi PMOS ottenuti con SDLM con fit polinomiale di diversi gradi}
     \label{tab:GradiSDLM}
   \end{table}
 
 
-Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), mentre le misure ottenute con queste ultime sono, in genere, molto simili tra loro. Ad esempio, osservando i grafici relativi alla \emph{SDLM} del PMOS 200-0.030 (figura \ref{fig:GradiSDLM}), si può notare che il plot della funzione $\frac{d^2 \ln (I_D)}{d{V_{GS}}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta pertanto necessario estrarre le tensioni di soglia utilizzando una funzione polinomiale di grado 6.
+Prendendo in considerazione i dati presenti nella tabella \ref{tab:GradiSDLM}, si nota come $V_{th}$ assume valori molto diversi a seconda del grado della polinomiale interpolante. Nella maggior parte dei casi, le tensioni di soglia ottenute con polinomiali di grado basso (2 e 4) cambiano molto tra loro e rispetto a quelle ottenute con polinomiali di grado alto (6 e 8), mentre le misure ottenute con queste ultime sono, in genere, molto simili tra loro. Ad esempio, osservando i grafici relativi a SDLM del PMOS 200-0.030 (figura \ref{fig:GradiSDLM}), si può notare che il plot della funzione $\frac{d^2 \ln (I_D)}{d{V_{GS}}^2}$ ha un andamento che non viene interpolato in modo preciso da polinomiali di basso grado: per questo i valori minimi si discostano parecchio dai minimi ottenuti con polinomiali di grado maggiore. Risulta pertanto necessario estrarre le tensioni di soglia utilizzando una funzione polinomiale di grado alto. Per questo studio è stato scelto il grado 6.
 
-Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i dispositivi NMOS: tabelle \ref{tab:VthSDLMN} e \ref{tab:deltaVthSDLMN}, e per i PMOS\footnote{Per i PMOS viene indicato il modulo della $V_{th}$ e per il calcolo della variazione si utilizza: $\Delta V_{th} = |V_{th_{post}}| - |V_{th_{pre}}|$.}: tabelle \ref{tab:VthSDLMP} e \ref{tab:deltaVthSDLMP}. Mentre in figura \ref{fig:deltaVthSDLM} si riportano i grafici che mostrano l'andamento della variazione della tensione di soglia ($\Delta V_{th}$), in funzione della dose assorbita.
+Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$ (tabelle \ref{tab:VthSDLMN} e \ref{tab:deltaVthSDLMN} per gli NMOS, tabelle \ref{tab:VthSDLMP} e \ref{tab:deltaVthSDLMP} per i PMOS\footnote{Per i PMOS viene indicato il modulo della $V_{th}$ e per il calcolo della variazione si utilizza: $\Delta V_{th} = |V_{th_{post}}| - |V_{th_{pre}}|$.}). In figura \ref{fig:deltaVthSDLM} si riportano i grafici che mostrano l'andamento della variazione della tensione di soglia ($\Delta V_{th}$), in funzione della dose assorbita.
 
 \clearpage
 
@@ -321,7 +321,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
       \bottomrule
     \end{tabular}%
   }
-  \caption[$V_{th}$ dei dispositivi NMOS estratte con SDLM]{$V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
+  \caption[$V_{th}$ dei dispositivi NMOS estratte con SDLM]{$V_{th}$ dei dispositivi NMOS estratte con SDLM}
   \label{tab:VthSDLMN}
 \end{table}
 
@@ -354,7 +354,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
       \bottomrule
     \end{tabular}%
   }
-  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con SDLM]{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{SDLM}}
+  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con SDLM]{$\Delta V_{th}$ dei dispositivi NMOS estratte con SDLM}
   \label{tab:deltaVthSDLMN}
 \end{table}
 
@@ -387,7 +387,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
       \bottomrule
     \end{tabular}%
   }
-  \caption[$|V_{th}|$ dei dispositivi PMOS estratte con SDLM]{$|V_{th}|$ dei dispositivi PMOS estratte con \emph{SDLM}}
+  \caption[$|V_{th}|$ dei dispositivi PMOS estratte con SDLM]{$|V_{th}|$ dei dispositivi PMOS estratte con SDLM}
   \label{tab:VthSDLMP}
 \end{table}
 
@@ -420,7 +420,7 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
       \bottomrule
     \end{tabular}%
   }
-  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con SDLM]{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{SDLM}}
+  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con SDLM]{$\Delta V_{th}$ dei dispositivi PMOS estratte con SDLM}
   \label{tab:deltaVthSDLMP}
 \end{table}
 
@@ -440,27 +440,27 @@ Di seguito si riportano i valori delle $V_{th}$ e delle $\Delta V_{th}$, per i d
   %W = 600
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/SDLM/sovrapposizione-deltaVth-SDLM-N600}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/SDLM/sovrapposizione-deltaVth-SDLM-P600}
-  \caption[Dati $\Delta V_{th}$ estratti con SDLM]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{SDLM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
+  \caption[Dati $\Delta V_{th}$ estratti con SDLM]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con SDLM in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
   \label{fig:deltaVthSDLM}
 \end{figure}
 
 \FloatBarrier
 
-\subsection[ELR]{Extrapolation in the Linear Region method}
-Il terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method, ELR} \cite{art2}. La tensione di soglia estratta con questo metodo è data dall'intercetta della estrapolazione lineare della caratteristica $I_D-V_{GS}$ nel suo punto di massima pendenza (cioè il punto di massima transconduttanza, $g_m$) con l'asse delle ascisse ($V_{GS}$). Per ottenere la tensione di soglia, al valore dell'intercetta si deve aggiungere $V_{DS}/2$, dove $V_{DS}$ è la tensione alla quale è stata misurata la caratteristica $I_D-V_{GS}$ interpolata linearmente.
-Operativamente, il tratto sul quale fare il fit lineare è ottenuto prendendo un determinato intervallo nell'intorno del punto di flesso della $I_D-V_{GS}$ (figura \ref{fig:ELR_ESEMPIO}).
+\subsection[ELR]{\emph{Extrapolation in the Linear Region method}}
+Il terzo metodo analizzato è l'\emph{Extrapolation in the Linear Region method} (ELR) \cite{art2}. La tensione di soglia estratta con questo metodo è data dall'intercetta dell'estrapolazione lineare della caratteristica $I_D-V_{GS}$ nel suo punto di massima pendenza (cioè il punto di massima transconduttanza, $g_m$) con l'asse delle ascisse ($V_{GS}$). Per ottenere la tensione di soglia, al valore dell'intercetta si deve aggiungere $V_{DS}/2$, dove $V_{DS}$ è la tensione alla quale è stata misurata la caratteristica $I_D-V_{GS}$ interpolata linearmente.
+Operativamente, il tratto sul quale fare il fit lineare è ottenuto prendendo un determinato intervallo nell'intorno del punto di flesso della caratteristica $I_D-V_{GS}$ (figura \ref{fig:ELR_ESEMPIO}).
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.485\textwidth]{./capitolo2/VTH/ELR/LinearFit-N4-100-30}
   \includegraphics[width=0.485\textwidth]{./capitolo2/VTH/ELR/LinearFit-P1-100-30}
-  \caption[Applicazione ELR]{Fit lineare della caratteristica  $I_D$-$V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030 }
+  \caption[Applicazione ELR]{\emph{Fit} lineare della caratteristica  $I_D$-$V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030 }
   \label{fig:ELR_ESEMPIO}
 \end{figure}
 
-Lo svantaggio principale di questo metodo è dato dal fatto che il punto di pendenza massima può essere incerto a causa di possibili effetti quali il degrado della mobilità dei portatori di carica e la possibile presenza di resistenze parassite serie al terminale di \emph{source} e \emph{drain}.
-Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace, in quanto non siamo principalmente interessati al valore della tensione di soglia dei dispositivi, ma alla variazione della tensione di soglia a causa delle radiazioni ionizzanti alle quali i dispositivi vengono sottoposti. Dunque gli errori prodotti dalle resistenze parassite e dalla degradazione di mobilità possono essere considerate come un \textit{offset} che viene eliminato nel momento in cui si calcola la differenza tra la $V_{th}$ pre e post irraggiamento.\\
-È infine doveroso fare una parentesi sulla regione di linearizzazione considerata per questo studio: infatti non è possibile stabilire con certezza una regione fissa in cui la funzione, ottenuta con misure sperimentali, può essere linearizzata. Il metodo da noi applicato è stato quello di analizzare tutti i possibili intervalli di linearizzazione ampi $100 mV$ i cui estremi ricadono nell'intervallo $[300 mV ; 750mV]$ e scegliere quello il cui il fit approssimava meglio la funzione. All'atto pratico abbiamo considerato l'intervallo il cui fit ha il coefficiente di determinazione $R^2$ più alto, che è risultato essere sempre maggiore di $0.999$. Di seguito vengono riportati i dati estratti: ${V_{th}}$ alle tabelle \ref{tab:VthELRN} (NMOS) e \ref{tab:VthELRP} (PMOS), mentre per la $\Delta V_{th}$ alle tabelle \ref{tab:deltaVthELRN} (NMOS) e \ref{tab:deltaVthELRP} (PMOS) e in figura \ref{fig:deltaVthELR}.  
+Lo svantaggio principale di questo metodo è dato dal fatto che il punto di massima pendenza può essere incerto a causa di effetti quali il degrado della mobilità dei portatori di carica e la possibile presenza di resistenze parassite serie ai terminali di \emph{source} e \emph{drain}.
+Nonostante ciò, per il questo studio il metodo ELR potrebbe risultare efficace, poiché non si è interessati principalmente al valore della tensione di soglia dei dispositivi, ma alla sua variazione a causa delle radiazioni ionizzanti alle quali i dispositivi vengono esposti. Dunque, gli errori prodotti dalle resistenze parassite e dalla degradazione di mobilità dei portatori possono essere considerate come un \textit{offset} che viene eliminato nel momento in cui si calcola la differenza tra la $V_{th}$ pre e post irraggiamento.\\
+È infine doveroso fare una parentesi sulla regione di linearizzazione considerata per questo studio: infatti, non è possibile stabilire con certezza una regione fissa in cui la funzione, ottenuta con misure sperimentali, può essere linearizzata. Il metodo da applicato in questo caso è stato quello di analizzare tutti i possibili intervalli di linearizzazione con ampiezza $100 mV$ i cui estremi ricadono nell'intervallo $[300 mV ; 750mV]$ e scegliere quello il cui il \emph{fit} approssima meglio la funzione. All'atto pratico, abbiamo considerato l'intervallo il cui \emph{fit} ha il coefficiente di determinazione $R^2$ più alto, che è risultato essere sempre maggiore di $0.999$. Di seguito vengono riportati i dati estratti: i valori di ${V_{th}}$ nelle tabelle \ref{tab:VthELRN} (NMOS) e \ref{tab:VthELRP} (PMOS), i valori di $\Delta V_{th}$ nelle tabelle \ref{tab:deltaVthELRN} (NMOS) e \ref{tab:deltaVthELRP} (PMOS) e in figura \ref{fig:deltaVthELR}.  
 
 \clearpage
 
@@ -491,7 +491,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
       \bottomrule
     \end{tabular}%
   }
-  \caption[$V_{th}$ dei dispositivi NMOS estratte con ELR]{$V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
+  \caption[$V_{th}$ dei dispositivi NMOS estratte con ELR]{$V_{th}$ dei dispositivi NMOS estratte con ELR}
   \label{tab:VthELRN}
 \end{table}
 
@@ -524,7 +524,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
       \bottomrule
     \end{tabular}%
   }
-  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con ELR]{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{ELR}}
+  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con ELR]{$\Delta V_{th}$ dei dispositivi NMOS estratte con ELR}
   \label{tab:deltaVthELRN}
 \end{table}
 
@@ -557,7 +557,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
       \bottomrule
     \end{tabular}%
   }
-  \caption[$|V_{th}|$ dei dispositivi PMOS estratte con ELR]{$|V_{th}|$ dei dispositivi PMOS estratte con \emph{ELR}}
+  \caption[$|V_{th}|$ dei dispositivi PMOS estratte con ELR]{$|V_{th}|$ dei dispositivi PMOS estratte con ELR}
   \label{tab:VthELRP}
 \end{table}
 
@@ -591,7 +591,7 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
       \bottomrule
     \end{tabular}%
   }
-  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con ELR]{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{ELR}}
+  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con ELR]{$\Delta V_{th}$ dei dispositivi PMOS estratte con ELR}
   \label{tab:deltaVthELRP}
 \end{table}
 
@@ -611,16 +611,16 @@ Nonostante ciò, per il nostro studio questo metodo potrebbe risultare efficace,
   % W = 600
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/ELR/sovrapposizione-deltaVth-FIT-N600}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/ELR/sovrapposizione-deltaVth-FIT-P600}
-  \caption[Dati $\Delta V_{th}$ estratti con ELR]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{ELR} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
+  \caption[Dati $\Delta V_{th}$ estratti con ELR]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con ELR in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
   \label{fig:deltaVthELR}
 \end{figure}
 
 \FloatBarrier
 
-\subsection[RM]{Ratio Method}
-Il \emph{Ratio Method, RM} è stato sviluppato per far fronte alle problematicità dell'\emph{ELR}: è stato infatti dimostrato che questo metodo non è influenzato dalla degradazione della mobilità dei portatori di carica né dalle resistenze parassite \cite{art2}. Questo metodo si basa sull'assunzione che, a bassi valori di tensione di \emph{drain} $V_{DS}$, il rapporto tra la corrente di \emph{drain} $I_D$ e la radice quadrata della transconduttanza $g_m$ ($\frac{I_D}{\sqrt{g_m}}$) in funzione della tensione di \emph{gate} $V_{GS}$ si comporti come una funzione lineare. La tensione di soglia $V_{th}$ coincide con il valore della tensione $V_{GS}$ a cui il fit lineare della funzione interseca l'asse delle ascisse (figura \ref{fig:FIT_RM}).\\
-Anche in questo caso, per ottenere il fit lineare più accurato possibile è stato usato lo stesso metodo esposto per l'\emph{ELR}.
-A seguire vengono riportati i valori estratti della $V_{th}$ e della $\Delta V_{th}$, nello specifico NMOS: tabelle \ref{tab:VthRMN} e \ref{tab:deltaVthRMN}, PMOS: tabelle \ref{tab:VthRMP} e \ref{tab:deltaVthRMP}. In figura \ref{fig:DeltaVthRM} vengono mostrati gli andamenti della $\Delta V_{th}$. 
+\subsection[RM]{\emph{Ratio Method}}
+Il \emph{Ratio Method} (RM) è stato sviluppato per far fronte alle problematicità di ELR: è stato infatti dimostrato che questo metodo non è influenzato dalla degradazione della mobilità dei portatori di carica né dalle resistenze parassite \cite{art2}. Questo metodo si basa sull'assunzione che, a bassi valori di tensione di \emph{drain} $V_{DS}$, il rapporto tra la corrente di \emph{drain} $I_D$ e la radice quadrata della transconduttanza $g_m$ ($\frac{I_D}{\sqrt{g_m}}$) in funzione della tensione di \emph{gate} $V_{GS}$ si comporti come una funzione lineare. La tensione di soglia $V_{th}$ coincide con il valore della tensione $V_{GS}$ a cui il \emph{fit} lineare della funzione interseca l'asse delle ascisse (figura \ref{fig:FIT_RM}).\\
+Anche in questo caso, per ottenere il \emph{fit} lineare più accurato possibile è stato usato lo stesso metodo esposto per l'ELR.
+Di seguito vengono riportati i dati estratti: i valori di ${V_{th}}$ nelle tabelle \ref{tab:VthRMN} (NMOS) e \ref{tab:VthRMP} (PMOS), i valori di $\Delta V_{th}$ nelle tabelle \ref{tab:deltaVthRMN} (NMOS) e \ref{tab:deltaVthRMP} (PMOS) e in figura \ref{fig:deltaVthRM}.  
 
 \vspace{1.5cm}
 
@@ -628,7 +628,7 @@ A seguire vengono riportati i valori estratti della $V_{th}$ e della $\Delta V_{
   \centering
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/RM/RM-N4-100-30}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/RM/RM-P1-100-30}
-  \caption[Applicazione RM]{Fit lineare della caratteristica $\frac{I_D}{\sqrt{g_m}}-V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030.}
+  \caption[Applicazione RM]{\emph{Fit} lineare della caratteristica $\frac{I_D}{\sqrt{g_m}}-V_{GS}$ a $V_{DS}=150mV$ di un NMOS e di un PMOS di dimensioni 100-0.030.}
   \label{fig:FIT_RM}
 \end{figure}
 
@@ -663,7 +663,7 @@ A seguire vengono riportati i valori estratti della $V_{th}$ e della $\Delta V_{
       \bottomrule
     \end{tabular}%
   }
-  \caption[$V_{th}$ dei dispositivi NMOS estratte con RM]{$V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
+  \caption[$V_{th}$ dei dispositivi NMOS estratte con RM]{$V_{th}$ dei dispositivi NMOS estratte con RM}
   \label{tab:VthRMN}
 \end{table}
 
@@ -696,7 +696,7 @@ A seguire vengono riportati i valori estratti della $V_{th}$ e della $\Delta V_{
       \bottomrule
     \end{tabular}%
   }
-  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con RM]{$\Delta V_{th}$ dei dispositivi NMOS estratte con \emph{RM}}
+  \caption[$\Delta V_{th}$ dei dispositivi NMOS estratte con RM]{$\Delta V_{th}$ dei dispositivi NMOS estratte con RM}
   \label{tab:deltaVthRMN}
 \end{table}
 
@@ -730,7 +730,7 @@ A seguire vengono riportati i valori estratti della $V_{th}$ e della $\Delta V_{
       \bottomrule
     \end{tabular}%
   }
-  \caption[$|V_{th}|$ dei dispositivi PMOS estratte con RM]{$|V_{th}|$ dei dispositivi PMOS estratte con \emph{RM}}
+  \caption[$|V_{th}|$ dei dispositivi PMOS estratte con RM]{$|V_{th}|$ dei dispositivi PMOS estratte con RM}
   \label{tab:VthRMP}
 \end{table}
 
@@ -763,7 +763,7 @@ A seguire vengono riportati i valori estratti della $V_{th}$ e della $\Delta V_{
       \bottomrule
     \end{tabular}%
   }
-  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con RM]{$\Delta V_{th}$ dei dispositivi PMOS estratte con \emph{RM}}
+  \caption[$\Delta V_{th}$ dei dispositivi PMOS estratte con RM]{$\Delta V_{th}$ dei dispositivi PMOS estratte con RM}
   \label{tab:deltaVthRMP}
 \end{table}
 
@@ -782,21 +782,21 @@ A seguire vengono riportati i valori estratti della $V_{th}$ e della $\Delta V_{
   % W = 600
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/RM/sovrapposizione-deltaVth-RM-N600}
   \includegraphics[width=0.49\textwidth]{./capitolo2/VTH/RM/sovrapposizione-deltaVth-RM-P600}
-  \caption[Dati $\Delta V_{th}$ estratti con RM]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con \emph{RM} in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
+  \caption[Dati $\Delta V_{th}$ estratti con RM]{Variazioni di $V_{th}$ dei dispositivi NMOS (a sinistra) PMOS (a destra) estratte con RM in funzione della dose assorbita. Ogni figura si riferisce a una larghezza di canale W differente.}
   \label{fig:DeltaVthRM}
 \end{figure}
 
 \FloatBarrier
 
 \subsection{Riepilogo}
-Per concludere questa sezione si vogliono osservare gli andamenti delle curve della variazione della tensione di soglia $V_{th}$ al variare della dose, con l'obiettivo di far incontrare la teoria, trattata alla sezione \ref{cap1:ionizzazione}, e dati sperimentali.
-In particolare si è scelto di fare questa analisi sul dispositivo a larghezza $W = 100 \mu m$ e a lunghezza $L = 30 nm$ sia per il transistore MOSFET a canale N che a canale P. 
+Per concludere questa sezione si vogliono osservare gli andamenti delle curve della variazione della tensione di soglia $V_{th}$ al variare della dose, con l'obiettivo di far incontrare la teoria, trattata alla sezione \ref{cap1:ionizzazione}, e i dati sperimentali.
+In particolare, si è scelto di svolgere questa analisi sul dispositivo di larghezza $W = 100 \mu m$ e di lunghezza $L = 30 nm$ sia per il transistore MOSFET a canale N sia per quello a canale P. 
 
-Mettendo a confronto tutti i metodi utilizzati nelle sezioni precedenti si trovano offset sugli andamenti anche superiori a $200mV$, figura \ref{fig:confronto_metodi_VTH}, che, però, non rappresentano un problema, poiché l'obiettivo è osservare la variazione della tensione di soglia. Nella figura \ref{fig:confronto_metodi_Delta_VTH} vengono mostrate le curve $\Delta V_{th}$. È da notare come la maggior parte dei metodi segue lo stesso andamento sia per i transistori MOSFET a canale N sia per quelli a canale P.
+Mettendo a confronto tutti i metodi utilizzati nelle sezioni precedenti si trovano differenze tra gli andamenti di $V_{th}$ calcolati con i diversi metodi anche superiori a $200mV$ (figura \ref{fig:confronto_metodi_VTH}). Questo, però, non rappresenta un problema, poiché l'obiettivo è osservare l'andamento della variazione della tensione di soglia. Nella figura \ref{fig:confronto_metodi_Delta_VTH} vengono mostrate le curve $\Delta V_{th}$. È da notare come la maggior parte dei metodi segue lo stesso andamento sia per i transistori MOSFET a canale N sia per quelli a canale P.
 
-\paragraph*{MOSFET a canale N} Osservando il grafico \ref{fig:confronto_metodi_Delta_VTH_NMOS} si ha che per dosi superiori a $50 Mrad$ \textit{ERL, SDLM} e \textit{TCM} sono molto simili (differenze poco superiori ai $5mV$) mentre per dosi inferiori \textit{SDLM} si distingue dalle altre due. Prendendo come riferimento queste curve, inizialmente si ha un decremento della $V_{th}$, dovuto all'accumulo di cariche positive nell'ossido; a $100Mrad$ di \emph{TID} si ha un aumento significativo della tensione di soglia (circa $20mV$), che può essere spiegato dall'intrappolamento di cariche negative da parte delle trappole all'interfaccia. Infine, per dosi superiori a $100Mrad$ si osserva un decremento della $V_{th}$ a cui non si è riusciti a trovare una spiegazione. 
+\paragraph*{MOSFET a canale N} Il grafico \ref{fig:confronto_metodi_Delta_VTH_NMOS} mostra che per dosi superiori a $50 Mrad$ \textit{ELR, SDLM} e \textit{TCM} sono molto simili (le differenze presenti sono al massimo poco superiori a $5mV$) mentre per dosi inferiori \textit{SDLM} si distingue dalle altre due. Prendendo come riferimento queste curve, inizialmente si ha un decremento della $V_{th}$ dovuto all'accumulo di cariche positive nell'ossido; a $100Mrad$ di \emph{TID} si ha un aumento significativo della tensione di soglia (di circa $20mV$), che può essere spiegato dall'intrappolamento di cariche negative da parte delle trappole all'interfaccia. Infine, per dosi superiori a $100Mrad$ e in seguito all\emph{annealing} si osserva un decremento della $V_{th}$ a cui non si è riusciti a trovare una spiegazione. 
 
-\paragraph*{MOSFET a canale P} Per quanto riguarda i PMOS, grafico \ref{fig:confronto_metodi_Delta_VTH_PMOS}, si osserva che \textit{ERL, SDLM} e \textit{TCM} hanno andamenti quasi sovrapposti che mostrano lo stesso comportamento del modulo della tensione di soglia\footnote{Il calcolo della variazione della tensione di soglia nei PMOS è $\Delta V_{th} = |V_{th,post}| - |V_{th,pre}|$}, che aumenta sempre all'aumentare della dose. Questo fenomeno è giustificato dall'accumulo di cariche positive intrappolate sia nell'ossido che nella giunzione $Si/SiO_2$. A seguito della procedura di annealing si può osservare un recupero importante, di circa $20mV$.
+\paragraph*{MOSFET a canale P} Il grafico \ref{fig:confronto_metodi_Delta_VTH_PMOS} mostra che \textit{ELR, SDLM} e \textit{TCM} sono quasi sovrapposti, in quanto sono caratterizzati dallo stesso comportamento del modulo della tensione di soglia\footnote{Il calcolo della variazione della tensione di soglia nei PMOS è $\Delta V_{th} = |V_{th,post}| - |V_{th,pre}|$}, che aumenta sempre all'aumentare della dose. Questo fenomeno è giustificato dall'accumulo di cariche positive intrappolate sia nell'ossido che nella giunzione $Si/SiO_2$. A seguito del processo di \emph{annealing} si può osservare un recupero importante, di circa $20mV$.
 
 \begin{figure}[ht]
 

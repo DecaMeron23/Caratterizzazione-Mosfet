@@ -1,18 +1,17 @@
-Il guadagno intrinseco ($A_{vi}$) è definito come il massimo guadagno ottenibile da un MOSFET, polarizzato da un generatore di corrente ideale.
-Fornisce una misura di quanto un MOSFET possa amplificare senza essere influenzato da elementi esterni.
+Il guadagno intrinseco $A_{vi}$ è definito come il massimo guadagno ottenibile da un MOSFET polarizzato da un generatore di corrente ideale.
+Tale parametro fornisce una misura di quanto un MOSFET può amplificare senza essere influenzato da elementi esterni.
 Esso viene calcolato come:
 
 \begin{equation}
     A_{vi} = g_{m} \cdot r_0 = \frac{g_{m}}{g_{ds}}
 \end{equation}
-
-Con $g_m$ la transconduttanza e $r_0$ la resistenza in uscita dal transistor (${1}/{g_{ds}}$). Spesso, il grafico di $A_{vi}$, viene mostrato in funzione del coefficiente di inversione ($I_{C0}$), parametro utile per descrivere il grado di inversione del canale (debole: per valori inferiori a $0.1$, moderata: tra $0.1$ e $10$, forte: superiori a $10$) il quale si può ricavare dalla $I_D$ ad alte $V_{DS}$:
+Dove  $g_m$ è la transconduttanza e $r_0 = \frac{1}{g_{ds}}$ è la resistenza in uscita dal transistor. Spesso, il grafico di $A_{vi}$ viene mostrato in funzione del coefficiente di inversione $I_{C0}$, che è un parametro utile per descrivere il grado di inversione del canale: debole per valori inferiori a $0.1$, moderata per valori compresi tra $0.1$ e $10$, forte per valori superiori a $10$. Per alti valori di $V_{DS}$, $I_{C0}$ può essere ricavato dalla $I_D$:
 
 \begin{equation}
     I_{C0} = \frac{I_{D}}{{I_{Z}}^{*}} \cdot \frac{L}{W}
 \end{equation}
 
-La corrente caratteristica (${I_{Z}}^{*}$) è stata misurata pre-irraggiamento. I valori sono riportati nella tabella \ref{tab:corrente_caratteristica}.
+La corrente caratteristica ${I_{Z}}^{*}$ è stata misurata pre-irraggiamento. I valori sono riportati nella tabella \ref{tab:corrente_caratteristica}.
 
 \begin{table}[ht]
     \centering
@@ -29,7 +28,7 @@ La corrente caratteristica (${I_{Z}}^{*}$) è stata misurata pre-irraggiamento. 
 \end{table}
 
 
-A figura \ref{fig:variazione_guadagnoIntrinseco} vengono mostrati i grafici $A_{vi}$ - $I_{C0}$, raggruppati per larghezza di canale, prima e dopo l'irraggiamento a $3Grad$, per transistori MOSFET a canale N e P.
+A figura \ref{fig:variazione_guadagnoIntrinseco} vengono mostrati i grafici $A_{vi}$ - $I_{C0}$ dei transistori MOSFET a canale N e P raggruppati per larghezza di canale, prima di essere irraggiati e dopo l'irraggiamento a $3Grad$, 
 % Mentre nei NMOS si nota un innalzamento significativo della curva $A_{vi}$ - $I_{C0}$, soprattutto per lunghezze di canale più grandi. Questo non sembra verificarsi per i PMOS, infatti, l'offset della curva è leggermente negativo rispetto ai rispettivi grafici pre-irraggiamento. Effetto più visibile per le lunghezze di canale più grandi.
 % \todo[inlinepar]{Dare una spiegazione a questo effetto(?)}  
 
@@ -48,6 +47,6 @@ A figura \ref{fig:variazione_guadagnoIntrinseco} vengono mostrati i grafici $A_{
     \includegraphics[width=0.49\textwidth]{./capitolo2/Guadagno_Intrinseco/variazione_guadagno/guadagnoIntrinsecoW600N4.png}
     \includegraphics[width=0.49\textwidth]{./capitolo2/Guadagno_Intrinseco/variazione_guadagno/guadagnoIntrinsecoW600P1.png}
 
-    \caption[Variazione del guadagno intrinseco pre e pos irraggiamento]{Variazioni del guadagno intrinseco per NMOS, a sinistra, e PMOS a destra prima e dopo una dose di $3Grad$.}
+    \caption[Variazione del guadagno intrinseco pre e post irraggiamento]{Variazioni del guadagno intrinseco per NMOS, a sinistra, e PMOS a destra prima di essere stati irraggiati e dopo aver subito una dose irraggiamento di $3Grad$.}
     \label{fig:variazione_guadagnoIntrinseco}
 \end{figure}
