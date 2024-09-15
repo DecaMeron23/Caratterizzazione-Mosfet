@@ -13,7 +13,7 @@ Nel caso in cui il MOSFET si trovi nella regione di saturazione si ottiene la se
 
 
 \subsection{Calcolo della transconduttanza}
-Calcolare al derivata di dati discontinui porta sempre, o quasi, ad ottenere delle curve spezzate, dalle quali è difficile trarre informazioni utili.
+Calcolare la derivata di dati discontinui porta sempre, o quasi, ad ottenere delle curve spezzate, dalle quali è difficile trarre informazioni utili.
 Questo è stato il caso per la transconduttanza; la figura \ref{fig:gm_smooth:no_smooth} (curva di sinistra) rappresenta la $g_m$ di un transistore  MOSFET a canale N con $ W = 100\mu m$ e $L = 30 nm$ senza eseguire nessun tipo di \emph{smooth}: per alte $V_{GS}$ il difetto è molto marcato. Per ridurre questo effetto, oltre ad applicare alla fine uno \emph{smooth} di ampiezza $5$, sono state calcolate due transconduttanze: la prima (${g_m}^{\prime}$) è stata estratta normalmente, mentre per la seconda (${g_m}^{\prime \prime}$) si è calcolato il rapporto incrementale tra $I_D$ e ${V_{GS}}^*$, ovvero la tensione \emph{gate}-\emph{source} traslata di una posizione, duplicando il primo valore ed eliminando l'ultimo. In seguito la transconduttanza è stata ricavata eseguendo la media tra i singoli valori di ${g_m}^\prime \text{ e } {g_m}^{\prime \prime}$:
 
 \begin{equation}
@@ -65,7 +65,7 @@ Un parametro utile per lo studio dell'influenza delle radiazioni ionizzanti sull
     {\%} \Delta {g_m}  = \frac{{g_m}_{post} - {g_m}_{pre}}{{g_m}_{pre}}\cdot 100
     \label{eq:delta_gm}
 \end{equation}
-Con ${g_m}_{post}$ si intende il massimo valore della transconduttanza ottenuta ad un determinato \emph{step} di irraggiamento, mentre ${g_m}_{pre}$ è il valore massimo della transconduttanza calcolata pre irraggiamento. I dati estratti\footnote{La $V_{DS}$ da cui è stata estratta la transconduttanza è di $0.9V$, nel caso di NMOS, mentre per PMOS $-0.9V$.} sono riportati a tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}.
+con ${g_m}_{post}$ si intende il massimo valore della transconduttanza ottenuta ad un determinato \emph{step} di irraggiamento, mentre ${g_m}_{pre}$ è il valore massimo della transconduttanza calcolata pre irraggiamento. I dati estratti\footnote{La $V_{DS}$ da cui è stata estratta la transconduttanza è di $0.9V$, nel caso di NMOS, mentre per PMOS $-0.9V$.} sono riportati a tabelle \ref{tab:deltaGm_N} e \ref{tab:deltaGm_P} e figura \ref{fig:delta_gm}.
 
 Analizzando i dati, risulta evidente che le radiazioni hanno un effetto negativo sulla transconduttanza, causandone una notevole riduzione. Osservando l'espressione della transconduttanza (equazione \ref{eq:gm}) si possono determinare due possibili cause per questo fenomeno. Infatti, la $g_m$ è dipendente sia dalla mobilità dei portatori $\mu$ sia dalla tensione di soglia $V_{th}$, entrambe influenzate dalle radiazioni ionizzanti. Dunque, la riduzione della $g_m$ può essere causata dalla variazione di entrambi i fattori nel seguente modo. Da una parte all'aumentare della \textit{TID}, infatti, si riduce la mobilità dei portatori e, di conseguenza, anche la transconduttanza. Dall'altra parte, invece, come messo in luce nella sezione \ref{cap2:vth}, la tensione di soglia dei dispositivi aumenta al crescere della \textit{TID} e, perciò, il fattore $V_{GS}-V_{th}$ della formula \ref{eq:gm} diminuisce, determinando una riduzione della $g_m$.
 
