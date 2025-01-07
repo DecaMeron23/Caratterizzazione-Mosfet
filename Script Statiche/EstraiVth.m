@@ -5,7 +5,7 @@ function EstraiVth
     directory = dir;
     file = {directory.name};
     
-    if ~(exist("tabelle" , "dir"))
+    if ~(exist("tabelle","dir"))
         mkdir tabelle
     end
     vth_file = {};

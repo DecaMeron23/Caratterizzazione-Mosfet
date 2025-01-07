@@ -3,7 +3,7 @@ classdef EstrazioneDati
     methods (Static)
     
         function [vgs , id , vds] = estrazione_dati_vgs(file , type)
-        % Funzione che estrae i dati da file, in input si da il nome del file e il
+        % Funzione che estrae i dati da file, in input si dà il nome del file e il
         % tipo di dispositivo es: 'P'
         % in output restituisce la prima colonna del file,che consideriamo "vgs", se il dispositivo è P restituisce
         % "Vsg" (Vs = 0.9V), come secondo output restituisce una matrice id, con le

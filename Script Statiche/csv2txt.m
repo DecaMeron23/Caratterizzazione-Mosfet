@@ -36,13 +36,15 @@ function csv2txt(file)
     
     [ ~ , nome_cartella  , ~]  = fileparts(pwd);
      
-    if nome_cartella(1) == 'P'
-        vg  = flipud(0.9 - vg);
+    if nome_cartella(1) == 'N'
+        vgs = vg;
+    elseif nome_cartella(1) == 'P'
+        vgs  = flipud(0.9 - vg);
     end
 
     % creaiamo i nomi delle diverse colonne
     name_table = "v" + type_file;
-    for vg_i = vg'
+    for vg_i = vgs'
         if type_file == 'g'
             name_table = [name_table ,"id_vd = " + vg_i+ "V" ,  "ig_vd = " + vg_i+ "V" , "is_vd = " + vg_i+ "V" ,"iavdd_vd = " + vg_i+ "V" , "ignd_vd = " + vg_i+ "V"];
         elseif type_file == 'd'

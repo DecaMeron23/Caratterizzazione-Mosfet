@@ -1,4 +1,4 @@
-function plot_gm(file ,nomeCartella , dati)
+function plot_gm(file, nomeCartella , dati)
     %% Estraiamo i dati
      
     type = nomeCartella(1);
