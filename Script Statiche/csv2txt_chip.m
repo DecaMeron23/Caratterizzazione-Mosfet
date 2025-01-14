@@ -21,7 +21,7 @@ function csv2txt_chip(path)
         if temp.isdir == 1
             nameFolder = temp.name;
             % escludiamo la cartella plot
-            if(contains(nameFolder , "P1") || contains(nameFolder , "N4"))
+            if(contains(nameFolder , "P") || contains(nameFolder , "N"))
                 folders{end+ 1} = nameFolder;
             end        
         end
@@ -137,18 +137,18 @@ function csv2txt_chip(path)
         DatiVg{2} = id;
         DatiVg{3} = vds;
 
-        % plot_id_vds(fileVd , nomeCartella , DatiVd);
-        % plot_id_vgs(fileVg , nomeCartella , DatiVg);
-        % plot_id_vgs_semilog(fileVg , nomeCartella , DatiVg); 
+        plot_id_vds(fileVd , nomeCartella , DatiVd);
+        plot_id_vgs(fileVg , nomeCartella , DatiVg);
+        plot_id_vgs_semilog(fileVg , nomeCartella , DatiVg); 
         plot_gm(fileVg , nomeCartella , DatiVg);
-        % plot_gds(fileVd , nomeCartella , DatiVd);
-        % plot_gm_id_w_l(fileVg , nomeCartella , DatiVg);
+        plot_gds(fileVd , nomeCartella , DatiVd);
+        plot_gm_id_w_l(fileVg , nomeCartella , DatiVg);
 
-        % if exist(fileVg2 , "file")
-        %     plot_id_vgs(fileVg2 , nomeCartella);
-        %     plot_id_vgs_semilog(fileVg2 , nomeCartella); 
-        %     plot_gm(fileVg2 , nomeCartella);
-        % end
+        if exist(fileVg2 , "file")
+            plot_id_vgs(fileVg2 , nomeCartella);
+            plot_id_vgs_semilog(fileVg2 , nomeCartella); 
+            plot_gm(fileVg2 , nomeCartella);
+        end
         if(~contains(cartella_attuale , "P1-100-180-nf"))
             [mod_jg(: , i) , vgs_jg(: , i)] = EstrazioneDati.estrazione_dati_jg_vgs(fileVg , type , cartella_attuale);
             legendaIg{end+1} = cartella_attuale;
