@@ -1,63 +1,67 @@
 %% Posizionarsi nella cartella che contiene tutti i dispositivi ad una certa
 %% quantità di radiazioni
 
+tic;
 % trovo la directory in cui ci troviamo
 directory = dir();
 % Lista dei file nella cartella
 lista_dispositivi = {directory.name};
-% verifichiamo se ci sono dei file nella cartella ( . e .. esclusi)
-if length(lista_dispositivi) <= 2
-    error("Cartella dei dispositivi vuota...")
+% tolgo dalla lista dei dispositivi . .. e, se esiste, rumore_finale
+lista_dispositivi(1:2) = [];
+if exist("rumore_finale","dir")
+    lista_dispositivi(end) = [];
 end
+% verifichiamo se ci sono dei file nella cartella
+if isempty(lista_dispositivi)
+    error("Cartella del livello di irraggiamento è vuota...")
+else
 
-%scorro tutte i dispositivi
-for i = 1:length(lista_dispositivi)
-    dispositivo = char(lista_dispositivi(i));
-    if strcmp(dispositivo(1), 'N') || strcmp(dispositivo(1), 'P') %considero solo le cartelle dei dispositivi
+    %scorro tutte i dispositivi
+    for i = 1:length(lista_dispositivi)
+        dispositivo = char(lista_dispositivi(i));
+        disp("["+i +"/" + length(lista_dispositivi) +"]"+ "Inizio dispositivo: " + dispositivo);
         cd(dispositivo);
         directory = dir();
+        directory([directory.isdir] == 0) = [];
         lista_correnti = {directory.name};
-        if length(lista_correnti) <= 2
-            error("Cartella delle correnti vuota...")
-        end
-
+        lista_correnti(1:2) = [];
+    
         %scorro tutte le correnti all'interno di un dispositivo
         for j = 1:length(lista_correnti)
             corrente = char(lista_correnti(j));
-            if length(corrente) >= 2 && strcmp(corrente(end-1:end), 'uA') %considero solo le cartelle delle correnti
-                cd(corrente)
-                directory = dir();
-                lista_misurazioni = {directory.name};
-                if length(lista_correnti) <= 2
-                    error("Cartella delle misurazioni vuota...")
-                end
+            disp("      > " + corrente + "...");
+            cd(corrente)
+            directory = dir();
+            lista_misure = {directory.name};
+            lista_misure(1:2) = [];
 
-                noise = '';
-                fondo = '';
-                fdt = '';
-                
-                %scorro tutti i file di una corrente, scovando noise, fondo
-                %e fdt. Poi ne faccio l'analisi
-                for k = 1:length(lista_misurazioni)
-                    misurazione = char(lista_misurazioni(k));
-                    if length(misurazione) >= 8 %se il nome del file è piu' corto di otto caratteri non posso fare la successive comparazioni
-                        if strcmp(misurazione(1:8), 'noise_P1') || strcmp(misurazione(1:8), 'noise_N4')
-                            noise  = misurazione;
-                        elseif strcmp(misurazione(1:8), 'fondo_P1') || strcmp(misurazione(1:8), 'fondo_N4')
-                            fondo  = misurazione;
-                        elseif strcmp(misurazione(1:6), 'fdt_P1') || strcmp(misurazione(1:6), 'fdt_N4')
-                            fdt  = misurazione;
-                        end
-                    end
-                    if ~strcmp(noise, '') && ~strcmp(fondo, '') && ~strcmp(fdt, '')
-                        Analisi_rumore(fondo, noise, fdt);
+            noise = '';
+            fondo = '';
+            fdt = '';
+            
+            %scorro tutti i file di una corrente, scovando noise, fondo
+            %e fdt. Poi ne faccio l'analisi
+            for k = 1:length(lista_misure)
+                misura = char(lista_misure(k));
+                if length(misura) >= 7 %se il nome del file è piu' corto di otto caratteri non posso fare la successive comparazioni
+                    if strcmp(misura(1:7), 'noise_N') || strcmp(misura(1:7), 'noise_P')
+                        noise  = misura;
+                    elseif strcmp(misura(1:7), 'fondo_P') || strcmp(misura(1:7), 'fondo_N')
+                        fondo  = misura;
+                    elseif strcmp(misura(1:5), 'fdt_P') || strcmp(misura(1:5), 'fdt_N')
+                        fdt  = misura;
                     end
                 end
-
-                cd ..;
+                if ~strcmp(noise, '') && ~strcmp(fondo, '') && ~strcmp(fdt, '')
+                    Analisi_rumore(fondo, noise, fdt);
+                end
             end
-        end
 
+            cd ..;
+        end
+    
         cd ..;
+        disp("["+i +"/" + length(lista_dispositivi) +"]"+ "Fine dispositivo: " + dispositivo);
     end
 end
+disp("Tempo Trascorso: " + toc + "s");

@@ -1,5 +1,5 @@
 function Analisi_rumore(fondo,noise,fdt)
-    nome_misurazione = fondo(6:end);
+    nome_misurazione = noise(6:end);
     cartella_misurazione = string(unique({dir().folder}));
 
     if strcmp(fondo(16), '_')
@@ -16,14 +16,13 @@ function Analisi_rumore(fondo,noise,fdt)
     ris = zeros(altezza,2);
     ris(:,1) = noise(:,1);
     for i = 1 : altezza
-        r = sqrt((sqrt(noise(i,2)^2 - fondo(i,2)^2)/10^(fdt(i,2)/20))^2 -const)*1E9;
-        if imag(r) ~= 0
-            r = "";
+        ris(i,2) = sqrt((sqrt(noise(i,2)^2 - fondo(i,2)^2)/10^(fdt(i,2)/20))^2 -const)*1E9;
+        if imag(ris(i,2)) ~= 0
+            ris(i,2) = "";
         end
-        ris(i,2) = r;
     end
 
-    %%salvo il documento
+    %salvo il documento
     if ~exist(cartella_finale , "dir")
             mkdir(cartella_finale);  
     end
