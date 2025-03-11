@@ -9,17 +9,6 @@ function Calcolo_Vth()
     % abilitare i plot di verifica (si = 1, no = 0)  
     PLOT_ON = 1;
     
-    % % indichiamo se il dispositivo è pre irraggiamento
-    % preIrraggiamento = 0;
-    % 
-    % if preIrraggiamento == 1
-    %     SPAN = 20;
-    %     GRADO = 6;
-    % elseif preIrraggiamento == 0
-    %     SPAN = 5;
-    %     GRADO = 6;
-    % end
-
     SPAN = 5;
     GRADO = 6;
     

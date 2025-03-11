@@ -130,7 +130,7 @@ classdef Vth
 
             coefficenti = modello.Coefficients.Estimate;
 
-            vth = round(-coefficenti(1) / coefficenti(2),1);
+            vth = -coefficenti(1) / coefficenti(2);
 
             x_new = [vth-0.2 , 0.9];
             y_fit = predict(modello , x_new');

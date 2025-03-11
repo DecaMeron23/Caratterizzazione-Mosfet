@@ -8,7 +8,6 @@ function csv2txt_chip(path)
 
     tic;
     cd(path);
-    
     % disabilitiamo i plot
     set(0,'DefaultFigureVisible','off');
     %disabilitiamo i warnign
@@ -21,145 +20,111 @@ function csv2txt_chip(path)
         if temp.isdir == 1
             nameFolder = temp.name;
             % escludiamo la cartella plot
-            if(contains(nameFolder , "P") || contains(nameFolder , "N"))
+            if((contains(nameFolder , "P") || contains(nameFolder , "N")) && contains(nameFolder , "-"))
                 folders{end+ 1} = nameFolder;
             end        
         end
     end
-    clear j directory temp nameFolder folder_iesima
 
-    %% per ogni cartella prendiamo il file .csv e lo trasfotmiamo in txt
-    type = char(folders(1));
-    type = type(1);
+    % per ogni cartella prendiamo il file .csv e lo trasfotmiamo in txt
+    canale_dispositivo = char(folders(1));
+    canale_dispositivo = canale_dispositivo(1);
 
-
+    % Legenda per il plot di I_g
     legendaIg = {};
 
+    % Scorriamo tutti i dispositivi
     for i = 1:length(folders)
-        
+        close all
+
+        % estraiamo la cartella attuale
         cartella_attuale = char(folders(i));
          
         disp("["+i +"/" + length(folders) +"]"+ "Inizio cartella: " + cartella_attuale);
-        %entriamo nella cartella
+        % entriamo nella cartella
         cd(cartella_attuale);
-
-        % cerchiamo i file da convertire
-        % if(exist("id_vds.csv", "file"))
-        %     file_vds = "id_vds.csv";
-        % elseif(exist("id-vds.csv", "file"))
-            file_vds = "id-vds.csv";
-        % else 
-        %     error('Non è stato trovate nessun file nominato "id_vds.csv" o "id-vds.csv"');
-        % end
-
-        % if(exist("id_vgs.csv", "file"))
-        %     file_vgs = "id_vgs.csv";
-        % elseif(exist("id-vgs.csv", "file"))
-            file_vgs = "id-vgs.csv";
-        % else 
-        %     error('Non è stato trovate nessun file nominato "id_vgs.csv" o "id-vgs.csv"');
-        % end
         
-        % if (exist("id_vgs_2.csv", "file"))
-        %     file_vgs2 = "id_vgs_2.csv";
-        % elseif (exist("id-vgs_2.csv", "file")) 
-        %     file_vgs2 = "id-vgs_2.csv";
-        % elseif (exist("id-vgs-2.csv", "file")) 
-           file_vgs2 = "id-vgs-2.csv";
-        % elseif (exist("id_vgs-2.csv", "file")) 
-        %     file_vgs2 = "id_vgs-2.csv";
-        % else 
-        %     error('Non è stato trovate nessun file nominato "id_vgs_2.csv" o "id-vgs_2.csv" o "id-vgs-2.csv" o "id_vgs-2.csv"');
-        % end
+        % definiamo i nomi dei file
+        file_vds_csv = "id-vds.csv";
+        file_vgs_csv = "id-vgs.csv";
+        file_vgs2_csv = "id-vgs_2.csv";
+        
+        % Se sono stati nominati in modo sbagliato li rinominiamo
+        cambia_nome(file_vds_csv , "id_vds.csv");
+        cambia_nome(file_vgs_csv , "id_vgs.csv");
+
+        cambia_nome(file_vgs2_csv, "id_vgs_2.csv");
+        cambia_nome(file_vgs2_csv, "id-vgs-2.csv");
+        cambia_nome(file_vgs2_csv, "id_vgs-2.csv");
+
+        %verifichiamo se esistono i file
+        verifica_file(file_vds_csv);
+        verifica_file(file_vgs_csv);
+        verifica_file(file_vgs2_csv);
 
         % convertiamo il file in txt
-        csv2txt(file_vds);
-        csv2txt(file_vgs);
-        csv2txt(file_vgs2);
+        csv2txt(file_vds_csv);
+        csv2txt(file_vgs_csv);
+        csv2txt(file_vgs2_csv);
     
-        %% creaiamo le cartelle necessarie
-        
+        % creaiamo le cartelle necessarie
         cartella_plot = "plot";
-        if(~exist(cartella_plot , "file"))
-            mkdir(cartella_plot);
-        end
+        mkdir(cartella_plot + "/eps");
+        mkdir(cartella_plot + "/png");
 
-        cd plot\
-        
-        if(~exist("eps" , "file"))
-            mkdir eps;
-        end
-
-        if(~exist("png" , "file"))
-            mkdir png;
-        end
-
-        cd ..
-
-        %% salviamo i plot
+        % Creaiamo e salviamo i plot
         [~, nomeCartella, ~] = fileparts(pwd);
 
-        % if(exist("id_vds.txt", "file"))
-        %     fileVd = "id_vds.txt";
-        % elseif(exist("id-vds.txt", "file"))
-            fileVd = "id-vds.txt";
-        % else 
-        %     error('Non è stato trovate nessun file nominato "id_vds.txt" o "id-vds.txt"');
-        % end
+        % Definiamo i nomi dei file csv
+        file_vds_txt = "id-vds.txt";
+        file_vgs_txt = "id-vgs.txt";
+        file_vgs2_txt = "id-vgs-2.txt";
 
-        % if(exist("id_vgs.txt", "file"))
-        %     fileVg = "id_vgs.txt";
-        % elseif(exist("id-vgs.txt", "file"))
-            fileVg = "id-vgs.txt";
-        % else 
-        %     error('Non è stato trovate nessun file nominato "id_vgs.txt" o "id-vgs.txt"');
-        % end
-        
-        % if (exist("id_vgs_2.txt", "file"))
-        %     fileVg2 = "id_vgs_2.txt";
-        % elseif (exist("id-vgs_2.txt", "file")) 
-        %     fileVg2 = "id-vgs_2.txt";
-        % elseif (exist("id-vgs-2.txt", "file")) 
-           fileVg2 = "id-vgs-2.txt";
-        % elseif (exist("id_vgs-2.txt", "file")) 
-        %     fileVg2 = "id_vgs-2.txt";
-        % else 
-        %     error('Non è stato trovate nessun file nominato "id_vgs_2.txt" o "id-vgs_2.txt" o "id-vgs-2.txt" o "id_vgs-2.txt"');
-        % end
-
-        [vds , id , vgs] = EstrazioneDati.estrazione_dati_vds(fileVd , type);
+        [vds , id , vgs] = EstrazioneDati.estrazione_dati_vds(file_vds_txt , canale_dispositivo);
         DatiVd{1} = vds;
         DatiVd{2} = id;
         DatiVd{3} = vgs;
 
-        [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(fileVg , type);
+        [vgs , id , vds] = EstrazioneDati.estrazione_dati_vgs(file_vgs_txt , canale_dispositivo);
         DatiVg{1} = vgs;
         DatiVg{2} = id;
         DatiVg{3} = vds;
 
-        mkdir("plot/eps/")
-        mkdir("plot/png/")
-
-        plot_id_vds(fileVd , nomeCartella , DatiVd);
-        plot_id_vgs(fileVg , nomeCartella , DatiVg);
-        plot_id_vgs_semilog(fileVg , nomeCartella , DatiVg); 
-        plot_gm(fileVg , nomeCartella , DatiVg);
-        plot_gds(fileVd , nomeCartella , DatiVd);
-        plot_gm_id_w_l(fileVg , nomeCartella , DatiVg);
-
-        if exist(fileVg2 , "file")
-            plot_id_vgs(fileVg2 , nomeCartella);
-            plot_id_vgs_semilog(fileVg2 , nomeCartella); 
-            plot_gm(fileVg2 , nomeCartella);
-        end
+        plot_id_vds(file_vds_txt , nomeCartella , DatiVd);
+        
+        plot_id_vgs(file_vgs_txt , nomeCartella , DatiVg);
+        
+        plot_id_vgs_semilog(file_vgs_txt , nomeCartella , DatiVg); 
+        
+        plot_gm(file_vgs_txt , nomeCartella , DatiVg);
+        
+        plot_gds(file_vds_txt , nomeCartella , DatiVd);
+        
         if(~contains(cartella_attuale , "nf"))
-            [mod_jg(: , i) , vgs_jg(: , i)] = EstrazioneDati.estrazione_dati_jg_vgs(fileVg , type , cartella_attuale);
+            plot_gm_id_w_l(file_vgs_txt , nomeCartella , DatiVg);
+        end
+
+        % se esiste il file vgs2 
+        if exist(file_vgs2_txt , "file")
+            plot_id_vgs(file_vgs2_txt , nomeCartella);
+            plot_id_vgs_semilog(file_vgs2_txt , nomeCartella); 
+            plot_gm(file_vgs2_txt , nomeCartella);
+        end
+
+        % verifichiamo se il dispositivo attuale funziona
+        if(~contains(cartella_attuale , "nf"))
+            [mod_jg(: , i) , vgs_jg(: , i)] = EstrazioneDati.estrazione_dati_jg_vgs(file_vgs_txt , canale_dispositivo , cartella_attuale);
             legendaIg{end+1} = cartella_attuale;
         end
-        %usciamo dalla cartella
+        
+
         cd ..
 
         disp("["+i +"/" + length(folders) +"]"+ "Fine cartella: " + cartella_attuale);
+        
+        % Chiudiamo tutti i plot
+        close all
+
     end
     %% Plot della Ig
 
@@ -170,7 +135,7 @@ function csv2txt_chip(path)
     legendaIg = string(legendaIg);
 
     disp("Inizio plot ig")
-    plot_jg_vgs(mod_jg , vgs_jg  , type , legendaIg);
+    plot_jg_vgs(mod_jg , vgs_jg  , canale_dispositivo , legendaIg);
     disp("Fine plot ig")
     
     
@@ -178,4 +143,17 @@ function csv2txt_chip(path)
     set(0,'DefaultFigureVisible','on');
     warning('on', 'all');
     disp("Tempo Trascorso: " + toc + "s");
+end
+
+
+function cambia_nome(NOME_CORRETTO , NOME_SBAGLIATO)
+    if(exist(NOME_SBAGLIATO, "file"))
+        movefile(NOME_SBAGLIATO , NOME_CORRETTO);
+    end
+end
+
+function verifica_file(FILE)
+    if(~exist(FILE , "file"))
+         error('Non è stato trovate nessun file nominato: "%s"' , FILE);
+    end
 end
