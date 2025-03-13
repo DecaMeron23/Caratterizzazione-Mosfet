@@ -77,6 +77,7 @@ function plot_gm_id_w_l(file , nomeCartella , dati)
     cd ..
 
 end
+
 % troviamo le intercette per fare il plot
 function [val_y , val_x , x , y] = intercette(id_l_w ,gm_id , gm , id)
     
