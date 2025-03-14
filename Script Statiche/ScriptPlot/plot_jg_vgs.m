@@ -19,7 +19,7 @@ function plot_jg_vgs(mod_jg , vgs , type , folders)
     legend(folders , Location="best");
 
     %% salviamo il plot
-    cd plot\
+    cd plot
         saveas(gcf , "plot_mod_jg_vgs" , 'eps');
         saveas(gcf , "plot_mod_jg_vgs" , 'png');
     cd ..

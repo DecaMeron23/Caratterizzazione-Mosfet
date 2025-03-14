@@ -38,10 +38,11 @@ function plot_gm(file, nomeCartella , dati)
     else
         name = "plot_gm_vgs";
     end
-    cd plot\eps
+    cd plot
+    cd eps
         saveas(gcf, name, 'eps');
     cd ..
-    cd png\
+    cd png
         saveas(gcf, name, 'png');
     cd ..
     cd ..

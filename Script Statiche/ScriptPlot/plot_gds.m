@@ -34,10 +34,11 @@ function plot_gds(file , nomeCartella , dati)
     title(titolo);
     %% Salviamo il plot
     
-    cd plot\eps
+    cd plot
+    cd eps
         saveas(gcf, 'plot_gds_vgs', 'eps');
     cd ..
-    cd png\
+    cd png
         saveas(gcf, 'plot_gds_vgs', 'png');
     cd ..
     cd ..

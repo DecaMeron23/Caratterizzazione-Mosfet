@@ -39,7 +39,8 @@ function plot_id_vgs_semilog(file , nomeCartella , dati)
         name = "plot_id_vgs_semilog";
     end
 
-    cd plot\eps;        
+    cd plot
+    cd eps;        
         saveas(gcf, name , 'eps');
     cd ..
     cd png

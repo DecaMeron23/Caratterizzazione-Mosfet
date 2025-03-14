@@ -35,10 +35,11 @@ function plot_id_vds(file , nomeCartella , dati)
     ylabel("$" + nome_id+ " [A] $", Interpreter="latex");
     
     %% save plot
-    cd plot\eps;
+    cd plot;
+    cd eps;
         saveas(gcf, 'plot_id_vds', 'eps');
     cd ..
-    cd png\
+    cd png
         saveas(gcf, 'plot_id_vds', 'png');
     cd ..
     cd ..

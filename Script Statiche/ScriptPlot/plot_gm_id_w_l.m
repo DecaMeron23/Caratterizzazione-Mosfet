@@ -68,7 +68,8 @@ function plot_gm_id_w_l(file , nomeCartella , dati)
         name = "plot_gm_id_w_l";
     end
 
-    cd plot\eps;        
+    cd plot;  
+    cd eps;        
         saveas(gcf, name , 'eps');
     cd ..
     cd png
