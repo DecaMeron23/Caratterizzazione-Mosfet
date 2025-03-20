@@ -14,4 +14,3 @@
 * **Misure Statiche** Cartella contenente le misure statiche
 * **Misure Statiche** Cartella contenente le misure di rumore
 * **Altri Script** Script di riferimento
-

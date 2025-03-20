@@ -1,8 +1,18 @@
+% Classe Vth, contiene tutte le diverse funzioni per calcolare la vth nei diversi metodi:
+% 1. RM
+% 2. RM con lo stesso intervallo rispetto a quello pre-irraggiamento
+% 3. FIT Lineare
+% 4. SDLM
+% 5. TCM
+
 classdef Vth
 
     methods (Static)
 
-        % Funzione vht RM
+        % Funzione vht RM, Parametri:
+        % dispositivo: nome del dispositivo es: N4-100-180
+        % PLOT_ON: Booleano, 1 se si vuole vedere il plot 0 altrimenti
+        % DISP_ON: Booleano, 1 se si vuole vedere a display il coefficente R^2, 0 altrimenti
         function [vth , estremi_fit]= RM(dispositivo , PLOT_ON , DISP_ON)
                 
             COLORI = lines(10);
@@ -97,7 +107,9 @@ classdef Vth
 
         end
 
-        % Funzione RM con estremi già indicati
+        % Funzione vht RM con gli estremi pre irraggiamento, Parametri:
+        % dispositivo: nome del dispositivo es: N4-100-180
+        % PLOT_ON: Booleano, 1 se si vuole vedere il plot 0 altrimenti
         function [vth , R , delta_vth] = RM_Estremi_PreIrraggiamento(dispositivo , PLOT_ON)
 
             dispositivo = char(dispositivo);
@@ -180,7 +192,9 @@ classdef Vth
         end
 
         % Funzione per il calcolo della vth con il metodo fit lineare della
-        % caratteristica id-vgs
+        % caratteristica id-vgs, parametri:
+        % dispositivo: nome del dispositivo es: N4-100-180
+        % PLOT_ON: Booleano, 1 se si vuole vedere il plot 0 altrimenti
         function vth = FIT_LIN(dispositivo , PLOT_ON)
 
             dispositivo = char(dispositivo);
@@ -299,7 +313,10 @@ classdef Vth
 
         end
 
-        %funzione per il calcolo della vth con il metodo SDLM
+        % Funzione per il calcolo della vth con il metodo SDLM, parametri:
+        % dispositivo: nome del dispositivo es: N4-100-180
+        % GRADO: Il grado della funzione polinomiale che esegue il fit
+        % PLOT_ON: Booleano, 1 se si vuole vedere il plot 0 altrimenti
         function vth = SDLM(dispositivo , GRADO , PLOT_ON)
 
             dispositivo = char(dispositivo);
@@ -413,7 +430,10 @@ classdef Vth
 
         end
 
-        %funzione per il calcolo della vth con il metodo TCM
+        % Funzione per il calcolo della vth con il metodo TCM, parametri:
+        % dispositivo: nome del dispositivo es: N4-100-180
+        % GRADO: Il grado della funzione polinomiale che esegue il fit
+        % PLOT_ON: Booleano, 1 se si vuole vedere il plot 0 altrimenti
         function vth = TCM(dispositivo , GRADO , PLOT_ON)
 
             dispositivo = char(dispositivo);
@@ -523,6 +543,7 @@ classdef Vth
         end
 
     end
+
     methods (Access = private , Static)
         %Funzione per RM_Estremi_preIrraggiamento quale trova gli estremi
         %su cui fare il fit
