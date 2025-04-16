@@ -1,11 +1,19 @@
 function Analisi_rumore(fondo,noise,fdt)
     nome_misurazione = noise(6:end);
     cartella_misurazione = string(unique({dir().folder}));
-
-    if strcmp(fondo(16), '_')
-        cartella_finale = ['..\..\rumore_finale\' fondo(7:15)];
-    else 
-        cartella_finale = ['..\..\rumore_finale\' fondo(7:16)];
+    
+    if isunix %per la compabilita linux
+        if strcmp(fondo(16), '_')
+            cartella_finale = ['../../rumore_finale/' fondo(7:15)];
+        else 
+            cartella_finale = ['../../rumore_finale/' fondo(7:16)];
+        end
+    else
+        if strcmp(fondo(16), '_')
+            cartella_finale = ['..\..\rumore_finale\' fondo(7:15)];
+        else 
+            cartella_finale = ['..\..\rumore_finale\' fondo(7:16)];
+        end
     end
 
     const = 4 * 300 * 25 * 1.38E-23; %densità spettrale di potenza di rumore di una resisenza da 25 Ohm
