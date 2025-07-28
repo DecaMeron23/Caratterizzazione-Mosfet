@@ -1,4 +1,4 @@
-function  gm = gm_gds( id , vgs_vds)
+function  gm = gm_gds(id , vgs_vds)
 % funzione che puo essere utilizzata sia per calcolare la gm che la gds,
 % per calcolare la gds passare come parametro vds al posto di vgs
     gm1 = zeros(size(id));

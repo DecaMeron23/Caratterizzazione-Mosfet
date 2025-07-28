@@ -1,3 +1,5 @@
+from pathlib import Path
+
 def titolo_plot(nome_cartella):
     """
     Restituisce:
@@ -6,7 +8,6 @@ def titolo_plot(nome_cartella):
     - L: lunghezza del canale in µm (es. 0.03)
     - tipo: tipo del dispositivo ('N' o 'P')
     """
-    from pathlib import Path
 
     nome = Path(nome_cartella).name
     tipo = nome[0]
