@@ -70,32 +70,27 @@ def estrazione_dati_id_vds(file, tipo = None):
     return id, vds, vgs
 
 
-def estrazione_dati_jg_vgs(file, nome_cartella , tipo = None):
-    path_file = Path(file)
-    # ! Da vedere
-    if Path("id-vgs.txt").exists():
-        path_file = Path("id-vgs.txt")
+def estrazione_dati_jg_vgs(file, tipo = None):
 
-    dati = pd.read_csv(path_file, header=1, delimiter='\t').to_numpy()
+    dati = pd.read_csv(file, header=1, delimiter='\t').to_numpy()
     vg = dati[:, 0]
 
     # se il tipo del file non è specificato lo prelevo
     if tipo is None:
         tipo=os.path.basename(os.path.dirname(file))[0]
 
-
     if tipo == 'P':
         vgs = -(vg - 0.9)
-        colonna_ig_vds0 = 33
+        colonna_ig_vds0 = 32
     elif tipo == 'N':
         vgs = vg
-        colonna_ig_vds0 = 3
+        colonna_ig_vds0 = 2
     else:
         raise ValueError("Tipo deve essere 'P' o 'N'")
 
     mod_ig = np.abs(dati[:, colonna_ig_vds0])
 
-    _, W, L = titolo_plot(nome_cartella)
+    _, W, L , _ = titolo_plot.titolo_plot(Path(file).parent)
     W *= 1e-4
     L *= 1e-4
 

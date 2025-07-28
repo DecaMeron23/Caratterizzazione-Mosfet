@@ -15,9 +15,10 @@ def titolo_plot(nome_cartella):
 
     try:
         tipo_transistor = f"{tipo}MOS"
-        larghezza = float(tokens[1])
-        lunghezza = float(tokens[2]) / 1000  # da nm a µm
-        titolo = f"{tipo_transistor} {int(larghezza)}/{lunghezza:.3f}"
-        return titolo, larghezza, lunghezza, tipo
+        W = float(tokens[1])
+        L = float(tokens[2]) / 1000  # da nm a µm
+        titolo = f"{tipo_transistor} {int(W)}/{L:.3f}"
+        return titolo, W, L, tipo
+    
     except Exception as e:
         raise ValueError("Errore nel parsing del nome della cartella, assicurati che sia nel formato 'N5-600-180'") from e

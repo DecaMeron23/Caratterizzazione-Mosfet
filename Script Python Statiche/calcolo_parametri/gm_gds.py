@@ -13,6 +13,13 @@ def gm_gds(id, vgs_vds):
         gm (np.ndarray): matrice delle derivate calcolate [n x m]
     """
 
+    # Rendo id sempre 2D per il calcolo
+    id_is_1d = False
+    if id.ndim == 1:
+        id = id[:, np.newaxis]
+        id_is_1d = True
+
+
     gm1 = np.zeros_like(id)
     gm2 = np.zeros_like(id)
 
@@ -29,5 +36,8 @@ def gm_gds(id, vgs_vds):
     # smoothing: applichiamo una media mobile
     for i in range(gm.shape[1]):
         gm[:, i] = uniform_filter1d(gm[:, i], size=5)
-
+    
+    # Se id era 1D ritorno solo la prima colonna
+    if id_is_1d:
+        return gm[:, 0]
     return gm
