@@ -40,4 +40,4 @@ if __name__ == "__main__":
         print("Inserire il path completo del chip che si vuole elaborare")
         sys.exit(1)
     else:
-        main(sys.argv[1] , show_plot=(False if sys.argv[2] == "False" else True))
+        main(sys.argv[1] , show_plot=(False if (sys.argv[2].lower() == "false" or sys.argv[2].lower() == "f") else True))

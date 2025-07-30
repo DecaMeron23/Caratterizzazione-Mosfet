@@ -156,7 +156,7 @@ def plot_jg_vgs(path_chip , file_id_vgs = "id-vgs.txt"):
     setup_plot_style()
     cartelle = get_cartelle(path_chip , contenenti_misure=True , no_nf = True)
 
-    nome_chip = Path(path_chip).parent.name
+    nome_chip = Path(path_chip).name[5] + Path(path_chip).name[4]
 
     nome_vgs , _ ,_ = nomi_assi_id_vgs_vds(canale_dispositivo=nome_chip[0])
     
@@ -201,6 +201,9 @@ def intercette(id_l_w, gm_id, gm, id):
     
     val_y = np.max(gm_id)
 
+    if any(val < 0 for val in id):
+        raise ValueError("Attenzione ci sono valori di corrente negativi... verificare se è un dispositivo funzionante")
+    
     valori_giusti = gm / np.sqrt(id)
     valori_assoluti = np.abs(valori_giusti - 1)
 
@@ -250,6 +253,7 @@ def nomi_assi_id_vgs_vds(canale_dispositivo):
         nome_vgs = r"V_{GS}"
         nome_id = r"I_D"
         nome_vds = r"V_{DS}"
+    else: raise ValueError(f"Valore non valido: canale_dispositivo = {canale_dispositivo}")
     return nome_vgs,nome_id,nome_vds
 
 
@@ -269,6 +273,8 @@ def elabora_plot(path, is_show=True):
         path_plot = c / "plot"
         Path(path_plot).mkdir(exist_ok=True)
 
+        print(f"\t- Elaborazione di {c.name}", end="")
+
 
         fig = plot_id_vgs(c / "id-vgs.txt")
         save_plot(fig , path_plot , "plot_id_vgs")
@@ -280,9 +286,10 @@ def elabora_plot(path, is_show=True):
         fig = plot_gm_vgs(c / "id-vgs.txt")
         save_plot(fig , path_plot , "plot_gm_vgs")
 
-        fig = plot_gm_id_w_l(c / "id-vgs.txt")
-        save_plot(fig , path_plot , "plot_gm_id_w_l")
-
+        if "nf" not in c.name:
+            fig = plot_gm_id_w_l(c / "id-vgs.txt")
+            save_plot(fig , path_plot , "plot_gm_id_w_l")
+        else: print(" - plot: 'plot_gm_id_w_l' non eseguito" , end="")
 
         fig = plot_id_vds(c / "id-vds.txt")
         save_plot(fig , path_plot , "plot_id_vds")
@@ -304,12 +311,7 @@ def elabora_plot(path, is_show=True):
             plt.show(block=False)
             plt.pause(0.1)
 
-
-
-
-        print(f"\t- {idx+1} elaborati su {len(path_cartelle)}")
-
-
+        print(f" - Completata! {idx+1} / {len(path_cartelle)}")
 
 
     path_plot = Path(path) / "plot"
