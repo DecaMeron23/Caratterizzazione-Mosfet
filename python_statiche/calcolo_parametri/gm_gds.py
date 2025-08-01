@@ -53,27 +53,27 @@ def gm_gds(id, vgs_vds):
 def crea_file_gm_gds(path_cartella):
     directory_dispositivi = get_cartelle(base_path=path_cartella , contenenti_misure=True)
     
-    def elabora_salva_gm_gds(dir , tipologia:str):
-        if "vgs" in tipologia:
-            id , tenisone_primaria , tensione_secondaria = estrazione_dati.estrazione_dati_id_vgs(Path(dir)/f"id-{tipologia}.txt")
-        elif "vds" in tipologia:
-            id , tenisone_primaria , tensione_secondaria = estrazione_dati.estrazione_dati_id_vds(Path(dir)/f"id-{tipologia}.txt")
-        else:
-            raise ValueError(f"Tipologia '{tipologia}' non riconosciuta in elabora_salva_gm_gds.")
-        
-        dati_calcolati = gm_gds(id=id, vgs_vds=tenisone_primaria)
-        
-        nome_tensione_secondaria = f"G{"m" if "vgs" in tipologia else "ds"}_V{"d" if "vgs" in tipologia else "g"}s="
-        header = np.hstack((f"{tipologia[:3].capitalize()}", [f"{nome_tensione_secondaria}{vds_i/1000:.2f}V" for vds_i in tensione_secondaria]))
-        df_dati_calcolati = pd.DataFrame(data=np.hstack((tenisone_primaria.reshape(-1, 1) , dati_calcolati)) , columns=header)
-        nome_file = Path(dir) / f"{"gds" if "vds" == tipologia else ("gm_2" if "vgs-2" == tipologia else "gm")}.txt"
-        df_dati_calcolati.to_csv(nome_file, sep='\t', index=False , float_format="%.7g")
-    
-    
     for idx, dir in enumerate(directory_dispositivi):
         
-        elabora_salva_gm_gds(dir , "vgs")
-        elabora_salva_gm_gds(dir , "vds")
-        elabora_salva_gm_gds(dir , "vgs-2")
+        _elabora_salva_gm_gds(dir , "vgs")
+        _elabora_salva_gm_gds(dir , "vds")
+        _elabora_salva_gm_gds(dir , "vgs-2")
 
         print(f"\t- {idx+1} elaborati su {len(directory_dispositivi)}")
+
+
+def _elabora_salva_gm_gds(dir , tipologia:str):
+    if "vgs" in tipologia:
+        id , tenisone_primaria , tensione_secondaria = estrazione_dati.estrazione_dati_id_vgs(Path(dir) , secondo_file="-2" in tipologia)
+    elif "vds" in tipologia:
+        id , tenisone_primaria , tensione_secondaria = estrazione_dati.estrazione_dati_id_vds(Path(dir))
+    else:
+        raise ValueError(f"Tipologia '{tipologia}' non riconosciuta in elabora_salva_gm_gds.")
+    
+    dati_calcolati = gm_gds(id=id, vgs_vds=tenisone_primaria)
+    
+    nome_tensione_secondaria = f"G{"m" if "vgs" in tipologia else "ds"}_V{"d" if "vgs" in tipologia else "g"}s="
+    header = np.hstack((f"{tipologia[:3].capitalize()}", [f"{nome_tensione_secondaria}{vds_i/1000:.2f}V" for vds_i in tensione_secondaria]))
+    df_dati_calcolati = pd.DataFrame(data=np.hstack((tenisone_primaria.reshape(-1, 1) , dati_calcolati)) , columns=header)
+    nome_file = Path(dir) / f"{"gds" if "vds" == tipologia else ("gm_2" if "vgs-2" == tipologia else "gm")}.txt"
+    df_dati_calcolati.to_csv(nome_file, sep='\t', index=False , float_format="%.7g")
