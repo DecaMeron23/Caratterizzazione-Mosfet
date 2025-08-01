@@ -16,7 +16,7 @@ from scipy.ndimage import uniform_filter1d
 
 # --- Funzione per impostare lo stile globale dei plot ---
 
-def setup_plot_style():
+def _setup_plot_style():
     mpl.rcParams.update({
         "figure.figsize": (9, 6),
         "figure.max_open_warning": 50, 
@@ -39,12 +39,13 @@ def setup_plot_style():
 
 # --- Funzioni di plot
 
-def plot_id_vds(file_id_vds):
-    setup_plot_style()
-    [id ,vds , vgs] = estrazione_dati.estrazione_dati_id_vds(file_id_vds)
-    titolo , _ , _ , canale_dispositivo  = titolo_plot(os.path.dirname(file_id_vds))
+def plot_id_vds(path_dispositivo):
+    _setup_plot_style()
+
+    [id ,vds , vgs] = estrazione_dati.estrazione_dati_id_vds(path_dispositivo)
+    titolo , _ , _ , canale_dispositivo  = titolo_plot(path_dispositivo)
     
-    nome_vgs, nome_id, nome_vds = nomi_assi_id_vgs_vds(canale_dispositivo)
+    nome_vgs, nome_id, nome_vds = _nomi_assi_id_vgs_vds(canale_dispositivo)
     plt.figure(f"{titolo} - id-vds")
     plt.plot(vds, id*1e3, label=[fr"${nome_vgs} = {vgs_i}$ mV" for vgs_i in vgs])
     plt.xlabel(f"${nome_vds}$ [V]")
@@ -55,17 +56,19 @@ def plot_id_vds(file_id_vds):
     return plt.gcf()
 
 
-def plot_id_vgs(file_id_vgs , semilog = False):
-    setup_plot_style()
+def plot_id_vgs(path_dispositivo , secondo_file = False , semilog = False):
+    _setup_plot_style()
     # Estrazione dati
-    [id ,vgs , vds] = estrazione_dati.estrazione_dati_id_vgs(file_id_vgs)
+
+    
+    [id ,vgs , vds] = estrazione_dati.estrazione_dati_id_vgs(path_dispositivo , secondo_file = secondo_file)
 
     # Estrazione informazioni
-    titolo , _ , _ , canale_dispositivo  = titolo_plot(os.path.dirname(file_id_vgs))
+    titolo , _ , _ , canale_dispositivo  = titolo_plot(path_dispositivo)
     
     # Nomi assi
-    nome_vgs, nome_id, nome_vds = nomi_assi_id_vgs_vds(canale_dispositivo)
-    plt.figure(f"{titolo}{" - semilog" if semilog else ""} - id_vgs{"_2" if "-2" in Path(file_id_vgs).name else ""}")
+    nome_vgs, nome_id, nome_vds = _nomi_assi_id_vgs_vds(canale_dispositivo)
+    plt.figure(f"{titolo}{" - semilog" if semilog else ""} - id-vgs{"-2" if secondo_file else ""}")
     if semilog:
         plt.semilogy(vgs, id*1e3, label=[fr"${nome_vds} = {vgs_i}$ mV" for vgs_i in vds])
         plt.grid(which="minor")
@@ -77,18 +80,18 @@ def plot_id_vgs(file_id_vgs , semilog = False):
     plt.legend()
     return plt.gcf()
 
-def plot_gm_vgs(file_id_vgs):
-    setup_plot_style()
+def plot_gm_vgs(path_dispositivo , secondo_file = False):
+    _setup_plot_style()
     # Estrazione dei valori
-    id , vgs , vds = estrazione_dati.estrazione_dati_id_vgs(file_id_vgs)
+    id , vgs , vds = estrazione_dati.estrazione_dati_id_vgs(path_dispositivo , secondo_file = secondo_file)
     gm = gm_gds(id=id , vgs_vds=vgs)
 
     # Estranzione informazioni
-    titolo , _ , _ , canale_dispositivo  = titolo_plot(os.path.dirname(file_id_vgs))
+    titolo , _ , _ , canale_dispositivo  = titolo_plot(path_dispositivo)
 
-    nome_vgs, _ , nome_vds = nomi_assi_id_vgs_vds(canale_dispositivo)
+    nome_vgs, _ , nome_vds = _nomi_assi_id_vgs_vds(canale_dispositivo)
     nome_gm = r"g_{m}"
-    plt.figure(f"{titolo} - gm-vgs{"_2" if "-2" in Path(file_id_vgs).name else ""}")
+    plt.figure(f"{titolo} - gm-vgs{"-2" if secondo_file else ""}")
     plt.plot(vgs, gm, label=[fr"${nome_vds} = {vgs_i}$ mV" for vgs_i in vds])
     plt.xlabel(f"${nome_vgs}$ [V]")
     plt.ylabel(rf"${nome_gm}$ [A/V]")
@@ -96,16 +99,16 @@ def plot_gm_vgs(file_id_vgs):
     plt.legend()
     return plt.gcf()
     
-def plot_gds_vds(file_id_vds):
-    setup_plot_style()
+def plot_gds_vds(path_dispositivo):
+    _setup_plot_style()
     # Estrazione dei valori
-    id , vds , vgs = estrazione_dati.estrazione_dati_id_vds(file_id_vds)
+    id , vds , vgs = estrazione_dati.estrazione_dati_id_vds(path_dispositivo)
     gds = gm_gds(id=id , vgs_vds=vds)
 
     # Estranzione informazioni
-    titolo , _ , _ , canale_dispositivo  = titolo_plot(os.path.dirname(file_id_vds))
+    titolo , _ , _ , canale_dispositivo  = titolo_plot(path_dispositivo)
 
-    nome_vgs, _ , nome_vds = nomi_assi_id_vgs_vds(canale_dispositivo)
+    nome_vgs, _ , nome_vds = _nomi_assi_id_vgs_vds(canale_dispositivo)
     nome_gds = r"g_{DS}"
 
     plt.figure(f"{titolo} - gds-vds")
@@ -116,23 +119,23 @@ def plot_gds_vds(file_id_vds):
     plt.legend()
     return plt.gcf()
     
-def plot_gm_id_w_l(file_id_vgs):
+def plot_gm_id_w_l(path_dispositivo):
     '''
         Si estrae a vds massima
     '''
-    setup_plot_style()
+    _setup_plot_style()
     # Estrazione dei valori
-    id , vgs , vds = estrazione_dati.estrazione_dati_id_vgs(file_id_vgs)
+    id , vgs , vds = estrazione_dati.estrazione_dati_id_vgs(path_dispositivo , secondo_file = False)
     id = id[: , -1]
     vds = vds[-1]
     gm = gm_gds(id=id , vgs_vds=vgs)
-    titolo , W , L , canale_dispositivo = titolo_plot(Path(file_id_vgs).parent)
+    titolo , W , L , canale_dispositivo = titolo_plot(path_dispositivo)
 
     gm_id = gm / id
 
     id_l_w = id * (L/W)
 
-    val_y , val_x , x , y = intercette(id_l_w , gm_id , gm , id)
+    val_y , val_x , x , y = _intercette(id_l_w , gm_id , gm , id)
 
     plt.figure(f"{titolo} - gm/id id-l/w")
     plt.loglog(id_l_w , gm_id)
@@ -151,18 +154,18 @@ def plot_gm_id_w_l(file_id_vgs):
     plt.grid(which="minor")
     return plt.gcf()
 
-def plot_jg_vgs(path_chip , file_id_vgs = "id-vgs.txt"):
+def plot_jg_vgs(path_chip):
     
-    setup_plot_style()
+    _setup_plot_style()
     cartelle = get_cartelle(path_chip , contenenti_misure=True , no_nf = True)
 
     nome_chip = Path(path_chip).name[5] + Path(path_chip).name[4]
 
-    nome_vgs , _ ,_ = nomi_assi_id_vgs_vds(canale_dispositivo=nome_chip[0])
+    nome_vgs , _ ,_ = _nomi_assi_id_vgs_vds(canale_dispositivo=nome_chip[0])
     
     plt.figure(f"{nome_chip} - jg-vgs")
     for c in cartelle:
-        path_file = Path(c) / file_id_vgs
+        path_file = Path(c)
         nome_dispositivo = Path(c).name
         mod_jg, vgs = estrazione_dati.estrazione_dati_jg_vgs(path_file)
         
@@ -179,10 +182,116 @@ def plot_jg_vgs(path_chip , file_id_vgs = "id-vgs.txt"):
     return plt.gcf()
 
 
+## Funzioni di plot per le Vth (a questi gli vengono passati i valori)
+
+def plot_rm(rm:np.array , vgs:np.array , coefficenti_retta:tuple , intervallo_fit:tuple , vth:float , path_dispositivo:Path):
+    _setup_plot_style()
+    titolo , _ , _ , canale_dispositivo = titolo_plot(path_dispositivo)
+   
+    _plot_fit_lin(vgs , rm , coefficenti_retta, intervallo_fit, vth, titolo , "RM")
+    
+    plt.xlim(left = 0)
+    plt.ylim(bottom = -0.1)
+
+    plt.ylabel(r"$\frac{I_D}{\sqrt{gm}}$ [$\mathrm{\sqrt{A \cdot V}}$]")
+    plt.xlabel(f"${_label_vgs(canale_dispositivo)}$ [V]")
+    return plt.gcf()
+
+
+def plot_sdlm(sdlm:np.array , vgs:np.array , x_fit:np.array , y_fit:tuple , grado_fit:int , vth:float , path_dispositivo:Path):
+    _setup_plot_style()
+    titolo , _ , _ , canale_dispositivo = titolo_plot(path_dispositivo)
+
+    plt.figure(f"{titolo} - SDLM")
+    plt.plot(vgs , sdlm , label = "SDLM")
+    plt.plot(x_fit , y_fit , label = f"Fit polinomiale di grado {grado_fit}")
+
+    plt.axvline(vth , linestyle = "--" , linewidth = 0.5 ,  color = "black")
+    plt.scatter(vth , y_fit.min() , zorder = 100 , color = "red" , marker="s")
+
+    if canale_dispositivo == "N":
+        ylabel = r"$\frac{\delta^2 \ln(I_D)}{\delta V_{GS}^2} \left[\frac{\ln(A)}{V^2}\right]$"
+    else:
+        ylabel = r"$\frac{\delta^2 \ln(I_D)}{\delta V_{SG}^2} \left[\frac{\ln(A)}{V^2}\right]$"
+
+    plt.ylabel(ylabel)
+    plt.xlabel(f"{_label_vgs(canale_dispositivo)} [V]")
+    plt.legend()
+    plt.title(titolo)
+    return plt.gcf()
+
+def plot_tcm(tcm:np.array , vgs:np.array , x_fit:np.array , y_fit:tuple , grado_fit:int , vth:float , path_dispositivo:Path):
+    _setup_plot_style()
+    titolo , _ , _ , canale_dispositivo = titolo_plot(path_dispositivo)
+
+    plt.figure(f"{titolo} - TCM")
+    plt.plot(vgs , tcm , label = "TCM")
+    plt.plot(x_fit , y_fit , label = f"Fit polinomiale di grado {grado_fit}")
+
+    plt.axvline(vth , linestyle = "--" , linewidth = 0.5 ,  color = "black")
+    plt.scatter(vth , y_fit.max() , zorder = 100 , color = "red" , marker="s")
+
+    if canale_dispositivo == "N":
+        ylabel = r"$\frac{\delta g_{m}}{\delta V_{GS}} \left[\frac{A}{V^2}\right]$"
+    else:
+        ylabel = r"$\frac{\delta g_{m}}{\delta V_{SG}} \left[\frac{A}{V^2}\right]$"
+
+    plt.ylabel(ylabel)
+    plt.xlabel(f"{_label_vgs(canale_dispositivo)} [V]")
+    plt.legend()
+    plt.title(titolo)
+
+    return plt.gcf()
+
+
+
+def plot_fit_lineare(id:np.array , vgs:np.array , coefficenti_retta:tuple , intervallo_fit:tuple , vth:float , path_dispositivo:Path):
+    _setup_plot_style()
+    titolo , _ , _ , canale_dispositivo = titolo_plot(path_dispositivo)
+   
+    _plot_fit_lin(vgs , id , coefficenti_retta , intervallo_fit , vth , titolo , "Fit Lineare")
+    
+    plt.xlim(left = 0)
+    plt.ylim(-0.01 , np.max(id) + 0.015)
+
+    plt.ylabel(r"$I_D$ [A]")
+    plt.xlabel(f"{_label_vgs(canale_dispositivo)} [V]")
+    return plt.gcf()
+
+
+
+
 # Funzioni di supporto
 
+def _plot_fit_lin(x , y, coefficenti_retta, intervallo_fit, vth, titolo , tipologia_fit):
 
-def intercette(id_l_w, gm_id, gm, id):
+    plt.figure(f"{titolo} - {tipologia_fit}")
+    plt.plot(x , y , label = tipologia_fit)
+
+    # Disegna la retta con intercetta e pendenza specificate
+    x_fit = np.linspace(vth-0.2, np.max(x), 100).reshape(-1, 1)
+    y_fit = (coefficenti_retta[0] + coefficenti_retta[1] * x_fit).reshape(-1, 1)
+    plt.plot(x_fit, y_fit , label = "Fit Lineare")
+
+    plt.axvline(intervallo_fit[0] , linestyle = "--" , linewidth = 0.5 , color = "red")
+    plt.axvline(intervallo_fit[1] , linestyle = "--" , linewidth = 0.5 , color = "red")
+    plt.axvline(vth , linestyle = "--" , linewidth = 0.5 , color="black")
+    
+    plt.scatter(vth , 0 , zorder =100  , marker="s" , color = "r")
+    plt.legend()
+    plt.title(titolo)
+
+def _label_vgs(canale_dispositivo):
+    if canale_dispositivo == "N":
+        label_vgs = r"$V_{GS}$"
+    elif canale_dispositivo == "P":
+        label_vgs = r"$|V_{GS}|$"
+    else:
+        raise ValueError(f"Canale dispositivo Errato: '{canale_dispositivo}'")
+    return label_vgs
+
+
+def _intercette(id_l_w, gm_id, gm, id):
     """
     Calcola le intercette per il grafico gm/ID vs ID/W.
     
@@ -237,7 +346,7 @@ def intercette(id_l_w, gm_id, gm, id):
 
 
 
-def nomi_assi_id_vgs_vds(canale_dispositivo):  
+def _nomi_assi_id_vgs_vds(canale_dispositivo):  
     '''
     Restituisce i nomi degli assi per VGS, ID e VDS a seconda del tipo di canale.
     Parametri:
@@ -256,18 +365,19 @@ def nomi_assi_id_vgs_vds(canale_dispositivo):
     else: raise ValueError(f"Valore non valido: canale_dispositivo = {canale_dispositivo}")
     return nome_vgs,nome_id,nome_vds
 
+def save_plot(fig, dir , name , show_plot):
+    fig_path = Path(dir) / f"{name}.png"
+    fig.savefig(fig_path, dpi=300, bbox_inches='tight')
+    if not show_plot:
+        plt.close(fig)
 
-def elabora_plot(path, is_show=True):
+
+
+def elabora_plot(path, show_plot=True):
     path_cartelle = get_cartelle(path , contenenti_misure=True)
     
-    def save_plot(fig, dir , name):
-        fig_path = Path(dir) / f"{name}.png"
-        fig.savefig(fig_path, dpi=300, bbox_inches='tight')
-        if not is_show:
-            plt.close(fig)
-
-    
     for  idx,c in enumerate(path_cartelle):        
+        
         c = Path(c)
 
         path_plot = c / "plot"
@@ -276,38 +386,37 @@ def elabora_plot(path, is_show=True):
         print(f"\t- Elaborazione di {c.name}", end="")
 
 
-        fig = plot_id_vgs(c / "id-vgs.txt")
-        save_plot(fig , path_plot , "plot_id_vgs")
+        fig = plot_id_vgs(c)
+        save_plot(fig , path_plot , "plot_id_vgs" , show_plot)
 
-        fig = plot_id_vgs(c / "id-vgs.txt", semilog=True)
-        save_plot(fig , path_plot , "plot_id_vgs_semilog")
+        fig = plot_id_vgs(c, semilog=True)
+        save_plot(fig , path_plot , "plot_id_vgs_semilog" , show_plot)
 
-
-        fig = plot_gm_vgs(c / "id-vgs.txt")
-        save_plot(fig , path_plot , "plot_gm_vgs")
+        fig = plot_gm_vgs(c)
+        save_plot(fig , path_plot , "plot_gm_vgs" , show_plot)
 
         if "nf" not in c.name:
-            fig = plot_gm_id_w_l(c / "id-vgs.txt")
-            save_plot(fig , path_plot , "plot_gm_id_w_l")
+            fig = plot_gm_id_w_l(c)
+            save_plot(fig , path_plot , "plot_gm_id_w_l" , show_plot)
         else: print(" - plot: 'plot_gm_id_w_l' non eseguito" , end="")
 
-        fig = plot_id_vds(c / "id-vds.txt")
-        save_plot(fig , path_plot , "plot_id_vds")
+        fig = plot_id_vds(c)
+        save_plot(fig , path_plot , "plot_id_vds" , show_plot)
 
-        fig = plot_gds_vds(c / "id-vds.txt")
-        save_plot(fig , path_plot , "plot_gds_vgs")
+        fig = plot_gds_vds(c)
+        save_plot(fig , path_plot , "plot_gds_vgs" , show_plot)
 
 
-        fig = plot_id_vgs(c / "id-vgs-2.txt")
-        save_plot(fig , path_plot , "plot_id_vgs_2")
+        fig = plot_id_vgs(c , secondo_file=True)
+        save_plot(fig , path_plot , "plot_id_vgs_2" , show_plot)
 
-        fig = plot_id_vgs(c / "id-vgs-2.txt", semilog=True)
-        save_plot(fig , path_plot , "plot_id_vgs_semilog_2")
+        fig = plot_id_vgs(c, semilog=True , secondo_file=True)
+        save_plot(fig , path_plot , "plot_id_vgs_semilog_2" , show_plot)
 
-        fig = plot_gm_vgs(c / "id-vgs-2.txt")
-        save_plot(fig , path_plot , "plot_gm_vgs_2")
+        fig = plot_gm_vgs(c , secondo_file=True)
+        save_plot(fig , path_plot , "plot_gm_vgs_2" , show_plot)
 
-        if is_show:
+        if show_plot:
             plt.show(block=False)
             plt.pause(0.1)
 
@@ -317,9 +426,9 @@ def elabora_plot(path, is_show=True):
     path_plot = Path(path) / "plot"
     path_plot.mkdir(exist_ok=True)
     fig = plot_jg_vgs(path)
-    save_plot(fig , path_plot , "plot_mod_jg_vgs")
+    save_plot(fig , path_plot , "plot_mod_jg_vgs" , show_plot)
 
-    if is_show:
+    if show_plot:
         plt.show(block=False)
         plt.pause(0.1)
 

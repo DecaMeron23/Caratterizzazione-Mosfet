@@ -1,7 +1,31 @@
 ## Esecuzione degli script:
 ### main_statiche.py
 
-Per eseguire lo script main_statiche.py è necessario spostarsi nella cartella `/python_statiche` e in seguito eseguire il comando:
+Per eseguire lo script main_statiche.py è necessario spostarsi nella cartella `/python_statiche` e in seguito creare l'ambiente virtuale, se lo si ha gia fatto passare prossimo punto:
+- Caso "Windows" con il prompt dei comandi CMD:
+```bash
+python -m venv .venv
+# successivamente attivare l'ambiente virtuale
+.venv\Scripts\activate.bat
+# infine installare le dipendenze tramite
+pip install -r requirements.txt
+```
+- Caso "Linux o Mac" su terminale:
+```bash
+python -m venv .venv
+# successivamente attivare l'ambiente virtuale
+source .venv/bin/activate
+# infine installare le dipendenze tramite
+pip install -r requirements.txt
+```
+
+#### Attivazione l'ambiente virtuale
+Per attivare l'ambiente virtuale si usa il comando:
+- su Windows `.venv\Scripts\activate.bat`
+- su Linux o Mac `source .venv/bin/activate`
+
+#### Uso di main_statiche
+dopo aver attivato il `venv` si può procedere ad analizzare i dati per farlo lanciare il comando:
 ```bash
 python main_statiche.py [path] [booleano]
 ```

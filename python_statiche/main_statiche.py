@@ -1,4 +1,5 @@
 from calcolo_parametri import gm_gds
+from calcolo_parametri import vth
 from pathlib import Path
 
 import csv2txt
@@ -21,7 +22,7 @@ def main(path_cartella , show_plot:True):
 
     ## Creazione dei Plot singoli
     print("\nInizio creazione plot")
-    plot.elabora_plot(path_cartella , show_plot)
+    # plot.elabora_plot(path_cartella , show_plot)
     print("Fine creazione plot")
 
     ## Creazione dei file gm e gds
@@ -29,15 +30,26 @@ def main(path_cartella , show_plot:True):
     gm_gds.crea_file_gm_gds(path_cartella)
     print("\nFine creazione dei file gm e gds")
 
+    print("\nInizio calcolo Vth")
+    vth.calcolo_vth(path_cartella , show_plot = show_plot)
+    print("\nFine calcolo Vth")
+
     tempo -= time.time()
     print(f"- Fine elaborazione, tempo impiegato {-tempo:.2f} sec")
 
     if show_plot:
         input("\nPer terminare l'operazione e chiudere tutti i plot premere invio...")
 
+
+
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
         print("Inserire il path completo del chip che si vuole elaborare")
         sys.exit(1)
-    else:
+    elif len(sys.argv) == 2:
+        main(sys.argv[1] , show_plot=True)
+    elif len(sys.argv) == 3:
         main(sys.argv[1] , show_plot=(False if (sys.argv[2].lower() == "false" or sys.argv[2].lower() == "f") else True))
+    else:
+        print(f"Si sono inseriti troppi parametri!\n {sys.argv}")
+        sys.exit(1)

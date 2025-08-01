@@ -415,7 +415,7 @@ classdef Vth
                 xlabel(xlabeltxt , "Interpreter","latex", "FontSize",15);
                 ylabel(ylabeltxt , "Interpreter", "latex", "FontSize", 15);
                 %Plot dei dati calcolati
-                plot(vgs(indici_intervallo),derivata_2_SDLM(indici_intervallo) , DisplayName= "SDLM")
+                plot(vgs(indici_intervallo),derivata_2_SDLM(indici_intervallo) , DisplayName="SDLM")
                 %plot della vth dei dati calcolati
                 xline(vth_SDLM_noFit,"--","Color","r" , DisplayName= "Minimo di SDLM");
                 %plot della polinomiale
