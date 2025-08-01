@@ -2,6 +2,8 @@ from calcolo_parametri import gm_gds
 from calcolo_parametri import vth
 from pathlib import Path
 
+import matplotlib.pyplot as plt
+
 import csv2txt
 import sys
 import time
@@ -22,8 +24,12 @@ def main(path_cartella , show_plot:True):
 
     ## Creazione dei Plot singoli
     print("\nInizio creazione plot")
-    # plot.elabora_plot(path_cartella , show_plot)
+    plot.elabora_plot(path_cartella , )
     print("Fine creazione plot")
+
+    if show_plot:
+        input("Premere invio per continuare (gli attuali plot verranno chiusi)...")
+        plt.close("all")
 
     ## Creazione dei file gm e gds
     print("\nInizio creazione dei file gm e gds")

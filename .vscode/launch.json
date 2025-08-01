@@ -13,7 +13,7 @@
             // "program": "${file}",
             "console": "integratedTerminal",
             // "args": "${command:pickArgs}"
-            "args": ["/home/emilio/Documenti/github/Caratterizzazione-Mosfet/Misure statiche/N4/Chip4NMOS" , "f"]
+            "args": ["/home/emilio/Documenti/github/Caratterizzazione-Mosfet/TEST/Chip5NMOS" , "t"]
         }
     ]
 }

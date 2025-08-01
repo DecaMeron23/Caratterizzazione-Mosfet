@@ -210,13 +210,14 @@ def _calcola_vth_e_salva(path_dispositivo , path_cartella , show_plot):
 
 
 def calcolo_vth(path_cartella:str , show_plot = True , nome_cartella_vth = "vth"):
-    directory_dispositivi = ricerca_file.get_cartelle(base_path=path_cartella , contenenti_misure=True)
+    directory_dispositivi = ricerca_file.get_cartelle(base_path=path_cartella , contenenti_misure=True , no_nf=True)
     
     # Creaiamo la cartella dei plot
     path_cartella_vth = Path(path_cartella) / nome_cartella_vth
     path_cartella_vth.mkdir(exist_ok=True) 
 
-    for idx, dir in enumerate(directory_dispositivi):        
+    for idx, dir in enumerate(directory_dispositivi):
+        (Path(dir)/"plot").mkdir(exist_ok=True)  
         _calcola_vth_e_salva(dir , path_cartella_vth , show_plot)
         if show_plot:
             plt.pause(0.1)

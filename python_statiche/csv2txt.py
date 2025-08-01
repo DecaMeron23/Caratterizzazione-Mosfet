@@ -79,8 +79,7 @@ def csv2txt(file:str):
 
 def csv2txt_chip(path_cartella):
     print(f"Inizio conversione file da .csv a .txt, della cartella:\n'{path_cartella}'")
-    tipo_e_numero_chip = os.path.basename(os.path.dirname(path_cartella))
-    cartelle = ricerca_file.get_cartelle(path_cartella , (f"{tipo_e_numero_chip}-*"))
+    cartelle = ricerca_file.get_cartelle(path_cartella , contenenti_misure=True)
     
     for idx, c in enumerate(cartelle):
         verifica_e_rinomina(c)

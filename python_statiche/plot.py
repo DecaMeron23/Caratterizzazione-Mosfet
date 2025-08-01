@@ -368,8 +368,8 @@ def _nomi_assi_id_vgs_vds(canale_dispositivo):
 def save_plot(fig, dir , name , show_plot):
     fig_path = Path(dir) / f"{name}.png"
     fig.savefig(fig_path, dpi=300, bbox_inches='tight')
-    if not show_plot:
-        plt.close(fig)
+    # if not show_plot:
+    #     plt.close(fig)
 
 
 
