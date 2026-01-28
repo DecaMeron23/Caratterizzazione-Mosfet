@@ -33,9 +33,10 @@ def _setup_plot_style():
         "lines.linewidth": 2,
         "lines.markersize": 6,
     })
-    import shutil
-    if shutil.which("pdflatex") is not None:
-        mpl.rcParams["text.usetex"] = True
+    mpl.rcParams["text.usetex"] = False
+    # import shutil
+    # if shutil.which("pdflatex") is not None:
+    #     mpl.rcParams["text.usetex"] = True
 
 # --- Funzioni di plot
 
@@ -194,7 +195,7 @@ def plot_rm(rm:np.array , vgs:np.array , coefficenti_retta:tuple , intervallo_fi
     plt.ylim(bottom = -0.1)
 
     plt.ylabel(r"$\frac{I_D}{\sqrt{gm}}$ [$\mathrm{\sqrt{A \cdot V}}$]")
-    plt.xlabel(f"${_label_vgs(canale_dispositivo)}$ [V]")
+    plt.xlabel(f"{_label_vgs(canale_dispositivo)} [V]")
     return plt.gcf()
 
 

@@ -24,12 +24,12 @@ def main(path_cartella , show_plot:True):
 
     ## Creazione dei Plot singoli
     print("\nInizio creazione plot")
-    plot.elabora_plot(path_cartella , )
+    plot.elabora_plot(path_cartella , show_plot)
     print("Fine creazione plot")
 
     if show_plot:
         input("Premere invio per continuare (gli attuali plot verranno chiusi)...")
-        plt.close("all")
+    plt.close("all")
 
     ## Creazione dei file gm e gds
     print("\nInizio creazione dei file gm e gds")
