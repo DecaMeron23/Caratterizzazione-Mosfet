@@ -44,7 +44,7 @@ python main_statiche.py "/home/emilio/Documenti/github/Caratterizzazione-Mosfet/
 == Struttura necessaria delle directory per operare:
 Gli script Python ipotizzano che le directory e i file sono disposti e nominati in un modo preciso.
 Per un ASIC è necessario che si mantenga la struttura seguente (in questo esempi l'ASIC utilizzato è il N5):
-
+```
     Chip5NMOS
     |
     ├── N5-200-180
@@ -66,6 +66,6 @@ Per un ASIC è necessario che si mantenga la struttura seguente (in questo esemp
         ├── id-vds.csv
         ├── id-vgs-2.csv
         └── id-vgs.csv
-
+```
 Se c'è questa struttura gli script funzionano correttamente.
 Se un dispositivo non funziona, ma si vogliono tenere lo stesso i valori, è necessario identificarlo ponendo post-fisso `-nf` nel nome della cartella, ad esempio: `N5-600-60-nf`, in questo verranno esclusi solo da alcune da alcune operazioni.
