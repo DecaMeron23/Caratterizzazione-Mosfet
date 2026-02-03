@@ -9,7 +9,7 @@
             "name": "Debugger Python: File corrente con argomenti",
             "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "program": "main_statiche.py",
             "console": "integratedTerminal",
             "args": "${command:pickArgs}"
         }

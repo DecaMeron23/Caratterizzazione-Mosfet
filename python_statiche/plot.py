@@ -29,7 +29,7 @@ def _setup_plot_style():
         "ytick.labelsize": 12,
         "legend.fontsize": 13,
         "font.family": "sans-serif",
-        "font.sans-serif": ["DejaVu Sans"],
+        # "font.sans-serif": ["Arial"],
         "lines.linewidth": 2,
         "lines.markersize": 6,
     })
@@ -40,7 +40,7 @@ def _setup_plot_style():
 
 # --- Funzioni di plot
 
-def plot_id_vds(path_dispositivo):
+def plot_id_vds(path_dispositivo: Path | str):
     _setup_plot_style()
 
     [id ,vds , vgs] = estrazione_dati.estrazione_dati_id_vds(path_dispositivo)
@@ -53,11 +53,10 @@ def plot_id_vds(path_dispositivo):
     plt.ylabel(f"${nome_id}$ [mA]")
     plt.title(titolo)
     plt.legend()
-    
     return plt.gcf()
 
 
-def plot_id_vgs(path_dispositivo , secondo_file = False , semilog = False):
+def plot_id_vgs(path_dispositivo:str | Path , secondo_file = False , semilog = False):
     _setup_plot_style()
     # Estrazione dati
 
@@ -81,7 +80,7 @@ def plot_id_vgs(path_dispositivo , secondo_file = False , semilog = False):
     plt.legend()
     return plt.gcf()
 
-def plot_gm_vgs(path_dispositivo , secondo_file = False):
+def plot_gm_vgs(path_dispositivo:str | Path , secondo_file = False):
     _setup_plot_style()
     # Estrazione dei valori
     id , vgs , vds = estrazione_dati.estrazione_dati_id_vgs(path_dispositivo , secondo_file = secondo_file)
@@ -100,7 +99,7 @@ def plot_gm_vgs(path_dispositivo , secondo_file = False):
     plt.legend()
     return plt.gcf()
     
-def plot_gds_vds(path_dispositivo):
+def plot_gds_vds(path_dispositivo:str | Path):
     _setup_plot_style()
     # Estrazione dei valori
     id , vds , vgs = estrazione_dati.estrazione_dati_id_vds(path_dispositivo)
@@ -120,7 +119,7 @@ def plot_gds_vds(path_dispositivo):
     plt.legend()
     return plt.gcf()
     
-def plot_gm_id_w_l(path_dispositivo):
+def plot_gm_id_w_l(path_dispositivo:str | Path):
     '''
         Si estrae a vds massima
     '''
@@ -135,9 +134,10 @@ def plot_gm_id_w_l(path_dispositivo):
     gm_id = gm / id
 
     id_l_w = id * (L/W)
-
-    val_y , val_x , x , y = _intercette(id_l_w , gm_id , gm , id)
-
+    try: 
+        val_y , val_x , x , y = _intercette(id_l_w , gm_id , gm , id)
+    except:
+        return None
     plt.figure(f"{titolo} - gm/id id-l/w")
     plt.loglog(id_l_w , gm_id)
     plt.axhline(val_y , linestyle = "--", linewidth = 0.6 , color = "black")
@@ -155,10 +155,11 @@ def plot_gm_id_w_l(path_dispositivo):
     plt.grid(which="minor")
     return plt.gcf()
 
-def plot_jg_vgs(path_chip):
+def plot_jg_vgs(path_chip:str | Path):
     
     _setup_plot_style()
-    cartelle = get_cartelle(path_chip , contenenti_misure=True , no_nf = True)
+    pattern = Path(path_chip).name[5] + Path(path_chip).name[4] + "-*"
+    cartelle = get_cartelle(path_chip , contenenti_misure=True , no_nf = True , pattern=pattern)
 
     nome_chip = Path(path_chip).name[5] + Path(path_chip).name[4]
 
@@ -185,7 +186,7 @@ def plot_jg_vgs(path_chip):
 
 ## Funzioni di plot per le Vth (a questi gli vengono passati i valori)
 
-def plot_rm(rm:np.array , vgs:np.array , coefficenti_retta:tuple , intervallo_fit:tuple , vth:float , path_dispositivo:Path):
+def plot_rm(rm , vgs , coefficenti_retta:tuple , intervallo_fit:tuple , vth:float , path_dispositivo:Path):
     _setup_plot_style()
     titolo , _ , _ , canale_dispositivo = titolo_plot(path_dispositivo)
    
@@ -199,7 +200,7 @@ def plot_rm(rm:np.array , vgs:np.array , coefficenti_retta:tuple , intervallo_fi
     return plt.gcf()
 
 
-def plot_sdlm(sdlm:np.array , vgs:np.array , x_fit:np.array , y_fit:tuple , grado_fit:int , vth:float , path_dispositivo:Path):
+def plot_sdlm(sdlm , vgs , x_fit , y_fit , grado_fit:int , vth:float , path_dispositivo:Path):
     _setup_plot_style()
     titolo , _ , _ , canale_dispositivo = titolo_plot(path_dispositivo)
 
@@ -221,7 +222,7 @@ def plot_sdlm(sdlm:np.array , vgs:np.array , x_fit:np.array , y_fit:tuple , grad
     plt.title(titolo)
     return plt.gcf()
 
-def plot_tcm(tcm:np.array , vgs:np.array , x_fit:np.array , y_fit:tuple , grado_fit:int , vth:float , path_dispositivo:Path):
+def plot_tcm(tcm , vgs , x_fit , y_fit , grado_fit:int , vth:float , path_dispositivo:Path):
     _setup_plot_style()
     titolo , _ , _ , canale_dispositivo = titolo_plot(path_dispositivo)
 
@@ -246,7 +247,7 @@ def plot_tcm(tcm:np.array , vgs:np.array , x_fit:np.array , y_fit:tuple , grado_
 
 
 
-def plot_fit_lineare(id:np.array , vgs:np.array , coefficenti_retta:tuple , intervallo_fit:tuple , vth:float , path_dispositivo:Path):
+def plot_fit_lineare(id , vgs , coefficenti_retta:tuple , intervallo_fit:tuple , vth:float , path_dispositivo:Path):
     _setup_plot_style()
     titolo , _ , _ , canale_dispositivo = titolo_plot(path_dispositivo)
    
@@ -374,11 +375,12 @@ def save_plot(fig, dir , name , show_plot):
 
 
 
-def elabora_plot(path, show_plot=True):
-    path_cartelle = get_cartelle(path , contenenti_misure=True)
+def elabora_plot(path:str | Path, show_plot=True):
+    pattern = Path(path).name[5] + Path(path).name[4] + "-*"
+    path_cartelle = get_cartelle(path , contenenti_misure=True , pattern= pattern)
     
     for  idx,c in enumerate(path_cartelle):        
-        
+        errore = False
         c = Path(c)
 
         path_plot = c / "plot"
@@ -386,42 +388,83 @@ def elabora_plot(path, show_plot=True):
 
         print(f"\t- Elaborazione di {c.name}", end="")
 
-
-        fig = plot_id_vgs(c)
-        save_plot(fig , path_plot , "plot_id_vgs" , show_plot)
-
-        fig = plot_id_vgs(c, semilog=True)
-        save_plot(fig , path_plot , "plot_id_vgs_semilog" , show_plot)
-
-        fig = plot_gm_vgs(c)
-        save_plot(fig , path_plot , "plot_gm_vgs" , show_plot)
-
+        try:
+            fig = plot_id_vgs(c)
+            save_plot(fig , path_plot , "plot_id_vgs" , show_plot)
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t - 'plot_id_vgs' non eseguito!\n\t\t -> err: {e}" , end ="")
+        
+        try:
+            fig = plot_id_vgs(c, semilog=True)
+            save_plot(fig , path_plot , "plot_id_vgs_semilog" , show_plot)
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t - 'plot_id_vgs_semilog' non eseguito!\n\t\t -> err: {e}" , end ="")
+        
+        try:
+            fig = plot_gm_vgs(c)
+            save_plot(fig , path_plot , "plot_gm_vgs" , show_plot)
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t - 'plot_gm_vgs' non eseguito!\n\t\t -> err: {e}" , end ="")
+        
         if "nf" not in c.name:
             fig = plot_gm_id_w_l(c)
-            save_plot(fig , path_plot , "plot_gm_id_w_l" , show_plot)
-        else: print(" - plot: 'plot_gm_id_w_l' non eseguito" , end="")
+            if fig == None:
+              print("\n \t\t - 'plot_gm_id_w_l' non eseguito")  
+            else:
+                save_plot(fig , path_plot , "plot_gm_id_w_l" , show_plot)
+        else: print("\n \t\t - 'plot_gm_id_w_l' non eseguito")
 
-        fig = plot_id_vds(c)
-        save_plot(fig , path_plot , "plot_id_vds" , show_plot)
+        try:
+            fig = plot_id_vds(c)
+            save_plot(fig , path_plot , "plot_id_vds" , show_plot)
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t - 'plot_id_vds' non eseguito!\n\t\t -> err: {e}" , end ="")
 
-        fig = plot_gds_vds(c)
-        save_plot(fig , path_plot , "plot_gds_vgs" , show_plot)
+
+        try:
+            fig = plot_gds_vds(c)
+            save_plot(fig , path_plot , "plot_gds_vgs" , show_plot)
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t - 'plot_gds_vgs' non eseguito!\n\t\t -> err: {e}" , end ="")
 
 
-        fig = plot_id_vgs(c , secondo_file=True)
-        save_plot(fig , path_plot , "plot_id_vgs_2" , show_plot)
+        try:
+            fig = plot_id_vgs(c , secondo_file=True)
+            save_plot(fig , path_plot , "plot_id_vgs_2" , show_plot)
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t - 'plot_id_vgs_2' non eseguito!\n\t\t -> err: {e}" , end ="")
 
-        fig = plot_id_vgs(c, semilog=True , secondo_file=True)
-        save_plot(fig , path_plot , "plot_id_vgs_semilog_2" , show_plot)
+        try:
+            fig = plot_id_vgs(c, semilog=True , secondo_file=True)
+            save_plot(fig , path_plot , "plot_id_vgs_semilog_2" , show_plot)
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t - 'plot_id_vgs_semilog_2' non eseguito!\n\t\t -> err: {e}" , end ="")
 
-        fig = plot_gm_vgs(c , secondo_file=True)
-        save_plot(fig , path_plot , "plot_gm_vgs_2" , show_plot)
+        try:
+            fig = plot_gm_vgs(c , secondo_file=True)
+            save_plot(fig , path_plot , "plot_gm_vgs_2" , show_plot)
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t - 'plot_gm_vgs_2' non eseguito!\n\t\t -> err: {e}" , end ="")
 
         if show_plot:
             plt.show(block=False)
             plt.pause(0.1)
 
-        print(f" - Completata! {idx+1} / {len(path_cartelle)}")
+        infoAvanzamento = f"{idx+1} / {len(path_cartelle)}"
+
+        if errore:
+            print(f"\n\t -> Completata {infoAvanzamento}")
+        else:
+            print(f" - Completata! {infoAvanzamento}")
+            
 
 
     path_plot = Path(path) / "plot"

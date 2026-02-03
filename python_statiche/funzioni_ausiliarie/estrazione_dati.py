@@ -99,7 +99,7 @@ def estrazione_dati_jg_vgs(path_dispositivo, tipo = None):
 
     return mod_jg, vgs
 
-def estrazione_dati_gm_vgs(path_dispositivo:str):
+def estrazione_dati_gm_vgs(path_dispositivo:str | Path):
     file = Path(path_dispositivo) / "gm.txt"
     gm, vgs, vds = _estrazione_gm_gds(file)
     return gm, vgs, vds

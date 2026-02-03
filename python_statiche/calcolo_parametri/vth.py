@@ -10,12 +10,12 @@ import plot
 import numpy as np
 import pandas as pd
 
-def RM(path_dispositivo:str, vds_value = 150)->float:
+def RM(path_dispositivo:str | Path, vds_value = 150)->float:
     '''
     Metodo RM: la vth è definita come l'intercetta con la retta y = 0 del fit lineare con la curva id/sqrt(gm) al variare di Vgs con una Vds = 150mV
     Si ipotizza che siano presenti il file gm.txt
     '''
-
+    
     path_dispositivo = Path(path_dispositivo)
 
     gm, vgs , vds = estrazione_dati.estrazione_dati_gm_vgs(path_dispositivo)
@@ -40,7 +40,7 @@ def RM(path_dispositivo:str, vds_value = 150)->float:
 
     return float(f"{vth:.5g}")
 
-def FIT_LIN(path_dispositivo:str, vds_value = 150)->float:
+def FIT_LIN(path_dispositivo:str | Path, vds_value = 150)->float:
     '''
     Metodo FIT_LIN: la vth è definita come l'intercetta con la retta y = 0 del fit lineare della corrente di drain al variare di vgs con una vds = 150mV
     Si ipotizza che siano presenti i file id-vgs.txt
@@ -64,7 +64,7 @@ def FIT_LIN(path_dispositivo:str, vds_value = 150)->float:
     return float(f"{vth:.5g}")
 
 
-def SDLM(path_dispositivo:str, vds_value = 900 , grado_fit = 6 ,  smooth_size = 5)->float:
+def SDLM(path_dispositivo:str | Path, vds_value = 900 , grado_fit = 6 ,  smooth_size = 5)->float:
     path_dispositivo = Path(path_dispositivo)
     id , vgs , vds = estrazione_dati.estrazione_dati_id_vgs(path_dispositivo)
 
@@ -91,7 +91,7 @@ def SDLM(path_dispositivo:str, vds_value = 900 , grado_fit = 6 ,  smooth_size = 
     return float(f"{vth:.5g}")
 
 
-def TCM(path_dispositivo:str, vds_value = 150 , grado_fit = 6 , smooth_size = 5):
+def TCM(path_dispositivo:str | Path, vds_value = 150 , grado_fit = 6 , smooth_size = 5):
     path_dispositivo = Path(path_dispositivo)
 
     gm , vgs, vds = estrazione_dati.estrazione_dati_gm_vgs(path_dispositivo)
@@ -182,45 +182,79 @@ def _smooth_e_gradient(x , t  , size , pre_smooth = False):
     return gradient
 
 
-def _calcola_vth_e_salva(path_dispositivo , path_cartella , show_plot):
+def _calcola_vth_e_salva(path_dispositivo: str | Path , path_cartella :str | Path , show_plot: bool) -> bool:
     d = Path(path_dispositivo)
     nome_file = Path(path_cartella) / f"{d.name}.txt"
     header = ["Lin_fit_Id", "Vth_TCM", "Vth_SDLM", "Vth_RM"]
     
-    vth_fit_lin = FIT_LIN(d)
-    plot.save_plot(plt.gcf() , d / "plot" , "plot_vth_fit_lin" , show_plot)
-
-    vth_TCM = TCM(d)
-    plot.save_plot(plt.gcf() , d / "plot" , "plot_vth_tcm" , show_plot)
-
-    vth_SDLM = SDLM(d)
-    plot.save_plot(plt.gcf() , d / "plot" , "plot_vth_sdlm" , show_plot)
-
-    vth_rm = RM(d)
-    plot.save_plot(plt.gcf() , d / "plot" , "plot_vth_rm" , show_plot)
-
-    vth = np.array([vth_fit_lin , vth_TCM , vth_SDLM , vth_rm]).reshape(1,-1) * 1e3
-    df_vth = pd.DataFrame(columns=header , data=vth)
-    df_vth.to_csv(nome_file , sep = '\t' , index=False , float_format="%.2f")
-
-
+    errore = False
+    
+    try:    
+        vth_fit_lin = FIT_LIN(d)
+        plot.save_plot(plt.gcf() , d / "plot" , "plot_vth_fit_lin" , show_plot)
+    except Exception as e:
+        errore = True
+        print(f"\n\t\t Errore calcolo 'Vth FIT_LIN'\n\t\t-> err:{e}" , end = "")
+        
+    try:    
+        vth_TCM = TCM(d)
+        plot.save_plot(plt.gcf() , d / "plot" , "plot_vth_tcm" , show_plot)
+    except Exception as e:
+        errore = True
+        print(f"\n\t\t Errore calcolo 'Vth TCM'\n\t\t-> err:{e}" , end = "")
+        
+    try:    
+        vth_SDLM = SDLM(d)
+        plot.save_plot(plt.gcf() , d / "plot" , "plot_vth_sdlm" , show_plot)
+    except Exception as e:
+        errore = True
+        print(f"\n\t\t Errore calcolo 'Vth SDLM'\n\t\t-> err:{e}" , end = "")
+        
+    try:    
+        vth_rm = RM(d)
+        plot.save_plot(plt.gcf() , d / "plot" , "plot_vth_rm" , show_plot)
+    except Exception as e:
+        errore = True
+        print(f"\n\t\t Errore calcolo 'Vth RM'\n\t\t-> err:{e}" , end = "")
+        
+    if not errore:
+        vth = np.array([vth_fit_lin , vth_TCM , vth_SDLM , vth_rm]).reshape(1,-1) * 1e3
+        df_vth = pd.DataFrame(columns=header , data=vth)
+        df_vth.to_csv(nome_file , sep = '\t' , index=False , float_format="%.2f")
+    else:
+        print("\n\t\t Impossibile salvare le Vth...")
+    return not errore
 
 ## Funzione Principale
 
 
 
-def calcolo_vth(path_cartella:str , show_plot = True , nome_cartella_vth = "vth"):
-    directory_dispositivi = ricerca_file.get_cartelle(base_path=path_cartella , contenenti_misure=True , no_nf=True)
+def calcolo_vth(path_cartella:str | Path , show_plot = True , nome_cartella_vth = "vth"):
+    path_cartella = Path(path_cartella)
+    
+    # Creazione del pattern di ricerca delle cartelle
+    pattern = Path(path_cartella).name[5] + Path(path_cartella).name[4] + "-*"
+    directory_dispositivi = ricerca_file.get_cartelle(base_path=path_cartella , contenenti_misure=True , no_nf=True , pattern= pattern)
     
     # Creaiamo la cartella dei plot
-    path_cartella_vth = Path(path_cartella) / nome_cartella_vth
+    path_cartella_vth = path_cartella / nome_cartella_vth
     path_cartella_vth.mkdir(exist_ok=True) 
 
     for idx, dir in enumerate(directory_dispositivi):
+        
+        print(f"\t Elaborazione di {dir.name}" , end="")
         (Path(dir)/"plot").mkdir(exist_ok=True)  
-        _calcola_vth_e_salva(dir , path_cartella_vth , show_plot)
+        
+        ok = _calcola_vth_e_salva(dir , path_cartella_vth , show_plot)
+        
         if show_plot:
             plt.pause(0.1)
             plt.show(block=False)
-        print(f"\t- {idx+1} elaborati su {len(directory_dispositivi)}")
+        
+        infoAvanzamento = f"{idx+1}/{len(directory_dispositivi)}"
+        
+        if not ok:
+            print(f"\n\t -> Completata! {infoAvanzamento}")
+        else:
+            print(f" - Completata! {infoAvanzamento}")
 

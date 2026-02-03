@@ -1,3 +1,4 @@
+import argparse
 from calcolo_parametri import gm_gds
 from calcolo_parametri import vth
 from pathlib import Path
@@ -9,19 +10,20 @@ import sys
 import time
 import plot
 
-def main(path_cartella , show_plot:True):
+def main(path_cartella , show_plot=True):
 
     if not Path(path_cartella).exists():
-        print(f"La directory indicata non esiste:\n'{path_cartella}'")
-        return
+        print(f"La directory indicata non esiste: '{path_cartella}'")
+        exit()
 
-    print(f"- Inizio elaborazione della cartella:\n '{path_cartella}'\nImpostazioni: {"Mostra i plot" if show_plot else "Non mostrare i plot"}\n")
-    tempo = time.time()
-
+    print(f"Inizio elaborazione della cartella: '{path_cartella}'")
+    print(f"Impostazioni: {"Mostra i plot" if show_plot else "Non mostrare i plot"}")
+    print()
+    print()
     ## Conversione dei file
 
     csv2txt.csv2txt_chip(path_cartella)
-
+    
     ## Creazione dei Plot singoli
     print("\nInizio creazione plot")
     plot.elabora_plot(path_cartella , show_plot)
@@ -40,22 +42,28 @@ def main(path_cartella , show_plot:True):
     vth.calcolo_vth(path_cartella , show_plot = show_plot)
     print("\nFine calcolo Vth")
 
-    tempo -= time.time()
-    print(f"- Fine elaborazione, tempo impiegato {-tempo:.2f} sec")
 
-    if show_plot:
-        input("\nPer terminare l'operazione e chiudere tutti i plot premere invio...")
+    plt.close("all")
 
 
+def str2bool(value):
+    value = value.lower()
+    if value in ("true", "t"):
+        return True
+    if value in ("false", "f"):
+        return False
+    raise argparse.ArgumentTypeError("Valore booleano atteso")
 
 if __name__ == "__main__":
-    if len(sys.argv) <= 1:
-        print("Inserire il path completo del chip che si vuole elaborare")
-        sys.exit(1)
-    elif len(sys.argv) == 2:
-        main(sys.argv[1] , show_plot=True)
-    elif len(sys.argv) == 3:
-        main(sys.argv[1] , show_plot=(False if (sys.argv[2].lower() == "false" or sys.argv[2].lower() == "f") else True))
-    else:
-        print(f"Si sono inseriti troppi parametri!\n {sys.argv}")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        prog="main_statiche.py",
+        description="script per l'analisi delle misure statiche di un ASIC")
+    parser.add_argument("path" , help= "Path assoluto dell'ASIC da analizzare")
+    parser.add_argument(
+        "-p" , "--plot",
+        action="store_true",
+        help="opzione che fa visualizzare i plot"
+    )
+    args = parser.parse_args()
+
+    main(path_cartella=args.path , show_plot=args.plot)

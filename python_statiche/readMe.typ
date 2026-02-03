@@ -23,28 +23,40 @@ pip install -r requirements.txt
 
 ==== Attivazione l'ambiente virtuale
 Per attivare l'ambiente virtuale si usa il comando:
-- su Windows `.venv\Scripts\activate.bat`
-- su Linux o Mac `source .venv/bin/activate`
+- su _Windows_:
+```bash
+.venv\Scripts\activate.bat
+```
+
+- su _Linux_ o _Mac_ 
+```bash
+source .venv/bin/activate
+```
 
 ==== Uso di main_statiche
 dopo aver attivato il `venv` si può procedere ad analizzare i dati per farlo lanciare il comando:
 ```bash
-python main_statiche.py [path] [booleano]
+python main_statiche.py [-h] [-p] path
 ```
-dove:
-- `[path]`: è il path completo (non relativo) alla cartella del dispositivo da elaborare, ad esempio: `"/home/emilio/Documenti/github/Caratterizzazione-Mosfet/Misure statiche/P1/Chip1PMOS_1Grad"`.
-*Inserire le virgolette se il path contiene degli spazi* (come nell'esempio precedente)
-- `[booleano]`: Questo parametro è opzionale e normalmente è posto a `True`. Serve ad indicare se si vogliono vedere i plot durante l'elaborazione dei file
+_MANDATORI_:
+- `path`: è il path completo (non relativo) alla cartella del dispositivo da elaborare, ad esempio: `"/home/emilio/Documenti/github/Caratterizzazione-Mosfet/Misure statiche/P1/Chip1PMOS_1Grad"`. *Inserire le virgolette se il path contiene degli spazi* (come nell'esempio precedente)
 
-Quindi un esempio di esecuzione dello script è:
+_OPZIONALI_:
+- `[-p]`: Serve ad indicare che si vogliono vedere i plot durante l'elaborazione dei file
+- `[-h]`: Per visualizzare il menù di help (non è necessario inserire il `path`)
+Quindi un esempio di esecuzione dello script, nel caso in cui si volessero vedere i plot, è:
+```bash
+python main_statiche.py "/home/emilio/Documenti/github/Caratterizzazione-Mosfet/Misure statiche/N6/Chip6NMOS" -p
 ```
-python main_statiche.py "/home/emilio/Documenti/github/Caratterizzazione-Mosfet/Misure statiche/N6/Chip6NMOS" false
+oppure per visualizzare il menù di help digitare:
+```bash
+python main_statiche.py -h
 ```
 
 == Struttura necessaria delle directory per operare:
 Gli script Python ipotizzano che le directory e i file sono disposti e nominati in un modo preciso.
 Per un ASIC è necessario che si mantenga la struttura seguente (in questo esempi l'ASIC utilizzato è il N5):
-```
+```terminal
     Chip5NMOS
     |
     ├── N5-200-180

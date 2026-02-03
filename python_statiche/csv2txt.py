@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from funzioni_ausiliarie import ricerca_file
 
-def csv2txt(file:str):
+def csv2txt(file:Path | str):
     """
     Converte un file CSV in un file TXT formattato.
     ---------
@@ -18,18 +18,16 @@ def csv2txt(file:str):
     ----
     - Il file TXT di output verrà salvato nella stessa directory del file CSV di input.
     """
-    
     try:
         # Leggi il file CSV
-        pd_data = pd.read_csv(file, header=6)
+        pd_data = pd.read_csv(file, header=6 , encoding="utf-8")
     except Exception as e:
         print(f"Errore nella lettura del file CSV '{file}': {e}")
         print(f"Controllare se il file è chiamato nel corretto modo ad esempio: \"id-vds.csv\" oppure \"id-vgs_2.csv\"")
-        return
+        exit()
     file_name = os.path.basename(file)
     type_file = file_name[4]  # 5° carattere
-
-
+    
     # Estrai e ordina i valori di vg
     vg_values = pd_data.iloc[:, 1].to_numpy()
     vg_values = np.unique(vg_values)
@@ -77,24 +75,48 @@ def csv2txt(file:str):
     df_final.to_csv(output_file, sep="\t", index=False , float_format="%.7g")
 
 
-def csv2txt_chip(path_cartella):
-    print(f"Inizio conversione file da .csv a .txt, della cartella:\n'{path_cartella}'")
-    cartelle = ricerca_file.get_cartelle(path_cartella , contenenti_misure=True)
+def csv2txt_chip(path_cartella: Path | str):
+    print("Conversione dei file csv...")
+
+    pattern = Path(path_cartella).name[5] + Path(path_cartella).name[4] + "-*"
+    cartelle = ricerca_file.get_cartelle(path_cartella , contenenti_misure=True , pattern= pattern)
     
     for idx, c in enumerate(cartelle):
         verifica_e_rinomina(c)
-        csv2txt(Path(c) / "id-vds.csv")
-        csv2txt(Path(c) / "id-vgs.csv")
-        csv2txt(Path(c) / "id-vgs-2.csv")
-        print(f"\t - {idx+1} elaborati su {len(cartelle)}")
+        errore = False
+        print(f"\t - Elaborazione di {c.name}" , end="")
+        
+        try:
+            csv2txt(Path(c) / "id-vds.csv")
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t Errore durante la conversione file 'id-vds.csv'\n\t\t -> err: {e}")
+        
+        try:
+            csv2txt(Path(c) / "id-vgs.csv")
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t Errore durante la conversione file 'id-vgs.csv'\n\t\t -> err: {e}")
+        
+        try:
+            csv2txt(Path(c) / "id-vgs-2.csv")
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t Errore durante la conversione file 'id-vgs-2.csv'\n\t\t -> err: {e}")
+            
+            
+        infoAvanzamento = f"{idx+1}/{len(cartelle)}"
+        
+        if errore:
+            print(f"\n\t -> Completata! {infoAvanzamento}")
+        else:
+            print(f"\t Completata! {infoAvanzamento}")
 
-    print("fine conversione file da .csv a .txt")
-
-
+    print("Fine della conversione dei file csv")
 
 # Funzioni Ausiliarie
 
-def verifica_e_rinomina(cartella: str):
+def verifica_e_rinomina(cartella: Path | str):
     '''
     Funzione che prede tutti i file .csv e verifica se hanno il '-' al posto di '_'
     '''

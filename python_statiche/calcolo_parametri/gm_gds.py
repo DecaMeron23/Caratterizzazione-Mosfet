@@ -50,30 +50,70 @@ def gm_gds(id, vgs_vds):
     return gm
 
 
-def crea_file_gm_gds(path_cartella):
-    directory_dispositivi = get_cartelle(base_path=path_cartella , contenenti_misure=True)
+def crea_file_gm_gds(path_cartella: str | Path):
+    # Creazione del patter, es: N5-*
+    pattern = Path(path_cartella).name[5] + Path(path_cartella).name[4] + "-*"
+    
+    # Ricerca delle cartelle che corrispondono al pattern
+    directory_dispositivi = get_cartelle(base_path=path_cartella , contenenti_misure=True , pattern= pattern)
+    
     
     for idx, dir in enumerate(directory_dispositivi):
+        errore = False
         
-        _elabora_salva_gm_gds(dir , "vgs")
-        _elabora_salva_gm_gds(dir , "vds")
-        _elabora_salva_gm_gds(dir , "vgs-2")
+        print(f"\t - Elaborazione di {dir.name}" , end="")
+        try:
+            _elabora_salva_gm_gds(dir , "vgs")
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t Errore durante elaborazione 'gm_vgs'\n\t\t -> err: {e}", end = "")
+        
+        try:        
+            _elabora_salva_gm_gds(dir , "vds")
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t Errore durante elaborazione 'gds_vds'\n\t\t -> err: {e}", end = "")
+        
+        try:
+            _elabora_salva_gm_gds(dir , "vgs-2")
+        except Exception as e:
+            errore = True
+            print(f"\n\t\t Errore durante elaborazione 'gm_vgs_2'\n\t\t -> err: {e}", end = "")
 
-        print(f"\t- {idx+1} elaborati su {len(directory_dispositivi)}")
+
+        infoAvanzamento = f"{idx+1}/{len(directory_dispositivi)}"
+        if errore:
+            print(f"\n\t -> Completata! {infoAvanzamento}")
+        else:
+            print(f" - Completata! {infoAvanzamento}")
 
 
-def _elabora_salva_gm_gds(dir , tipologia:str):
-    if "vgs" in tipologia:
-        id , tenisone_primaria , tensione_secondaria = estrazione_dati.estrazione_dati_id_vgs(Path(dir) , secondo_file="-2" in tipologia)
-    elif "vds" in tipologia:
-        id , tenisone_primaria , tensione_secondaria = estrazione_dati.estrazione_dati_id_vds(Path(dir))
-    else:
-        raise ValueError(f"Tipologia '{tipologia}' non riconosciuta in elabora_salva_gm_gds.")
+def _elabora_salva_gm_gds(dir :str | Path , tipologia:str):
+    dir = Path(dir)
     
+    isVgs = "vgs" in tipologia
+    isVds = "vds" in tipologia
+    isVgs_2 = "vgs-2" in tipologia
+    
+    if (not (isVgs or isVds or isVgs_2)): # Verifico che almeno uno dei precedenti sia vero
+        raise ValueError(f"Tipologia '{tipologia}' non rigonosciuta")
+    
+    if isVgs:
+        id , tenisone_primaria , tensione_secondaria = estrazione_dati.estrazione_dati_id_vgs(dir , secondo_file= isVgs_2)
+    elif isVds:
+        id , tenisone_primaria , tensione_secondaria = estrazione_dati.estrazione_dati_id_vds(dir)
+
     dati_calcolati = gm_gds(id=id, vgs_vds=tenisone_primaria)
     
-    nome_tensione_secondaria = f"G{"m" if "vgs" in tipologia else "ds"}_V{"d" if "vgs" in tipologia else "g"}s="
-    header = np.hstack((f"{tipologia[:3].capitalize()}", [f"{nome_tensione_secondaria}{vds_i/1000:.2f}V" for vds_i in tensione_secondaria]))
+    nome_tensione_secondaria = f"G{"m" if isVgs else "ds"}_V{"d" if isVgs else "g"}s="
+    
+    headerTensioneSecondaria = [f"{nome_tensione_secondaria}{vds_i/1000:.2f}V" for vds_i in tensione_secondaria]
+    header = np.hstack((f"{tipologia[:3].capitalize()}", headerTensioneSecondaria))
+    
+    # Creo il dataframe
     df_dati_calcolati = pd.DataFrame(data=np.hstack((tenisone_primaria.reshape(-1, 1) , dati_calcolati)) , columns=header)
-    nome_file = Path(dir) / f"{"gds" if "vds" == tipologia else ("gm_2" if "vgs-2" == tipologia else "gm")}.txt"
+    
+    nome_file = dir / f"{"gds" if isVds else ("gm_2" if isVgs_2 else "gm")}.txt"
+    
+    # Salvo il file in fomrato .txt
     df_dati_calcolati.to_csv(nome_file, sep='\t', index=False , float_format="%.7g")
