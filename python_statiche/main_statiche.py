@@ -22,25 +22,27 @@ def main(path_cartella , show_plot=True):
     print()
     ## Conversione dei file
 
+    print("Conversione dei file csv...")
     csv2txt.csv2txt_chip(path_cartella)
+    print("Fine della conversione dei file csv\n\n")
     
     ## Creazione dei Plot singoli
-    print("\nInizio creazione plot")
+    print("Inizio creazione plot")
     plot.elabora_plot(path_cartella , show_plot)
-    print("Fine creazione plot")
+    print("Fine creazione plot\n\n")
 
     if show_plot:
         input("Premere invio per continuare (gli attuali plot verranno chiusi)...")
     plt.close("all")
 
     ## Creazione dei file gm e gds
-    print("\nInizio creazione dei file gm e gds")
+    print("Inizio creazione dei file gm e gds")
     gm_gds.crea_file_gm_gds(path_cartella)
-    print("\nFine creazione dei file gm e gds")
+    print("Fine creazione dei file gm e gds\n\n")
 
-    print("\nInizio calcolo Vth")
+    print("Inizio calcolo Vth")
     vth.calcolo_vth(path_cartella , show_plot = show_plot)
-    print("\nFine calcolo Vth")
+    print("Fine calcolo Vth")
 
 
     plt.close("all")

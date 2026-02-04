@@ -76,7 +76,6 @@ def csv2txt(file:Path | str):
 
 
 def csv2txt_chip(path_cartella: Path | str):
-    print("Conversione dei file csv...")
 
     pattern = Path(path_cartella).name[5] + Path(path_cartella).name[4] + "-*"
     cartelle = ricerca_file.get_cartelle(path_cartella , contenenti_misure=True , pattern= pattern)
@@ -112,7 +111,6 @@ def csv2txt_chip(path_cartella: Path | str):
         else:
             print(f"\t Completata! {infoAvanzamento}")
 
-    print("Fine della conversione dei file csv")
 
 # Funzioni Ausiliarie
 
